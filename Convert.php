@@ -13,6 +13,8 @@ class Convert
 
     function __construct($str)
     {
+//        mb_regex_encoding();
+//        mb_internal_encoding();
         $this->load($str);
     }
 
