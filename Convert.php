@@ -4,6 +4,46 @@ namespace Jawira\CaseConverter;
 
 class Convert
 {
+    const SNAKE = 'snake';
+    const CAMEL = 'camel';
+    const AUTO = 'auto';
+
+    protected $original = '';
+    protected $words = [];
+
+    function __construct($str)
+    {
+        $this->load($str);
+    }
+
+    public function load($str, $type = self::AUTO)
+    {
+        if (is_string($str)) {
+
+            $strategy = $this->analyse();
+
+            switch ($strategy) {
+                case self::SNAKE:
+                    $this->original = $str;
+                    $this->words = array_filter(mb_split('_+', $str));
+                    break;
+                case self::CAMEL:
+                    $this->original = $str;
+
+                    break;
+            }
+
+        }
+        return $this;
+    }
+
+    // Returns if
+    protected function analyse($str)
+    {
+        return (mb_strpos($str, '_') !== false) ? self::SNAKE : self::CAMEL;
+    }
+
+
     /**
      * Converts a Camel Case string to Snake Case
      *
