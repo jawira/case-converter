@@ -10,11 +10,21 @@ class Convert
     protected $words = [];
     protected $detectedCase;
 
+    /**
+     * Convert constructor.
+     *
+     * @param $str String to convert
+     */
     function __construct($str)
     {
         $this->load($str);
     }
 
+    /**
+     * @param $str
+     *
+     * @return $this
+     */
     public function load($str)
     {
         $this->detectedCase = $this->analyse($str);
@@ -45,9 +55,9 @@ class Convert
     }
 
     /**
-     * Returns an CamelCase string
+     * Returns camel case string
      *
-     * @param boolean $uppercase First character must be uppercase
+     * @param bool $uppercase
      *
      * @return string
      */
@@ -56,22 +66,23 @@ class Convert
         $copy = array_map(function ($w) {
             return ucfirst(mb_strtolower($w));
         }, $this->words);
-        $str = implode('', $copy);
+        $result = implode('', $copy);
 
-        return $uppercase ? ucfirst($str) : lcfirst($str);
+        return $uppercase ? ucfirst($result) : lcfirst($result);
     }
 
     /**
-     * Returns an SnakeCase string
+     * Returns snake case string
      *
-     * @param bool|false $uppercase If true the result will be an Screaming Snake Case string
+     * @param bool $uppercase
      *
      * @return string
      */
     public function toSnake($uppercase = false)
     {
-        $str = implode('_', $this->words);
-        return $uppercase ? mb_strtolower($str) : mb_strtoupper($str);
+        $result = implode('_', $this->words);
+
+        return $uppercase ? mb_strtoupper($result) : mb_strtolower($result);
     }
 
     /**
@@ -84,6 +95,11 @@ class Convert
         return array_filter(mb_split('_+', $str));
     }
 
+    /**
+     * @param $str
+     *
+     * @return array
+     */
     protected function readCamel($str)
     {
         $res = preg_replace_callback('/[[:upper:]]+/', function ($m) {
@@ -93,8 +109,14 @@ class Convert
         return $this->readSnake($res);
     }
 
+    /**
+     * Magic function
+     *
+     * @return string
+     */
     public function __toString()
     {
         return ($this->detectedCase === self::CAMEL) ? $this->toSnake() : $this->toCamel();
     }
+
 }
