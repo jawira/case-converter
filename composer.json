@@ -1,0 +1,16 @@
+{
+    "name": "jawira/case-converter",
+    "description": "Convert string between Camel case and Snake case",
+    "type": "library",
+    "require-dev": {
+        "pds/skeleton": "^1.0"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Jawira Portugal",
+            "email": "portugal@jawira.com"
+        }
+    ],
+    "require": {}
+}
