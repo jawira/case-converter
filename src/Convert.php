@@ -6,40 +6,39 @@ class Convert
 {
     const SNAKE = 'snake';
     const CAMEL = 'camel';
-    const AUTO = 'auto';
 
-    protected $original = '';
     protected $words = [];
+    protected $detectedCase;
 
     function __construct($str)
     {
-//        mb_regex_encoding();
-//        mb_internal_encoding();
         $this->load($str);
     }
 
-    public function load($str, $type = self::AUTO)
+    public function load($str)
     {
-        if (is_string($str)) {
+        $this->detectedCase = $this->analyse($str);
 
-            $strategy = $this->analyse();
-
-            switch ($strategy) {
-                case self::SNAKE:
-                    $this->original = $str;
-                    $this->words = array_filter(mb_split('_+', $str));
-                    break;
-                case self::CAMEL:
-                    $this->original = $str;
-
-                    break;
-            }
-
+        switch ($this->detectedCase) {
+            case self::SNAKE:
+                $this->words = $this->readSnake($str);
+                break;
+            case self::CAMEL:
+            default:
+                $this->words = $this->readCamel($str);
+                break;
         }
+
         return $this;
     }
 
-    // Returns if
+    /**
+     * Detects the case type of $str
+     *
+     * @param $str
+     *
+     * @return string
+     */
     protected function analyse($str)
     {
         return (mb_strpos($str, '_') !== false) ? self::SNAKE : self::CAMEL;
@@ -48,63 +47,54 @@ class Convert
     /**
      * Returns an CamelCase string
      *
-     * @param bool|false $upper If true the result will be Pascal Case.
-     * @param bool|false $private If true the result will start with an underscore
+     * @param boolean $uppercase First character must be uppercase
+     *
      * @return string
      */
-    public function camel($upper = false, $private = false)
+    public function toCamel($uppercase = false)
     {
         $copy = array_map(function ($w) {
             return ucfirst(mb_strtolower($w));
         }, $this->words);
         $str = implode('', $copy);
 
-        return $private ? '_' : '' . $upper ? ucfirst($str) : lcfirst($str);
+        return $uppercase ? ucfirst($str) : lcfirst($str);
     }
 
     /**
      * Returns an SnakeCase string
      *
-     * @param bool|false $upper If true the result will be an Screaming Snake Case string
+     * @param bool|false $uppercase If true the result will be an Screaming Snake Case string
+     *
      * @return string
      */
-    public function snake($upper = false)
+    public function toSnake($uppercase = false)
     {
         $str = implode('_', $this->words);
-        return $upper ? mb_strtolower($str) : mb_strtoupper($str);
+        return $uppercase ? mb_strtolower($str) : mb_strtoupper($str);
     }
 
-
-
-
     /**
-     * Converts a Camel Case string to Snake Case
-     *
      * @param $str
-     * @param bool|false $upper
-     * @return string
+     *
+     * @return array
      */
-    public static function old_camelToSnake($str, $upper = false)
+    protected function readSnake($str)
     {
-        $res = preg_replace_callback('|[A-Z]{1,}|', function ($m) {
+        return array_filter(mb_split('_+', $str));
+    }
+
+    protected function readCamel($str)
+    {
+        $res = preg_replace_callback('/[[:upper:]]+/', function ($m) {
             return '_' . reset($m);
         }, $str);
-        $res = trim($res, '_');
-        return $upper ? mb_strtoupper($res) : mb_strtolower($res);
+
+        return $this->readSnake($res);
     }
 
-    /**
-     * Converts a Snake Case string to Camel Case
-     *
-     * @param $str
-     * @param bool|false $upper
-     * @return string
-     */
-    public static function old_snakeToCamel($str, $upper = false)
+    public function __toString()
     {
-        $res = preg_replace_callback('|_{1,}\w|', function ($m) {
-            return mb_strtoupper(trim(reset($m), '_'));
-        }, $str);
-        return $upper ? ucfirst($res) : lcfirst($res);
+        return ($this->detectedCase === self::CAMEL) ? $this->toSnake() : $this->toCamel();
     }
 }
