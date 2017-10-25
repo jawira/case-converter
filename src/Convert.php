@@ -7,12 +7,10 @@ class Convert
     const SNAKE = 'snake';
     const CAMEL = 'camel';
 
-    protected $words = [];
+    protected $words;
     protected $detectedCase;
 
     /**
-     * Convert constructor.
-     *
      * @param $str String to convert
      */
     function __construct($str)
@@ -21,6 +19,8 @@ class Convert
     }
 
     /**
+     * Entry function, receives $str to change case
+     *
      * @param $str
      *
      * @return $this
@@ -43,9 +43,9 @@ class Convert
     }
 
     /**
-     * Detects the case type of $str
+     * Detects if $str is camel case or snake case
      *
-     * @param $str
+     * @param string $str String to be analysed
      *
      * @return string
      */
@@ -57,7 +57,7 @@ class Convert
     /**
      * Returns camel case string
      *
-     * @param bool $uppercase
+     * @param bool $uppercase Should first letter be in uppercase
      *
      * @return string
      */
@@ -74,7 +74,7 @@ class Convert
     /**
      * Returns snake case string
      *
-     * @param bool $uppercase
+     * @param bool $uppercase Returns string in uppercase
      *
      * @return string
      */
@@ -86,7 +86,9 @@ class Convert
     }
 
     /**
-     * @param $str
+     * Reads $str assuming is snake case string
+     *
+     * @param string $str
      *
      * @return array
      */
@@ -96,14 +98,16 @@ class Convert
     }
 
     /**
-     * @param $str
+     * Reads $str assuming is camel case string
+     *
+     * @param string $str
      *
      * @return array
      */
     protected function readCamel($str)
     {
-        $res = preg_replace_callback('/[[:upper:]]+/', function ($m) {
-            return '_' . reset($m);
+        $res = preg_replace_callback('/[[:upper:]]+/', function ($match) {
+            return '_' . reset($match);
         }, $str);
 
         return $this->readSnake($res);
