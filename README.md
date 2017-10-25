@@ -38,7 +38,7 @@ Install using composer:
 $ composer require jawira/case-converter
 ```
 
-Import class into your code:
+Then import class into your code:
 
 ```php
 <?php
