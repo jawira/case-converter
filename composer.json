@@ -1,19 +1,24 @@
 {
-    "name": "jawira/case-converter",
-    "description": "Convert string between Camel case and Snake case",
-    "type": "library",
-    "require-dev": {
-        "pds/skeleton": "^1.0"
-    },
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "Jawira Portugal",
-            "email": "portugal@jawira.com"
-        }
-    ],
-    "require": {
-        "php": ">=5.6",
-        "phpunit/phpunit": "^5.7"
+  "name": "jawira/case-converter",
+  "description": "Convert string between Camel Case and Snake Case",
+  "type": "library",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Jawira Portugal",
+      "email": "dev@tugal.be"
     }
+  ],
+  "autoload": {
+    "psr-4": {
+      "Jawira\\CaseConverter\\": "src/"
+    }
+  },
+  "require": {
+    "php": ">=5.3"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^5.7",
+    "pds/skeleton": "^1.0"
+  }
 }
