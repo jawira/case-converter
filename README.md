@@ -1,7 +1,7 @@
-Case converter 🐪🐍
-=================
+Case converter 
+==============
 
-Convert strings between **camel case** and **snake case**.
+Convert strings between **Camel Case** 🐪 and **Snake Case** 🐍.
 
 Examples
 --------
@@ -27,8 +27,8 @@ Using uppercase versions:
 
 ```php
 $mother = new Convert('sarahConnor'); 
-echo $mother->toSnake(true);  // output: SARAH_CONNOR (aka screaming snake case)
-echo $mother->toCamel(true);  // output: SarahConnor (aka pascal case)
+echo $mother->toSnake(true);  // output: SARAH_CONNOR (aka Screaming Snake Case)
+echo $mother->toCamel(true);  // output: SarahConnor (aka Pascal Case)
 ```
 
 Installation
