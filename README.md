@@ -1,7 +1,7 @@
-Case converter 🐪🐍
-=================
+Case converter 
+==============
 
-Convert strings between **camel case** and **snake case**.
+Convert strings between **Camel Case** 🐪 and **Snake Case** 🐍.
 
 Examples
 --------
@@ -18,17 +18,17 @@ echo (new Convert('HELLO_WORLD'));  // output: helloWorld
 Explicitly set output case:
 
 ```php
-$son = (new Convert('john_connor'); 
+$son = new Convert('john_connor'); 
 echo $son->toSnake();  // output: john_connor 
 echo $son->toCamel();  // output: johnConnor
 ```
 
-Use uppercase versions for output:
+Using uppercase versions:
 
 ```php
-$mother = (new Convert('sarahConnor'); 
-echo $mother->toSnake(true);  // output: SARAH_CONNOR 
-echo $mother->toCamel(true);  // output: SarahConnor
+$mother = new Convert('sarahConnor'); 
+echo $mother->toSnake(true);  // output: SARAH_CONNOR (aka Screaming Snake Case)
+echo $mother->toCamel(true);  // output: SarahConnor (aka Pascal Case)
 ```
 
 Installation
@@ -38,7 +38,7 @@ Install using composer:
 $ composer require jawira/case-converter
 ```
 
-Then import class into your code:
+Then import `Convert` class into your code:
 
 ```php
 <?php

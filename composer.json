@@ -1,6 +1,6 @@
 {
   "name": "jawira/case-converter",
-  "description": "Convert string between Camel Case and Snake Case",
+  "description": "Convert string between Camel Case 🐪 and Snake Case 🐍",
   "type": "library",
   "license": "MIT",
   "authors": [
@@ -16,9 +16,5 @@
   },
   "require": {
     "php": ">=5.3"
-  },
-  "require-dev": {
-    "phpunit/phpunit": "^5.7",
-    "pds/skeleton": "^1.0"
   }
 }
