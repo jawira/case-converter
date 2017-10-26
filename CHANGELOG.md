@@ -8,7 +8,16 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 [unreleased]
 ------------
 
-v0.0.0
+v1.0.0 - 2017-10-27
+------------
+
+### Changed
+* Slight changes on [README.md]()
+
+### Removed
+* PHPUnit and pds/skeleton dependencies
+
+v0.0.0 - 2017-10-26
 ------
 
 ### Added
