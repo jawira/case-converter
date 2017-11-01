@@ -17,6 +17,17 @@ class ConvertTest extends TestCase
         $this->assertSame($expectedSnake, (string)$case);
     }
 
+    /**
+     * @dataProvider fromSnakeToCamelProvider
+     *
+     * @param $inputSnake
+     * @param $expectedCamel
+     */
+    public function testFromSnakeToCamelConstructor($inputSnake, $expectedCamel)
+    {
+        $case = new Convert($inputSnake);
+        $this->assertSame($expectedCamel, (string)$case);
+    }
 
     /**
      * Camel to Snake provider
@@ -30,15 +41,30 @@ class ConvertTest extends TestCase
             'one word 1'    => ['one', 'one'],
             'one word 2'    => ['Laser', 'laser'],
             'two words 1'   => ['helloWorld', 'hello_world'],
-            'two words 2'   => ['HelloWorld', 'hello_world'],
-            'two words 3'   => ['objectId', 'object_id'],
-            'two words 4'   => ['firstName', 'first_name'],
-            'two words 5'   => ['PascalCase', 'pascal_case'],
+            'two words 2'   => ['objectId', 'object_id'],
+            'two words 3'   => ['firstName', 'first_name'],
+            'two words 4'   => ['PascalCase', 'pascal_case'],
             'three words 1' => ['lowerCamelCase', 'lower_camel_case'],
             'three words 2' => ['numberOfProducts', 'number_of_products'],
             'acronym 1'     => ['ASCII', 'a_s_c_i_i'],
             'acronym 2'     => ['NASA', 'n_a_s_a'],
-            'Oompa Loompa'  => ['OompaLoompaDoompadeeDooIVeGotAnotherPuzzleForYou', 'oompa_loompa_doompadee_doo_i_ve_got_another_puzzle_for_you'],
+            'oompa loompa'  => ['OompaLoompaDoompadeeDooIVeGotAnotherPuzzleForYou', 'oompa_loompa_doompadee_doo_i_ve_got_another_puzzle_for_you'],
+        ];
+    }
+
+    public function fromSnakeToCamelProvider()
+    {
+        return [
+            'empty'         => ['', ''],
+            'one word 1'    => ['One', 'one'],
+            'one word 2'    => ['LASER', 'laser'],
+            'two words 1'   => ['product_id', 'productId'],
+            'two words 2'   => ['last_update', 'lastUpdate'],
+            'two words 3'   => ['CREATED_AT', 'createdAt'],
+            'three words 1' => ['last_user_id', 'lastUserId'],
+            'acronym 1'     => ['f_b_i', 'fBI'],
+            'acronym 2'     => ['u_s_a', 'uSA'],
+            'oompa loompa'  => ['oompa_loompa_doompadee_doo_i_ve_got_another_puzzle_for_you', 'oompaLoompaDoompadeeDooIVeGotAnotherPuzzleForYou'],
         ];
     }
 
