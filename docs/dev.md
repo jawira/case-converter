@@ -1,11 +1,17 @@
 Development
 ===========
 
-Running phpunit
----------------
+phpunit
+-------
+
+Running PHPUnit:
+
 ```sh
-$ php .\phpunit-6.4.3.phar --bootstrap .\vendor\autoload.php .\tests\ConvertTest.php
+$ php .\phpunit-6.4.phar --bootstrap .\vendor\autoload.php .\tests\ConvertTest.php
 ```
+
+Download PHPUnit: <https://phar.phpunit.de/phpunit-6.4.phar>
+
 
 Issues
 ------

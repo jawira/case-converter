@@ -1,4 +1,5 @@
 <?php
+
 use Jawira\CaseConverter\Convert;
 use PHPUnit\Framework\TestCase;
 
@@ -48,6 +49,8 @@ class ConvertTest extends TestCase
             'three words 2' => ['numberOfProducts', 'number_of_products'],
             'acronym 1'     => ['ASCII', 'a_s_c_i_i'],
             'acronym 2'     => ['NASA', 'n_a_s_a'],
+            'español 1'     => ['Ñandú', 'ñandú'],
+            'español 2'     => ['VergüenzaAjena', 'vergüenza_ajena'],
             'oompa loompa'  => ['OompaLoompaDoompadeeDooIVeGotAnotherPuzzleForYou', 'oompa_loompa_doompadee_doo_i_ve_got_another_puzzle_for_you'],
         ];
     }
@@ -57,13 +60,16 @@ class ConvertTest extends TestCase
         return [
             'empty'         => ['', ''],
             'one word 1'    => ['One', 'one'],
-            'one word 2'    => ['LASER', 'laser'],
+            'one word 2'    => ['Laser', 'laser'],
             'two words 1'   => ['product_id', 'productId'],
             'two words 2'   => ['last_update', 'lastUpdate'],
             'two words 3'   => ['CREATED_AT', 'createdAt'],
             'three words 1' => ['last_user_id', 'lastUserId'],
             'acronym 1'     => ['f_b_i', 'fBI'],
             'acronym 2'     => ['u_s_a', 'uSA'],
+            'español 1'     => ['LETRA_EÑE', 'letraEñe'],
+            'español 2'     => ['QUICO_Y_ÑOÑO', 'quicoYÑoño'],
+            'español 3'     => ['Un_Gran_Árbol', 'unGranÁrbol'],
             'oompa loompa'  => ['oompa_loompa_doompadee_doo_i_ve_got_another_puzzle_for_you', 'oompaLoompaDoompadeeDooIVeGotAnotherPuzzleForYou'],
         ];
     }
