@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 [unreleased]
 ------------
+
+
+v1.0.1 - 2017-11-10
+-------------------
+
 ### Added
 * Unitary tests
 * Unitary tests for spanish characters
