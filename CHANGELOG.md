@@ -8,8 +8,19 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 [unreleased]
 ------------
 
+
+v1.0.1 - 2017-11-10
+-------------------
+
+### Added
+* Unitary tests
+* Unitary tests for spanish characters
+
+### Fixed
+* Bug with acronyms ([issue #5](https://github.com/jawira/case-converter/issues/5))
+
 v1.0.0 - 2017-10-27
-------------
+-------------------
 
 ### Changed
 * Slight changes on [README.md]()
@@ -18,7 +29,7 @@ v1.0.0 - 2017-10-27
 * PHPUnit and pds/skeleton dependencies
 
 v0.0.0 - 2017-10-26
-------
+-------------------
 
 ### Added
 * Composer support

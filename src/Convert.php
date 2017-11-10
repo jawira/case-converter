@@ -106,7 +106,7 @@ class Convert
      */
     protected function readCamel($str)
     {
-        $res = preg_replace_callback('/[[:upper:]]+/', function ($match) {
+        $res = preg_replace_callback('/[[:upper:]]{1}/', function ($match) {
             return '_' . reset($match);
         }, $str);
 
