@@ -3,6 +3,9 @@ Case converter
 
 Convert strings between **Camel Case** 🐪 and **Snake Case** 🐍.
 
+* 🔁 automatic case detection
+* 🌐 i18n
+
 Examples
 --------
 
@@ -31,9 +34,16 @@ echo $mother->toSnake(true);  // output: SARAH_CONNOR (aka Screaming Snake Case)
 echo $mother->toCamel(true);  // output: SarahConnor (aka Pascal Case)
 ```
 
+How it works
+------------
+
+If any underscore `_` if found, the input string is considered to be Snake Case, and Camel Case otherwise.
+
 Installation
 ------------
+
 Install using composer:
+
 ```sh
 $ composer require jawira/case-converter
 ```

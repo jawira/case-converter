@@ -8,6 +8,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 [unreleased]
 ------------
 
+### Fixed
+* Bug with spanish characters ([issue #6](https://github.com/jawira/case-converter/issues/6))
 
 v1.0.1 - 2017-11-10
 -------------------
