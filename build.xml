@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<project name="Case Converter" description="Case Converter class" default="qa">
+
+    <target name="make:phpunit" description="Install PHPUnit6">
+        <exec command="make bin/phpunit" passthru="true"/>
+    </target>
+
+    <target name="make:composer" description="Install Composer">
+        <exec command="make bin/composer" passthru="true"/>
+    </target>
+
+    <target name="qa" description="Quality assurance"
+            depends="composer:validate, phpunit:run, php:check-syntax"/>
+
+    <target name="composer:validate" description="Check composer.json syntax" depends="make:composer">
+        <composer composer="bin/composer">
+            <arg value="validate"/>
+            <arg value="--strict"/>
+            <arg value="--no-check-lock"/>
+        </composer>
+    </target>
+
+    <target name="phpunit:run" description="Run unit tests" depends="make:phpunit">
+        <exec executable="bin/phpunit" passthru="true"/>
+    </target>
+
+    <target name="php:check-syntax" description="Check syntax on PHP files">
+        <fileset dir="${project.basedir}" id="php_files">
+            <include name="**/*.php"/>
+            <exclude name="vendor/"/>
+        </fileset>
+
+        <apply executable="${php.interpreter}" passthru="true">
+            <arg value="-l"/>
+            <fileset refid="php_files"/>
+        </apply>
+    </target>
+
+</project>

@@ -63,12 +63,14 @@ class Convert
      */
     public function toCamel($uppercase = false)
     {
-        $copy = array_map(function ($w) {
-            return ucfirst(mb_strtolower($w));
-        }, $this->words);
-        $result = implode('', $copy);
+        $result = '';
 
-        return $uppercase ? ucfirst($result) : lcfirst($result);
+        foreach ($this->words as $key => $w) {
+            $mode = ($key === 0) ? MB_CASE_LOWER : MB_CASE_TITLE;
+            $result .= mb_convert_case($w, $mode);
+        }
+
+        return $uppercase ? mb_convert_case($result, MB_CASE_TITLE) : $result;
     }
 
     /**
@@ -82,7 +84,8 @@ class Convert
     {
         $result = implode('_', $this->words);
 
-        return $uppercase ? mb_strtoupper($result) : mb_strtolower($result);
+        $mode = $uppercase ? MB_CASE_UPPER : MB_CASE_LOWER;
+        return mb_convert_case($result, $mode);
     }
 
     /**
