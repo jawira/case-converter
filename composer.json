@@ -5,8 +5,7 @@
   "license": "MIT",
   "authors": [
     {
-      "name": "Jawira Portugal",
-      "email": "dev@tugal.be"
+      "name": "Jawira Portugal"
     }
   ],
   "autoload": {
@@ -15,7 +14,7 @@
     }
   },
   "require": {
-    "php": ">=5.3",
+    "php": ">=5.4",
     "ext-mbstring" : "*"
   }
 }

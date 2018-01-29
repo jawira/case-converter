@@ -8,18 +8,33 @@ class ConvertTest extends TestCase
 
     /**
      * @dataProvider fromCamelToSnakeProvider
+     * @covers       \Jawira\CaseConverter\Convert::__construct
+     * @covers       \Jawira\CaseConverter\Convert::__toString
+     * @covers       \Jawira\CaseConverter\Convert::analyse
+     * @covers       \Jawira\CaseConverter\Convert::load
+     * @covers       \Jawira\CaseConverter\Convert::readCamel
+     * @covers       \Jawira\CaseConverter\Convert::readSnake
+     * @covers       \Jawira\CaseConverter\Convert::toSnake
      *
      * @param string $inputCamel
      * @param string $expectedSnake
      */
     public function testFromCamelToSnakeConstructor($inputCamel, $expectedSnake)
     {
-        $case = new Convert($inputCamel);
+        $case = new Jawira\CaseConverter\Convert($inputCamel);
         $this->assertSame($expectedSnake, (string)$case);
     }
 
     /**
      * @dataProvider fromSnakeToCamelProvider
+     * @covers       \Jawira\CaseConverter\Convert::__construct
+     * @covers       \Jawira\CaseConverter\Convert::__toString
+     * @covers       \Jawira\CaseConverter\Convert::analyse
+     * @covers       \Jawira\CaseConverter\Convert::load
+     * @covers       \Jawira\CaseConverter\Convert::readCamel
+     * @covers       \Jawira\CaseConverter\Convert::readSnake
+     * @covers       \Jawira\CaseConverter\Convert::toCamel
+     * @covers       \Jawira\CaseConverter\Convert::toSnake
      *
      * @param $inputSnake
      * @param $expectedCamel
