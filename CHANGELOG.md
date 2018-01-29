@@ -8,6 +8,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 [unreleased]
 ------------
 
+v1.1.0 - 2018-01-29
+-------------------
+
+### Added
+* Buildtools (Makefile & Phing)
+
 ### Fixed
 * Bug with spanish characters ([issue #6](https://github.com/jawira/case-converter/issues/6))
 
