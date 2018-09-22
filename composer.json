@@ -1,20 +1,24 @@
 {
   "name": "jawira/case-converter",
-  "description": "Convert string between Camel Case 🐪 and Snake Case 🐍",
   "type": "library",
+  "description": "Convert string between Camel Case 🐪 and Snake Case 🐍",
+  "keywords": [
+    "Snake case",
+    "Camel case"
+  ],
   "license": "MIT",
   "authors": [
     {
       "name": "Jawira Portugal"
     }
   ],
+  "require": {
+    "php": ">=5.4",
+    "ext-mbstring": "*"
+  },
   "autoload": {
     "psr-4": {
       "Jawira\\CaseConverter\\": "src/"
     }
-  },
-  "require": {
-    "php": ">=5.4",
-    "ext-mbstring" : "*"
   }
 }
