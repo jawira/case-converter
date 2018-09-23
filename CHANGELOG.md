@@ -8,6 +8,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 [unreleased]
 ------------
 
+v1.1.1 - 2018-09-23
+-------------------
+
+### Added
+
+- Crated Phing visualisation `build.png`
+
 ### Fixed
 
 - Unversioning `composer.lock`
