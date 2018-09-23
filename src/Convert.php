@@ -2,6 +2,11 @@
 
 namespace Jawira\CaseConverter;
 
+/**
+ * Class Convert
+ *
+ * @package Jawira\CaseConverter
+ */
 class Convert
 {
     const SNAKE = 'snake';
@@ -13,7 +18,7 @@ class Convert
     /**
      * @param $str String to convert
      */
-    function __construct($str)
+    public function __construct($str)
     {
         $this->load($str);
     }
@@ -66,7 +71,7 @@ class Convert
         $result = '';
 
         foreach ($this->words as $key => $w) {
-            $mode = ($key === 0) ? MB_CASE_LOWER : MB_CASE_TITLE;
+            $mode   = ($key === 0) ? MB_CASE_LOWER : MB_CASE_TITLE;
             $result .= mb_convert_case($w, $mode);
         }
 
@@ -83,8 +88,8 @@ class Convert
     public function toSnake($uppercase = false)
     {
         $result = implode('_', $this->words);
+        $mode   = $uppercase ? MB_CASE_UPPER : MB_CASE_LOWER;
 
-        $mode = $uppercase ? MB_CASE_UPPER : MB_CASE_LOWER;
         return mb_convert_case($result, $mode);
     }
 
