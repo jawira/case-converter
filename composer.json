@@ -16,6 +16,9 @@
     "php": ">=5.4",
     "ext-mbstring": "*"
   },
+  "suggest": {
+    "pds/skeleton": "Standard filesystem skeleton suitable for all PHP packages"
+  },
   "autoload": {
     "psr-4": {
       "Jawira\\CaseConverter\\": "src/"
