@@ -1,7 +1,7 @@
-.idea/
-vendor/
-bin/composer
-bin/phpunit
-composer-setup.php
-composer.lock
-resources/coverage/clover.xml
+/.idea/
+/vendor/
+/bin/composer
+/bin/phpunit
+/composer-setup.php
+/composer.lock
+/resources/coverage/clover.xml
