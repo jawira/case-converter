@@ -12,6 +12,11 @@ Unreleased
 
 - Added `pds/skeleton` badge in [README.md]()
 - Added `pds/skeleton` as suggestion in [composer.json]()
+- Added behat tests #9
+
+### Fixed
+
+- Fixed bug with invalid Pascal Case #12
 
 v1.1.1 - 2018-09-23
 -------------------

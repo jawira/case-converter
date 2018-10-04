@@ -70,12 +70,12 @@ class Convert
     {
         $result = '';
 
-        foreach ($this->words as $key => $w) {
-            $mode   = ($key === 0) ? MB_CASE_LOWER : MB_CASE_TITLE;
-            $result .= mb_convert_case($w, $mode);
+        foreach ($this->words as $key => $word) {
+            $mode   = ($key === 0 && $uppercase === false) ? MB_CASE_LOWER : MB_CASE_TITLE;
+            $result .= mb_convert_case($word, $mode);
         }
 
-        return $uppercase ? mb_convert_case($result, MB_CASE_TITLE) : $result;
+        return $result;
     }
 
     /**
