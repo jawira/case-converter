@@ -6,15 +6,22 @@ clear:	## Clear project
 	rm -f bin/phpunit bin/composer
 .PHONY: clear
 
-bin/phpunit:	## Install PHPUnit 6
-	@mkdir -p bin
-	@wget --no-verbose -O bin/phpunit https://phar.phpunit.de/phpunit-6.phar
-	@chmod +x bin/phpunit
-	bin/phpunit --version
+bin/phpunit:	## Unit testing framework - https://phpunit.de/
+	@mkdir -p $(@D)
+	@wget --no-verbose -O $@ https://phar.phpunit.de/phpunit-7.phar
+	@chmod +x $@
+	$@ --version
 
-bin/composer:	## Install Composer
-	@mkdir -p bin
+bin/phpdoc:	## PHP documentor - https://www.phpdoc.org/
+	@mkdir -p $(@D)
+	@wget --no-verbose -O $@ http://phpdoc.org/phpDocumentor.phar
+	@chmod +x $@
+	$@ --version
+
+bin/composer:	## Dependency Manager - https://getcomposer.org/
+	@mkdir -p $(@D)
 	@wget --no-verbose -O composer-setup.php https://getcomposer.org/installer
-	@php composer-setup.php --install-dir=bin --filename=composer
+	@php composer-setup.php --install-dir=$(@D) --filename=$(@F) --version=1.7.2
 	@rm -f composer-setup.php
-	bin/composer --version
+	@chmod +x $@
+	$@ self-update

@@ -17,7 +17,8 @@
     "ext-mbstring": "*"
   },
   "require-dev": {
-    "behat/behat": "^3.5"
+    "behat/behat": "^3.5",
+    "jawira/skeleton": "^1.5"
   },
   "suggest": {
     "pds/skeleton": "Standard filesystem skeleton suitable for all PHP packages"
