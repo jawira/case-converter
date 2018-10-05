@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 Unreleased
 ----------
 
+v1.1.4 - 2018-10-06
+-------------------
+
 ### Fixed
 
 - Fixed support for multilingual strings: spanish, greek, cyrillic, etc. 
