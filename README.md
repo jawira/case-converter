@@ -12,8 +12,8 @@ Convert strings between **Camel Case** 🐪 and **Snake Case** 🐍.
 [![composer.lock](https://poser.pugx.org/jawira/case-converter/composerlock)](https://packagist.org/packages/jawira/case-converter)
 [![PDS Skeleton](https://img.shields.io/badge/pds-skeleton-blue.svg?style=flat-square)](https://github.com/php-pds/skeleton)
 
-Examples
---------
+Usage
+-----
 
 Automatic conversion:
 
@@ -40,6 +40,14 @@ echo $mother->toSnake(true);  // output: SARAH_CONNOR (aka Screaming Snake Case)
 echo $mother->toCamel(true);  // output: SarahConnor (aka Pascal Case)
 ```
 
+Handling multilingual strings:
+
+```php
+echo (new Convert('DON_RAMÓN_Y_ÑOÑO')); // output: donRamónYÑoño 
+echo (new Convert('πολύΚαλό'));         // output: πολύ_καλό 
+echo (new Convert('очень_приятно'));    // output: оченьПриятно 
+```
+
 How it works
 ------------
 
@@ -60,3 +68,13 @@ Then import `Convert` class into your code:
 <?php
 use Jawira\CaseConverter\Convert;
 ```
+
+Contributing
+------------
+
+To contribute to this project please read [CONTRIBUTING.md](./CONTRIBUTING.md)
+
+License
+-------
+
+This library is licensed under the [MIT LICENSE](LICENSE.md).

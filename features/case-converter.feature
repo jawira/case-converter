@@ -24,6 +24,8 @@ Feature: Convert Case
       | NASA                                             | n_a_s_a                                                    |
       | Ñandú                                            | ñandú                                                      |
       | VergüenzaAjena                                   | vergüenza_ajena                                            |
+      | πολύΚαλό                                         | πολύ_καλό                                                  |
+      | ОченьПриятно                                     | очень_приятно                                              |
       | OompaLoompaDoompadeeDooIVeGotAnotherPuzzleForYou | oompa_loompa_doompadee_doo_i_ve_got_another_puzzle_for_you |
 
 
@@ -46,6 +48,7 @@ Feature: Convert Case
       | LETRA_EÑE                                                  | letraEñe                                         |
       | QUICO_Y_ÑOÑO                                               | quicoYÑoño                                       |
       | Un_Gran_Árbol                                              | unGranÁrbol                                      |
+      | Πολύ_καλό                                                  | πολύΚαλό                                         |
       | oompa_loompa_doompadee_doo_i_ve_got_another_puzzle_for_you | oompaLoompaDoompadeeDooIVeGotAnotherPuzzleForYou |
 
 
@@ -69,6 +72,8 @@ Feature: Convert Case
       | NASA                                             | N_A_S_A                                                    |
       | Ñandú                                            | ÑANDÚ                                                      |
       | VergüenzaAjena                                   | VERGÜENZA_AJENA                                            |
+      | ΠολύΚαλό                                         | ΠΟΛΎ_ΚΑΛΌ                                                  |
+      | ОченьПриятно                                     | ОЧЕНЬ_ПРИЯТНО                                              |
       | OompaLoompaDoompadeeDooIVeGotAnotherPuzzleForYou | OOMPA_LOOMPA_DOOMPADEE_DOO_I_VE_GOT_ANOTHER_PUZZLE_FOR_YOU |
 
 
@@ -89,6 +94,8 @@ Feature: Convert Case
       | f_b_i                                                      | FBI                                              |
       | u_s_a                                                      | USA                                              |
       | LETRA_EÑE                                                  | LetraEñe                                         |
-      | QUICO_Y_ÑOÑO                                               | QuicoYÑoño                                       |
+      | DON_RAMÓN_Y_ÑOÑO                                           | DonRamónYÑoño                                    |
       | Un_Gran_Árbol                                              | UnGranÁrbol                                      |
+      | Πολύ_καλό                                                  | ΠολύΚαλό                                         |
+      | Очень_приятно                                              | ОченьПриятно                                     |
       | oompa_loompa_doompadee_doo_i_ve_got_another_puzzle_for_you | OompaLoompaDoompadeeDooIVeGotAnotherPuzzleForYou |
