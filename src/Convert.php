@@ -30,7 +30,7 @@ class Convert
      *
      * @return $this
      */
-    public function load($str)
+    protected function load($str)
     {
         $this->detectedCase = $this->analyse($str);
 
@@ -110,11 +110,13 @@ class Convert
      *
      * @param string $str
      *
+     * @see https://www.regular-expressions.info/unicode.html#category
+     *
      * @return array
      */
     protected function readCamel($str)
     {
-        $res = preg_replace_callback('/[[:upper:]]{1}/', function ($match) {
+        $res = preg_replace_callback('#\p{Lu}{1}#u', function ($match) {
             return '_' . reset($match);
         }, $str);
 
