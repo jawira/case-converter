@@ -1,17 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<project name="Case Converter" description="Case Converter class" default="qa">
+<project name="Case Converter" description="Case Converter class" default="qa" phingVersion="3.0">
 
     <target name="make:phpunit" description="Install PHPUnit6">
         <exec command="make bin/phpunit" passthru="true"/>
     </target>
+
+    <target name="make" description="Install all bins" depends="make:composer, make:phpunit"/>
 
     <target name="make:composer" description="Install Composer">
         <exec command="make bin/composer" passthru="true"/>
     </target>
 
     <target name="qa" description="Quality assurance"
-            depends="composer:validate, phpunit:run, php:check-syntax"/>
+            depends="make, composer:validate, phpunit:run, behat:run, php:lint"/>
 
     <target name="composer:validate" description="Check composer.json syntax" depends="make:composer">
         <composer composer="bin/composer">
@@ -21,20 +23,29 @@
         </composer>
     </target>
 
+    <target name="composer:install-dev" depends="make:composer">
+        <composer composer="bin/composer">
+            <arg value="install"/>
+        </composer>
+    </target>
+
     <target name="phpunit:run" description="Run unit tests" depends="make:phpunit">
         <exec executable="bin/phpunit" passthru="true"/>
     </target>
 
-    <target name="php:check-syntax" description="Check syntax on PHP files">
+    <target name="php:lint" description="Check syntax on PHP files">
         <fileset dir="${project.basedir}" id="php_files">
             <include name="**/*.php"/>
             <exclude name="vendor/"/>
         </fileset>
-
-        <apply executable="${php.interpreter}" passthru="true">
-            <arg value="-l"/>
+        <phplint>
             <fileset refid="php_files"/>
-        </apply>
+        </phplint>
+    </target>
+
+    <target name="behat:run" description="Run behat tests" depends="composer:install-dev">
+        <exec executable="vendor/bin/behat"
+              passthru="true"/>
     </target>
 
 </project>
