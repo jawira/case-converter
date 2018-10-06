@@ -1,24 +1,44 @@
 Development
 ===========
 
-phpunit
+PHPUnit
 -------
+
+Install PHPUnit:
+
+```bash
+$ make bin/phpunit
+```
 
 Running PHPUnit:
 
-```sh
-$ php .\phpunit-6.4.phar --bootstrap .\vendor\autoload.php .\tests\ConvertTest.php
+```bash
+$ bin/phpunit
 ```
 
-Download PHPUnit: <https://phar.phpunit.de/phpunit-6.4.phar>
+Behat
+-----
 
+Install Behat:
+
+```bash
+$ composer install
+```
+
+Run behat tests:
+
+```bash
+$ vendor/bin/behat
+```
 
 Issues
 ------
+
 Issues are managed with <https://waffle.io/>
 
 Conventions
 -----------
+
 This project adheres to:
 
  * [Semantic Versioning](http://semver.org/)
