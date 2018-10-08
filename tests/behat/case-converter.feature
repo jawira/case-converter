@@ -49,6 +49,7 @@ Feature: Convert Case
       | QUICO_Y_ÑOÑO                                               | quicoYÑoño                                       |
       | Un_Gran_Árbol                                              | unGranÁrbol                                      |
       | Πολύ_καλό                                                  | πολύΚαλό                                         |
+      | ОЧЕНЬ_ПРИЯТНО                                              | оченьПриятно                                     |
       | oompa_loompa_doompadee_doo_i_ve_got_another_puzzle_for_you | oompaLoompaDoompadeeDooIVeGotAnotherPuzzleForYou |
 
 

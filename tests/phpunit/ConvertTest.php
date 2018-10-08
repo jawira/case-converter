@@ -7,85 +7,108 @@ class ConvertTest extends TestCase
 {
 
     /**
-     * @dataProvider fromCamelToSnakeProvider
-     * @covers       \Jawira\CaseConverter\Convert::__construct
-     * @covers       \Jawira\CaseConverter\Convert::__toString
-     * @covers       \Jawira\CaseConverter\Convert::analyse
-     * @covers       \Jawira\CaseConverter\Convert::load
-     * @covers       \Jawira\CaseConverter\Convert::readCamel
-     * @covers       \Jawira\CaseConverter\Convert::readSnake
-     * @covers       \Jawira\CaseConverter\Convert::toSnake
+     * Testing constructor
      *
-     * @param string $inputCamel
-     * @param string $expectedSnake
+     * @covers \Jawira\CaseConverter\Convert::__construct()
+     *
      */
-    public function testFromCamelToSnakeConstructor($inputCamel, $expectedSnake)
+    public function testContructor()
     {
-        $case = new Jawira\CaseConverter\Convert($inputCamel);
-        $this->assertSame($expectedSnake, (string)$case);
+        $mock = $this->getMockBuilder(Convert::class)
+                     ->disableOriginalConstructor()
+                     ->setMethods(['load'])
+                     ->getMock();
+
+        $mock->expects($this->once())
+             ->method('load')
+             ->with($this->equalTo('hello_world'));
+
+        $class = new ReflectionObject($mock);
+        $class->getConstructor()
+              ->invoke($mock, 'hello_world');
     }
 
     /**
-     * @dataProvider fromSnakeToCamelProvider
-     * @covers       \Jawira\CaseConverter\Convert::__construct
-     * @covers       \Jawira\CaseConverter\Convert::__toString
-     * @covers       \Jawira\CaseConverter\Convert::analyse
-     * @covers       \Jawira\CaseConverter\Convert::load
-     * @covers       \Jawira\CaseConverter\Convert::readCamel
-     * @covers       \Jawira\CaseConverter\Convert::readSnake
-     * @covers       \Jawira\CaseConverter\Convert::toCamel
-     * @covers       \Jawira\CaseConverter\Convert::toSnake
+     * Tests if analyse() detects if string as "_" or not
      *
-     * @param $inputSnake
-     * @param $expectedCamel
+     * @covers       \Jawira\CaseConverter\Convert::analyse()
+     * @dataProvider analyseProvider
+     *
+     * @param $input
+     * @param $expected
      */
-    public function testFromSnakeToCamelConstructor($inputSnake, $expectedCamel)
+    public function testAnalyse($input, $expected)
     {
-        $case = new Convert($inputSnake);
-        $this->assertSame($expectedCamel, (string)$case);
+        $stub = $this->getMockBuilder(Convert::class)
+                     ->disableOriginalConstructor()
+                     ->setMethods([])
+                     ->getMock();
+
+        $reflection = new ReflectionObject($stub);
+        $method     = $reflection->getMethod('analyse');
+        $method->setAccessible(true);
+
+        $output = $method->invoke($stub, $input);
+
+        $this->assertSame($output, $expected);
     }
 
     /**
-     * Camel to Snake provider
+     * Provider method
      *
      * @return array
      */
-    public function fromCamelToSnakeProvider()
+    public function analyseProvider()
     {
         return [
-            'empty'         => ['', ''],
-            'one word 1'    => ['one', 'one'],
-            'one word 2'    => ['Laser', 'laser'],
-            'two words 1'   => ['helloWorld', 'hello_world'],
-            'two words 2'   => ['objectId', 'object_id'],
-            'two words 3'   => ['firstName', 'first_name'],
-            'two words 4'   => ['PascalCase', 'pascal_case'],
-            'three words 1' => ['lowerCamelCase', 'lower_camel_case'],
-            'three words 2' => ['numberOfProducts', 'number_of_products'],
-            'acronym 1'     => ['ASCII', 'a_s_c_i_i'],
-            'acronym 2'     => ['NASA', 'n_a_s_a'],
-            'español 1'     => ['Ñandú', 'ñandú'],
-            'español 2'     => ['VergüenzaAjena', 'vergüenza_ajena'],
-            'oompa loompa'  => ['OompaLoompaDoompadeeDooIVeGotAnotherPuzzleForYou', 'oompa_loompa_doompadee_doo_i_ve_got_another_puzzle_for_you'],
+            ['hola_mundo', Convert::SNAKE],
+            ['HELLO_WORLD', Convert::SNAKE],
+            ['', Convert::CAMEL],
+            ['HELLO', Convert::CAMEL],
+            ['one', Convert::CAMEL],
+            ['helloWorld', Convert::CAMEL],
         ];
     }
 
-    public function fromSnakeToCamelProvider()
+
+    /**
+     * @covers       \Jawira\CaseConverter\Convert::toSnake()
+     *
+     * @param array  $words     Words to transform to snake case
+     * @param bool   $uppercase Get uppercase snake case
+     * @param string $expected  Expected output
+     *
+     * @dataProvider toSnakeProvider
+     */
+    public function testToSnake($words, $uppercase, $expected)
+    {
+        $stub = $this->getMockBuilder(Convert::class)
+                     ->disableOriginalConstructor()
+                     ->setMethods()
+                     ->getMock();
+
+        $reflection = new ReflectionObject($stub);
+        $property   = $reflection->getProperty('words');
+        $property->setAccessible(true);
+        $property->setValue($stub, $words);
+
+        /** @noinspection PhpUndefinedMethodInspection */
+        $output = $stub->toSnake($uppercase);
+
+        $this->assertSame($output, $expected);
+
+    }
+
+    /**
+     * Provider for testToSnake
+     */
+    public function toSnakeProvider()
     {
         return [
-            'empty'         => ['', ''],
-            'one word 1'    => ['One', 'one'],
-            'one word 2'    => ['Laser', 'laser'],
-            'two words 1'   => ['product_id', 'productId'],
-            'two words 2'   => ['last_update', 'lastUpdate'],
-            'two words 3'   => ['CREATED_AT', 'createdAt'],
-            'three words 1' => ['last_user_id', 'lastUserId'],
-            'acronym 1'     => ['f_b_i', 'fBI'],
-            'acronym 2'     => ['u_s_a', 'uSA'],
-            'español 1'     => ['LETRA_EÑE', 'letraEñe'],
-            'español 2'     => ['QUICO_Y_ÑOÑO', 'quicoYÑoño'],
-            'español 3'     => ['Un_Gran_Árbol', 'unGranÁrbol'],
-            'oompa loompa'  => ['oompa_loompa_doompadee_doo_i_ve_got_another_puzzle_for_you', 'oompaLoompaDoompadeeDooIVeGotAnotherPuzzleForYou'],
+            [['hello'], false, 'hello'],
+            [['hello'], true, 'HELLO'],
+            [['hello', 'world'], false, 'hello_world'],
+            [['hello', 'world'], true, 'HELLO_WORLD'],
         ];
     }
 
