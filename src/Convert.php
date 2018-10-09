@@ -102,7 +102,7 @@ class Convert
      */
     protected function readSnake($str)
     {
-        return array_filter(mb_split('_+', $str));
+        return array_values(array_filter(mb_split('_+', $str)));
     }
 
     /**
