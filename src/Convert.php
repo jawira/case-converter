@@ -9,10 +9,24 @@ namespace Jawira\CaseConverter;
  */
 class Convert
 {
+    /**
+     * Used to represent _snake case_ strings
+     */
     const SNAKE = 'snake';
+
+    /**
+     * Used to represent _camel case_ strings
+     */
     const CAMEL = 'camel';
 
+    /**
+     * @var array Stores words to be transformed to _camel case_ or _snake case_
+     */
     protected $words;
+
+    /**
+     * @var string Type of writing detected by \Jawira\CaseConverter\Convert::analyse
+     */
     protected $detectedCase;
 
     /**

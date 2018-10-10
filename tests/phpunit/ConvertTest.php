@@ -4,7 +4,7 @@ use Jawira\CaseConverter\Convert;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Class ConvertTest
+ * Unitary tests for \Jawira\CaseConverter\Convert
  *
  * @see https://jtreminio.com/blog/unit-testing-tutorial-part-i-introduction-to-phpunit/
  */
@@ -12,7 +12,9 @@ class ConvertTest extends TestCase
 {
 
     /**
-     * Testing constructor
+     * Testing \Jawira\CaseConverter\Convert::__construct
+     *
+     * Tests if constructor calls \Jawira\CaseConverter\Convert::load.
      *
      * @covers \Jawira\CaseConverter\Convert::__construct()
      *
@@ -34,7 +36,10 @@ class ConvertTest extends TestCase
     }
 
     /**
-     * Tests if analyse() detects if string as "_" or not
+     * Testing \Jawira\CaseConverter\Convert::analyse
+     *
+     * \Jawira\CaseConverter\Convert::analyse should return Convert::SNAKE if
+     * $input contains '_'.
      *
      * @covers       \Jawira\CaseConverter\Convert::analyse()
      * @dataProvider analyseProvider
@@ -44,11 +49,13 @@ class ConvertTest extends TestCase
      */
     public function testAnalyse($input, $expected)
     {
+        // Disabling constructor without stub methods
         $stub = $this->getMockBuilder(Convert::class)
                      ->disableOriginalConstructor()
                      ->setMethods()
                      ->getMock();
 
+        // Removing protected for analyse method
         $reflection = new ReflectionObject($stub);
         $method     = $reflection->getMethod('analyse');
         $method->setAccessible(true);
@@ -59,7 +66,7 @@ class ConvertTest extends TestCase
     }
 
     /**
-     * Provider method
+     * Provider method for \ConvertTest::testAnalyse
      *
      * @return array
      */
@@ -77,6 +84,13 @@ class ConvertTest extends TestCase
 
 
     /**
+     * Testing
+     *
+     * Testing \Jawira\CaseConverter\Convert::toCamel
+     *
+     * This method reads \Jawira\CaseConverter\Convert::$words and returns a
+     * _snake case_ string. Returned value can be in _pascal case_ format.
+     *
      * @covers       \Jawira\CaseConverter\Convert::toSnake()
      *
      * @param array  $words     Words to transform to snake case
@@ -87,11 +101,13 @@ class ConvertTest extends TestCase
      */
     public function testToSnake($words, $uppercase, $expected)
     {
+        // Disabling contructor, without stub methods
         $stub = $this->getMockBuilder(Convert::class)
                      ->disableOriginalConstructor()
                      ->setMethods()
                      ->getMock();
 
+        // Making "words" property accessible and setting a value
         $reflection = new ReflectionObject($stub);
         $property   = $reflection->getProperty('words');
         $property->setAccessible(true);
@@ -118,6 +134,12 @@ class ConvertTest extends TestCase
     }
 
     /**
+     * Testing \Jawira\CaseConverter\Convert::toCamel
+     *
+     * This method reads \Jawira\CaseConverter\Convert::$words and returns a
+     * _camel case_ string. Returned value can be in _screaming snake case_
+     * format.
+     *
      * @dataProvider toCamelProvider
      *
      * @covers       \Jawira\CaseConverter\Convert::toCamel()
@@ -128,11 +150,13 @@ class ConvertTest extends TestCase
      */
     public function testToCamel($words, $uppercase, $expected)
     {
+        // Disabling constructor without stub methods
         $stub = $this->getMockBuilder(Convert::class)
                      ->disableOriginalConstructor()
                      ->setMethods()
                      ->getMock();
 
+        // Making "words" property accessible and setting a value
         $reflection = new ReflectionObject($stub);
         $property   = $reflection->getProperty('words');
         $property->setAccessible(true);
@@ -146,7 +170,9 @@ class ConvertTest extends TestCase
 
 
     /**
-     * Provider for testToSnake
+     * Provider for \ConvertTest::testToCamel
+     *
+     * @return array
      */
     public function toCamelProvider()
     {
@@ -159,6 +185,10 @@ class ConvertTest extends TestCase
     }
 
     /**
+     * Testing \Jawira\CaseConverter\Convert::readSnake
+     *
+     * This method should return all words contained in a _snake case_ string.
+     *
      * @dataProvider readSnakeProvider
      *
      * @covers       \Jawira\CaseConverter\Convert::readSnake()
@@ -186,6 +216,8 @@ class ConvertTest extends TestCase
     }
 
     /**
+     * Data provider for \ConvertTest::testReadSnake
+     *
      * @return array
      */
     public function readSnakeProvider()
@@ -202,6 +234,10 @@ class ConvertTest extends TestCase
     }
 
     /**
+     * Testing \Jawira\CaseConverter\Convert::readCamel
+     *
+     * This method should return all words contained in a _camel case_ string.
+     *
      * @covers       \Jawira\CaseConverter\Convert::readCamel()
      *
      * @dataProvider readCamelProvider
@@ -235,13 +271,126 @@ class ConvertTest extends TestCase
         $this->assertSame($returnValue, $output);
     }
 
+    /**
+     * Data provider for \ConvertTest::testReadCamel
+     *
+     * @return array
+     */
     public function readCamelProvider()
     {
         return [
-            ['HelloWorld', '_Hello_World', 'dummy_value'],
-            ['helloWorld', 'hello_World', 'dummy_value'],
+            ['HelloWorld', '_Hello_World', 'return-value'],
+            ['helloWorld', 'hello_World', 'return-value'],
         ];
     }
 
+    /**
+     * Testing \Jawira\CaseConverter\Convert::load
+     *
+     * Load method should call \Jawira\CaseConverter\Convert::analyse and then
+     * send parsed words to \Jawira\CaseConverter\Convert::$words.
+     *
+     * @covers       \Jawira\CaseConverter\Convert::load()
+     *
+     * @dataProvider loadProvider
+     *
+     * @param $string
+     * @param $detectedCase
+     * @param $methodToCall
+     * @param $words
+     */
+    public function testLoad($string, $detectedCase, $methodToCall, $words)
+    {
+        // Disabling constructor
+        $stub = $this->getMockBuilder(Convert::class)
+                     ->disableOriginalConstructor()
+                     ->setMethods(['analyse', $methodToCall])
+                     ->getMock();
 
+        // Setting expectation for Convert::analyse()
+        $stub->expects($this->once())
+             ->method('analyse')
+             ->with($this->equalTo($string))
+             ->willReturn($detectedCase);
+
+
+        // Setting expectation for $methodToCall
+        $stub->expects($this->once())
+             ->method($methodToCall)
+             ->with($this->equalTo($string))
+             ->willReturn($words);
+
+        // Unprotecting load
+        $reflection = new ReflectionObject($stub);
+        $method     = $reflection->getMethod('load');
+        $method->setAccessible(true);
+
+        $returnedObject = $method->invoke($stub, $string);
+
+        $this->assertAttributeSame($words, 'words', $stub);
+        $this->assertInstanceOf(Convert::class, $returnedObject);
+    }
+
+    /**
+     * Provider method for \ConvertTest::testLoad
+     *
+     * @return array
+     */
+    public function loadProvider()
+    {
+        return [
+            ['dummy-string', Convert::SNAKE, 'readSnake', ['dummy-array']],
+            ['dummy-string', Convert::CAMEL, 'readCamel', ['dummy-array']],
+        ];
+    }
+
+    /**
+     * Testing \Jawira\CaseConverter\Convert::__toString
+     *
+     * Calls \Jawira\CaseConverter\Convert::toSnake or \Jawira\CaseConverter\Convert::toCamel
+     * according to \Jawira\CaseConverter\Convert::$detectedCase value.
+     *
+     * @covers       \Jawira\CaseConverter\Convert::__toString()
+     *
+     * @dataProvider toStringProvider
+     *
+     * @param $methodToCall
+     * @param $detectedCase
+     * @param $returnString
+     */
+    public function test__toString($methodToCall, $detectedCase, $returnString)
+    {
+        // Disabling constructor
+        $stub = $this->getMockBuilder(Convert::class)
+                     ->disableOriginalConstructor()
+                     ->setMethods([$methodToCall])
+                     ->getMock();
+
+        // Setting expectation for $methodToCall
+        $stub->expects($this->once())
+             ->method($methodToCall)
+             ->willReturn($returnString);
+
+        // Setting value to protected property
+        $reflection = new ReflectionObject($stub);
+        $property   = $reflection->getProperty('detectedCase');
+        $property->setAccessible(true);
+        $property->setValue($stub, $detectedCase);
+
+        $toString = (string)$stub;
+        $this->assertSame($returnString, $toString);
+    }
+
+    /**
+     * Provider method for \ConvertTest::test__toString
+     *
+     * @return array
+     */
+    public function toStringProvider()
+    {
+        return [
+            ['toCamel', Convert::SNAKE, 'dummy-string'],
+            ['toSnake', Convert::CAMEL, 'dummy-string'],
+        ];
+    }
 }
