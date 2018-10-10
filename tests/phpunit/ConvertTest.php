@@ -19,7 +19,7 @@ class ConvertTest extends TestCase
      * @covers \Jawira\CaseConverter\Convert::__construct()
      *
      */
-    public function testContructor()
+    public function testConstructor()
     {
         $mock = $this->getMockBuilder(Convert::class)
                      ->disableOriginalConstructor()
@@ -101,7 +101,7 @@ class ConvertTest extends TestCase
      */
     public function testToSnake($words, $uppercase, $expected)
     {
-        // Disabling contructor, without stub methods
+        // Disabling constructor, without stub methods
         $stub = $this->getMockBuilder(Convert::class)
                      ->disableOriginalConstructor()
                      ->setMethods()
@@ -320,14 +320,16 @@ class ConvertTest extends TestCase
              ->with($this->equalTo($string))
              ->willReturn($words);
 
-        // Unprotecting load
+        // Changing load method visibility
         $reflection = new ReflectionObject($stub);
         $method     = $reflection->getMethod('load');
         $method->setAccessible(true);
 
         $returnedObject = $method->invoke($stub, $string);
 
+        /** @noinspection PhpParamsInspection */
         $this->assertAttributeSame($words, 'words', $stub);
+        /** @noinspection PhpParamsInspection */
         $this->assertInstanceOf(Convert::class, $returnedObject);
     }
 
