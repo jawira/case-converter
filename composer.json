@@ -20,7 +20,7 @@
     "behat/behat": "^3.5"
   },
   "suggest": {
-    "pds/skeleton": "Standard filesystem skeleton suitable for all PHP packages"
+    "pds/skeleton": "PHP Package Development Standards"
   },
   "autoload": {
     "psr-4": {

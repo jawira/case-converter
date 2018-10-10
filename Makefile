@@ -3,7 +3,7 @@ help:	## Help
 .PHONY: help
 
 clear:	## Clear project
-	rm -f bin/phpunit bin/composer
+	rm -f bin/phpunit bin/composer bin/phpdoc
 .PHONY: clear
 
 bin/phpunit:	## Unit testing framework - https://phpunit.de/

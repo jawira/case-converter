@@ -45,13 +45,13 @@ Handling multilingual strings:
 ```php
 echo (new Convert('DON_RAMÓN_Y_ÑOÑO')); // output: donRamónYÑoño 
 echo (new Convert('πολύΚαλό'));         // output: πολύ_καλό 
-echo (new Convert('очень_приятно'));    // output: оченьПриятно 
+echo (new Convert('ОЧЕНЬ_ПРИЯТНО'));    // output: оченьПриятно 
 ```
 
 How it works
 ------------
 
-If any underscore `_` if found, the input string is considered to be Snake Case, and Camel Case otherwise.
+If any underscore `_` is found, the input string is considered to be Snake Case, and Camel Case otherwise.
 
 Installation
 ------------
@@ -72,7 +72,7 @@ use Jawira\CaseConverter\Convert;
 Contributing
 ------------
 
-To contribute to this project please read [CONTRIBUTING.md](./CONTRIBUTING.md)
+To contribute to this project please read [CONTRIBUTING.md](./CONTRIBUTING.md).
 
 License
 -------
