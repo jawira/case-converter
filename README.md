@@ -51,7 +51,7 @@ echo (new Convert('ОЧЕНЬ_ПРИЯТНО'));    // output: оченьПри�
 How it works
 ------------
 
-If any underscore `_` if found, the input string is considered to be Snake Case, and Camel Case otherwise.
+If any underscore `_` is found, the input string is considered to be Snake Case, and Camel Case otherwise.
 
 Installation
 ------------
