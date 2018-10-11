@@ -2,21 +2,51 @@
 
 <project name="Case Converter" description="Case Converter class" default="qa" phingVersion="3.0">
 
-    <target name="make:phpunit" description="Install PHPUnit6">
-        <exec command="make bin/phpunit" passthru="true"/>
+    <target name="phpunit:download" description="Install PHPUnit">
+
+        <if>
+            <not>
+                <available file="bin/phpunit"/>
+            </not>
+            <then>
+                <mkdir dir="bin"/>
+                <httpget url="https://phar.phpunit.de/phpunit-7.phar"
+                         dir="bin"
+                         filename="phpunit"
+                         followRedirects="true"/>
+            </then>
+        </if>
+        <chmod file="bin/phpunit" mode="0555"/>
     </target>
 
-    <target name="make" description="Install all bins" depends="make:composer, make:phpunit"/>
+    <target name="setup"
+            description="Install dependencies"
+            depends="composer:download, composer:install-dev, phpunit:download"/>
 
-    <target name="make:composer" description="Install Composer">
-        <exec command="make bin/composer" passthru="true"/>
+    <target name="composer:download" description="Download composer">
+        <if>
+            <not>
+                <available file="bin/composer"/>
+            </not>
+            <then>
+                <mkdir dir="bin"/>
+                <httpget url="https://getcomposer.org/installer"
+                         dir="${project.basedir}"
+                         filename="composer-setup.php"
+                         followRedirects="true"/>
+                <exec command="php composer-setup.php --install-dir=bin --filename=composer --version=1.7.2"/>
+                <delete file="composer-setup.php"/>
+            </then>
+        </if>
+        <chmod file="bin/composer" mode="0555"/>
+        <composer composer="bin/composer" command="self-update"/>
     </target>
 
     <target name="qa"
             description="Quality assurance"
-            depends="make, composer:validate, phpunit:run, behat:run, php:lint"/>
+            depends="composer:validate, phpunit:run, behat:run, php:lint"/>
 
-    <target name="composer:validate" description="Check composer.json syntax" depends="make:composer">
+    <target name="composer:validate" description="Check composer.json syntax" depends="composer:download">
         <composer composer="bin/composer">
             <arg value="validate"/>
             <arg value="--strict"/>
@@ -24,13 +54,13 @@
         </composer>
     </target>
 
-    <target name="composer:install-dev" depends="make:composer">
+    <target name="composer:install-dev" depends="composer:download">
         <composer composer="bin/composer">
             <arg value="install"/>
         </composer>
     </target>
 
-    <target name="phpunit:run" description="Run unit tests" depends="make:phpunit">
+    <target name="phpunit:run" description="Run unit tests" depends="phpunit:download">
         <exec executable="bin/phpunit" passthru="true">
             <arg value="--testdox"/>
         </exec>
