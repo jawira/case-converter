@@ -12,7 +12,8 @@
         <exec command="make bin/composer" passthru="true"/>
     </target>
 
-    <target name="qa" description="Quality assurance"
+    <target name="qa"
+            description="Quality assurance"
             depends="make, composer:validate, phpunit:run, behat:run, php:lint"/>
 
     <target name="composer:validate" description="Check composer.json syntax" depends="make:composer">
@@ -30,22 +31,24 @@
     </target>
 
     <target name="phpunit:run" description="Run unit tests" depends="make:phpunit">
-        <exec executable="bin/phpunit" passthru="true"/>
+        <exec executable="bin/phpunit" passthru="true">
+            <arg value="--testdox"/>
+        </exec>
     </target>
 
     <target name="php:lint" description="Check syntax on PHP files">
-        <fileset dir="${project.basedir}" id="php_files">
-            <include name="**/*.php"/>
-            <exclude name="vendor/"/>
-        </fileset>
         <phplint>
-            <fileset refid="php_files"/>
+            <fileset dir="${project.basedir}">
+                <include name="**/*.php"/>
+                <exclude name="vendor/"/>
+            </fileset>
         </phplint>
     </target>
 
     <target name="behat:run" description="Run behat tests" depends="composer:install-dev">
-        <exec executable="vendor/bin/behat"
-              passthru="true"/>
+        <exec executable="vendor/bin/behat" passthru="true">
+            <arg value="--colors"/>
+        </exec>
     </target>
 
 </project>
