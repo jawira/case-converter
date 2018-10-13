@@ -62,6 +62,7 @@
 
     <target name="phpunit:run" description="Run unit tests" depends="phpunit:download">
         <exec executable="bin/phpunit" passthru="true">
+            <arg line="--configuration=config/phpunit.xml"/>
             <arg value="--testdox"/>
         </exec>
     </target>
