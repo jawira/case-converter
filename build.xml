@@ -55,8 +55,11 @@
     </target>
 
     <target name="composer:install-dev" depends="composer:download">
-        <composer composer="bin/composer">
-            <arg value="install"/>
+        <composer composer="bin/composer" command="install">
+            <arg value="--no-suggest"/>
+            <arg value="--no-interaction"/>
+            <arg value="--profile"/>
+            <arg value="--prefer-dist"/>
         </composer>
     </target>
 

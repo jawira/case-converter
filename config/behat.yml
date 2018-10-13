@@ -1,0 +1,9 @@
+default:
+  suites:
+    default:
+      paths:
+      - '%paths.base%/../tests/behat/'
+      contexts:
+        - \Jawira\CaseConverter\Behat\FeatureContext
+  formatters:
+    pretty: true

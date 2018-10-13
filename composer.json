@@ -26,5 +26,11 @@
     "psr-4": {
       "Jawira\\CaseConverter\\": "src/"
     }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Jawira\\CaseConverter\\Behat\\": "tests/behat/bootstrap/"
+    }
   }
 }
+
