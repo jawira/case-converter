@@ -15,6 +15,7 @@ Unreleased
 ### Changed
 
 - Moved PHPUnit and Behat files to `tests` dir
+- Renaming some Phing targets
 
 v1.1.4 - 2018-10-06
 -------------------
