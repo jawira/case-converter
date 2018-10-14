@@ -3,7 +3,7 @@
 namespace Jawira\CaseConverter;
 
 /**
- * Class Convert
+ * Convert string from Camel Case to Snake Case and vice versa
  *
  * @package Jawira\CaseConverter
  */
