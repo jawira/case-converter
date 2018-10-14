@@ -1,8 +1,9 @@
 <?php
 
+namespace Jawira\CaseConverter\Behat;
+
 use Behat\Behat\Context\Context;
-use Behat\Gherkin\Node\PyStringNode;
-use Behat\Gherkin\Node\TableNode;
+use Exception;
 use Jawira\CaseConverter\Convert;
 
 /**
@@ -16,14 +17,15 @@ class FeatureContext implements Context
     protected $result;
 
     /**
-     * @var Jawira\CaseConverter\Convert
+     * @var \Jawira\CaseConverter\Convert
      */
     protected $instance;
 
     /**
      * @Given /^CaseConverter class is instantiated with "([^"]*)"$/
+     * @param string $arg1 String to convert
      */
-    public function caseconverterClassIsInstantiatedWith($arg1)
+    public function caseConverterClassIsInstantiatedWith($arg1)
     {
         $this->instance = new Convert($arg1);
     }
@@ -38,6 +40,9 @@ class FeatureContext implements Context
 
     /**
      * @Then /^I should have "([^"]*)"$/
+     * @param string $arg1 Converted expected string
+     *
+     * @throws \Exception
      */
     public function iShouldHave($arg1)
     {

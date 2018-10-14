@@ -1,40 +1,38 @@
 Development
 ===========
 
-PHPUnit
+Testing
 -------
 
-Install PHPUnit:
+- Test all:
 
-```bash
-$ make bin/phpunit
-```
+    ```bash
+    $ phing qa
+    ```
 
-Running PHPUnit:
+- PHPUnit:
 
-```bash
-$ bin/phpunit
-```
+    ```bash
+    $ phing phpunit:run
+    ```
 
-Behat
------
+- Behat:
 
-Install Behat:
+    ```bash
+    $ phing behat:run
+    ```
 
-```bash
-$ composer install
-```
+- Php lint:
 
-Run behat tests:
+    ```bash
+    $ phing php:lint
+    ```
 
-```bash
-$ vendor/bin/behat
-```
+- Validate Composer:
 
-Issues
-------
-
-Issues are managed with <https://waffle.io/>
+    ```bash
+    $ phing composer:validate
+    ```
 
 Conventions
 -----------
