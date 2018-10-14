@@ -14,8 +14,7 @@
   ],
   "require": {
     "php": ">=5.4",
-    "ext-mbstring": "*",
-    "jawira/skeleton": "^1.5"
+    "ext-mbstring": "*"
   },
   "require-dev": {
     "behat/behat": "^3.5"
@@ -34,4 +33,3 @@
     }
   }
 }
-
