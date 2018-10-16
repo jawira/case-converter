@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<project name="Case Converter" description="Case Converter class" default="qa" phingVersion="3.0">
+<project name="Case Converter" description="Case Converter class" default="qa">
 
     <target name="phpunit:download" description="Install PHPUnit">
 
