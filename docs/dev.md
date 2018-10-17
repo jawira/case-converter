@@ -1,24 +1,42 @@
 Development
 ===========
 
-phpunit
+Testing
 -------
 
-Running PHPUnit:
+- Test all:
 
-```sh
-$ php .\phpunit-6.4.phar --bootstrap .\vendor\autoload.php .\tests\ConvertTest.php
-```
+    ```bash
+    $ phing qa
+    ```
 
-Download PHPUnit: <https://phar.phpunit.de/phpunit-6.4.phar>
+- PHPUnit:
 
+    ```bash
+    $ phing phpunit:run
+    ```
 
-Issues
-------
-Issues are managed with <https://waffle.io/>
+- Behat:
+
+    ```bash
+    $ phing behat:run
+    ```
+
+- Php lint:
+
+    ```bash
+    $ phing php:lint
+    ```
+
+- Validate Composer:
+
+    ```bash
+    $ phing composer:validate
+    ```
 
 Conventions
 -----------
+
 This project adheres to:
 
  * [Semantic Versioning](http://semver.org/)

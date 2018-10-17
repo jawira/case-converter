@@ -8,6 +8,22 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 Unreleased
 ----------
 
+v1.1.5 - 2018-10-18
+-------------------
+
+### Added
+
+- New Phing target for Behat tests
+
+### Changed
+
+- Moved PHPUnit and Behat files to `tests` dir
+- Renaming some Phing targets
+
+### Removed
+
+- Behat was removed from `composer.json`, instead, `bin/behat` is used.
+
 v1.1.4 - 2018-10-06
 -------------------
 

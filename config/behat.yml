@@ -1,0 +1,11 @@
+default:
+  autoload:
+    '': '%paths.base%/../tests/behat/bootstrap/'
+  suites:
+    default:
+      paths:
+      - '%paths.base%/../tests/behat/'
+      contexts:
+      - FeatureContext
+  formatters:
+    pretty: true
