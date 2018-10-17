@@ -1,9 +1,11 @@
 default:
+  autoload:
+    '': '%paths.base%/../tests/behat/bootstrap/'
   suites:
     default:
       paths:
       - '%paths.base%/../tests/behat/'
       contexts:
-        - \Jawira\CaseConverter\Behat\FeatureContext
+      - FeatureContext
   formatters:
     pretty: true

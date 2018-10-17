@@ -1,9 +1,6 @@
 <?php
 
-namespace Jawira\CaseConverter\Behat;
-
 use Behat\Behat\Context\Context;
-use Exception;
 use Jawira\CaseConverter\Convert;
 
 /**
