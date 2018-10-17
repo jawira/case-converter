@@ -30,7 +30,7 @@ class Convert
     protected $detectedCase;
 
     /**
-     * @param $str String to convert
+     * @param string $str String to convert
      */
     public function __construct($str)
     {
@@ -40,7 +40,7 @@ class Convert
     /**
      * Entry function, receives $str to change case
      *
-     * @param $str
+     * @param string $str
      *
      * @return $this
      */
