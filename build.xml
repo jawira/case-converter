@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<project name="Case Converter" description="Case Converter class" default="qa">
+<project name="Case Converter" description="Case Converter class" default="qa" phingVersion="3.0">
 
     <target name="phpunit:download" description="Install PHPUnit">
 
@@ -34,7 +34,8 @@
                          dir="${project.basedir}"
                          filename="composer-setup.php"
                          followRedirects="true"/>
-                <exec command="php composer-setup.php --install-dir=bin --filename=composer --version=1.7.2"/>
+                <exec command="php composer-setup.php --install-dir=bin --filename=composer --version=1.7.2"
+                      checkreturn="true"/>
                 <delete file="composer-setup.php"/>
             </then>
         </if>
@@ -64,7 +65,7 @@
     </target>
 
     <target name="phpunit:run" description="Run unit tests" depends="phpunit:download">
-        <exec executable="bin/phpunit" passthru="true">
+        <exec executable="bin/phpunit" passthru="true" checkreturn="true">
             <arg line="--configuration=config/phpunit.xml"/>
             <arg value="--testdox"/>
         </exec>
@@ -80,7 +81,7 @@
     </target>
 
     <target name="behat:run" description="Run behat tests" depends="composer:install-dev">
-        <exec executable="vendor/bin/behat" passthru="true">
+        <exec executable="vendor/bin/behat" passthru="true" checkreturn="true">
             <arg value="--colors"/>
         </exec>
     </target>
