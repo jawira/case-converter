@@ -17,6 +17,10 @@ Unreleased
 - Moved PHPUnit and Behat files to `tests` dir
 - Renaming some Phing targets
 
+### Removed
+
+- Behat was removed from `composer.json`, instead, `bin/behat` is used.
+
 v1.1.4 - 2018-10-06
 -------------------
 
