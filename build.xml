@@ -3,7 +3,6 @@
 <project name="Case Converter" description="Case Converter class" default="qa" phingVersion="3.0">
 
     <target name="phpunit:download" description="Install PHPUnit">
-
         <if>
             <not>
                 <available file="bin/phpunit"/>
@@ -80,9 +79,28 @@
         </phplint>
     </target>
 
-    <target name="behat:run" description="Run behat tests" depends="composer:install-dev">
-        <exec executable="vendor/bin/behat" passthru="true" checkreturn="true">
+    <target name="behat:run" description="Run behat tests" depends="behat:install">
+        <exec executable="bin/behat" passthru="true" checkreturn="true">
             <arg value="--colors"/>
+        </exec>
+    </target>
+
+    <target name="behat:install" description="Download Behat">
+        <if>
+            <not>
+                <available file="bin/behat"/>
+            </not>
+            <then>
+                <mkdir dir="bin"/>
+                <httpget url="https://github.com/Behat/Behat/releases/download/v3.3.0/behat.phar"
+                         dir="bin"
+                         filename="behat"
+                         followRedirects="true"/>
+            </then>
+        </if>
+        <chmod file="bin/behat" mode="0555"/>
+        <exec executable="bin/behat" passthru="true" checkreturn="true">
+            <arg value="--version"/>
         </exec>
     </target>
 

@@ -16,20 +16,12 @@
     "php": ">=5.4",
     "ext-mbstring": "*"
   },
-  "require-dev": {
-    "behat/behat": "^3.5"
-  },
   "suggest": {
     "pds/skeleton": "PHP Package Development Standards"
   },
   "autoload": {
     "psr-4": {
       "Jawira\\CaseConverter\\": "src/"
-    }
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "Jawira\\CaseConverter\\Behat\\": "tests/behat/bootstrap/"
     }
   }
 }
