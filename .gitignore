@@ -1,9 +1,10 @@
 /.idea/
+/resources/coverage/
+/resources/phpdoc/
 /vendor/
+/bin/behat
 /bin/composer
 /bin/phpdoc
 /bin/phpunit
 /composer-setup.php
 /composer.lock
-/resources/coverage/
-/resources/phpdoc/

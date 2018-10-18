@@ -12,7 +12,8 @@
                 <httpget url="https://phar.phpunit.de/phpunit-7.phar"
                          dir="bin"
                          filename="phpunit"
-                         followRedirects="true"/>
+                         followRedirects="true"
+                         proxy="${env.http_proxy}"/>
             </then>
         </if>
         <chmod file="bin/phpunit" mode="0555"/>
@@ -32,7 +33,8 @@
                 <httpget url="https://getcomposer.org/installer"
                          dir="${project.basedir}"
                          filename="composer-setup.php"
-                         followRedirects="true"/>
+                         followRedirects="true"
+                         proxy="${env.http_proxy}"/>
                 <exec command="php composer-setup.php --install-dir=bin --filename=composer --version=1.7.2"
                       checkreturn="true"/>
                 <delete file="composer-setup.php"/>
@@ -95,7 +97,8 @@
                 <httpget url="https://github.com/Behat/Behat/releases/download/v3.3.0/behat.phar"
                          dir="bin"
                          filename="behat"
-                         followRedirects="true"/>
+                         followRedirects="true"
+                         proxy="${env.http_proxy}"/>
             </then>
         </if>
         <chmod file="bin/behat" mode="0555"/>
