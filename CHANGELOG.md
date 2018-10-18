@@ -8,6 +8,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 Unreleased
 ----------
 
+### Fixed
+
+- Phing uses `http_proxy` behind a proxy to download Behat, PHPUnit and 
+Composer.
+
 v1.1.5 - 2018-10-18
 -------------------
 

@@ -34,6 +34,12 @@ Testing
     $ phing composer:validate
     ```
 
+Using proxy with Phing
+----------------------
+
+To use a proxy to download composer, phing and phpunit, you have to set the
+environment variable `http_proxy`.
+
 Conventions
 -----------
 
