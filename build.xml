@@ -2,6 +2,8 @@
 
 <project name="Case Converter" description="Case Converter class" default="qa" phingVersion="3.0">
 
+    <property name="phing.http.proxy" value="${env.http_proxy}"/>
+
     <target name="phpunit:download" description="Install PHPUnit">
         <if>
             <not>
