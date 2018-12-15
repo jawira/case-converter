@@ -4,6 +4,9 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+
+## [v1.1.6] - 2018-12-15
+
 ### Fixed
 
 - Phing uses `http_proxy` behind a proxy to download Behat, PHPUnit and 
@@ -105,3 +108,4 @@ Composer.
 [v1.1.0]: https://github.com/jawira/case-converter/compare/v1.0.1...v1.1.0
 [v1.0.1]: https://github.com/jawira/case-converter/compare/v1.0.0...v1.0.1
 [v1.0.0]: https://github.com/jawira/case-converter/compare/v0.0.0...v1.0.0
+[v1.1.6]: https://github.com/jawira/case-converter/compare/v1.1.5...v1.1.6
