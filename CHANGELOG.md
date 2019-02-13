@@ -4,6 +4,9 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+### Added
+
+- Waffle.io badge in README.md
 
 ## [v1.1.6] - 2018-12-15
 
@@ -96,7 +99,7 @@ Composer.
 
 ### Removed
 * Deleted Convert::old_camelToSnake()
-* Deteled Convert::old_snakeToCamel()
+* Deleted Convert::old_snakeToCamel()
 
 [#12]: https://github.com/jawira/case-converter/pull/12
 [#9]: https://github.com/jawira/case-converter/pull/9
