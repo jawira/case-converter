@@ -11,6 +11,7 @@ Convert strings between **Camel Case** 🐪 and **Snake Case** 🐍.
 [![License](https://poser.pugx.org/jawira/case-converter/license)](https://packagist.org/packages/jawira/case-converter)
 [![composer.lock](https://poser.pugx.org/jawira/case-converter/composerlock)](https://packagist.org/packages/jawira/case-converter)
 [![PDS Skeleton](https://img.shields.io/badge/pds-skeleton-blue.svg?style=flat-square)](https://github.com/php-pds/skeleton)
+[![Waffle.io - Columns and their card count](https://badge.waffle.io/Jawira/case-converter.svg?columns=all)](https://waffle.io/Jawira/case-converter)
 
 Usage
 -----
