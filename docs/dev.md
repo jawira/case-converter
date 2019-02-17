@@ -7,7 +7,7 @@ Testing
 - Test all:
 
     ```bash
-    $ phing qa
+    $ phing test
     ```
 
 - PHPUnit:

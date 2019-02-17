@@ -7,6 +7,7 @@ All notable changes to this project will be documented in this file.
 ### Added
 
 - Waffle.io badge in README.md
+- #16 Use Phive to download Phar files
 
 ## [v1.1.6] - 2018-12-15
 
