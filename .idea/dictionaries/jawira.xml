@@ -3,7 +3,12 @@
     <words>
       <w>hola</w>
       <w>jawira</w>
+      <w>mbstring</w>
       <w>mundo</w>
+      <w>phing</w>
+      <w>phive</w>
+      <w>phpstan</w>
+      <w>testdox</w>
     </words>
   </dictionary>
 </component>

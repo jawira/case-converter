@@ -4,6 +4,17 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+## [v1.1.7] - 2019-02-18
+
+### Added
+
+- Waffle.io badge in README.md
+- [#16] Use Phive to download Phar files
+- [#11] Created `CaseConverterException`
+
+### Fixed
+
+- [#17] Fixing PHPStan error
 
 ## [v1.1.6] - 2018-12-15
 
@@ -96,7 +107,7 @@ Composer.
 
 ### Removed
 * Deleted Convert::old_camelToSnake()
-* Deteled Convert::old_snakeToCamel()
+* Deleted Convert::old_snakeToCamel()
 
 [#12]: https://github.com/jawira/case-converter/pull/12
 [#9]: https://github.com/jawira/case-converter/pull/9
@@ -109,3 +120,7 @@ Composer.
 [v1.0.1]: https://github.com/jawira/case-converter/compare/v1.0.0...v1.0.1
 [v1.0.0]: https://github.com/jawira/case-converter/compare/v0.0.0...v1.0.0
 [v1.1.6]: https://github.com/jawira/case-converter/compare/v1.1.5...v1.1.6
+[#17]: https://github.com/jawira/case-converter/pull/17
+[#16]: https://github.com/jawira/case-converter/pull/16
+[#11]: https://github.com/jawira/case-converter/pull/11
+[v1.1.7]: https://github.com/jawira/case-converter/compare/v1.1.6...v1.1.7

@@ -31,6 +31,8 @@ class Convert
 
     /**
      * @param string $str String to convert
+     *
+     * @throws \Jawira\CaseConverter\CaseConverterException
      */
     public function __construct($str)
     {
@@ -43,6 +45,7 @@ class Convert
      * @param string $str
      *
      * @return $this
+     * @throws \Jawira\CaseConverter\CaseConverterException
      */
     protected function load($str)
     {
@@ -127,12 +130,17 @@ class Convert
      * @see https://www.regular-expressions.info/unicode.html#category
      *
      * @return array
+     * @throws \Jawira\CaseConverter\CaseConverterException
      */
     protected function readCamel($str)
     {
         $res = preg_replace_callback('#\p{Lu}{1}#u', function ($match) {
             return '_' . reset($match);
         }, $str);
+
+        if (is_null($res)) {
+             throw new CaseConverterException("Error while processing $str");
+        }
 
         return $this->readSnake($res);
     }
