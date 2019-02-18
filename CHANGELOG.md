@@ -8,6 +8,11 @@ All notable changes to this project will be documented in this file.
 
 - Waffle.io badge in README.md
 - #16 Use Phive to download Phar files
+- #11 Created `CaseConverterException`
+
+### Fixed
+
+- #17 Fixing PHPStan error
 
 ## [v1.1.6] - 2018-12-15
 
