@@ -26,6 +26,7 @@ Feature: Convert Case
       | VergüenzaAjena                                   | vergüenza_ajena                                            |
       | πολύΚαλό                                         | πολύ_καλό                                                  |
       | ОченьПриятно                                     | очень_приятно                                              |
+      | եսՀայերենՉգիտեմ                                  | ես_հայերեն_չգիտեմ                                          |
       | OompaLoompaDoompadeeDooIVeGotAnotherPuzzleForYou | oompa_loompa_doompadee_doo_i_ve_got_another_puzzle_for_you |
 
 
@@ -50,6 +51,7 @@ Feature: Convert Case
       | Un_Gran_Árbol                                              | unGranÁrbol                                      |
       | Πολύ_καλό                                                  | πολύΚαλό                                         |
       | ОЧЕНЬ_ПРИЯТНО                                              | оченьПриятно                                     |
+      | Ես_հայերեն_չգիտեմ                                          | եսՀայերենՉգիտեմ                                  |
       | oompa_loompa_doompadee_doo_i_ve_got_another_puzzle_for_you | oompaLoompaDoompadeeDooIVeGotAnotherPuzzleForYou |
 
 
@@ -75,6 +77,7 @@ Feature: Convert Case
       | VergüenzaAjena                                   | VERGÜENZA_AJENA                                            |
       | ΠολύΚαλό                                         | ΠΟΛΎ_ΚΑΛΌ                                                  |
       | ОченьПриятно                                     | ОЧЕНЬ_ПРИЯТНО                                              |
+      | եսՀայերենՉգիտեմ                                  | ԵՍ_ՀԱՅԵՐԵՆ_ՉԳԻՏԵՄ                                          |
       | OompaLoompaDoompadeeDooIVeGotAnotherPuzzleForYou | OOMPA_LOOMPA_DOOMPADEE_DOO_I_VE_GOT_ANOTHER_PUZZLE_FOR_YOU |
 
 
@@ -99,4 +102,5 @@ Feature: Convert Case
       | Un_Gran_Árbol                                              | UnGranÁrbol                                      |
       | Πολύ_καλό                                                  | ΠολύΚαλό                                         |
       | Очень_приятно                                              | ОченьПриятно                                     |
+      | Ես_հայերեն_չգիտեմ                                          | ԵսՀայերենՉգիտեմ                                  |
       | oompa_loompa_doompadee_doo_i_ve_got_another_puzzle_for_you | OompaLoompaDoompadeeDooIVeGotAnotherPuzzleForYou |
