@@ -6,8 +6,8 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 
-- Armenian behat tests #18
-- Swedish behat tests #18
+- Armenian behat tests [#18]
+- Swedish behat tests [#18]
 
 ## [v1.1.7] - 2019-02-18
 
@@ -129,3 +129,4 @@ Composer.
 [#16]: https://github.com/jawira/case-converter/pull/16
 [#11]: https://github.com/jawira/case-converter/pull/11
 [v1.1.7]: https://github.com/jawira/case-converter/compare/v1.1.6...v1.1.7
+[#18]: https://github.com/jawira/case-converter/pull/18
