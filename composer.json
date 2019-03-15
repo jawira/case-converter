@@ -23,5 +23,8 @@
     "psr-4": {
       "Jawira\\CaseConverter\\": "src/"
     }
+  },
+  "require-dev": {
+    "symplify/changelog-linker": "^5.4"
   }
 }
