@@ -10,24 +10,24 @@ Feature: Convert Case
     Then I should have "<snake>"
 
     Examples:
-      | camel                                            | snake                                                      |
-      |                                                  |                                                            |
-      | one                                              | one                                                        |
-      | Laser                                            | laser                                                      |
-      | helloWorld                                       | hello_world                                                |
-      | objectId                                         | object_id                                                  |
-      | firstName                                        | first_name                                                 |
-      | PascalCase                                       | pascal_case                                                |
-      | lowerCamelCase                                   | lower_camel_case                                           |
-      | numberOfProducts                                 | number_of_products                                         |
-      | ASCII                                            | a_s_c_i_i                                                  |
-      | NASA                                             | n_a_s_a                                                    |
-      | Ñandú                                            | ñandú                                                      |
-      | VergüenzaAjena                                   | vergüenza_ajena                                            |
-      | πολύΚαλό                                         | πολύ_καλό                                                  |
-      | ОченьПриятно                                     | очень_приятно                                              |
-      | եսՀայերենՉգիտեմ                                  | ես_հայերեն_չգիտեմ                                          |
-      | OompaLoompaDoompadeeDooIVeGotAnotherPuzzleForYou | oompa_loompa_doompadee_doo_i_ve_got_another_puzzle_for_you |
+      | camel            | snake              |
+      |                  |                    |
+      | one              | one                |
+      | Laser            | laser              |
+      | helloWorld       | hello_world        |
+      | objectId         | object_id          |
+      | firstName        | first_name         |
+      | PascalCase       | pascal_case        |
+      | lowerCamelCase   | lower_camel_case   |
+      | numberOfProducts | number_of_products |
+      | ASCII            | a_s_c_i_i          |
+      | NASA             | n_a_s_a            |
+      | Ñandú            | ñandú              |
+      | VergüenzaAjena   | vergüenza_ajena    |
+      | πολύΚαλό         | πολύ_καλό          |
+      | ОченьПриятно     | очень_приятно      |
+      | եսՀայերենՉգիտեմ  | ես_հայերեն_չգիտեմ  |
+      | jagFörstårInte   | jag_förstår_inte   |
 
 
   Scenario Outline: Implicitly converting from Snake Case to Camel Case
@@ -36,23 +36,23 @@ Feature: Convert Case
     Then I should have "<camel>"
 
     Examples:
-      | snake                                                      | camel                                            |
-      |                                                            |                                                  |
-      | One                                                        | one                                              |
-      | Laser                                                      | laser                                            |
-      | product_id                                                 | productId                                        |
-      | last_update                                                | lastUpdate                                       |
-      | CREATED_AT                                                 | createdAt                                        |
-      | last_user_id                                               | lastUserId                                       |
-      | f_b_i                                                      | fBI                                              |
-      | u_s_a                                                      | uSA                                              |
-      | LETRA_EÑE                                                  | letraEñe                                         |
-      | QUICO_Y_ÑOÑO                                               | quicoYÑoño                                       |
-      | Un_Gran_Árbol                                              | unGranÁrbol                                      |
-      | Πολύ_καλό                                                  | πολύΚαλό                                         |
-      | ОЧЕНЬ_ПРИЯТНО                                              | оченьПриятно                                     |
-      | Ես_հայերեն_չգիտեմ                                          | եսՀայերենՉգիտեմ                                  |
-      | oompa_loompa_doompadee_doo_i_ve_got_another_puzzle_for_you | oompaLoompaDoompadeeDooIVeGotAnotherPuzzleForYou |
+      | snake             | camel           |
+      |                   |                 |
+      | One               | one             |
+      | Laser             | laser           |
+      | product_id        | productId       |
+      | last_update       | lastUpdate      |
+      | CREATED_AT        | createdAt       |
+      | last_user_id      | lastUserId      |
+      | f_b_i             | fBI             |
+      | u_s_a             | uSA             |
+      | LETRA_EÑE         | letraEñe        |
+      | QUICO_Y_ÑOÑO      | quicoYÑoño      |
+      | Un_Gran_Árbol     | unGranÁrbol     |
+      | Πολύ_καλό         | πολύΚαλό        |
+      | ОЧЕНЬ_ПРИЯТНО     | оченьПриятно    |
+      | Ես_հայերեն_չգիտեմ | եսՀայերենՉգիտեմ |
+      | Jag_förstår_inte  | jagFörstårInte  |
 
 
   Scenario Outline: Converting from Camel Case to screaming Snake Case
@@ -61,24 +61,24 @@ Feature: Convert Case
     Then I should have "<screaming>"
 
     Examples:
-      | camel                                            | screaming                                                  |
-      |                                                  |                                                            |
-      | one                                              | ONE                                                        |
-      | Laser                                            | LASER                                                      |
-      | helloWorld                                       | HELLO_WORLD                                                |
-      | objectId                                         | OBJECT_ID                                                  |
-      | firstName                                        | FIRST_NAME                                                 |
-      | PascalCase                                       | PASCAL_CASE                                                |
-      | lowerCamelCase                                   | LOWER_CAMEL_CASE                                           |
-      | numberOfProducts                                 | NUMBER_OF_PRODUCTS                                         |
-      | ASCII                                            | A_S_C_I_I                                                  |
-      | NASA                                             | N_A_S_A                                                    |
-      | Ñandú                                            | ÑANDÚ                                                      |
-      | VergüenzaAjena                                   | VERGÜENZA_AJENA                                            |
-      | ΠολύΚαλό                                         | ΠΟΛΎ_ΚΑΛΌ                                                  |
-      | ОченьПриятно                                     | ОЧЕНЬ_ПРИЯТНО                                              |
-      | եսՀայերենՉգիտեմ                                  | ԵՍ_ՀԱՅԵՐԵՆ_ՉԳԻՏԵՄ                                          |
-      | OompaLoompaDoompadeeDooIVeGotAnotherPuzzleForYou | OOMPA_LOOMPA_DOOMPADEE_DOO_I_VE_GOT_ANOTHER_PUZZLE_FOR_YOU |
+      | camel            | screaming          |
+      |                  |                    |
+      | one              | ONE                |
+      | Laser            | LASER              |
+      | helloWorld       | HELLO_WORLD        |
+      | objectId         | OBJECT_ID          |
+      | firstName        | FIRST_NAME         |
+      | PascalCase       | PASCAL_CASE        |
+      | lowerCamelCase   | LOWER_CAMEL_CASE   |
+      | numberOfProducts | NUMBER_OF_PRODUCTS |
+      | ASCII            | A_S_C_I_I          |
+      | NASA             | N_A_S_A            |
+      | Ñandú            | ÑANDÚ              |
+      | VergüenzaAjena   | VERGÜENZA_AJENA    |
+      | ΠολύΚαλό         | ΠΟΛΎ_ΚΑΛΌ          |
+      | ОченьПриятно     | ОЧЕНЬ_ПРИЯТНО      |
+      | եսՀայերենՉգիտեմ  | ԵՍ_ՀԱՅԵՐԵՆ_ՉԳԻՏԵՄ  |
+      | jagFörstårInte   | JAG_FÖRSTÅR_INTE   |
 
 
   Scenario Outline: Converting from Snake Case to Pascal Case
@@ -87,20 +87,20 @@ Feature: Convert Case
     Then I should have "<pascal>"
 
     Examples:
-      | snake                                                      | pascal                                           |
-      |                                                            |                                                  |
-      | One                                                        | One                                              |
-      | Laser                                                      | Laser                                            |
-      | product_id                                                 | ProductId                                        |
-      | last_update                                                | LastUpdate                                       |
-      | CREATED_AT                                                 | CreatedAt                                        |
-      | last_user_id                                               | LastUserId                                       |
-      | f_b_i                                                      | FBI                                              |
-      | u_s_a                                                      | USA                                              |
-      | LETRA_EÑE                                                  | LetraEñe                                         |
-      | DON_RAMÓN_Y_ÑOÑO                                           | DonRamónYÑoño                                    |
-      | Un_Gran_Árbol                                              | UnGranÁrbol                                      |
-      | Πολύ_καλό                                                  | ΠολύΚαλό                                         |
-      | Очень_приятно                                              | ОченьПриятно                                     |
-      | Ես_հայերեն_չգիտեմ                                          | ԵսՀայերենՉգիտեմ                                  |
-      | oompa_loompa_doompadee_doo_i_ve_got_another_puzzle_for_you | OompaLoompaDoompadeeDooIVeGotAnotherPuzzleForYou |
+      | snake             | pascal          |
+      |                   |                 |
+      | One               | One             |
+      | Laser             | Laser           |
+      | product_id        | ProductId       |
+      | last_update       | LastUpdate      |
+      | CREATED_AT        | CreatedAt       |
+      | last_user_id      | LastUserId      |
+      | f_b_i             | FBI             |
+      | u_s_a             | USA             |
+      | LETRA_EÑE         | LetraEñe        |
+      | DON_RAMÓN_Y_ÑOÑO  | DonRamónYÑoño   |
+      | Un_Gran_Árbol     | UnGranÁrbol     |
+      | Πολύ_καλό         | ΠολύΚαλό        |
+      | Очень_приятно     | ОченьПриятно    |
+      | Ես_հայերեն_չգիտեմ | ԵսՀայերենՉգիտեմ |
+      | Jag_förstår_inte  | JagFörstårInte  |

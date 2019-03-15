@@ -7,6 +7,7 @@ All notable changes to this project will be documented in this file.
 ### Added
 
 - Armenian behat tests #18
+- Swedish behat tests #18
 
 ## [v1.1.7] - 2019-02-18
 
