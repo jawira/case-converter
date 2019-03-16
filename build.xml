@@ -1,62 +1,35 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<project name="Case Converter" description="Case Converter class" default="qa" phingVersion="3.0">
+<project name="Case Converter" description="Case Converter class" default="help" phingVersion="3.0">
+
+    <defaultexcludes default="true"/><!--Initializing default excludes-->
+    <defaultexcludes add="**/.idea"/>
+    <defaultexcludes add="**/.idea/**"/>
 
     <property name="phing.http.proxy" value="${env.http_proxy}"/>
 
-    <target name="phpunit:download" description="Install PHPUnit">
-        <if>
-            <not>
-                <available file="bin/phpunit"/>
-            </not>
-            <then>
-                <mkdir dir="bin"/>
-                <httpget url="https://phar.phpunit.de/phpunit-7.phar"
-                         dir="bin"
-                         filename="phpunit"
-                         followRedirects="true"/>
-            </then>
-        </if>
-        <chmod file="bin/phpunit" mode="0555"/>
+    <target name="help">
+        <loadfile property="help" file="docs/dev.md"/>
+        <echo>${line.separator}${help}</echo>
     </target>
 
     <target name="setup"
             description="Install dependencies"
-            depends="composer:download, composer:install-dev, phpunit:download"/>
+            depends="composer:install-dev, phive:install"/>
 
-    <target name="composer:download" description="Download composer">
-        <if>
-            <not>
-                <available file="bin/composer"/>
-            </not>
-            <then>
-                <mkdir dir="bin"/>
-                <httpget url="https://getcomposer.org/installer"
-                         dir="${project.basedir}"
-                         filename="composer-setup.php"
-                         followRedirects="true"/>
-                <exec command="php composer-setup.php --install-dir=bin --filename=composer --version=1.7.2"
-                      checkreturn="true"/>
-                <delete file="composer-setup.php"/>
-            </then>
-        </if>
-        <chmod file="bin/composer" mode="0555"/>
-        <composer composer="bin/composer" command="self-update"/>
-    </target>
-
-    <target name="qa"
+    <target name="test"
             description="Quality assurance"
-            depends="composer:validate, phpunit:run, behat:run, php:lint"/>
+            depends="php:lint, composer:validate, phpunit:run, behat:run, phpstan:run"/>
 
-    <target name="composer:validate" description="Check composer.json syntax" depends="composer:download">
-        <composer composer="bin/composer">
+    <target name="composer:validate" description="Check composer.json syntax">
+        <composer>
             <arg value="validate"/>
             <arg value="--strict"/>
             <arg value="--no-check-lock"/>
         </composer>
     </target>
 
-    <target name="composer:install-dev" depends="composer:download">
+    <target name="composer:install-dev">
         <composer composer="bin/composer" command="install">
             <arg value="--no-suggest"/>
             <arg value="--no-interaction"/>
@@ -65,7 +38,7 @@
         </composer>
     </target>
 
-    <target name="phpunit:run" description="Run unit tests" depends="phpunit:download">
+    <target name="phpunit:run" description="Run unit tests" depends="phive:install">
         <exec executable="bin/phpunit" passthru="true" checkreturn="true">
             <arg line="--configuration=config/phpunit.xml"/>
             <arg value="--testdox"/>
@@ -81,29 +54,22 @@
         </phplint>
     </target>
 
-    <target name="behat:run" description="Run behat tests" depends="behat:install">
+    <target name="behat:run" description="Run behat tests" depends="phive:install">
         <exec executable="bin/behat" passthru="true" checkreturn="true">
             <arg value="--colors"/>
         </exec>
     </target>
 
-    <target name="behat:install" description="Download Behat">
-        <if>
-            <not>
-                <available file="bin/behat"/>
-            </not>
-            <then>
-                <mkdir dir="bin"/>
-                <httpget url="https://github.com/Behat/Behat/releases/download/v3.3.0/behat.phar"
-                         dir="bin"
-                         filename="behat"
-                         followRedirects="true"/>
-            </then>
-        </if>
-        <chmod file="bin/behat" mode="0555"/>
-        <exec executable="bin/behat" passthru="true" checkreturn="true">
-            <arg value="--version"/>
+    <target name="phpstan:run" depends="phive:install">
+        <exec executable="bin/phpstan" passthru="true" checkreturn="true">
+            <arg line="--level=max analyze"/>
+            <arg path="src"/>
         </exec>
     </target>
 
+    <target name="phive:install">
+        <exec executable="phive" passthru="true" checkreturn="true">
+            <arg value="install"/>
+        </exec>
+    </target>
 </project>

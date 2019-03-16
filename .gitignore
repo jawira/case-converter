@@ -8,3 +8,4 @@
 /bin/phpunit
 /composer-setup.php
 /composer.lock
+/bin/phpstan

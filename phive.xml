@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phive xmlns="https://phar.io/phive">
+  <configuration>
+    <targetDirectory>bin</targetDirectory>
+  </configuration>
+  <phar name="phpunit" version="^7.4.4" installed="7.5.5" location="./bin/phpunit" copy="false"/>
+  <phar name="phpstan" version="^0.10.5" installed="0.11.2" location="./bin/phpstan" copy="false"/>
+  <phar name="behat/behat" version="^3.3.0" installed="3.3.0" location="./bin/behat" copy="false"/>
+</phive>
