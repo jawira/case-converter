@@ -106,7 +106,7 @@ Feature: Convert Case
       | Jag_förstår_inte  | JagFörstårInte  |
 
 
-  Scenario Outline: Implicitly converting from Snake Case to Camel Case
+  Scenario Outline: Converting from Snake Case to Kebab case
     Given CaseConverter class is instantiated with "<snake>"
     When I call "toKebab" method with "false" as argument
     Then I should have "<kebab>"
@@ -129,3 +129,27 @@ Feature: Convert Case
       | Очень_Приятно     | очень-приятно     |
       | ես_Հայերեն_Չգիտեմ | ես-հայերեն-չգիտեմ |
       | jag_Förstår_Inte  | jag-förstår-inte  |
+
+  Scenario Outline: Converting from Snake Case to Train case
+    Given CaseConverter class is instantiated with "<snake>"
+    When I call "toKebab" method with "true" as argument
+    Then I should have "<kebab>"
+
+    Examples:
+      | snake             | kebab             |
+      |                   |                   |
+      | One               | One               |
+      | Laser             | Laser             |
+      | product_id        | Product-Id        |
+      | last_update       | Last-Update       |
+      | CREATED_AT        | Created-At        |
+      | last_user_id      | Last-User-Id      |
+      | f_b_i             | F-B-I             |
+      | u_s_a             | U-S-A             |
+      | LETRA_EÑE         | Letra-Eñe         |
+      | QUICO_Y_ÑOÑO      | Quico-Y-Ñoño      |
+      | Un_Gran_Árbol     | Un-Gran-Árbol     |
+      | πολύ_Καλό         | Πολύ-Καλό         |
+      | Очень_Приятно     | Очень-Приятно     |
+      | ես_Հայերեն_Չգիտեմ | Ես-Հայերեն-Չգիտեմ |
+      | jag_Förstår_Inte  | Jag-Förstår-Inte  |

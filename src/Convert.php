@@ -10,19 +10,19 @@ namespace Jawira\CaseConverter;
 class Convert
 {
     /**
-     * Represents _snake case_ strings
+     * Identifier for _snake case_ strings
      */
     const SNAKE = 'snake';
 
     const SNAKE_GLUE = '_';
 
     /**
-     * Represents _camel case_ strings
+     * Identifier for _camel case_ strings
      */
     const CAMEL = 'camel';
 
     /**
-     * Represents _kebab case_ strings
+     * Identifier for _kebab case_ strings
      */
     const KEBAB = 'kebab';
 
@@ -109,8 +109,8 @@ class Convert
     }
 
     /**
-     * @param $pattern
-     * @param $string
+     * @param string $pattern
+     * @param string $string
      *
      * @return array
      */
@@ -122,7 +122,7 @@ class Convert
     /**
      * Returns words contained in $str assuming it's in kebab case
      *
-     * @param $str
+     * @param string $str
      *
      * @return array
      */
