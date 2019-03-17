@@ -6,6 +6,7 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 
+- Handling Kebab case #19
 - Armenian behat tests [#18]
 - Swedish behat tests [#18]
 
