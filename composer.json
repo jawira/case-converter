@@ -4,7 +4,8 @@
   "description": "Convert string between Camel Case 🐪 and Snake Case 🐍",
   "keywords": [
     "Snake case",
-    "Camel case"
+    "Camel case",
+    "Kebab case"
   ],
   "license": "MIT",
   "authors": [
@@ -23,8 +24,5 @@
     "psr-4": {
       "Jawira\\CaseConverter\\": "src/"
     }
-  },
-  "require-dev": {
-    "symplify/changelog-linker": "^5.4"
   }
 }
