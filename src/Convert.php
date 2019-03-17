@@ -173,6 +173,7 @@ class Convert
      */
     public function __toString()
     {
+        // TODO v2 should always print in Camel case, no exceptions.
         return ($this->namingConvention === self::CAMEL) ? $this->toSnake() : $this->toCamel();
     }
 
