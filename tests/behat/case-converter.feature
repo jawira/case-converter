@@ -153,3 +153,27 @@ Feature: Convert Case
       | Очень_Приятно     | Очень-Приятно     |
       | ես_Հայերեն_Չգիտեմ | Ես-Հայերեն-Չգիտեմ |
       | jag_Förstår_Inte  | Jag-Förstår-Inte  |
+
+  Scenario Outline: Converting from Kebab case to Snake case
+    Given CaseConverter class is instantiated with "<kebab>"
+    When I call "toSnake" method with "false" as argument
+    Then I should have "<snake>"
+
+    Examples:
+      | kebab             | snake            |
+      |                   |                   |
+      | One               | one               |
+      | Laser             | laser             |
+      | Product-Id        | product_id        |
+      | Last-Update       | last_update       |
+      | Created-At        | created_at        |
+      | Last-User-Id      | last_user_id      |
+      | F-B-I             | f_b_i             |
+      | U-S-A             | u_s_a             |
+      | Letra-Eñe         | letra_eñe         |
+      | Quico-Y-Ñoño      | quico_y_ñoño      |
+      | Un-Gran-Árbol     | un_gran_árbol     |
+      | Πολύ-Καλό         | πολύ_καλό         |
+      | Очень-Приятно     | очень_приятно     |
+      | Ես-Հայերեն-Չգիտեմ | ես_հայերեն_չգիտեմ |
+      | Jag-Förstår-Inte  | jag_förstår_inte  |
