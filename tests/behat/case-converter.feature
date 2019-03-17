@@ -104,3 +104,28 @@ Feature: Convert Case
       | Очень_приятно     | ОченьПриятно    |
       | Ես_հայերեն_չգիտեմ | ԵսՀայերենՉգիտեմ |
       | Jag_förstår_inte  | JagFörstårInte  |
+
+
+  Scenario Outline: Implicitly converting from Snake Case to Camel Case
+    Given CaseConverter class is instantiated with "<snake>"
+    When I call "toKebab" method with "false" as argument
+    Then I should have "<kebab>"
+
+    Examples:
+      | snake             | kebab             |
+      |                   |                   |
+      | One               | one               |
+      | Laser             | laser             |
+      | product_id        | product-id        |
+      | last_update       | last-update       |
+      | CREATED_AT        | created-at        |
+      | last_user_id      | last-user-id      |
+      | f_b_i             | f-b-i             |
+      | u_s_a             | u-s-a             |
+      | LETRA_EÑE         | letra-eñe         |
+      | QUICO_Y_ÑOÑO      | quico-y-ñoño      |
+      | Un_Gran_Árbol     | un-gran-árbol     |
+      | πολύ_Καλό         | πολύ-καλό         |
+      | Очень_Приятно     | очень-приятно     |
+      | ես_Հայերեն_Չգիտեմ | ես-հայերեն-չգիտեմ |
+      | jag_Förstår_Inte  | jag-förstår-inte  |

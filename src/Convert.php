@@ -10,14 +10,23 @@ namespace Jawira\CaseConverter;
 class Convert
 {
     /**
-     * Used to represent _snake case_ strings
+     * Represents _snake case_ strings
      */
     const SNAKE = 'snake';
 
+    const SNAKE_GLUE = '_';
+
     /**
-     * Used to represent _camel case_ strings
+     * Represents _camel case_ strings
      */
     const CAMEL = 'camel';
+
+    /**
+     * Represents _kebab case_ strings
+     */
+    const KEBAB = 'kebab';
+
+    const KEBAB_GLUE = '-';
 
     /**
      * @var array Stores words to be transformed to _camel case_ or _snake case_
@@ -55,6 +64,9 @@ class Convert
             case self::SNAKE:
                 $this->words = $this->readSnake($str);
                 break;
+            case self::KEBAB:
+                $this->words = $this->readKebab($str);
+                break;
             case self::CAMEL:
             default:
                 $this->words = $this->readCamel($str);
@@ -73,41 +85,15 @@ class Convert
      */
     protected function analyse($str)
     {
-        return (mb_strpos($str, '_') !== false) ? self::SNAKE : self::CAMEL;
-    }
-
-    /**
-     * Returns camel case string
-     *
-     * @param bool $uppercase Should first letter be in uppercase
-     *
-     * @return string
-     */
-    public function toCamel($uppercase = false)
-    {
-        $result = '';
-
-        foreach ($this->words as $key => $word) {
-            $mode   = ($key === 0 && $uppercase === false) ? MB_CASE_LOWER : MB_CASE_TITLE;
-            $result .= mb_convert_case($word, $mode);
+        if (mb_strpos($str, self::SNAKE_GLUE)) {
+            return self::SNAKE;
         }
 
-        return $result;
-    }
+        if (mb_strpos($str, self::KEBAB_GLUE)) {
+            return self::KEBAB;
+        }
 
-    /**
-     * Returns snake case string
-     *
-     * @param bool $uppercase Returns string in uppercase
-     *
-     * @return string
-     */
-    public function toSnake($uppercase = false)
-    {
-        $result = implode('_', $this->words);
-        $mode   = $uppercase ? MB_CASE_UPPER : MB_CASE_LOWER;
-
-        return mb_convert_case($result, $mode);
+        return self::CAMEL;
     }
 
     /**
@@ -119,7 +105,30 @@ class Convert
      */
     protected function readSnake($str)
     {
-        return array_values(array_filter(mb_split('_+', $str)));
+        return $this->splitString(self::SNAKE_GLUE . '+', $str);
+    }
+
+    /**
+     * @param $pattern
+     * @param $string
+     *
+     * @return array
+     */
+    protected function splitString($pattern, $string)
+    {
+        return array_values(array_filter(mb_split($pattern, $string)));
+    }
+
+    /**
+     * Returns words contained in $str assuming it's in kebab case
+     *
+     * @param $str
+     *
+     * @return array
+     */
+    protected function readKebab($str)
+    {
+        return $this->splitString(self::KEBAB_GLUE . '+', $str);
     }
 
     /**
@@ -135,11 +144,11 @@ class Convert
     protected function readCamel($str)
     {
         $res = preg_replace_callback('#\p{Lu}{1}#u', function ($match) {
-            return '_' . reset($match);
+            return self::SNAKE_GLUE . reset($match);
         }, $str);
 
         if (is_null($res)) {
-             throw new CaseConverterException("Error while processing $str");
+            throw new CaseConverterException("Error while processing $str");
         }
 
         return $this->readSnake($res);
@@ -153,6 +162,55 @@ class Convert
     public function __toString()
     {
         return ($this->detectedCase === self::CAMEL) ? $this->toSnake() : $this->toCamel();
+    }
+
+    /**
+     * Returns snake case string
+     *
+     * @param bool $uppercase Returns string in uppercase
+     *
+     * @return string
+     */
+    public function toSnake($uppercase = false)
+    {
+        $result = implode(self::SNAKE_GLUE, $this->words);
+        $mode   = $uppercase ? \MB_CASE_UPPER : \MB_CASE_LOWER;
+
+        return mb_convert_case($result, $mode);
+    }
+
+    /**
+     * @param bool $uppercase
+     *
+     * @return string
+     */
+    public function toKebab($uppercase = false)
+    {
+        $words = array_map(function ($word) use ($uppercase){
+            $mode = $uppercase ? \MB_CASE_TITLE : \MB_CASE_LOWER;
+            return mb_convert_case($word, $mode);
+        }, $this->words);
+
+        return implode(self::KEBAB_GLUE, $words);
+    }
+
+    /**
+     * Returns camel case string
+     *
+     * @param bool $uppercase Should first letter be in uppercase
+     *
+     * @return string
+     */
+    public function toCamel($uppercase = false)
+    {
+        $result = '';
+
+        foreach ($this->words as $key => $word) {
+            $mode   = ($key === 0 && $uppercase === false) ? \MB_CASE_LOWER : \MB_CASE_TITLE;
+            $result .= mb_convert_case($word, $mode);
+        }
+
+        return $result;
     }
 
 }
