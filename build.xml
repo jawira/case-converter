@@ -42,6 +42,7 @@
         <exec executable="bin/phpunit" passthru="true" checkreturn="true">
             <arg line="--configuration=config/phpunit.xml"/>
             <arg value="--testdox"/>
+            <arg value="--stop-on-failure"/>
         </exec>
     </target>
 
