@@ -104,3 +104,76 @@ Feature: Convert Case
       | Очень_приятно     | ОченьПриятно    |
       | Ես_հայերեն_չգիտեմ | ԵսՀայերենՉգիտեմ |
       | Jag_förstår_inte  | JagFörstårInte  |
+
+
+  Scenario Outline: Converting from Snake Case to Kebab case
+    Given CaseConverter class is instantiated with "<snake>"
+    When I call "toKebab" method with "false" as argument
+    Then I should have "<kebab>"
+
+    Examples:
+      | snake             | kebab             |
+      |                   |                   |
+      | One               | one               |
+      | Laser             | laser             |
+      | product_id        | product-id        |
+      | last_update       | last-update       |
+      | CREATED_AT        | created-at        |
+      | last_user_id      | last-user-id      |
+      | f_b_i             | f-b-i             |
+      | u_s_a             | u-s-a             |
+      | LETRA_EÑE         | letra-eñe         |
+      | QUICO_Y_ÑOÑO      | quico-y-ñoño      |
+      | Un_Gran_Árbol     | un-gran-árbol     |
+      | πολύ_Καλό         | πολύ-καλό         |
+      | Очень_Приятно     | очень-приятно     |
+      | ես_Հայերեն_Չգիտեմ | ես-հայերեն-չգիտեմ |
+      | jag_Förstår_Inte  | jag-förstår-inte  |
+
+  Scenario Outline: Converting from Snake Case to Train case
+    Given CaseConverter class is instantiated with "<snake>"
+    When I call "toKebab" method with "true" as argument
+    Then I should have "<kebab>"
+
+    Examples:
+      | snake             | kebab             |
+      |                   |                   |
+      | One               | One               |
+      | Laser             | Laser             |
+      | product_id        | Product-Id        |
+      | last_update       | Last-Update       |
+      | CREATED_AT        | Created-At        |
+      | last_user_id      | Last-User-Id      |
+      | f_b_i             | F-B-I             |
+      | u_s_a             | U-S-A             |
+      | LETRA_EÑE         | Letra-Eñe         |
+      | QUICO_Y_ÑOÑO      | Quico-Y-Ñoño      |
+      | Un_Gran_Árbol     | Un-Gran-Árbol     |
+      | πολύ_Καλό         | Πολύ-Καλό         |
+      | Очень_Приятно     | Очень-Приятно     |
+      | ես_Հայերեն_Չգիտեմ | Ես-Հայերեն-Չգիտեմ |
+      | jag_Förstår_Inte  | Jag-Förstår-Inte  |
+
+  Scenario Outline: Converting from Kebab case to Snake case
+    Given CaseConverter class is instantiated with "<kebab>"
+    When I call "toSnake" method with "false" as argument
+    Then I should have "<snake>"
+
+    Examples:
+      | kebab             | snake            |
+      |                   |                   |
+      | One               | one               |
+      | Laser             | laser             |
+      | Product-Id        | product_id        |
+      | Last-Update       | last_update       |
+      | Created-At        | created_at        |
+      | Last-User-Id      | last_user_id      |
+      | F-B-I             | f_b_i             |
+      | U-S-A             | u_s_a             |
+      | Letra-Eñe         | letra_eñe         |
+      | Quico-Y-Ñoño      | quico_y_ñoño      |
+      | Un-Gran-Árbol     | un_gran_árbol     |
+      | Πολύ-Καλό         | πολύ_καλό         |
+      | Очень-Приятно     | очень_приятно     |
+      | Ես-Հայերեն-Չգիտեմ | ես_հայերեն_չգիտեմ |
+      | Jag-Förstår-Inte  | jag_förstår_inte  |

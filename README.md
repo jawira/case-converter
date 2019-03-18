@@ -1,7 +1,7 @@
 Case converter 
 ==============
 
-Convert strings between **Camel Case** 🐪 and **Snake Case** 🐍.
+Convert string between **Camel Case** 🐪, **Snake Case** 🐍and **Kebab Case** 🥙.
 
 * 🔁 automatic case detection
 * 🌐 i18n
@@ -31,6 +31,7 @@ Explicitly set output case:
 $son = new Convert('john_connor'); 
 echo $son->toSnake();  // output: john_connor 
 echo $son->toCamel();  // output: johnConnor
+echo $son->toKebab();  // output: john-connor 
 ```
 
 Using uppercase versions:
@@ -39,6 +40,7 @@ Using uppercase versions:
 $mother = new Convert('sarahConnor'); 
 echo $mother->toSnake(true);  // output: SARAH_CONNOR (aka Screaming Snake Case)
 echo $mother->toCamel(true);  // output: SarahConnor (aka Pascal Case)
+echo $mother->toKebab(true);  // output: John-Connor (aka Train Case)
 ```
 
 Handling multilingual strings:
@@ -49,10 +51,14 @@ echo (new Convert('πολύΚαλό'));         // output: πολύ_καλό
 echo (new Convert('ОЧЕНЬ_ПРИЯТНО'));    // output: оченьПриятно 
 ```
 
-How it works
-------------
+Notes
+-----
 
-If any underscore `_` is found, the input string is considered to be Snake Case, and Camel Case otherwise.
+* Magic function `__toString` will always print string in Camel case format. 
+However, if input string is in Camel case format then Snake case is used.
+* If any underscore `_` is found, the input string is considered to be Snake 
+Case. If any dash `-` is found, the input string is considered to be Kebab Case. 
+Finally, if no `-` nor `_` is found, string is considered to be Camel Case.
 
 Installation
 ------------

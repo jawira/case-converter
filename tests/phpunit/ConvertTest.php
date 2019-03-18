@@ -46,6 +46,8 @@ class ConvertTest extends TestCase
      *
      * @param $input
      * @param $expected
+     *
+     * @throws \ReflectionException
      */
     public function testAnalyse($input, $expected)
     {
@@ -82,7 +84,6 @@ class ConvertTest extends TestCase
         ];
     }
 
-
     /**
      * Testing
      *
@@ -98,6 +99,7 @@ class ConvertTest extends TestCase
      * @param string $expected  Expected output
      *
      * @dataProvider toSnakeProvider
+     * @throws \ReflectionException
      */
     public function testToSnake($words, $uppercase, $expected)
     {
@@ -117,7 +119,6 @@ class ConvertTest extends TestCase
         $output = $stub->toSnake($uppercase);
 
         $this->assertSame($expected, $output);
-
     }
 
     /**
@@ -147,6 +148,8 @@ class ConvertTest extends TestCase
      * @param $words
      * @param $uppercase
      * @param $expected
+     *
+     * @throws \ReflectionException
      */
     public function testToCamel($words, $uppercase, $expected)
     {
@@ -167,7 +170,6 @@ class ConvertTest extends TestCase
 
         $this->assertSame($expected, $output);
     }
-
 
     /**
      * Provider for \ConvertTest::testToCamel
@@ -195,6 +197,8 @@ class ConvertTest extends TestCase
      *
      * @param $snake
      * @param $expected
+     *
+     * @throws \ReflectionException
      */
     public function testReadSnake($snake, $expected)
     {
@@ -245,6 +249,8 @@ class ConvertTest extends TestCase
      * @param string $camel
      * @param string $expected
      * @param string $returnValue
+     *
+     * @throws \ReflectionException
      */
     public function testReadCamel($camel, $expected, $returnValue)
     {
@@ -298,6 +304,8 @@ class ConvertTest extends TestCase
      * @param $detectedCase
      * @param $methodToCall
      * @param $words
+     *
+     * @throws \ReflectionException
      */
     public function testLoad($string, $detectedCase, $methodToCall, $words)
     {
@@ -312,7 +320,6 @@ class ConvertTest extends TestCase
              ->method('analyse')
              ->with($this->equalTo($string))
              ->willReturn($detectedCase);
-
 
         // Setting expectation for $methodToCall
         $stub->expects($this->once())
@@ -359,6 +366,8 @@ class ConvertTest extends TestCase
      * @param $methodToCall
      * @param $detectedCase
      * @param $returnString
+     *
+     * @throws \ReflectionException
      */
     public function test__toString($methodToCall, $detectedCase, $returnString)
     {
@@ -375,7 +384,7 @@ class ConvertTest extends TestCase
 
         // Setting value to protected property
         $reflection = new ReflectionObject($stub);
-        $property   = $reflection->getProperty('detectedCase');
+        $property   = $reflection->getProperty('namingConvention');
         $property->setAccessible(true);
         $property->setValue($stub, $detectedCase);
 
