@@ -1,7 +1,7 @@
 {
   "name": "jawira/case-converter",
   "type": "library",
-  "description": "Convert string between Camel Case 🐪 and Snake Case 🐍",
+  "description": "Convert string between **Camel Case** 🐪, **Snake Case** 🐍and **Kebab Case** 🥙.",
   "keywords": [
     "Snake case",
     "Camel case",

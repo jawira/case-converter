@@ -1,7 +1,7 @@
 Case converter 
 ==============
 
-Convert strings among **Camel Case** 🐪, **Snake Case** 🐍and **Kebab Case** 🥙.
+Convert string between **Camel Case** 🐪, **Snake Case** 🐍and **Kebab Case** 🥙.
 
 * 🔁 automatic case detection
 * 🌐 i18n
