@@ -58,6 +58,8 @@
     <target name="behat:run" description="Run behat tests" depends="phive:install">
         <exec executable="bin/behat" passthru="true" checkreturn="true">
             <arg value="--colors"/>
+            <arg value="--no-interaction"/>
+            <!--<arg value="&#45;&#45;stop-on-failure"/>-->
         </exec>
     </target>
 

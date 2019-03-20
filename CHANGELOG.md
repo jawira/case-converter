@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+### Changed
+
+- Behat tests have been adapted for new CaseConverter signature #21
+
 ## [v1.2.0] - 2019-03-18
 
 ### Added
