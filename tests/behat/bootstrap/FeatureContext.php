@@ -1,7 +1,7 @@
 <?php
 
-use Behat\Behat\Tester\Exception\PendingException;
 use Behat\Behat\Context\Context;
+use Behat\Behat\Tester\Exception\PendingException;
 use Jawira\CaseConverter\Convert;
 
 /**
@@ -22,6 +22,8 @@ class FeatureContext implements Context
     /**
      * @Given /^CaseConverter class is instantiated with "([^"]*)"$/
      * @param string $arg1 String to convert
+     *
+     * @throws \Jawira\CaseConverter\CaseConverterException
      */
     public function caseConverterClassIsInstantiatedWith($arg1)
     {
@@ -37,43 +39,27 @@ class FeatureContext implements Context
     }
 
     /**
-     * @Then /^I should have "([^"]*)"$/
-     * @param string $arg1 Converted expected string
+     * @When I call :methodName
+     *
+     * @param $methodName
+     */
+    public function iCall($methodName)
+    {
+        $this->result = ($this->instance)->$methodName();
+    }
+
+    /**
+     * @Then method should return :returnString
+     *
+     * @param string $returnString Expected string
      *
      * @throws \Exception
      */
-    public function iShouldHave($arg1)
+    public function methodShouldReturn($returnString)
     {
-        if ($this->result !== $arg1) {
-            $message = sprintf('Result "%s" is not equal to expected string "%s"', $this->result, $arg1);
+        if ($this->result !== $returnString) {
+            $message = sprintf('Result "%s" is not equal to expected string "%s"', $this->result, $returnString);
             throw new Exception($message);
         }
     }
-
-
-    /**
-     * @When I call :arg1 method with :arg2 as argument
-     *
-     * @param string $arg1 Name of the method to call
-     * @param string $arg2 'true' or 'false' string
-     *
-     * @throws \Exception
-     */
-    public function iCallMethodWithAsArgument($arg1, $arg2)
-    {
-        switch ($arg2) {
-            case 'true':
-                $argument = true;
-                break;
-            case 'false':
-                $argument = false;
-                break;
-            default:
-                $message = sprintf('Invalid "%s" argument', $arg2);
-                throw new Exception($message);
-        }
-
-        $this->result = ($this->instance)->$arg1($argument);
-    }
-
 }
