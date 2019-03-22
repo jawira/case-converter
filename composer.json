@@ -1,11 +1,16 @@
 {
   "name": "jawira/case-converter",
   "type": "library",
-  "description": "Convert string between **Camel Case** 🐪, **Snake Case** 🐍and **Kebab Case** 🥙.",
+  "description": "Convert string between: Snake case \uD83D\uDC0D, Camel case \uD83D\uDC2A, Kebab case \uD83E\uDD59, Pascal case , Ada case \uD83D\uDC69, Train case \uD83D\uDE86, Cobol case \uD83C\uDFE6 and Macro case \uD83D\uDD20.",
   "keywords": [
-    "Snake case",
     "Camel case",
-    "Kebab case"
+    "Snake case",
+    "Pascal case",
+    "Kebab case",
+    "Ada case",
+    "Train case",
+    "Cobol case",
+    "Macro case"
   ],
   "license": "MIT",
   "authors": [
@@ -14,7 +19,7 @@
     }
   ],
   "require": {
-    "php": ">=5.4",
+    "php": "^7.1",
     "ext-mbstring": "*"
   },
   "suggest": {
