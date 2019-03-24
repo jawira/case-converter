@@ -3,21 +3,44 @@
 namespace Jawira\CaseConverter;
 
 /**
- * Convert string from Camel Case to Snake Case and vice versa
+ * Convert string between different naming conventions.
  *
+ * Handled formats:
+ *
+ * - Ada case
+ * - Camel case
+ * - Cobol case
+ * - Kebab case
+ * - Macro case
+ * - Pascal case
+ * - Snake case
+ * - Train case
+ *
+ * @see     https://softwareengineering.stackexchange.com/questions/322413/bothered-by-an-unknown-letter-case-name
  * @package Jawira\CaseConverter
+ * @author  Jawira Portugal
  */
 class Convert
 {
     /**
-     * Identifier for _snake case_ strings
+     * Glue used in _Kebab case_ strings
      */
-    const SNAKE = 'snake';
+    const DASH = '-';
 
     /**
      * Glue used in _Snake case_ strings
      */
-    const SNAKE_GLUE = '_';
+    const UNDERSCORE = '_';
+
+    /**
+     * Identifier for _Snake case_ and _Pascal case_
+     */
+    const UPPERCASE = 'uppercase';
+
+    /**
+     * Identifier for _snake case_ strings
+     */
+    const SNAKE = 'snake';
 
     /**
      * Identifier for _camel case_ strings
@@ -29,10 +52,11 @@ class Convert
      */
     const KEBAB = 'kebab';
 
-    /**
-     * Glue used in _Kebab case_ strings
-     */
-    const KEBAB_GLUE = '-';
+    const ADA = 'ada';
+
+    const MACRO = 'macro';
+
+    const PASCAL = 'pascal';
 
     /**
      * @var array Words extracted from input string
@@ -44,7 +68,7 @@ class Convert
      *
      * @see https://en.wikipedia.org/wiki/Naming_convention_(programming)
      */
-    protected $namingConvention;
+    protected $wordDivider;
 
     /**
      * @param string $input String to convert
@@ -53,7 +77,7 @@ class Convert
      */
     public function __construct($input)
     {
-        $this->load($input);
+        $this->detectNamingConvention($input);
     }
 
     /**
@@ -64,20 +88,22 @@ class Convert
      * @return $this
      * @throws \Jawira\CaseConverter\CaseConverterException
      */
-    protected function load($input)
+    protected function detectNamingConvention($input)
     {
-        $this->namingConvention = $this->analyse($input);
+        $this->wordDivider = $this->analyse($input);
 
-        switch ($this->namingConvention) {
-            case self::SNAKE:
-                $this->words = $this->readSnake($input);
+        switch ($this->wordDivider) {
+            case self::UNDERSCORE:
+                $this->words = $this->splitUnderscoreString($input);
                 break;
-            case self::KEBAB:
-                $this->words = $this->readKebab($input);
+            case self::DASH:
+                $this->words = $this->splitDashString($input);
                 break;
-            case self::CAMEL:
+            case self::UPPERCASE:
+                $this->words = $this->splitUppercaseString($input);
+                break;
             default:
-                $this->words = $this->readCamel($input);
+                throw new CaseConverterException('Unknown naming convention');
                 break;
         }
 
@@ -85,7 +111,7 @@ class Convert
     }
 
     /**
-     * Detects naming convention of $input string.
+     * Detects word separator of $input string.
      *
      * @param string $input String to be analysed
      *
@@ -93,15 +119,15 @@ class Convert
      */
     protected function analyse($input)
     {
-        if (mb_strpos($input, self::SNAKE_GLUE)) {
-            return self::SNAKE;
+        if (mb_strpos($input, self::UNDERSCORE)) {
+            return self::UNDERSCORE;
         }
 
-        if (mb_strpos($input, self::KEBAB_GLUE)) {
-            return self::KEBAB;
+        if (mb_strpos($input, self::DASH)) {
+            return self::DASH;
         }
 
-        return self::CAMEL;
+        return self::UPPERCASE;
     }
 
     /**
@@ -111,9 +137,9 @@ class Convert
      *
      * @return array
      */
-    protected function readSnake($input)
+    protected function splitUnderscoreString($input)
     {
-        return $this->splitString(self::SNAKE_GLUE . '+', $input);
+        return $this->splitString(self::UNDERSCORE . '+', $input);
     }
 
     /**
@@ -136,9 +162,9 @@ class Convert
      *
      * @return array
      */
-    protected function readKebab($input)
+    protected function splitDashString($input)
     {
-        return $this->splitString(self::KEBAB_GLUE . '+', $input);
+        return $this->splitString(self::DASH . '+', $input);
     }
 
     /**
@@ -151,11 +177,11 @@ class Convert
      * @return array
      * @throws \Jawira\CaseConverter\CaseConverterException
      */
-    protected function readCamel($input)
+    protected function splitUppercaseString($input)
     {
         $res = preg_replace_callback('#\p{Lu}{1}#u',
             function ($match) {
-                return self::SNAKE_GLUE . reset($match);
+                return self::UNDERSCORE . reset($match);
             },
                                      $input);
 
@@ -163,39 +189,25 @@ class Convert
             throw new CaseConverterException("Error while processing $input");
         }
 
-        return $this->readSnake($res);
+        return $this->splitUnderscoreString($res);
     }
 
     /**
-     * Return a Camel case or Snake case according to detected naming convention
+     * Return a _Camel case_ string
      *
      * @return string
      */
     public function __toString()
     {
-        // TODO v2 should always print in Camel case, no exceptions.
-        return ($this->namingConvention === self::CAMEL) ? $this->toSnake() : $this->toCamel();
-    }
-
-    /**
-     * Returns snake case string
-     *
-     * @param bool $uppercase Returns string in uppercase
-     *
-     * @return string
-     */
-    public function toSnake($uppercase = false)
-    {
-        $result = implode(self::SNAKE_GLUE, $this->words);
-        $mode   = $uppercase ? \MB_CASE_UPPER : \MB_CASE_LOWER;
-
-        return mb_convert_case($result, $mode);
+        return $this->toCamel();
     }
 
     /**
      * Returns camel case string
      *
      * @param bool $uppercase Should first letter be in uppercase
+     *
+     * @example thisIsCamelCase
      *
      * @return string
      */
@@ -212,20 +224,85 @@ class Convert
     }
 
     /**
-     * @param bool $uppercase
+     * @example ThisIsPascalCase
+     * @return string
+     */
+    public function toPascal()
+    {
+        return $this->toCamel(true);
+    }
+
+    /**
+     * @example this_is_snake_case
+     * @return string
+     */
+    public function toSnake()
+    {
+        return $this->glueString(self::UNDERSCORE, \MB_CASE_LOWER);
+    }
+
+    /**
+     * @param string $glue Character to glue words
+     * @param int    $mode MB String constant
      *
      * @return string
      */
-    public function toKebab($uppercase = false)
+    protected function glueString($glue, $mode)
     {
-        $words = array_map(function ($word) use ($uppercase) {
-            $mode = $uppercase ? \MB_CASE_TITLE : \MB_CASE_LOWER;
+        assert(in_array($mode, [\MB_CASE_UPPER, \MB_CASE_LOWER, \MB_CASE_TITLE]));
 
+        $convertCase = function ($word) use ($mode) {
             return mb_convert_case($word, $mode);
-        },
-            $this->words);
+        };
 
-        return implode(self::KEBAB_GLUE, $words);
+        $words = array_map($convertCase, $this->words);
+
+        return implode($glue, $words);
+    }
+
+    /**
+     * @example THIS_IS_MACRO_CASE
+     * @return string
+     */
+    public function toMacro()
+    {
+        return $this->glueString(self::UNDERSCORE, \MB_CASE_UPPER);
+    }
+
+    /**
+     * @example This_Is_Ada_Case
+     * @return string
+     */
+    public function toAda()
+    {
+        return $this->glueString(self::UNDERSCORE, \MB_CASE_TITLE);
+    }
+
+    /**
+     * @example this-is-kebab-case
+     * @return string
+     */
+    public function toKebab()
+    {
+        return $this->glueString(self::DASH, \MB_CASE_LOWER);
+    }
+
+    /**
+     * @example THIS-IS-COBOL-CASE
+     * @return string
+     */
+    public function toCobol()
+    {
+        return $this->glueString(self::DASH, \MB_CASE_UPPER);
+    }
+
+    /**
+     * @example This-Is-Train-Case
+     * @return string
+     */
+    public function toTrain()
+    {
+        return $this->glueString(self::DASH, \MB_CASE_TITLE);
     }
 
 }
