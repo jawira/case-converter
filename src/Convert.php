@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Jawira\CaseConverter;
 
@@ -22,53 +22,27 @@ namespace Jawira\CaseConverter;
  */
 class Convert
 {
-    /**
-     * Glue used in _Kebab case_ strings
-     */
-    const DASH = '-';
+    const DASH         = '-';
+    const UNDERSCORE   = '_';
+    const EMPTY_STRING = '';
 
-    /**
-     * Glue used in _Snake case_ strings
-     */
-    const UNDERSCORE = '_';
+    const STRATEGY_DASH       = 'dash';
+    const STRATEGY_UNDERSCORE = 'underscore';
+    const STRATEGY_UPPERCASE  = 'uppercase';
 
-    /**
-     * Identifier for _Snake case_ and _Pascal case_
-     */
-    const UPPERCASE = 'uppercase';
-
-    /**
-     * Identifier for _snake case_ strings
-     */
-    const SNAKE = 'snake';
-
-    /**
-     * Identifier for _camel case_ strings
-     */
-    const CAMEL = 'camel';
-
-    /**
-     * Identifier for _kebab case_ strings
-     */
-    const KEBAB = 'kebab';
-
-    const ADA = 'ada';
-
-    const MACRO = 'macro';
-
-    const PASCAL = 'pascal';
+    const ADA    = 'Ada';
+    const CAMEL  = 'Camel';
+    const COBOL  = 'Cobol';
+    const KEBAB  = 'Kebab';
+    const MACRO  = 'Macro';
+    const PASCAL = 'Pascal';
+    const SNAKE  = 'Snake';
+    const TRAIN  = 'Train';
 
     /**
      * @var array Words extracted from input string
      */
     protected $words;
-
-    /**
-     * @var string Detected naming convention
-     *
-     * @see https://en.wikipedia.org/wiki/Naming_convention_(programming)
-     */
-    protected $wordDivider;
 
     /**
      * @param string $input String to convert
@@ -88,18 +62,16 @@ class Convert
      * @return $this
      * @throws \Jawira\CaseConverter\CaseConverterException
      */
-    protected function detectNamingConvention($input)
+    protected function detectNamingConvention(string $input): self
     {
-        $this->wordDivider = $this->analyse($input);
-
-        switch ($this->wordDivider) {
-            case self::UNDERSCORE:
+        switch ($this->analyse($input)) {
+            case self::STRATEGY_UNDERSCORE:
                 $this->words = $this->splitUnderscoreString($input);
                 break;
-            case self::DASH:
+            case self::STRATEGY_DASH:
                 $this->words = $this->splitDashString($input);
                 break;
-            case self::UPPERCASE:
+            case self::STRATEGY_UPPERCASE:
                 $this->words = $this->splitUppercaseString($input);
                 break;
             default:
@@ -111,23 +83,54 @@ class Convert
     }
 
     /**
-     * Detects word separator of $input string.
+     * Detects word separator of $input string and tells you what strategy you should use.
      *
      * @param string $input String to be analysed
      *
-     * @return string
+     * @return string Strategy to use
+     * @throws \Jawira\CaseConverter\CaseConverterException
      */
-    protected function analyse($input)
+    protected function analyse(string $input): string
     {
+        // Strings like "MARIO_WORLD"
         if (mb_strpos($input, self::UNDERSCORE)) {
-            return self::UNDERSCORE;
+            return self::STRATEGY_UNDERSCORE;
         }
 
+        // Strings like "Judo-Boy"
         if (mb_strpos($input, self::DASH)) {
-            return self::DASH;
+            return self::STRATEGY_DASH;
         }
 
-        return self::UPPERCASE;
+        // Strings like "DROMEDARY"
+        if ($this->isUppercaseWord($input)) {
+            return self::STRATEGY_UNDERSCORE;
+        }
+
+        // Strings like "getLastName"
+        return self::STRATEGY_UPPERCASE;
+    }
+
+    /**
+     * Returns true if $input string is a single word composed only by uppercase characters.
+     *
+     * @example isUppercaseWord('BRUSSELS'); // true
+     * @example isUppercaseWord('Brussels'); // false
+     *
+     * @param string $input
+     *
+     * @return bool
+     * @throws \Jawira\CaseConverter\CaseConverterException
+     */
+    protected function isUppercaseWord(string $input)
+    {
+        $match = preg_match('#^\p{Lu}+$#u', $input);
+
+        if ($match === false) {
+            throw new CaseConverterException('Error executing regex');
+        }
+
+        return $match === 1;
     }
 
     /**
@@ -137,7 +140,7 @@ class Convert
      *
      * @return array
      */
-    protected function splitUnderscoreString($input)
+    protected function splitUnderscoreString(string $input): array
     {
         return $this->splitString(self::UNDERSCORE . '+', $input);
     }
@@ -150,7 +153,7 @@ class Convert
      *
      * @return array
      */
-    protected function splitString($pattern, $input)
+    protected function splitString(string $pattern, string $input): array
     {
         return array_values(array_filter(mb_split($pattern, $input)));
     }
@@ -162,7 +165,7 @@ class Convert
      *
      * @return array
      */
-    protected function splitDashString($input)
+    protected function splitDashString(string $input): array
     {
         return $this->splitString(self::DASH . '+', $input);
     }
@@ -177,19 +180,19 @@ class Convert
      * @return array
      * @throws \Jawira\CaseConverter\CaseConverterException
      */
-    protected function splitUppercaseString($input)
+    protected function splitUppercaseString(string $input): array
     {
-        $res = preg_replace_callback('#\p{Lu}{1}#u',
-            function ($match) {
-                return self::UNDERSCORE . reset($match);
-            },
-                                     $input);
+        $closure = function ($match) {
+            return self::UNDERSCORE . reset($match);
+        };
 
-        if (is_null($res)) {
+        $result = preg_replace_callback('#\p{Lu}{1}#u', $closure, $input);
+
+        if (is_null($result)) {
             throw new CaseConverterException("Error while processing $input");
         }
 
-        return $this->splitUnderscoreString($res);
+        return $this->splitUnderscoreString($result);
     }
 
     /**
@@ -197,7 +200,7 @@ class Convert
      *
      * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->toCamel();
     }
@@ -205,66 +208,62 @@ class Convert
     /**
      * Returns camel case string
      *
-     * @param bool $uppercase Should first letter be in uppercase
-     *
      * @example thisIsCamelCase
      *
      * @return string
      */
-    public function toCamel($uppercase = false)
+    public function toCamel()
     {
-        $result = '';
+        return $this->glueString(self::EMPTY_STRING, \MB_CASE_TITLE, true);
+    }
 
-        foreach ($this->words as $key => $word) {
-            $mode   = ($key === 0 && $uppercase === false) ? \MB_CASE_LOWER : \MB_CASE_TITLE;
-            $result .= mb_convert_case($word, $mode);
+    /**
+     * @param string $glue           Character to glue words
+     * @param int    $mode           MB String constant
+     * @param bool   $lowerCaseFirst Force using lower case for the first word
+     *
+     * @return string
+     */
+    protected function glueString(string $glue, int $mode, bool $lowerCaseFirst = false): string
+    {
+        assert(in_array($mode, [\MB_CASE_UPPER, \MB_CASE_LOWER, \MB_CASE_TITLE]), 'Invalid MB mode');
+
+        $closure = function ($word) use ($mode) {
+            return mb_convert_case($word, $mode, 'UTF-8');
+        };
+
+        $words = array_map($closure, $this->words);
+
+        if ($lowerCaseFirst && count($this->words) > 0) {
+            $words[0] = mb_convert_case($words[0], \MB_CASE_LOWER, 'UTF-8');
         }
 
-        return $result;
+        return implode($glue, $words);
     }
 
     /**
      * @example ThisIsPascalCase
      * @return string
      */
-    public function toPascal()
+    public function toPascal(): string
     {
-        return $this->toCamel(true);
+        return $this->glueString(self::EMPTY_STRING, \MB_CASE_TITLE);
     }
 
     /**
      * @example this_is_snake_case
      * @return string
      */
-    public function toSnake()
+    public function toSnake(): string
     {
         return $this->glueString(self::UNDERSCORE, \MB_CASE_LOWER);
-    }
-
-    /**
-     * @param string $glue Character to glue words
-     * @param int    $mode MB String constant
-     *
-     * @return string
-     */
-    protected function glueString($glue, $mode)
-    {
-        assert(in_array($mode, [\MB_CASE_UPPER, \MB_CASE_LOWER, \MB_CASE_TITLE]));
-
-        $convertCase = function ($word) use ($mode) {
-            return mb_convert_case($word, $mode);
-        };
-
-        $words = array_map($convertCase, $this->words);
-
-        return implode($glue, $words);
     }
 
     /**
      * @example THIS_IS_MACRO_CASE
      * @return string
      */
-    public function toMacro()
+    public function toMacro(): string
     {
         return $this->glueString(self::UNDERSCORE, \MB_CASE_UPPER);
     }
@@ -273,7 +272,7 @@ class Convert
      * @example This_Is_Ada_Case
      * @return string
      */
-    public function toAda()
+    public function toAda(): string
     {
         return $this->glueString(self::UNDERSCORE, \MB_CASE_TITLE);
     }
@@ -282,7 +281,7 @@ class Convert
      * @example this-is-kebab-case
      * @return string
      */
-    public function toKebab()
+    public function toKebab(): string
     {
         return $this->glueString(self::DASH, \MB_CASE_LOWER);
     }
@@ -291,7 +290,7 @@ class Convert
      * @example THIS-IS-COBOL-CASE
      * @return string
      */
-    public function toCobol()
+    public function toCobol(): string
     {
         return $this->glueString(self::DASH, \MB_CASE_UPPER);
     }
@@ -300,7 +299,7 @@ class Convert
      * @example This-Is-Train-Case
      * @return string
      */
-    public function toTrain()
+    public function toTrain(): string
     {
         return $this->glueString(self::DASH, \MB_CASE_TITLE);
     }
