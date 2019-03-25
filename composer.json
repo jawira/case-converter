@@ -1,7 +1,7 @@
 {
   "name": "jawira/case-converter",
   "type": "library",
-  "description": "Convert string between: Snake case \uD83D\uDC0D, Camel case \uD83D\uDC2A, Kebab case \uD83E\uDD59, Pascal case , Ada case \uD83D\uDC69, Train case \uD83D\uDE86, Cobol case \uD83C\uDFE6 and Macro case \uD83D\uDD20.",
+  "description": "Convert string between: Snake case \uD83D\uDC0D, Camel case \uD83D\uDC2A, Kebab case \uD83E\uDD59, Pascal case \uD83D\uDC68\u200D\uD83D\uDD2C, Ada case \uD83D\uDC69\u200D\uD83D\uDD2C, Train case \uD83D\uDE86, Cobol case \uD83C\uDFE6 and Macro case \uD83D\uDD20.",
   "keywords": [
     "Camel case",
     "Snake case",

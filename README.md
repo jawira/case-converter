@@ -54,11 +54,15 @@ echo (new Convert('ОЧЕНЬ_ПРИЯТНО'));    // output: оченьПри�
 Notes
 -----
 
+// todo: update notes
+
 * Magic function `__toString` will always print string in Camel case format. 
 However, if input string is in Camel case format then Snake case is used.
 * If any underscore `_` is found, the input string is considered to be Snake 
 Case. If any dash `-` is found, the input string is considered to be Kebab Case. 
 Finally, if no `-` nor `_` is found, string is considered to be Camel Case.
+* todo: numbers not handled, please open issue
+
 
 Installation
 ------------
@@ -75,6 +79,11 @@ Then import `Convert` class into your code:
 <?php
 use Jawira\CaseConverter\Convert;
 ```
+
+Full example
+------------
+
+// full code w/require...
 
 Contributing
 ------------
