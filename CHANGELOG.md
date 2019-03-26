@@ -4,9 +4,12 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+## [v2.0.0] - 2019-03-26
+
 ### Changed
 
-- Behat tests have been adapted for new CaseConverter signature #21
+- [#21] New methods to convert strings between: Snake case, Camel case, Kebab case, Pascal case, Ada case, Train case, Cobol case and Macro case
+- [#21] Behat tests have been adapted for new CaseConverter signatures
 
 ## [v1.2.0] - 2019-03-18
 
@@ -139,3 +142,7 @@ Composer.
 [#18]: https://github.com/jawira/case-converter/pull/18
 [#19]: https://github.com/jawira/case-converter/pull/19
 [v1.2.0]: https://github.com/jawira/case-converter/compare/v1.1.7...v1.2.0
+
+[#21]: https://github.com/jawira/case-converter/pull/21
+
+[v2.0.0]: https://github.com/jawira/case-converter/compare/v1.2.0...v2.0.0
