@@ -13,6 +13,8 @@ Feature: Convert Case
       | method   | input-string         | output-string        |
       | toCamel  |                      |                      |
       | toCamel  | a                    | a                    |
+      | toCamel  | NASA                 | nasa                 |
+      | toCamel  | Fbi                  | fbi                  |
       | toCamel  | B-C-D                | bCD                  |
       | toCamel  | CamelCase            | camelCase            |
       | toCamel  | dataTransfer         | dataTransfer         |
@@ -26,6 +28,8 @@ Feature: Convert Case
       | toCamel  | Ես-հայերեն-չգիտեմ    | եսՀայերենՉգիտեմ      |
       | toPascal |                      |                      |
       | toPascal | a                    | A                    |
+      | toPascal | NASA                 | Nasa                 |
+      | toPascal | Fbi                  | Fbi                  |
       | toPascal | B-C-D                | BCD                  |
       | toPascal | CamelCase            | CamelCase            |
       | toPascal | dataTransfer         | DataTransfer         |
@@ -39,7 +43,9 @@ Feature: Convert Case
       | toPascal | Ես-հայերեն-չգիտեմ    | ԵսՀայերենՉգիտեմ      |
       | toSnake  |                      |                      |
       | toSnake  | a                    | a                    |
-      | toSnake  | B-C-D                | a_b_c                |
+      | toSnake  | NASA                 | nasa                 |
+      | toSnake  | Fbi                  | fbi                  |
+      | toSnake  | B-C-D                | b_c_d                |
       | toSnake  | CamelCase            | camel_case           |
       | toSnake  | dataTransfer         | data_transfer        |
       | toSnake  | eniac_computer       | eniac_computer       |
@@ -52,7 +58,9 @@ Feature: Convert Case
       | toSnake  | Ես-հայերեն-չգիտեմ    | ես_հայերեն_չգիտեմ    |
       | toMacro  |                      |                      |
       | toMacro  | a                    | A                    |
-      | toMacro  | B-C-D                | A_B_C                |
+      | toMacro  | NASA                 | NASA                 |
+      | toMacro  | Fbi                  | FBI                  |
+      | toMacro  | B-C-D                | B_C_D                |
       | toMacro  | CamelCase            | CAMEL_CASE           |
       | toMacro  | dataTransfer         | DATA_TRANSFER        |
       | toMacro  | eniac_computer       | ENIAC_COMPUTER       |
@@ -64,8 +72,10 @@ Feature: Convert Case
       | toMacro  | ОЧЕНЬ_ПРИЯТНО        | ОЧЕНЬ_ПРИЯТНО        |
       | toMacro  | Ես-հայերեն-չգիտեմ    | ԵՍ_ՀԱՅԵՐԵՆ_ՉԳԻՏԵՄ    |
       | toAda    |                      |                      |
-      | toAda    | a                    | a                    |
-      | toAda    | B-C-D                | A_B_C                |
+      | toAda    | a                    | A                    |
+      | toAda    | NASA                 | Nasa                 |
+      | toAda    | Fbi                  | Fbi                  |
+      | toAda    | B-C-D                | B_C_D                |
       | toAda    | CamelCase            | Camel_Case           |
       | toAda    | dataTransfer         | Data_Transfer        |
       | toAda    | eniac_computer       | Eniac_Computer       |
@@ -78,7 +88,9 @@ Feature: Convert Case
       | toAda    | Ես-հայերեն-չգիտեմ    | Ես_Հայերեն_Չգիտեմ    |
       | toKebab  |                      |                      |
       | toKebab  | a                    | a                    |
-      | toKebab  | B-C-D                | a-b-c                |
+      | toKebab  | NASA                 | nasa                 |
+      | toKebab  | Fbi                  | fbi                  |
+      | toKebab  | B-C-D                | b-c-d                |
       | toKebab  | CamelCase            | camel-case           |
       | toKebab  | dataTransfer         | data-transfer        |
       | toKebab  | eniac_computer       | eniac-computer       |
@@ -91,7 +103,9 @@ Feature: Convert Case
       | toKebab  | Ես-հայերեն-չգիտեմ    | ես-հայերեն-չգիտեմ    |
       | toCobol  |                      |                      |
       | toCobol  | a                    | A                    |
-      | toCobol  | B-C-D                | A-B-C                |
+      | toCobol  | NASA                 | NASA                 |
+      | toCobol  | Fbi                  | FBI                  |
+      | toCobol  | B-C-D                | B-C-D                |
       | toCobol  | CamelCase            | CAMEL-CASE           |
       | toCobol  | dataTransfer         | DATA-TRANSFER        |
       | toCobol  | eniac_computer       | ENIAC-COMPUTER       |
@@ -103,8 +117,10 @@ Feature: Convert Case
       | toCobol  | ОЧЕНЬ_ПРИЯТНО        | ОЧЕНЬ-ПРИЯТНО        |
       | toCobol  | Ես-հայերեն-չգիտեմ    | ԵՍ-ՀԱՅԵՐԵՆ-ՉԳԻՏԵՄ    |
       | toTrain  |                      |                      |
-      | toTrain  | a                    | a                    |
-      | toTrain  | B-C-D                | A-B-C                |
+      | toTrain  | a                    | A                    |
+      | toTrain  | NASA                 | Nasa                 |
+      | toTrain  | Fbi                  | Fbi                  |
+      | toTrain  | B-C-D                | B-C-D                |
       | toTrain  | CamelCase            | Camel-Case           |
       | toTrain  | dataTransfer         | Data-Transfer        |
       | toTrain  | eniac_computer       | Eniac-Computer       |

@@ -66,6 +66,7 @@
     <target name="phpstan:run" depends="phive:install">
         <exec executable="bin/phpstan" passthru="true" checkreturn="true">
             <arg line="--level=max analyze"/>
+            <arg value="--no-progress"/>
             <arg path="src"/>
         </exec>
     </target>
