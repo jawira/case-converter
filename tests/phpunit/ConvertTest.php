@@ -193,7 +193,7 @@ class ConvertTest extends TestCase
      *
      * @dataProvider readSnakeProvider
      *
-     * @covers       \Jawira\CaseConverter\Convert::readSnake()
+     * @covers       \Jawira\CaseConverter\Convert::splitUnderscoreString()
      *
      * @param $snake
      * @param $expected
@@ -242,7 +242,7 @@ class ConvertTest extends TestCase
      *
      * This method should return all words contained in a _camel case_ string.
      *
-     * @covers       \Jawira\CaseConverter\Convert::readCamel()
+     * @covers       \Jawira\CaseConverter\Convert::splitUppercaseString()
      *
      * @dataProvider readCamelProvider
      *
@@ -296,7 +296,7 @@ class ConvertTest extends TestCase
      * Load method should call \Jawira\CaseConverter\Convert::analyse and then
      * send parsed words to \Jawira\CaseConverter\Convert::$words.
      *
-     * @covers       \Jawira\CaseConverter\Convert::load()
+     * @covers       \Jawira\CaseConverter\Convert::detectNamingConvention()
      *
      * @dataProvider loadProvider
      *

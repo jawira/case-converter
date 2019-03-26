@@ -58,12 +58,15 @@
     <target name="behat:run" description="Run behat tests" depends="phive:install">
         <exec executable="bin/behat" passthru="true" checkreturn="true">
             <arg value="--colors"/>
+            <arg value="--no-interaction"/>
+            <!--<arg value="&#45;&#45;stop-on-failure"/>-->
         </exec>
     </target>
 
     <target name="phpstan:run" depends="phive:install">
         <exec executable="bin/phpstan" passthru="true" checkreturn="true">
             <arg line="--level=max analyze"/>
+            <arg value="--no-progress"/>
             <arg path="src"/>
         </exec>
     </target>
@@ -72,5 +75,17 @@
         <exec executable="phive" passthru="true" checkreturn="true">
             <arg value="install"/>
         </exec>
+    </target>
+
+    <target name="changelog:links" description="Update links in composer.json">
+        <composer command="require">
+            <arg value="symplify/changelog-linker"/>
+        </composer>
+        <exec executable="vendor/bin/changelog-linker">
+            <arg value="link"/>
+        </exec>
+        <composer command="remove">
+            <arg value="symplify/changelog-linker"/>
+        </composer>
     </target>
 </project>

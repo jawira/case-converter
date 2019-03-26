@@ -4,176 +4,130 @@ Feature: Convert Case
   change case
 
 
-  Scenario Outline: Implicitly converting from Camel Case to Snake Case
-    Given CaseConverter class is instantiated with "<camel>"
-    When I cast object to string
-    Then I should have "<snake>"
+  Scenario Outline: Convert a string calling a CaseConverter method
+    Given CaseConverter class is instantiated with "<input-string>"
+    When I call "<method>"
+    Then method should return "<output-string>"
 
     Examples:
-      | camel            | snake              |
-      |                  |                    |
-      | one              | one                |
-      | Laser            | laser              |
-      | helloWorld       | hello_world        |
-      | objectId         | object_id          |
-      | firstName        | first_name         |
-      | PascalCase       | pascal_case        |
-      | lowerCamelCase   | lower_camel_case   |
-      | numberOfProducts | number_of_products |
-      | ASCII            | a_s_c_i_i          |
-      | NASA             | n_a_s_a            |
-      | Ñandú            | ñandú              |
-      | VergüenzaAjena   | vergüenza_ajena    |
-      | πολύΚαλό         | πολύ_καλό          |
-      | ОченьПриятно     | очень_приятно      |
-      | եսՀայերենՉգիտեմ  | ես_հայերեն_չգիտեմ  |
-      | jagFörstårInte   | jag_förstår_inte   |
-
-
-  Scenario Outline: Implicitly converting from Snake Case to Camel Case
-    Given CaseConverter class is instantiated with "<snake>"
-    When I cast object to string
-    Then I should have "<camel>"
-
-    Examples:
-      | snake             | camel           |
-      |                   |                 |
-      | One               | one             |
-      | Laser             | laser           |
-      | product_id        | productId       |
-      | last_update       | lastUpdate      |
-      | CREATED_AT        | createdAt       |
-      | last_user_id      | lastUserId      |
-      | f_b_i             | fBI             |
-      | u_s_a             | uSA             |
-      | LETRA_EÑE         | letraEñe        |
-      | QUICO_Y_ÑOÑO      | quicoYÑoño      |
-      | Un_Gran_Árbol     | unGranÁrbol     |
-      | Πολύ_καλό         | πολύΚαλό        |
-      | ОЧЕНЬ_ПРИЯТНО     | оченьПриятно    |
-      | Ես_հայերեն_չգիտեմ | եսՀայերենՉգիտեմ |
-      | Jag_förstår_inte  | jagFörstårInte  |
-
-
-  Scenario Outline: Converting from Camel Case to screaming Snake Case
-    Given CaseConverter class is instantiated with "<camel>"
-    When I call "toSnake" method with "true" as argument
-    Then I should have "<screaming>"
-
-    Examples:
-      | camel            | screaming          |
-      |                  |                    |
-      | one              | ONE                |
-      | Laser            | LASER              |
-      | helloWorld       | HELLO_WORLD        |
-      | objectId         | OBJECT_ID          |
-      | firstName        | FIRST_NAME         |
-      | PascalCase       | PASCAL_CASE        |
-      | lowerCamelCase   | LOWER_CAMEL_CASE   |
-      | numberOfProducts | NUMBER_OF_PRODUCTS |
-      | ASCII            | A_S_C_I_I          |
-      | NASA             | N_A_S_A            |
-      | Ñandú            | ÑANDÚ              |
-      | VergüenzaAjena   | VERGÜENZA_AJENA    |
-      | ΠολύΚαλό         | ΠΟΛΎ_ΚΑΛΌ          |
-      | ОченьПриятно     | ОЧЕНЬ_ПРИЯТНО      |
-      | եսՀայերենՉգիտեմ  | ԵՍ_ՀԱՅԵՐԵՆ_ՉԳԻՏԵՄ  |
-      | jagFörstårInte   | JAG_FÖRSTÅR_INTE   |
-
-
-  Scenario Outline: Converting from Snake Case to Pascal Case
-    Given CaseConverter class is instantiated with "<snake>"
-    When I call "toCamel" method with "true" as argument
-    Then I should have "<pascal>"
-
-    Examples:
-      | snake             | pascal          |
-      |                   |                 |
-      | One               | One             |
-      | Laser             | Laser           |
-      | product_id        | ProductId       |
-      | last_update       | LastUpdate      |
-      | CREATED_AT        | CreatedAt       |
-      | last_user_id      | LastUserId      |
-      | f_b_i             | FBI             |
-      | u_s_a             | USA             |
-      | LETRA_EÑE         | LetraEñe        |
-      | DON_RAMÓN_Y_ÑOÑO  | DonRamónYÑoño   |
-      | Un_Gran_Árbol     | UnGranÁrbol     |
-      | Πολύ_καλό         | ΠολύΚαλό        |
-      | Очень_приятно     | ОченьПриятно    |
-      | Ես_հայերեն_չգիտեմ | ԵսՀայերենՉգիտեմ |
-      | Jag_förstår_inte  | JagFörstårInte  |
-
-
-  Scenario Outline: Converting from Snake Case to Kebab case
-    Given CaseConverter class is instantiated with "<snake>"
-    When I call "toKebab" method with "false" as argument
-    Then I should have "<kebab>"
-
-    Examples:
-      | snake             | kebab             |
-      |                   |                   |
-      | One               | one               |
-      | Laser             | laser             |
-      | product_id        | product-id        |
-      | last_update       | last-update       |
-      | CREATED_AT        | created-at        |
-      | last_user_id      | last-user-id      |
-      | f_b_i             | f-b-i             |
-      | u_s_a             | u-s-a             |
-      | LETRA_EÑE         | letra-eñe         |
-      | QUICO_Y_ÑOÑO      | quico-y-ñoño      |
-      | Un_Gran_Árbol     | un-gran-árbol     |
-      | πολύ_Καλό         | πολύ-καλό         |
-      | Очень_Приятно     | очень-приятно     |
-      | ես_Հայերեն_Չգիտեմ | ես-հայերեն-չգիտեմ |
-      | jag_Förstår_Inte  | jag-förstår-inte  |
-
-  Scenario Outline: Converting from Snake Case to Train case
-    Given CaseConverter class is instantiated with "<snake>"
-    When I call "toKebab" method with "true" as argument
-    Then I should have "<kebab>"
-
-    Examples:
-      | snake             | kebab             |
-      |                   |                   |
-      | One               | One               |
-      | Laser             | Laser             |
-      | product_id        | Product-Id        |
-      | last_update       | Last-Update       |
-      | CREATED_AT        | Created-At        |
-      | last_user_id      | Last-User-Id      |
-      | f_b_i             | F-B-I             |
-      | u_s_a             | U-S-A             |
-      | LETRA_EÑE         | Letra-Eñe         |
-      | QUICO_Y_ÑOÑO      | Quico-Y-Ñoño      |
-      | Un_Gran_Árbol     | Un-Gran-Árbol     |
-      | πολύ_Καλό         | Πολύ-Καλό         |
-      | Очень_Приятно     | Очень-Приятно     |
-      | ես_Հայերեն_Չգիտեմ | Ես-Հայերեն-Չգիտեմ |
-      | jag_Förstår_Inte  | Jag-Förstår-Inte  |
-
-  Scenario Outline: Converting from Kebab case to Snake case
-    Given CaseConverter class is instantiated with "<kebab>"
-    When I call "toSnake" method with "false" as argument
-    Then I should have "<snake>"
-
-    Examples:
-      | kebab             | snake            |
-      |                   |                   |
-      | One               | one               |
-      | Laser             | laser             |
-      | Product-Id        | product_id        |
-      | Last-Update       | last_update       |
-      | Created-At        | created_at        |
-      | Last-User-Id      | last_user_id      |
-      | F-B-I             | f_b_i             |
-      | U-S-A             | u_s_a             |
-      | Letra-Eñe         | letra_eñe         |
-      | Quico-Y-Ñoño      | quico_y_ñoño      |
-      | Un-Gran-Árbol     | un_gran_árbol     |
-      | Πολύ-Καλό         | πολύ_καλό         |
-      | Очень-Приятно     | очень_приятно     |
-      | Ես-Հայերեն-Չգիտեմ | ես_հայերեն_չգիտեմ |
-      | Jag-Förstår-Inte  | jag_förstår_inte  |
+      | method   | input-string         | output-string        |
+      | toCamel  |                      |                      |
+      | toCamel  | a                    | a                    |
+      | toCamel  | NASA                 | nasa                 |
+      | toCamel  | Fbi                  | fbi                  |
+      | toCamel  | B-C-D                | bCD                  |
+      | toCamel  | CamelCase            | camelCase            |
+      | toCamel  | dataTransfer         | dataTransfer         |
+      | toCamel  | eniac_computer       | eniacComputer        |
+      | toCamel  | FIBONACCI_NUMBER     | fibonacciNumber      |
+      | toCamel  | Good_Morning_Vietnam | goodMorningVietnam   |
+      | toCamel  | Jag_förstår_inte     | jagFörstårInte       |
+      | toCamel  | quicoYÑoño           | quicoYÑoño           |
+      | toCamel  | Πολύ-καλό            | πολύΚαλό             |
+      | toCamel  | ОЧЕНЬ_ПРИЯТНО        | оченьПриятно         |
+      | toCamel  | Ես-հայերեն-չգիտեմ    | եսՀայերենՉգիտեմ      |
+      | toPascal |                      |                      |
+      | toPascal | a                    | A                    |
+      | toPascal | NASA                 | Nasa                 |
+      | toPascal | Fbi                  | Fbi                  |
+      | toPascal | B-C-D                | BCD                  |
+      | toPascal | CamelCase            | CamelCase            |
+      | toPascal | dataTransfer         | DataTransfer         |
+      | toPascal | eniac_computer       | EniacComputer        |
+      | toPascal | FIBONACCI_NUMBER     | FibonacciNumber      |
+      | toPascal | Good_Morning_Vietnam | GoodMorningVietnam   |
+      | toPascal | Jag_förstår_inte     | JagFörstårInte       |
+      | toPascal | quicoYÑoño           | QuicoYÑoño           |
+      | toPascal | Πολύ-καλό            | ΠολύΚαλό             |
+      | toPascal | ОЧЕНЬ_ПРИЯТНО        | ОченьПриятно         |
+      | toPascal | Ես-հայերեն-չգիտեմ    | ԵսՀայերենՉգիտեմ      |
+      | toSnake  |                      |                      |
+      | toSnake  | a                    | a                    |
+      | toSnake  | NASA                 | nasa                 |
+      | toSnake  | Fbi                  | fbi                  |
+      | toSnake  | B-C-D                | b_c_d                |
+      | toSnake  | CamelCase            | camel_case           |
+      | toSnake  | dataTransfer         | data_transfer        |
+      | toSnake  | eniac_computer       | eniac_computer       |
+      | toSnake  | FIBONACCI_NUMBER     | fibonacci_number     |
+      | toSnake  | Good_Morning_Vietnam | good_morning_vietnam |
+      | toSnake  | Jag_förstår_inte     | jag_förstår_inte     |
+      | toSnake  | quicoYÑoño           | quico_y_ñoño         |
+      | toSnake  | Πολύ-καλό            | πολύ_καλό            |
+      | toSnake  | ОЧЕНЬ_ПРИЯТНО        | очень_приятно        |
+      | toSnake  | Ես-հայերեն-չգիտեմ    | ես_հայերեն_չգիտեմ    |
+      | toMacro  |                      |                      |
+      | toMacro  | a                    | A                    |
+      | toMacro  | NASA                 | NASA                 |
+      | toMacro  | Fbi                  | FBI                  |
+      | toMacro  | B-C-D                | B_C_D                |
+      | toMacro  | CamelCase            | CAMEL_CASE           |
+      | toMacro  | dataTransfer         | DATA_TRANSFER        |
+      | toMacro  | eniac_computer       | ENIAC_COMPUTER       |
+      | toMacro  | FIBONACCI_NUMBER     | FIBONACCI_NUMBER     |
+      | toMacro  | Good_Morning_Vietnam | GOOD_MORNING_VIETNAM |
+      | toMacro  | Jag_förstår_inte     | JAG_FÖRSTÅR_INTE     |
+      | toMacro  | quicoYÑoño           | QUICO_Y_ÑOÑO         |
+      | toMacro  | Πολύ-καλό            | ΠΟΛΎ_ΚΑΛΌ            |
+      | toMacro  | ОЧЕНЬ_ПРИЯТНО        | ОЧЕНЬ_ПРИЯТНО        |
+      | toMacro  | Ես-հայերեն-չգիտեմ    | ԵՍ_ՀԱՅԵՐԵՆ_ՉԳԻՏԵՄ    |
+      | toAda    |                      |                      |
+      | toAda    | a                    | A                    |
+      | toAda    | NASA                 | Nasa                 |
+      | toAda    | Fbi                  | Fbi                  |
+      | toAda    | B-C-D                | B_C_D                |
+      | toAda    | CamelCase            | Camel_Case           |
+      | toAda    | dataTransfer         | Data_Transfer        |
+      | toAda    | eniac_computer       | Eniac_Computer       |
+      | toAda    | FIBONACCI_NUMBER     | Fibonacci_Number     |
+      | toAda    | Good_Morning_Vietnam | Good_Morning_Vietnam |
+      | toAda    | Jag_förstår_inte     | Jag_Förstår_Inte     |
+      | toAda    | quicoYÑoño           | Quico_Y_Ñoño         |
+      | toAda    | Πολύ-καλό            | Πολύ_Καλό            |
+      | toAda    | ОЧЕНЬ_ПРИЯТНО        | Очень_Приятно        |
+      | toAda    | Ես-հայերեն-չգիտեմ    | Ես_Հայերեն_Չգիտեմ    |
+      | toKebab  |                      |                      |
+      | toKebab  | a                    | a                    |
+      | toKebab  | NASA                 | nasa                 |
+      | toKebab  | Fbi                  | fbi                  |
+      | toKebab  | B-C-D                | b-c-d                |
+      | toKebab  | CamelCase            | camel-case           |
+      | toKebab  | dataTransfer         | data-transfer        |
+      | toKebab  | eniac_computer       | eniac-computer       |
+      | toKebab  | FIBONACCI_NUMBER     | fibonacci-number     |
+      | toKebab  | Good_Morning_Vietnam | good-morning-vietnam |
+      | toKebab  | Jag_förstår_inte     | jag-förstår-inte     |
+      | toKebab  | quicoYÑoño           | quico-y-ñoño         |
+      | toKebab  | Πολύ-καλό            | πολύ-καλό            |
+      | toKebab  | ОЧЕНЬ_ПРИЯТНО        | очень-приятно        |
+      | toKebab  | Ես-հայերեն-չգիտեմ    | ես-հայերեն-չգիտեմ    |
+      | toCobol  |                      |                      |
+      | toCobol  | a                    | A                    |
+      | toCobol  | NASA                 | NASA                 |
+      | toCobol  | Fbi                  | FBI                  |
+      | toCobol  | B-C-D                | B-C-D                |
+      | toCobol  | CamelCase            | CAMEL-CASE           |
+      | toCobol  | dataTransfer         | DATA-TRANSFER        |
+      | toCobol  | eniac_computer       | ENIAC-COMPUTER       |
+      | toCobol  | FIBONACCI_NUMBER     | FIBONACCI-NUMBER     |
+      | toCobol  | Good_Morning_Vietnam | GOOD-MORNING-VIETNAM |
+      | toCobol  | Jag_förstår_inte     | JAG-FÖRSTÅR-INTE     |
+      | toCobol  | quicoYÑoño           | QUICO-Y-ÑOÑO         |
+      | toCobol  | Πολύ-καλό            | ΠΟΛΎ-ΚΑΛΌ            |
+      | toCobol  | ОЧЕНЬ_ПРИЯТНО        | ОЧЕНЬ-ПРИЯТНО        |
+      | toCobol  | Ես-հայերեն-չգիտեմ    | ԵՍ-ՀԱՅԵՐԵՆ-ՉԳԻՏԵՄ    |
+      | toTrain  |                      |                      |
+      | toTrain  | a                    | A                    |
+      | toTrain  | NASA                 | Nasa                 |
+      | toTrain  | Fbi                  | Fbi                  |
+      | toTrain  | B-C-D                | B-C-D                |
+      | toTrain  | CamelCase            | Camel-Case           |
+      | toTrain  | dataTransfer         | Data-Transfer        |
+      | toTrain  | eniac_computer       | Eniac-Computer       |
+      | toTrain  | FIBONACCI_NUMBER     | Fibonacci-Number     |
+      | toTrain  | Good_Morning_Vietnam | Good-Morning-Vietnam |
+      | toTrain  | Jag_förstår_inte     | Jag-Förstår-Inte     |
+      | toTrain  | quicoYÑoño           | Quico-Y-Ñoño         |
+      | toTrain  | Πολύ-καλό            | Πολύ-Καλό            |
+      | toTrain  | ОЧЕНЬ_ПРИЯТНО        | Очень-Приятно        |
+      | toTrain  | Ես-հայերեն-չգիտեմ    | Ես-Հայերեն-Չգիտեմ    |
