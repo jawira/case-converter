@@ -35,7 +35,7 @@ detected. The use the right method to convert the string according to your
 needs.  
 
 ```php
-$son = new Convert('john_connor');
+$son = new Convert('john-connor');
 
 echo $son->toCamel();   // output: johnConnor
 echo $son->toSnake();   // output: john_connor 
@@ -80,7 +80,7 @@ Notes
 * You must use _UTF-8_ encoding.
 * Magic function `__toString` will always print string in _Camel case_ format.
 * Input strings are not supposed to have numbers in it. If you need to handle
-numbers with this library then please [open an issue].
+numbers then please [open an issue].
 
 Installation
 ------------
