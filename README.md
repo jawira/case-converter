@@ -41,6 +41,20 @@ echo $son->toCamel();   // output: johnConnor
 echo $son->toSnake();   // output: john_connor 
 ```
 
+Handled formats
+---------------
+
+| Name          | Method        | Example           | 
+| ------------- | ------------- | ----------------- |
+| Camel case    | `toCamel()`   | myNameIsBond      |
+| Pascal case   | `toPascal()`  | MyNameIsBond      |
+| Kebab case    | `toKebab()`   | my-name-is-bond   |
+| Train case    | `toTrain()`   | My-Name-Is-Bond   |
+| Cobol case    | `toCobol()`   | MY-NAME-IS-BOND   |
+| Snake case    | `toSnake()`   | my_name_is_bond   |
+| Ada case      | `toAda()`     | My_Name_Is_Bond   |
+| Macro case    | `toMacro()`   | MY_NAME_IS_BOND   |
+
 i18n
 ----
 
@@ -59,20 +73,6 @@ echo $grc->toCamel();   // output: πολύΚαλό
 $rus = new Convert('ОЧЕНЬ_ПРИЯТНО');    
 echo $rus->toCamel();   // output: оченьПриятно
 ```
-
-Handled formats
----------------
-
-| Name          | Method        | Example           | 
-| ------------- | ------------- | ----------------- |
-| Camel case    | `toCamel()`   | myNameIsBond      |
-| Pascal case   | `toPascal()`  | MyNameIsBond      |
-| Kebab case    | `toKebab()`   | my-name-is-bond   |
-| Train case    | `toTrain()`   | My-Name-Is-Bond   |
-| Cobol case    | `toCobol()`   | MY-NAME-IS-BOND   |
-| Snake case    | `toSnake()`   | my_name_is_bond   |
-| Ada case      | `toAda()`     | My_Name_Is_Bond   |
-| Macro case    | `toMacro()`   | MY_NAME_IS_BOND   |
 
 Notes
 -----
