@@ -142,7 +142,5 @@ Composer.
 [#18]: https://github.com/jawira/case-converter/pull/18
 [#19]: https://github.com/jawira/case-converter/pull/19
 [v1.2.0]: https://github.com/jawira/case-converter/compare/v1.1.7...v1.2.0
-
 [#21]: https://github.com/jawira/case-converter/pull/21
-
 [v2.0.0]: https://github.com/jawira/case-converter/compare/v1.2.0...v2.0.0
