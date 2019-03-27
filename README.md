@@ -28,7 +28,7 @@ Features:
 Usage
 -----
 
-Explicitly set output case:
+The input string is automatically 
 
 ```php
 $son = new Convert('john_connor');
@@ -46,18 +46,43 @@ echo $son->toCobol();   // output: JOHN-CONNOR
 Handling multilingual
 ---------------------
 
+Multilingual strings are handled automatically:
+
 ```php
-echo (new Convert('DON_RAMÓN_Y_ÑOÑO')); // output: donRamónYÑoño 
-echo (new Convert('πολύΚαλό'));         // output: πολύΚαλό 
-echo (new Convert('ОЧЕНЬ_ПРИЯТНО'));    // output: оченьПриятно 
+// Spanish
+$esp = new Convert('DON_RAMÓN_Y_ÑOÑO'); 
+echo $esp->toCamel();   // output: donRamónYÑoño
+
+// Greek
+$grc =(new Convert('πολύΚαλό');          
+echo $grc->toCamel();   // output: πολύΚαλό
+
+// Russian
+$rus = new Convert('ОЧЕНЬ_ПРИЯТНО');    
+echo $rus->toCamel();   // output: оченьПриятно
 ```
+
+Handled formats
+---------------
+
+| Name          | Example           |
+| ------------- | ----------------- |
+| Camel case    | myNameIsBond      |
+| Pascal case   | MyNameIsBond      |
+| Kebab case    | my-name-is-bond   |
+| Train case    | My-Name-Is-Bond   |
+| Cobol case    | MY-NAME-IS-BOND   |
+| Snake case    | my_name_is_bond   |
+| Ada case      | My_Name_Is_Bond   |
+| Macro case    | MY_NAME_IS_BOND   |
 
 Notes
 -----
 
-* Magic function `__toString` will always print string in Camel case format.
-* todo: numbers not handled, please open issue
-* // todo: update notes
+* This library expects to receive an _UTF-8_ string.
+* Magic function `__toString` will always print string in _Camel case_ format.
+* Input string are not supposed to have numbers in it. If you have a problem 
+please [open an issue].
 
 Installation
 ------------
@@ -85,9 +110,15 @@ Full example
 Contributing
 ------------
 
-To contribute to this project please read [CONTRIBUTING.md](./CONTRIBUTING.md).
+Pull requests are welcome, please [open an issue] before committing.
+
+Good practices are described in [CONTRIBUTING.md].
 
 License
 -------
 
 This library is licensed under the [MIT LICENSE](LICENSE.md).
+
+
+[open an issue]: https://github.com/jawira/case-converter/issues/new
+[CONTRIBUTING.md]: ./CONTRIBUTING.md
