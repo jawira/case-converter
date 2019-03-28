@@ -1,0 +1,18 @@
+language: php
+
+php:
+  - 7.1
+  - 7.2
+  - 7.3
+
+# Commands to be run before your environment runs.
+before_script:
+  - composer self-update
+  - wget -O /usr/local/bin/phive https://phar.io/releases/phive.phar
+  - chmod -x /usr/local/bin/phive
+  - phive --help
+  - wget -O /usr/local/bin/phing https://github.com/phingofficial/phing/releases/download/3.0.0-alpha2/phing-3.0.0-alpha2.phar
+  - chmod -x /usr/local/bin/phing
+  - composer --help
+
+
