@@ -17,22 +17,69 @@ class ConvertTest extends TestCase
      * Tests if constructor calls \Jawira\CaseConverter\Convert::load.
      *
      * @covers \Jawira\CaseConverter\Convert::__construct()
-     *
      */
     public function testConstructor()
     {
         $mock = $this->getMockBuilder(Convert::class)
                      ->disableOriginalConstructor()
-                     ->setMethods(['load'])
+                     ->setMethods(['detectNamingConvention'])
                      ->getMock();
 
         $mock->expects($this->once())
-             ->method('load')
+             ->method('detectNamingConvention')
              ->with($this->equalTo('hello_world'));
 
         $class = new ReflectionObject($mock);
         $class->getConstructor()
               ->invoke($mock, 'hello_world');
+    }
+
+    /**
+     * @covers       \Jawira\CaseConverter\Convert::isUppercaseWord()
+     *
+     * @param string $inputString
+     * @param bool   $expectedResult
+     *
+     * @dataProvider isUppercaseWordProvider
+     *
+     * @throws \ReflectionException
+     */
+    public function testIsUppercaseWord(string $inputString, bool $expectedResult)
+    {
+        // Disabling constructor without stub methods
+        $stub = $this->getMockBuilder(Convert::class)
+                     ->disableOriginalConstructor()
+                     ->setMethods()
+                     ->getMock();
+
+        // Removing protected for analyse method
+        $reflection = new ReflectionObject($stub);
+        $method     = $reflection->getMethod('isUppercaseWord');
+        $method->setAccessible(true);
+
+        $output = $method->invoke($stub, $inputString);
+
+        $this->assertSame($expectedResult, $output);
+    }
+
+    /**
+     * Data provider for \Jawira\CaseConverter\Convert::isUppercaseWord()
+     *
+     * @return array
+     */
+    public function isUppercaseWordProvider()
+    {
+        return [
+            ['X', true],
+            ['YES', true],
+            ['HELLO', true],
+            ['', false],
+            ['x', false],
+            ['HELLOxWORLD', false],
+            ['HELLO-WORLD', false],
+            ['HELLO_WORLD', false],
+            ['HelloWorld', false],
+        ];
     }
 
     /**
@@ -42,6 +89,7 @@ class ConvertTest extends TestCase
      * $input contains '_'.
      *
      * @covers       \Jawira\CaseConverter\Convert::analyse()
+     * @covers       \Jawira\CaseConverter\Convert::isUppercaseWord()
      * @dataProvider analyseProvider
      *
      * @param $input
@@ -75,12 +123,13 @@ class ConvertTest extends TestCase
     public function analyseProvider()
     {
         return [
-            'Snake 1' => ['hola_mundo', Convert::SNAKE],
-            'Snake 2' => ['HELLO_WORLD', Convert::SNAKE],
-            'Camel 1' => ['', Convert::CAMEL],
-            'Camel 2' => ['HELLO', Convert::CAMEL],
-            'Camel 3' => ['one', Convert::CAMEL],
-            'Camel 4' => ['helloWorld', Convert::CAMEL],
+            'Dash 1'  => ['hola_mundo', Convert::STRATEGY_UNDERSCORE],
+            'Dash 2'  => ['HELLO_WORLD', Convert::STRATEGY_UNDERSCORE],
+            'Dash 3'  => ['HELLO', Convert::STRATEGY_UNDERSCORE],
+            'Upper 1' => ['', Convert::STRATEGY_UPPERCASE],
+            'Upper 3' => ['one', Convert::STRATEGY_UPPERCASE],
+            'Upper 4' => ['helloWorld', Convert::STRATEGY_UPPERCASE],
+            'dash 1'  => ['hello-World', Convert::STRATEGY_DASH],
         ];
     }
 
