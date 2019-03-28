@@ -13,6 +13,9 @@ before_script:
   - chmod -x /usr/local/bin/phing
   - phing -version
 
+script:
+  - phing setup test
+
 cache:
   directories:
     - /home/.cache/composer
