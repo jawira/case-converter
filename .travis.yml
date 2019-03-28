@@ -2,10 +2,7 @@ language: php
 
 php:
   - 7.1
-  - 7.2
-  - 7.3
 
-# Commands to be run before your environment runs.
 before_script:
   - composer self-update
   - wget -O /usr/local/bin/phive https://phar.io/releases/phive.phar
@@ -15,4 +12,7 @@ before_script:
   - chmod -x /usr/local/bin/phing
   - composer --help
 
-
+cache:
+  directories:
+    - /home/.cache/composer
+    - /home/.phive
