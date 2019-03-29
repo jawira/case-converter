@@ -71,10 +71,11 @@
     </exec>
   </target>
 
-  <target name="phive:install">
+  <target name="phive:install" description="Install Phar">
     <exec executable="phive" passthru="true" checkreturn="true">
       <arg value="--no-progress"/>
       <arg value="install"/>
+      <arg value="--force-accept-unsigned"/>
       <arg line="--trust-gpg-keys 4AA394086372C20A,8E730BA25823D8B5,2420BAE0A3BE25C6"/>
     </exec>
   </target>
