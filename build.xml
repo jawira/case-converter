@@ -74,6 +74,7 @@
     <target name="phive:install">
         <exec executable="phive" passthru="true" checkreturn="true">
             <arg value="install"/>
+            <arg value="--force-accept-unsigned"/>
         </exec>
     </target>
 

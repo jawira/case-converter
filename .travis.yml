@@ -22,5 +22,5 @@ script:
 
 cache:
   directories:
-    - /home/.cache/composer
-    - /home/.phive
+    - /home/travis/.cache/composer
+    - /home/travis/.phive
