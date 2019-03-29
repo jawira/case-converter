@@ -1,6 +1,8 @@
 Development
 ===========
 
+![Phing targets](../build.png "Phing targets")
+
 Testing
 -------
 
