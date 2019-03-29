@@ -24,4 +24,4 @@ cache:
   directories:
     - /home/travis/.cache/composer
     - /home/travis/.phive
-    - /home/jawira/.gnupg
+    - /home/travis/.gnupg
