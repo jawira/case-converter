@@ -2,93 +2,92 @@
 
 <project name="Case Converter" description="Case Converter class" default="help" phingVersion="3.0">
 
-    <defaultexcludes default="true"/><!--Initializing default excludes-->
-    <defaultexcludes add="**/.idea"/>
-    <defaultexcludes add="**/.idea/**"/>
+  <defaultexcludes default="true"/><!--Initializing default excludes-->
+  <defaultexcludes add="**/.idea"/>
+  <defaultexcludes add="**/.idea/**"/>
 
-    <property name="phing.http.proxy" value="${env.http_proxy}"/>
+  <property name="phing.http.proxy" value="${env.http_proxy}"/>
 
-    <target name="help">
-        <loadfile property="help" file="docs/dev.md"/>
-        <echo>${line.separator}${help}</echo>
-    </target>
+  <target name="help">
+    <loadfile property="help" file="docs/dev.md"/>
+    <echo>${line.separator}${help}</echo>
+  </target>
 
-    <target name="setup"
-            description="Install dependencies"
-            depends="composer:install-dev, phive:install"/>
+  <target name="setup"
+          description="Install dependencies"
+          depends="composer:install-dev, phive:install"/>
 
-    <target name="test"
-            description="Quality assurance"
-            depends="php:lint, composer:validate, phpunit:run, behat:run, phpstan:run"/>
+  <target name="test"
+          description="Quality assurance"
+          depends="php:lint, composer:validate, phpunit:run, behat:run, phpstan:run"/>
 
-    <target name="composer:validate" description="Check composer.json syntax">
-        <composer>
-            <arg value="validate"/>
-            <arg value="--strict"/>
-            <arg value="--no-check-lock"/>
-        </composer>
-    </target>
+  <target name="composer:validate" description="Check composer.json syntax">
+    <composer>
+      <arg value="validate"/>
+      <arg value="--strict"/>
+      <arg value="--no-check-lock"/>
+    </composer>
+  </target>
 
-    <target name="composer:install-dev">
-        <composer composer="bin/composer" command="install">
-            <arg value="--no-suggest"/>
-            <arg value="--no-interaction"/>
-            <arg value="--profile"/>
-            <arg value="--prefer-dist"/>
-        </composer>
-    </target>
+  <target name="composer:install-dev">
+    <composer composer="bin/composer" command="install">
+      <arg value="--no-suggest"/>
+      <arg value="--no-interaction"/>
+      <arg value="--profile"/>
+      <arg value="--prefer-dist"/>
+    </composer>
+  </target>
 
-    <target name="phpunit:run" description="Run unit tests" depends="phive:install">
-        <exec executable="bin/phpunit" passthru="true" checkreturn="true">
-            <arg line="--configuration=config/phpunit.xml"/>
-            <arg value="--testdox"/>
-            <arg value="--stop-on-failure"/>
-        </exec>
-    </target>
+  <target name="phpunit:run" description="Run unit tests" depends="phive:install">
+    <exec executable="bin/phpunit" passthru="true" checkreturn="true">
+      <arg line="--configuration=config/phpunit.xml"/>
+      <arg value="--testdox"/>
+      <arg value="--stop-on-failure"/>
+    </exec>
+  </target>
 
-    <target name="php:lint" description="Check syntax on PHP files">
-        <phplint>
-            <fileset dir="${project.basedir}">
-                <include name="**/*.php"/>
-                <exclude name="vendor/"/>
-            </fileset>
-        </phplint>
-    </target>
+  <target name="php:lint" description="Check syntax on PHP files">
+    <phplint>
+      <fileset dir="${project.basedir}">
+        <include name="**/*.php"/>
+        <exclude name="vendor/"/>
+      </fileset>
+    </phplint>
+  </target>
 
-    <target name="behat:run" description="Run behat tests" depends="phive:install">
-        <exec executable="bin/behat" passthru="true" checkreturn="true">
-            <arg value="--colors"/>
-            <arg value="--no-interaction"/>
-            <!--<arg value="&#45;&#45;stop-on-failure"/>-->
-        </exec>
-    </target>
+  <target name="behat:run" description="Run behat tests" depends="phive:install">
+    <exec executable="bin/behat" passthru="true" checkreturn="true">
+      <arg value="--colors"/>
+      <arg value="--no-interaction"/>
+      <!--<arg value="&#45;&#45;stop-on-failure"/>-->
+    </exec>
+  </target>
 
-    <target name="phpstan:run" depends="phive:install">
-        <exec executable="bin/phpstan" passthru="true" checkreturn="true">
-            <arg line="--level=max analyze"/>
-            <arg value="--no-progress"/>
-            <arg path="src"/>
-        </exec>
-    </target>
+  <target name="phpstan:run" depends="phive:install">
+    <exec executable="bin/phpstan" passthru="true" checkreturn="true">
+      <arg line="--level=max analyze"/>
+      <arg value="--no-progress"/>
+      <arg path="src"/>
+    </exec>
+  </target>
 
-    <target name="phive:install">
-        <exec executable="phive" passthru="true" checkreturn="true">
-            <arg value="install"/>
-            <arg value="--trust-gpg-keys"/>
-            <arg value="4AA394086372C20A,8E730BA25823D8B5,2420BAE0A3BE25C6"/>
-            <arg value="--force-accept-unsigned"/>
-        </exec>
-    </target>
+  <target name="phive:install">
+    <exec executable="phive" passthru="true" checkreturn="true">
+      <arg value="install"/>
+      <arg line="--trust-gpg-keys 4AA394086372C20A,8E730BA25823D8B5,2420BAE0A3BE25C6"/>
+      <arg value="--force-accept-unsigned"/>
+    </exec>
+  </target>
 
-    <target name="changelog:links" description="Update links in composer.json">
-        <composer command="require">
-            <arg value="symplify/changelog-linker"/>
-        </composer>
-        <exec executable="vendor/bin/changelog-linker">
-            <arg value="link"/>
-        </exec>
-        <composer command="remove">
-            <arg value="symplify/changelog-linker"/>
-        </composer>
-    </target>
+  <target name="changelog:links" description="Update links in composer.json">
+    <composer command="require">
+      <arg value="symplify/changelog-linker"/>
+    </composer>
+    <exec executable="vendor/bin/changelog-linker">
+      <arg value="link"/>
+    </exec>
+    <composer command="remove">
+      <arg value="symplify/changelog-linker"/>
+    </composer>
+  </target>
 </project>
