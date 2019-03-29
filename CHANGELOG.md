@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+### Changed
+
+- [#27] Re-writing PHPUnit tests
+
+### Added
+
+- [#27] Travis-ci integration
+
 ## [v2.0.1] - 2019-03-28
 
 ### Changed
@@ -151,7 +159,6 @@ Composer.
 [v1.2.0]: https://github.com/jawira/case-converter/compare/v1.1.7...v1.2.0
 [#21]: https://github.com/jawira/case-converter/pull/21
 [v2.0.0]: https://github.com/jawira/case-converter/compare/v1.2.0...v2.0.0
-
 [#25]: https://github.com/jawira/case-converter/pull/25
-
 [v2.0.1]: https://github.com/jawira/case-converter/compare/v2.0.0...v2.0.1
+[#27]: https://github.com/jawira/case-converter/pull/27
