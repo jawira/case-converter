@@ -18,6 +18,7 @@ Features:
 * 🌐 i18n
 
 [![Latest Stable Version](https://poser.pugx.org/jawira/case-converter/v/stable)](https://packagist.org/packages/jawira/case-converter)
+[![Build Status](https://www.travis-ci.org/jawira/case-converter.svg?branch=master)](https://www.travis-ci.org/jawira/case-converter)
 [![License](https://poser.pugx.org/jawira/case-converter/license)](https://packagist.org/packages/jawira/case-converter)
 [![Total Downloads](https://poser.pugx.org/jawira/case-converter/downloads)](https://packagist.org/packages/jawira/case-converter)
 [![Monthly Downloads](https://poser.pugx.org/jawira/case-converter/d/monthly)](https://packagist.org/packages/jawira/case-converter)
@@ -28,43 +29,66 @@ Features:
 Usage
 -----
 
-Explicitly set output case:
+Pass the string to be converted as parameter when instantiating `Convert` class.
+
+The format from input string (e.g. _john_connor_) is going to be automatically 
+detected. The use the right method to convert the string according to your 
+needs.  
 
 ```php
-$son = new Convert('john_connor');
+$son = new Convert('john-connor');
 
 echo $son->toCamel();   // output: johnConnor
-echo $son->toPascal();  // output: JohnConnor 
 echo $son->toSnake();   // output: john_connor 
-echo $son->toAda();     // output: John_Connor 
-echo $son->toMacro();   // output: JOHN_CONNOR 
-echo $son->toKebab();   // output: john-connor 
-echo $son->toTrain();   // output: John-Connor 
-echo $son->toCobol();   // output: JOHN-CONNOR 
 ```
 
-Handling multilingual
----------------------
+Handled formats
+---------------
+
+| Name          | Method        | Example           | 
+| ------------- | ------------- | ----------------- |
+| Camel case    | `toCamel()`   | myNameIsBond      |
+| Pascal case   | `toPascal()`  | MyNameIsBond      |
+| Kebab case    | `toKebab()`   | my-name-is-bond   |
+| Train case    | `toTrain()`   | My-Name-Is-Bond   |
+| Cobol case    | `toCobol()`   | MY-NAME-IS-BOND   |
+| Snake case    | `toSnake()`   | my_name_is_bond   |
+| Ada case      | `toAda()`     | My_Name_Is_Bond   |
+| Macro case    | `toMacro()`   | MY_NAME_IS_BOND   |
+
+i18n
+----
+
+Fully compatible with multilingual strings:
 
 ```php
-echo (new Convert('DON_RAMÓN_Y_ÑOÑO')); // output: donRamónYÑoño 
-echo (new Convert('πολύΚαλό'));         // output: πολύΚαλό 
-echo (new Convert('ОЧЕНЬ_ПРИЯТНО'));    // output: оченьПриятно 
+// Spanish
+$esp = new Convert('DON_RAMÓN_Y_ÑOÑO'); 
+echo $esp->toCamel();   // output: donRamónYÑoño
+
+// Greek
+$grc = new Convert('πολύ-Καλό');          
+echo $grc->toCamel();   // output: πολύΚαλό
+
+// Russian
+$rus = new Convert('ОЧЕНЬ_ПРИЯТНО');    
+echo $rus->toCamel();   // output: оченьПриятно
 ```
 
 Notes
 -----
 
-* Magic function `__toString` will always print string in Camel case format.
-* todo: numbers not handled, please open issue
-* // todo: update notes
+* You must use _UTF-8_ encoding.
+* Magic function `__toString` will always print string in _Camel case_ format.
+* Input strings are not supposed to have numbers in it. If you need to handle
+numbers then please [open an issue].
 
 Installation
 ------------
 
-Install using composer:
+Install using Composer:
 
-```sh
+```
 $ composer require jawira/case-converter
 ```
 
@@ -78,16 +102,41 @@ use Jawira\CaseConverter\Convert;
 Full example
 ------------
 
+```php
+<?php declare(strict_types=1);
+
+namespace Demo;
+
+require __DIR__ . '/vendor/autoload.php';
+
+use Jawira\CaseConverter\Convert;
+
+$robot = new Convert('The-Terminator');
+
+echo $robot->toPascal() . PHP_EOL;
+echo $robot->toCobol() . PHP_EOL;
 ```
-// todo: full code w/require...
+
+Output:
+
+```
+TheTerminator
+THE-TERMINATOR
 ```
 
 Contributing
 ------------
 
-To contribute to this project please read [CONTRIBUTING.md](./CONTRIBUTING.md).
+Pull requests are welcome, please [open an issue] before committing.
+
+Good development practices are described in [CONTRIBUTING.md], you are not 
+required to follow these rules.
 
 License
 -------
 
 This library is licensed under the [MIT LICENSE](LICENSE.md).
+
+
+[open an issue]: https://github.com/jawira/case-converter/issues/new
+[CONTRIBUTING.md]: ./CONTRIBUTING.md
