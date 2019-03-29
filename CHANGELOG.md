@@ -4,9 +4,11 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+## [v2.0.2] - 2019-03-29
+
 ### Changed
 
-- [#27] Re-writing PHPUnit tests
+- [#24] Re-writing PHPUnit tests
 
 ### Added
 
@@ -162,3 +164,4 @@ Composer.
 [#25]: https://github.com/jawira/case-converter/pull/25
 [v2.0.1]: https://github.com/jawira/case-converter/compare/v2.0.0...v2.0.1
 [#27]: https://github.com/jawira/case-converter/pull/27
+[v2.0.2]: https://github.com/jawira/case-converter/compare/v2.0.1...v2.0.2
