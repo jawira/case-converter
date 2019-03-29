@@ -9,3 +9,4 @@
 /composer-setup.php
 /composer.lock
 /bin/phpstan
+/bin/phing
