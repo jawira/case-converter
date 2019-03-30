@@ -37,14 +37,14 @@ Usage
     $son = new Convert('john-connor');
     ```
     
-    Input string (i.e. _john-connor_) format is going to be detected 
+    Input string (i.e. _john-connor_) format is going to be detected
     automatically. 
 
 2. Then use the right method to convert the string accordingly to your needs:
 
     ```php
     echo $son->toCamel();   // output: johnConnor
-    echo $son->toSnake();   // output: john_connor 
+    echo $son->toSnake();   // output: john_connor
     ```
 
 Handled formats
