@@ -99,23 +99,21 @@ class Convert
      */
     protected function analyse(string $input): string
     {
-        // Strings like "MARIO_WORLD"
         if (mb_strpos($input, self::UNDERSCORE)) {
-            return self::STRATEGY_UNDERSCORE;
+            // Strings like "MARIO_WORLD"
+            $strategy = self::STRATEGY_UNDERSCORE;
+        } elseif (mb_strpos($input, self::DASH)) {
+            // Strings like "Judo-Boy"
+            $strategy = self::STRATEGY_DASH;
+        } elseif ($this->isUppercaseWord($input)) {
+            // Strings like "DROMEDARY"
+            $strategy = self::STRATEGY_UNDERSCORE;
+        } else {
+            // Strings like "getLastName"
+            $strategy = self::STRATEGY_UPPERCASE;
         }
 
-        // Strings like "Judo-Boy"
-        if (mb_strpos($input, self::DASH)) {
-            return self::STRATEGY_DASH;
-        }
-
-        // Strings like "DROMEDARY"
-        if ($this->isUppercaseWord($input)) {
-            return self::STRATEGY_UNDERSCORE;
-        }
-
-        // Strings like "getLastName"
-        return self::STRATEGY_UPPERCASE;
+        return $strategy;
     }
 
     /**
@@ -242,13 +240,13 @@ class Convert
             return mb_convert_case($word, $mode, self::ENCODING);
         };
 
-        $words = array_map($closure, $this->words);
+        $convertedWords = array_map($closure, $this->words);
 
         if ($lowerCaseFirst && count($this->words) > 0) {
-            $words[0] = mb_convert_case($words[0], \MB_CASE_LOWER, self::ENCODING);
+            $convertedWords[0] = mb_convert_case($convertedWords[0], \MB_CASE_LOWER, self::ENCODING);
         }
 
-        return implode($glue, $words);
+        return implode($glue, $convertedWords);
     }
 
     /**
