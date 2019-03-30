@@ -113,39 +113,48 @@ Composer.
 ## [v1.1.0] - 2018-01-29
 
 ### Added
-* Build tools (Makefile & Phing)
+
+- Build tools (Makefile & Phing)
 
 ### Fixed
-* Bug with spanish characters ([issue #6](https://github.com/jawira/case-converter/issues/6))
+
+- Bug with spanish characters ([issue #6](https://github.com/jawira/case-converter/issues/6))
 
 ## [v1.0.1] - 2017-11-10
 
 ### Added
-* Unitary tests
-* Unitary tests for spanish characters
+
+- Unitary tests
+- Unitary tests for spanish characters
 
 ### Fixed
-* Bug with acronyms ([issue #5](https://github.com/jawira/case-converter/issues/5))
+
+- Bug with acronyms ([issue #5](https://github.com/jawira/case-converter/issues/5))
 
 ## [v1.0.0] - 2017-10-27
 
 ### Changed
-* Slight changes on [README.md]()
+
+- Slight changes on [README.md]()
 
 ### Removed
-* PHPUnit and pds/skeleton dependencies
+
+- PHPUnit and pds/skeleton dependencies
 
 ## [v0.0.0] - 2017-10-26
 
 ### Added
-* Composer support
+
+- Composer support
 
 ### Changed
-* Directory structure has been modified to adapt it to Packagist
+
+- Directory structure has been modified to adapt it to Packagist
 
 ### Removed
-* Deleted Convert::old_camelToSnake()
-* Deleted Convert::old_snakeToCamel()
+
+- Deleted Convert::old_camelToSnake()
+- Deleted Convert::old_snakeToCamel()
 
 [#12]: https://github.com/jawira/case-converter/pull/12
 [#9]: https://github.com/jawira/case-converter/pull/9
