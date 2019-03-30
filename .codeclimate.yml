@@ -1,0 +1,10 @@
+plugins:
+  sonar-php:
+    enabled: true
+    config:
+      tests_patterns:
+        - tests/**
+  fixme:
+    enabled: true
+  markdownlint:
+    enabled: true

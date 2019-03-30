@@ -15,7 +15,7 @@
 
   <target name="setup"
           description="Install dependencies"
-          depends="composer:install-dev, phive:install"/>
+          depends="composer:install-dev, phive:install, cc:get"/>
 
   <target name="test"
           description="Quality assurance"
@@ -91,4 +91,44 @@
       <arg value="symplify/changelog-linker"/>
     </composer>
   </target>
+
+  <target name="cc:get" description="Download Code Climate">
+    <property name="cc.dir" value="bin"/>
+    <property name="cc.filename" value="cc-test-reporter"/>
+    <if>
+      <not>
+        <available file="${cc.dir}/${cc.filename}"/>
+      </not>
+      <then>
+        <mkdir dir="${cc.dir}"/>
+        <httpget dir="${cc.dir}"
+                 filename="${cc.filename}"
+                 followRedirects="true"
+                 url="https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64"/>
+      </then>
+    </if>
+    <chmod file="${cc.dir}/${cc.filename}" mode="0775"/>
+    <exec executable="${cc.dir}/${cc.filename}" passthru="true" checkreturn="true">
+      <arg value="--version"/>
+    </exec>
+  </target>
+
+  <target name="cc:before-build" description="To run before a build">
+    <exec executable="bin/cc-test-reporter" passthru="true" checkreturn="true">
+      <arg value="before-build"/>
+    </exec>
+  </target>
+
+  <target name="cc:after-build" description="Handle &amp; upload coverage payload">
+    <exec executable="bin/cc-test-reporter" passthru="true" checkreturn="true">
+      <arg value="format-coverage"/>
+      <arg line="--input-type clover"/>
+      <arg file="resources/coverage/clover.xml"/>
+    </exec>
+    <exec executable="bin/cc-test-reporter" passthru="true" checkreturn="true">
+      <!--you must supply a CC_TEST_REPORTER_ID ENV variable-->
+      <arg value="upload-coverage"/>
+    </exec>
+  </target>
+
 </project>

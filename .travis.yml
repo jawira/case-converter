@@ -16,8 +16,14 @@ install:
   - phive --no-progress install --force-accept-unsigned --trust-gpg-keys 4AA394086372C20A,8E730BA25823D8B5,2420BAE0A3BE25C6
   - bin/phing setup
 
+before_script:
+  - bin/phing cc:before-build
+
 script:
   - bin/phing test
+
+after_script:
+  - bin/phing cc:after-build
 
 cache:
   directories:
