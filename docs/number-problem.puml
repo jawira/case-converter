@@ -1,4 +1,5 @@
 @startuml
+left to right direction
 hide empty description
 
 state "hello-8-world" as state1
