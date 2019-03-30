@@ -29,18 +29,21 @@ Features:
 Usage
 -----
 
-Pass the string to be converted as parameter when instantiating `Convert` class.
+1. Pass the string to be converted as parameter when instantiating `Convert` class:
 
-The format from input string (e.g. _john_connor_) is going to be automatically 
-detected. The use the right method to convert the string according to your 
-needs.  
+    ```php
+    $son = new Convert('john-connor');
+    ```
+    
+    The format of input string (i.e. _john_connor_) is going to be automatically 
+    detected. 
 
-```php
-$son = new Convert('john-connor');
+2. Then use the right method to convert the string accordingly to your needs:
 
-echo $son->toCamel();   // output: johnConnor
-echo $son->toSnake();   // output: john_connor 
-```
+    ```php
+    echo $son->toCamel();   // output: johnConnor
+    echo $son->toSnake();   // output: john_connor 
+    ```
 
 Handled formats
 ---------------
@@ -135,8 +138,8 @@ required to follow these rules.
 License
 -------
 
-This library is licensed under the [MIT LICENSE](LICENSE.md).
+This library is licensed under the [MIT LICENSE].
 
-
+[MIT LICENSE]: ./LICENSE.md
 [open an issue]: https://github.com/jawira/case-converter/issues/new
 [CONTRIBUTING.md]: ./CONTRIBUTING.md

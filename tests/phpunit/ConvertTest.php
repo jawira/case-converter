@@ -20,12 +20,13 @@ class ConvertTest extends TestCase
      */
     public function testConstructor()
     {
-        //
+        // Disable constructor mocking one method
         $mock = $this->getMockBuilder(Convert::class)
                      ->disableOriginalConstructor()
                      ->setMethods(['detectNamingConvention'])
                      ->getMock();
 
+        // Configuring stub
         $mock->expects($this->once())
              ->method('detectNamingConvention')
              ->with($this->equalTo('hello_world'));
@@ -166,6 +167,71 @@ class ConvertTest extends TestCase
             [Convert::UNDERSCORE, 'Hello_World', ['Hello', 'World']],
             [Convert::UNDERSCORE, 'HELLO_WORLD', ['HELLO', 'WORLD']],
             [Convert::UNDERSCORE, '__hello_____world__', ['hello', 'world']],
+        ];
+    }
+
+    /**
+     * @covers       \Jawira\CaseConverter\Convert::glueString()
+     * @dataProvider glueStringProvider
+     *
+     * @param array  $words
+     * @param string $glue
+     * @param int    $mode
+     * @param bool   $lcf
+     *
+     * @throws \ReflectionException
+     */
+    public function testGlueString(array $words, string $glue, int $mode, bool $lcf, string $expected)
+    {
+        // Disabling constructor without stub methods
+        $mock = $this->getMockBuilder(Convert::class)
+                     ->disableOriginalConstructor()
+                     ->setMethods()
+                     ->getMock();
+
+        // Making "words" property accessible and setting a value
+        $reflection = new ReflectionObject($mock);
+        $property   = $reflection->getProperty('words');
+        $property->setAccessible(true);
+        $property->setValue($mock, $words);
+
+        // Making public a protected method
+        $reflection = new ReflectionObject($mock);
+        $method     = $reflection->getMethod('glueString');
+        $method->setAccessible(true);
+
+        // Testing
+        $output = $method->invoke($mock, $glue, $mode, $lcf);
+        $this->assertSame($expected, $output);
+    }
+
+    public function glueStringProvider()
+    {
+        return [
+            [['foo', 'bar'], Convert::DASH, \MB_CASE_LOWER, false, 'foo-bar'],
+            [['foo', 'bar'], Convert::DASH, \MB_CASE_TITLE, false, 'Foo-Bar'],
+            [['foo', 'bar'], Convert::DASH, \MB_CASE_UPPER, false, 'FOO-BAR'],
+            [['foo', 'bar'], Convert::UNDERSCORE, \MB_CASE_LOWER, false, 'foo_bar'],
+            [['foo', 'bar'], Convert::UNDERSCORE, \MB_CASE_TITLE, false, 'Foo_Bar'],
+            [['foo', 'bar'], Convert::UNDERSCORE, \MB_CASE_UPPER, false, 'FOO_BAR'],
+            [['foo', 'bar'], Convert::EMPTY_STRING, \MB_CASE_LOWER, false, 'foobar'],
+            [['foo', 'bar'], Convert::EMPTY_STRING, \MB_CASE_TITLE, false, 'FooBar'],
+            [['foo', 'bar'], Convert::EMPTY_STRING, \MB_CASE_UPPER, false, 'FOOBAR'],
+            [['foo', 'bar'], '§', \MB_CASE_LOWER, false, 'foo§bar'],
+            [['foo', 'bar'], '§', \MB_CASE_TITLE, false, 'Foo§Bar'],
+            [['foo', 'bar'], '§', \MB_CASE_UPPER, false, 'FOO§BAR'],
+            [['foo', 'bar'], Convert::DASH, \MB_CASE_LOWER, true, 'foo-bar'],
+            [['foo', 'bar'], Convert::DASH, \MB_CASE_TITLE, true, 'foo-Bar'],
+            [['foo', 'bar'], Convert::DASH, \MB_CASE_UPPER, true, 'foo-BAR'],
+            [['foo', 'bar'], Convert::UNDERSCORE, \MB_CASE_LOWER, true, 'foo_bar'],
+            [['foo', 'bar'], Convert::UNDERSCORE, \MB_CASE_TITLE, true, 'foo_Bar'],
+            [['foo', 'bar'], Convert::UNDERSCORE, \MB_CASE_UPPER, true, 'foo_BAR'],
+            [['foo', 'bar'], Convert::EMPTY_STRING, \MB_CASE_LOWER, true, 'foobar'],
+            [['foo', 'bar'], Convert::EMPTY_STRING, \MB_CASE_TITLE, true, 'fooBar'],
+            [['foo', 'bar'], Convert::EMPTY_STRING, \MB_CASE_UPPER, true, 'fooBAR'],
+            [['foo', 'bar'], '§', \MB_CASE_LOWER, true, 'foo§bar'],
+            [['foo', 'bar'], '§', \MB_CASE_TITLE, true, 'foo§Bar'],
+            [['foo', 'bar'], '§', \MB_CASE_UPPER, true, 'foo§BAR'],
         ];
     }
 }
