@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+## [v2.0.3] - 2019-03-30
+
 ### Added
 
 - [#22] Code Climate integration
