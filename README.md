@@ -31,14 +31,14 @@ Features:
 Usage
 -----
 
-1. Pass the string to be converted as parameter when instantiating `Convert` class:
+1. Instantiate `Convert` class with the string to transform:
 
     ```php
     $son = new Convert('john-connor');
     ```
     
-    The format of input string (i.e. _john_connor_) is going to be automatically 
-    detected. 
+    Input string (i.e. _john-connor_) format is going to be detected 
+    automatically. 
 
 2. Then use the right method to convert the string accordingly to your needs:
 
