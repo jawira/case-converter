@@ -19,6 +19,8 @@ Features:
 
 [![Latest Stable Version](https://poser.pugx.org/jawira/case-converter/v/stable)](https://packagist.org/packages/jawira/case-converter)
 [![Build Status](https://www.travis-ci.org/jawira/case-converter.svg?branch=master)](https://www.travis-ci.org/jawira/case-converter)
+[![Maintainability](https://api.codeclimate.com/v1/badges/35677f6ce7dac27a5d0c/maintainability)](https://codeclimate.com/github/jawira/case-converter/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/35677f6ce7dac27a5d0c/test_coverage)](https://codeclimate.com/github/jawira/case-converter/test_coverage)
 [![License](https://poser.pugx.org/jawira/case-converter/license)](https://packagist.org/packages/jawira/case-converter)
 [![Total Downloads](https://poser.pugx.org/jawira/case-converter/downloads)](https://packagist.org/packages/jawira/case-converter)
 [![Monthly Downloads](https://poser.pugx.org/jawira/case-converter/d/monthly)](https://packagist.org/packages/jawira/case-converter)
@@ -29,18 +31,21 @@ Features:
 Usage
 -----
 
-Pass the string to be converted as parameter when instantiating `Convert` class.
+1. Pass the string to be converted as parameter when instantiating `Convert` class:
 
-The format from input string (e.g. _john_connor_) is going to be automatically 
-detected. The use the right method to convert the string according to your 
-needs.  
+    ```php
+    $son = new Convert('john-connor');
+    ```
+    
+    The format of input string (i.e. _john_connor_) is going to be automatically 
+    detected. 
 
-```php
-$son = new Convert('john-connor');
+2. Then use the right method to convert the string accordingly to your needs:
 
-echo $son->toCamel();   // output: johnConnor
-echo $son->toSnake();   // output: john_connor 
-```
+    ```php
+    echo $son->toCamel();   // output: johnConnor
+    echo $son->toSnake();   // output: john_connor 
+    ```
 
 Handled formats
 ---------------
@@ -135,8 +140,8 @@ required to follow these rules.
 License
 -------
 
-This library is licensed under the [MIT LICENSE](LICENSE.md).
+This library is licensed under the [MIT LICENSE].
 
-
+[MIT LICENSE]: ./LICENSE.md
 [open an issue]: https://github.com/jawira/case-converter/issues/new
 [CONTRIBUTING.md]: ./CONTRIBUTING.md

@@ -9,4 +9,6 @@
 /composer-setup.php
 /composer.lock
 /bin/phpstan
+/bin/phpunit.phar
 /bin/phing
+/bin/cc-test-reporter
