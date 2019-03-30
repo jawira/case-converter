@@ -131,4 +131,16 @@
     </exec>
   </target>
 
+  <target name="plantuml:parse-docs" description="Parse PlantUML files to image from docs dir">
+    <composer command="require">
+      <arg value="jawira/plantuml"/>
+    </composer>
+    <exec executable="vendor/bin/plantuml" passthru="true" checkreturn="true">
+      <arg path="docs/**.puml/"/>
+    </exec>
+    <composer command="remove">
+      <arg value="jawira/plantuml"/>
+    </composer>
+  </target>
+
 </project>
