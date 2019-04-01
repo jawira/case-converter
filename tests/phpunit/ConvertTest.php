@@ -234,4 +234,58 @@ class ConvertTest extends TestCase
             [['foo', 'bar'], '§', \MB_CASE_UPPER, true, 'foo§BAR'],
         ];
     }
+
+    /**
+     * Test _converter methods_: _toCamel_, _toSnake_, ...
+     *
+     * @dataProvider converterMethodProvider()
+     *
+     * @covers       \Jawira\CaseConverter\Convert::toCamel()
+     * @covers       \Jawira\CaseConverter\Convert::toAda()
+     * @covers       \Jawira\CaseConverter\Convert::toCobol()
+     * @covers       \Jawira\CaseConverter\Convert::toKebab()
+     * @covers       \Jawira\CaseConverter\Convert::toMacro()
+     * @covers       \Jawira\CaseConverter\Convert::toPascal()
+     * @covers       \Jawira\CaseConverter\Convert::toSnake()
+     * @covers       \Jawira\CaseConverter\Convert::toTrain()
+     *
+     * @throws \ReflectionException
+     */
+    public function testConverterMethodCallsGlueString($converterMethod)
+    {
+        // Disabling constructor without stub methods
+        $mock = $this->getMockBuilder(Convert::class)
+                     ->disableOriginalConstructor()
+                     ->setMethods(['glueString'])
+                     ->getMock();
+
+        // Stub called once and returns value
+        $mock->expects($this->once())
+             ->method('glueString');
+
+        // Removing protected for converter method
+        $reflection = new ReflectionObject($mock);
+        $method     = $reflection->getMethod($converterMethod);
+        $method->setAccessible(true);
+
+        $method->invoke($mock);
+    }
+
+    /**
+     * Return and array with the name of all _converterMethods_.
+     */
+    public function converterMethodProvider()
+    {
+        return [
+            'toAda'      => ['toAda'],
+            'toCamel'    => ['toCamel'],
+            'toCobol'    => ['toCobol'],
+            'toKebab'    => ['toKebab'],
+            'toMacro'    => ['toMacro'],
+            'toPascal'   => ['toPascal'],
+            'toSnake'    => ['toSnake'],
+            'toTrain'    => ['toTrain'],
+        ];
+    }
+
 }
