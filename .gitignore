@@ -13,3 +13,4 @@
 /bin/phing
 /bin/cc-test-reporter
 /coverage/codeclimate.json
+/bin/phpDocumentor
