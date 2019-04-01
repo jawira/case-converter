@@ -11,3 +11,5 @@
 /bin/phpstan
 /bin/phpunit.phar
 /bin/phing
+/bin/cc-test-reporter
+/coverage/codeclimate.json

@@ -1,0 +1,2 @@
+# https://github.com/markdownlint/markdownlint/blob/master/docs/RULES.md
+style "config/markdown-lint.rb"
