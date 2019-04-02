@@ -249,9 +249,11 @@ class ConvertTest extends TestCase
      * @covers       \Jawira\CaseConverter\Convert::toSnake()
      * @covers       \Jawira\CaseConverter\Convert::toTrain()
      *
+     * @param string $converterMethod
+     *
      * @throws \ReflectionException
      */
-    public function testConverterMethodCallsGlueString($converterMethod)
+    public function testConverterMethodCallsGlueString(string $converterMethod)
     {
         // Disabling constructor without stub methods
         $mock = $this->getMockBuilder(Convert::class)
@@ -277,15 +279,50 @@ class ConvertTest extends TestCase
     public function converterMethodProvider()
     {
         return [
-            'toAda'      => ['toAda'],
-            'toCamel'    => ['toCamel'],
-            'toCobol'    => ['toCobol'],
-            'toKebab'    => ['toKebab'],
-            'toMacro'    => ['toMacro'],
-            'toPascal'   => ['toPascal'],
-            'toSnake'    => ['toSnake'],
-            'toTrain'    => ['toTrain'],
+            'to' . Convert::ADA    => ['to' . Convert::ADA],
+            'to' . Convert::CAMEL  => ['to' . Convert::CAMEL],
+            'to' . Convert::COBOL  => ['to' . Convert::COBOL],
+            'to' . Convert::KEBAB  => ['to' . Convert::KEBAB],
+            'to' . Convert::MACRO  => ['to' . Convert::MACRO],
+            'to' . Convert::PASCAL => ['to' . Convert::PASCAL],
+            'to' . Convert::SNAKE  => ['to' . Convert::SNAKE],
+            'to' . Convert::TRAIN  => ['to' . Convert::TRAIN],
         ];
     }
 
+    /**
+     * @covers \Jawira\CaseConverter\Convert::__toString()
+     *
+     * @throws \ReflectionException
+     */
+    public function testToString()
+    {
+        // Get mock, without the constructor being called
+        $mock = $this->getMockBuilder(Convert::class)
+                     ->disableOriginalConstructor()
+                     ->getMock();
+
+        // set expectations for constructor calls
+        $mock->expects($this->once())
+             ->method('toCamel');
+
+        // now call the magic function
+        $reflectedClass  = new ReflectionClass(Convert::class);
+        $reflectedMethod = $reflectedClass->getMethod('__toString');
+        $reflectedMethod->invoke($mock);
+    }
+
+    /**
+     * @covers \Jawira\CaseConverter\Convert::detectNamingConvention()
+     */
+    public function detectNamingConvention()
+    {
+        // analyse should be called with $input
+        // one split method should be called with same $input
+        // self should be returned
+    }
+
+    // splitUnderscoreString
+    // splitDashString
+    // splitUnderscoreString
 }
