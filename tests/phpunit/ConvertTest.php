@@ -313,16 +313,43 @@ class ConvertTest extends TestCase
     }
 
     /**
-     * @covers \Jawira\CaseConverter\Convert::detectNamingConvention()
+     * @covers       \Jawira\CaseConverter\Convert::detectNamingConvention()
+     *
+     * @param string $analyseReturn Expected value returned by analyse() method
+     * @param string $splitMethod   Split method to be called
+     *
+     * @dataProvider detectNamingConventionProvider()
+     *
+     * @throws \ReflectionException
      */
-    public function detectNamingConvention()
+    public function testDetectNamingConvention(string $analyseReturn, string $splitMethod)
     {
-        // analyse should be called with $input
-        // one split method should be called with same $input
-        // self should be returned
-    }
+        $inputString = 'deep-space-nine';
 
-    // splitUnderscoreString
-    // splitDashString
-    // splitUnderscoreString
+        // Disabling constructor and setting stub methods
+        $mock = $this->getMockBuilder(Convert::class)
+                     ->disableOriginalConstructor()
+                     ->setMethods(['analyse', $splitMethod])
+                     ->getMock();
+
+        // set expectations for analyse()
+        $mock->expects($this->once())
+             ->method('analyse')
+             ->with($inputString)
+             ->will($this->returnValue($analyseReturn));
+
+        // set expectations for $splitMethod
+        $mock->expects($this->once())
+             ->method($splitMethod)
+             ->with($inputString);
+
+        // Making public a protected method
+        $reflection = new ReflectionObject($mock);
+        $method     = $reflection->getMethod('detectNamingConvention');
+        $method->setAccessible(true);
+
+        // Testing
+        $output = $method->invoke($mock, $inputString);
+        $this->assertInstanceOf(Convert::class, $output);
+    }
 }
