@@ -82,52 +82,58 @@ class ConvertTest extends TestCase
     /**
      * Testing \Jawira\CaseConverter\Convert::analyse
      *
-     * \Jawira\CaseConverter\Convert::analyse should return Convert::SNAKE if
-     * $input contains '_'.
+     * \Jawira\CaseConverter\Convert::analyse should return Convert::SNAKE if $input contains '_'.
      *
      * @covers       \Jawira\CaseConverter\Convert::analyse()
-     * @covers       \Jawira\CaseConverter\Convert::isUppercaseWord()
      * @dataProvider analyseProvider
      *
-     * @param $input
-     * @param $expected
+     * @param bool   $isUppercaseWordReturn Times that `isUppercaseWord()` method is called.
+     * @param string $expected              Expected result
+     * @param string $input                 Input string
      *
      * @throws \ReflectionException
      */
-    public function testAnalyse($input, $expected)
+    public function testAnalyse(bool $isUppercaseWordReturn, string $expected, string $input)
     {
         // Disabling constructor without stub methods
         $stub = $this->getMockBuilder(Convert::class)
                      ->disableOriginalConstructor()
-                     ->setMethods()
+                     ->setMethods(['isUppercaseWord'])
                      ->getMock();
+
+        // Configuring expectation
+        $stub->expects($this->any())
+             ->method('isUppercaseWord')
+             ->willReturn($isUppercaseWordReturn);
 
         // Removing protected for analyse method
         $reflection = new ReflectionObject($stub);
         $method     = $reflection->getMethod('analyse');
         $method->setAccessible(true);
 
+        // Testing
         $output = $method->invoke($stub, $input);
-
         $this->assertSame($expected, $output);
     }
 
     public function analyseProvider()
     {
         return [
-            'Dash 1'  => ['hola_mundo', Convert::STRATEGY_UNDERSCORE],
-            'Dash 2'  => ['HELLO_WORLD', Convert::STRATEGY_UNDERSCORE],
-            'Dash 3'  => ['HELLO', Convert::STRATEGY_UNDERSCORE],
-            'Upper 1' => ['', Convert::STRATEGY_UPPERCASE],
-            'Upper 3' => ['one', Convert::STRATEGY_UPPERCASE],
-            'Upper 4' => ['helloWorld', Convert::STRATEGY_UPPERCASE],
-            'dash 1'  => ['hello-World', Convert::STRATEGY_DASH],
+            'Underscore 1' => [false, Convert::STRATEGY_UNDERSCORE, 'hola_mundo'],
+            'Underscore 2' => [false, Convert::STRATEGY_UNDERSCORE, 'HELLO_WORLD'],
+            'Underscore 3' => [true, Convert::STRATEGY_UNDERSCORE, 'Ñ'],
+            'Underscore 4' => [true, Convert::STRATEGY_UNDERSCORE, 'HELLO'],
+            'Uppercase 1'  => [false, Convert::STRATEGY_UPPERCASE, ''],
+            'Uppercase 2'  => [false, Convert::STRATEGY_UPPERCASE, 'ñ'],
+            'Uppercase 3'  => [false, Convert::STRATEGY_UPPERCASE, 'one'],
+            'Uppercase 4'  => [false, Convert::STRATEGY_UPPERCASE, 'helloWorld'],
+            'Dash 1'       => [false, Convert::STRATEGY_DASH, 'hello-World'],
+            'Dash 2'       => [false, Convert::STRATEGY_DASH, 'my-name-is-bond'],
         ];
     }
 
     /**
      * @covers       \Jawira\CaseConverter\Convert::splitString()
-     *
      * @dataProvider splitStringProvider
      *
      * @param string $pattern
@@ -408,12 +414,11 @@ class ConvertTest extends TestCase
     }
 
     /**
-     * @covers \Jawira\CaseConverter\Convert::splitUppercaseString()
+     * @covers       \Jawira\CaseConverter\Convert::splitUppercaseString()
+     * @dataProvider splitUppercaseStringProvider()
      *
      * @param string $input
      * @param string $parameter
-     *
-     * @dataProvider splitUppercaseStringProvider()
      *
      * @throws \ReflectionException
      */
