@@ -7,6 +7,7 @@ All notable changes to this project will be documented in this file.
 ### Changed
 
 - [#24] Improving PHPUnit tests
+- [#29] Adding PHPPackages badges
 
 ## [v2.0.3] - 2019-03-30
 
@@ -187,3 +188,5 @@ All notable changes to this project will be documented in this file.
 [#24]: https://github.com/jawira/case-converter/pull/24
 [#22]: https://github.com/jawira/case-converter/pull/22
 [v2.0.3]: https://github.com/jawira/case-converter/compare/v2.0.2...v2.0.3
+
+[#29]: https://github.com/jawira/case-converter/pull/29
