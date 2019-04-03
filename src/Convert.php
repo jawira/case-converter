@@ -182,9 +182,10 @@ class Convert
     /**
      * Splits $input using Uppercase letters.
      *
-     * First we replace any capital letter with an underscore character and the same letter but in lowercase format.
-     *
-     * Then Convert::splitUnderscoreString() is called because $input string can be treated as a Snake case string.
+     * 1. First and underscore character '_' will be prepended before any
+     * uppercase character. Now input string can be treated as an _snake case_
+     * string.
+     * 2. Convert::splitUnderscoreString() is called to split string from step 1.
      *
      * @param string $input
      *

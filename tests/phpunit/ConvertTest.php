@@ -406,4 +406,45 @@ class ConvertTest extends TestCase
             'splitUnderscoreString' => ['splitUnderscoreString'],
         ];
     }
+
+    /**
+     * @covers \Jawira\CaseConverter\Convert::splitUppercaseString()
+     *
+     * @param string $input
+     * @param string $parameter
+     *
+     * @dataProvider splitUppercaseStringProvider()
+     *
+     * @throws \ReflectionException
+     */
+    public function testSplitUppercaseString(string $input, string $parameter)
+    {
+        // Disabling constructor and setting stub method
+        $mock = $this->getMockBuilder(Convert::class)
+                     ->disableOriginalConstructor()
+                     ->setMethods(['splitUnderscoreString'])
+                     ->getMock();
+
+        // Setting expectation for Stub method
+        $mock->expects($this->once())
+             ->method('splitUnderscoreString')
+             ->with($parameter);
+
+        // Making public a protected method
+        $reflection = new ReflectionObject($mock);
+        $method     = $reflection->getMethod('splitUppercaseString');
+        $method->setAccessible(true);
+
+        // Testing
+        $method->invoke($mock, $input);
+    }
+
+    public function splitUppercaseStringProvider()
+    {
+        return [
+            ['HolaMundo', '_Hola_Mundo'],
+            ['yes', 'yes'],
+            ['airBus', 'air_Bus'],
+        ];
+    }
 }
