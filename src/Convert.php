@@ -119,11 +119,14 @@ class Convert
     /**
      * Returns true if $input string is a single word composed only by uppercase characters.
      *
-     * @example isUppercaseWord('BRUSSELS'); // true
-     * @example isUppercaseWord('Brussels'); // false
+     * ```
+     * isUppercaseWord('BRUSSELS'); // true
+     * isUppercaseWord('Brussels'); // false
+     * ```
+     *
      * @see     https://www.regular-expressions.info/unicode.html#category
      *
-     * @param string $input
+     * @param string $input String to be tested.
      *
      * @return bool
      * @throws \Jawira\CaseConverter\CaseConverterException
@@ -177,7 +180,12 @@ class Convert
     }
 
     /**
-     * Splits $input using Uppercase letters
+     * Splits $input using Uppercase letters.
+     *
+     * 1. First and underscore character '_' will be prepended before any
+     * uppercase character. Now input string can be treated as an _snake case_
+     * string.
+     * 2. Convert::splitUnderscoreString() is called to split string from step 1.
      *
      * @param string $input
      *
@@ -214,7 +222,9 @@ class Convert
     /**
      * Return string in `Camel case` format.
      *
-     * @example thisIsCamelCase
+     * ```
+     * Example: thisIsCamelCase
+     * ```
      *
      * @return string
      */
@@ -226,9 +236,12 @@ class Convert
     /**
      * Implode self::$words array using $glue.
      *
-     * @param string $glue           Character to glue words
-     * @param int    $mode           Case mode to apply to each word
-     * @param bool   $lowerCaseFirst Force using \MB_CASE_LOWER for the first word
+     * @param string $glue           Character to glue words. Even if is assumed your are using underscore or dash
+     *                               character, this method should be capable to use any character as glue.
+     * @param int    $mode           Case mode to apply to each word. Should be a valid mode for mb_convert_case()
+     *                               function.
+     * @param bool   $lowerCaseFirst Force using \MB_CASE_LOWER for the first word, this parameter is expected to be
+     *                               true only for Camel case.
      *
      * @return string
      */
@@ -252,7 +265,10 @@ class Convert
     /**
      * Return string in `Pascal case` format.
      *
-     * @example ThisIsPascalCase
+     * ```
+     * Example: ThisIsPascalCase
+     * ```
+     *
      * @return string
      */
     public function toPascal(): string
@@ -263,7 +279,10 @@ class Convert
     /**
      * Return string in `Snake case` format.
      *
-     * @example this_is_snake_case
+     * ```
+     * Example: this_is_snake_case
+     * ```
+     *
      * @return string
      */
     public function toSnake(): string
@@ -274,7 +293,10 @@ class Convert
     /**
      * Return string in `Macro case` format.
      *
-     * @example THIS_IS_MACRO_CASE
+     * ```
+     * Example: THIS_IS_MACRO_CASE
+     * ```
+     *
      * @return string
      */
     public function toMacro(): string
@@ -285,7 +307,10 @@ class Convert
     /**
      * Return string in `Ada case` format.
      *
-     * @example This_Is_Ada_Case
+     * ```
+     * Example: This_Is_Ada_Case
+     * ```
+     *
      * @return string
      */
     public function toAda(): string
@@ -296,7 +321,10 @@ class Convert
     /**
      * Return string in `Kebab case` format.
      *
-     * @example this-is-kebab-case
+     * ```
+     * Example: this-is-kebab-case
+     * ```
+     *
      * @return string
      */
     public function toKebab(): string
@@ -307,7 +335,10 @@ class Convert
     /**
      * Return string in `Cobol case` format.
      *
-     * @example THIS-IS-COBOL-CASE
+     * ```
+     * Example: THIS-IS-COBOL-CASE
+     * ```
+     *
      * @return string
      */
     public function toCobol(): string
@@ -318,7 +349,10 @@ class Convert
     /**
      * Return string in `Train case` format.
      *
-     * @example This-Is-Train-Case
+     * ```
+     * Example: This-Is-Train-Case
+     * ```
+     *
      * @return string
      */
     public function toTrain(): string

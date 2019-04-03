@@ -1,4 +1,4 @@
-Case converter 
+Case converter
 ==============
 
 Use this library to convert string between:
@@ -36,9 +36,9 @@ Usage
     ```php
     $son = new Convert('john-connor');
     ```
-    
+
     Input string (i.e. _john-connor_) format is going to be detected
-    automatically. 
+    automatically.
 
 2. Then use the right method to convert the string accordingly to your needs:
 
@@ -50,7 +50,7 @@ Usage
 Handled formats
 ---------------
 
-| Name          | Method        | Example           | 
+| Name          | Method        | Example           |
 | ------------- | ------------- | ----------------- |
 | Camel case    | `toCamel()`   | myNameIsBond      |
 | Pascal case   | `toPascal()`  | MyNameIsBond      |
@@ -68,15 +68,15 @@ Fully compatible with multilingual strings:
 
 ```php
 // Spanish
-$esp = new Convert('DON_RAMÓN_Y_ÑOÑO'); 
+$esp = new Convert('DON_RAMÓN_Y_ÑOÑO');
 echo $esp->toCamel();   // output: donRamónYÑoño
 
 // Greek
-$grc = new Convert('πολύ-Καλό');          
+$grc = new Convert('πολύ-Καλό');
 echo $grc->toCamel();   // output: πολύΚαλό
 
 // Russian
-$rus = new Convert('ОЧЕНЬ_ПРИЯТНО');    
+$rus = new Convert('ОЧЕНЬ_ПРИЯТНО');
 echo $rus->toCamel();   // output: оченьПриятно
 ```
 
@@ -86,15 +86,15 @@ Notes
 * You must use _UTF-8_ encoding.
 * Magic function `__toString` will always print string in _Camel case_ format.
 * Input strings are not supposed to have numbers in it. If you need to handle
-numbers then please [open an issue].
+  numbers then please [open an issue].
 
 Installation
 ------------
 
 Install using Composer:
 
-```
-$ composer require jawira/case-converter
+```console
+composer require jawira/case-converter
 ```
 
 Then import `Convert` class into your code:
@@ -124,7 +124,7 @@ echo $robot->toCobol() . PHP_EOL;
 
 Output:
 
-```
+```text
 TheTerminator
 THE-TERMINATOR
 ```
@@ -134,7 +134,7 @@ Contributing
 
 Pull requests are welcome, please [open an issue] before committing.
 
-Good development practices are described in [CONTRIBUTING.md], you are not 
+Good development practices are described in [CONTRIBUTING.md], you are not
 required to follow these rules.
 
 License
