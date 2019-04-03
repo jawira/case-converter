@@ -352,4 +352,58 @@ class ConvertTest extends TestCase
         $output = $method->invoke($mock, $inputString);
         $this->assertInstanceOf(Convert::class, $output);
     }
+
+    public function detectNamingConventionProvider()
+    {
+        return [
+            'underscore' => [Convert::STRATEGY_UNDERSCORE, 'splitUnderscoreString'],
+            'dash'       => [Convert::STRATEGY_DASH, 'splitDashString'],
+            'uppercase'  => [Convert::STRATEGY_UPPERCASE, 'splitUppercaseString'],
+        ];
+    }
+
+    /**
+     * Tested methods should call Convert::splitString() method
+     *
+     * @covers       \Jawira\CaseConverter\Convert::splitDashString()
+     * @covers       \Jawira\CaseConverter\Convert::splitUnderscoreString()
+     *
+     * @dataProvider splitStringCallProvider()
+     *
+     * @param string $splitMethod
+     *
+     * @throws \ReflectionException
+     */
+    public function testSplitStringCall(string $splitMethod)
+    {
+        $splitReturnValue = ['this', 'can', 'be', 'anything'];
+
+        // Disabling constructor and setting stub method
+        $mock = $this->getMockBuilder(Convert::class)
+                     ->disableOriginalConstructor()
+                     ->setMethods(['splitString'])
+                     ->getMock();
+
+        // Making public a protected method
+        $reflection = new ReflectionObject($mock);
+        $method     = $reflection->getMethod($splitMethod);
+        $method->setAccessible(true);
+
+        // Expectation
+        $mock->expects($this->once())
+             ->method('splitString')
+             ->will($this->returnValue($splitReturnValue));
+
+        // Testing
+        $output = $method->invoke($mock, $splitMethod);
+        $this->assertSame($splitReturnValue, $output);
+    }
+
+    public function splitStringCallProvider()
+    {
+        return [
+            'splitDashString'       => ['splitDashString'],
+            'splitUnderscoreString' => ['splitUnderscoreString'],
+        ];
+    }
 }
