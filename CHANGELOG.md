@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+## [v2.0.4] - 2019-04-04
+
+### Changed
+
+- [#24] Improving PHPUnit tests
+- [#29] Adding PHPPackages badges
+
 ## [v2.0.3] - 2019-03-30
 
 ### Added
@@ -30,17 +37,17 @@ All notable changes to this project will be documented in this file.
 
 ### Changed
 
-- [#21] New methods to convert strings between: Snake case, Camel case, 
-Kebab case, Pascal case, Ada case, Train case, Cobol case and Macro case
+- [#21] New methods to convert strings between: Snake case, Camel case,
+  Kebab case, Pascal case, Ada case, Train case, Cobol case and Macro case
 - [#21] Behat tests have been adapted for new CaseConverter signatures
 
 ## [v1.2.0] - 2019-03-18
 
 ### Added
 
-- [#19] Handling Kebab case 
-- [#18] Armenian behat tests 
-- [#18] Swedish behat tests 
+- [#19] Handling Kebab case
+- [#18] Armenian behat tests
+- [#18] Swedish behat tests
 
 ## [v1.1.7] - 2019-02-18
 
@@ -58,8 +65,8 @@ Kebab case, Pascal case, Ada case, Train case, Cobol case and Macro case
 
 ### Fixed
 
-- Phing uses `http_proxy` behind a proxy to download Behat, PHPUnit and 
-Composer.
+- Phing uses `http_proxy` behind a proxy to download Behat, PHPUnit and
+  Composer.
 
 ## [v1.1.5] - 2018-10-18
 
@@ -80,7 +87,7 @@ Composer.
 
 ### Fixed
 
-- Fixed support for multilingual strings: spanish, greek, cyrillic, etc. 
+- Fixed support for multilingual strings: spanish, greek, cyrillic, etc.
 
 ## [v1.1.3] - 2018-10-04
 
@@ -113,39 +120,48 @@ Composer.
 ## [v1.1.0] - 2018-01-29
 
 ### Added
-* Build tools (Makefile & Phing)
+
+- Build tools (Makefile & Phing)
 
 ### Fixed
-* Bug with spanish characters ([issue #6](https://github.com/jawira/case-converter/issues/6))
+
+- Bug with spanish characters ([issue #6](https://github.com/jawira/case-converter/issues/6))
 
 ## [v1.0.1] - 2017-11-10
 
 ### Added
-* Unitary tests
-* Unitary tests for spanish characters
+
+- Unitary tests
+- Unitary tests for spanish characters
 
 ### Fixed
-* Bug with acronyms ([issue #5](https://github.com/jawira/case-converter/issues/5))
+
+- Bug with acronyms ([issue #5](https://github.com/jawira/case-converter/issues/5))
 
 ## [v1.0.0] - 2017-10-27
 
 ### Changed
-* Slight changes on [README.md]()
+
+- Slight changes on [README.md]()
 
 ### Removed
-* PHPUnit and pds/skeleton dependencies
+
+- PHPUnit and pds/skeleton dependencies
 
 ## [v0.0.0] - 2017-10-26
 
 ### Added
-* Composer support
+
+- Composer support
 
 ### Changed
-* Directory structure has been modified to adapt it to Packagist
+
+- Directory structure has been modified to adapt it to Packagist
 
 ### Removed
-* Deleted Convert::old_camelToSnake()
-* Deleted Convert::old_snakeToCamel()
+
+- Deleted Convert::old_camelToSnake()
+- Deleted Convert::old_snakeToCamel()
 
 [#12]: https://github.com/jawira/case-converter/pull/12
 [#9]: https://github.com/jawira/case-converter/pull/9
@@ -171,6 +187,10 @@ Composer.
 [v2.0.1]: https://github.com/jawira/case-converter/compare/v2.0.0...v2.0.1
 [#27]: https://github.com/jawira/case-converter/pull/27
 [v2.0.2]: https://github.com/jawira/case-converter/compare/v2.0.1...v2.0.2
-
 [#24]: https://github.com/jawira/case-converter/pull/24
 [#22]: https://github.com/jawira/case-converter/pull/22
+[v2.0.3]: https://github.com/jawira/case-converter/compare/v2.0.2...v2.0.3
+
+[#29]: https://github.com/jawira/case-converter/pull/29
+
+[v2.0.4]: https://github.com/jawira/case-converter/compare/v2.0.3...v2.0.4

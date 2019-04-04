@@ -131,4 +131,24 @@
     </exec>
   </target>
 
+  <target name="plantuml:parse-docs" description="Parse PlantUML files to image from docs dir">
+    <composer command="require">
+      <arg value="jawira/plantuml"/>
+    </composer>
+    <exec executable="vendor/bin/plantuml" passthru="true" checkreturn="true">
+      <arg path="docs/**.puml/"/>
+    </exec>
+    <composer command="remove">
+      <arg value="jawira/plantuml"/>
+    </composer>
+  </target>
+
+  <target name="git:tags" description="List all git tags">
+    <!--https://stackoverflow.com/a/34239190/4345061-->
+    <exec executable="git" passthru="true">
+      <arg value="log"/>
+      <arg line="--graph --all --decorate --oneline --simplify-by-decoration"/>
+    </exec>
+  </target>
+
 </project>

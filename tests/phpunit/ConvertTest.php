@@ -82,52 +82,58 @@ class ConvertTest extends TestCase
     /**
      * Testing \Jawira\CaseConverter\Convert::analyse
      *
-     * \Jawira\CaseConverter\Convert::analyse should return Convert::SNAKE if
-     * $input contains '_'.
+     * \Jawira\CaseConverter\Convert::analyse should return Convert::SNAKE if $input contains '_'.
      *
      * @covers       \Jawira\CaseConverter\Convert::analyse()
-     * @covers       \Jawira\CaseConverter\Convert::isUppercaseWord()
      * @dataProvider analyseProvider
      *
-     * @param $input
-     * @param $expected
+     * @param bool   $isUppercaseWordReturn Times that `isUppercaseWord()` method is called.
+     * @param string $expected              Expected result
+     * @param string $input                 Input string
      *
      * @throws \ReflectionException
      */
-    public function testAnalyse($input, $expected)
+    public function testAnalyse(bool $isUppercaseWordReturn, string $expected, string $input)
     {
         // Disabling constructor without stub methods
         $stub = $this->getMockBuilder(Convert::class)
                      ->disableOriginalConstructor()
-                     ->setMethods()
+                     ->setMethods(['isUppercaseWord'])
                      ->getMock();
+
+        // Configuring expectation
+        $stub->expects($this->any())
+             ->method('isUppercaseWord')
+             ->willReturn($isUppercaseWordReturn);
 
         // Removing protected for analyse method
         $reflection = new ReflectionObject($stub);
         $method     = $reflection->getMethod('analyse');
         $method->setAccessible(true);
 
+        // Testing
         $output = $method->invoke($stub, $input);
-
         $this->assertSame($expected, $output);
     }
 
     public function analyseProvider()
     {
         return [
-            'Dash 1'  => ['hola_mundo', Convert::STRATEGY_UNDERSCORE],
-            'Dash 2'  => ['HELLO_WORLD', Convert::STRATEGY_UNDERSCORE],
-            'Dash 3'  => ['HELLO', Convert::STRATEGY_UNDERSCORE],
-            'Upper 1' => ['', Convert::STRATEGY_UPPERCASE],
-            'Upper 3' => ['one', Convert::STRATEGY_UPPERCASE],
-            'Upper 4' => ['helloWorld', Convert::STRATEGY_UPPERCASE],
-            'dash 1'  => ['hello-World', Convert::STRATEGY_DASH],
+            'Underscore 1' => [false, Convert::STRATEGY_UNDERSCORE, 'hola_mundo'],
+            'Underscore 2' => [false, Convert::STRATEGY_UNDERSCORE, 'HELLO_WORLD'],
+            'Underscore 3' => [true, Convert::STRATEGY_UNDERSCORE, 'Ñ'],
+            'Underscore 4' => [true, Convert::STRATEGY_UNDERSCORE, 'HELLO'],
+            'Uppercase 1'  => [false, Convert::STRATEGY_UPPERCASE, ''],
+            'Uppercase 2'  => [false, Convert::STRATEGY_UPPERCASE, 'ñ'],
+            'Uppercase 3'  => [false, Convert::STRATEGY_UPPERCASE, 'one'],
+            'Uppercase 4'  => [false, Convert::STRATEGY_UPPERCASE, 'helloWorld'],
+            'Dash 1'       => [false, Convert::STRATEGY_DASH, 'hello-World'],
+            'Dash 2'       => [false, Convert::STRATEGY_DASH, 'my-name-is-bond'],
         ];
     }
 
     /**
      * @covers       \Jawira\CaseConverter\Convert::splitString()
-     *
      * @dataProvider splitStringProvider
      *
      * @param string $pattern
@@ -232,6 +238,218 @@ class ConvertTest extends TestCase
             [['foo', 'bar'], '§', \MB_CASE_LOWER, true, 'foo§bar'],
             [['foo', 'bar'], '§', \MB_CASE_TITLE, true, 'foo§Bar'],
             [['foo', 'bar'], '§', \MB_CASE_UPPER, true, 'foo§BAR'],
+        ];
+    }
+
+    /**
+     * Test _converter methods_: _toCamel_, _toSnake_, ...
+     *
+     * @dataProvider converterMethodProvider()
+     *
+     * @covers       \Jawira\CaseConverter\Convert::toCamel()
+     * @covers       \Jawira\CaseConverter\Convert::toAda()
+     * @covers       \Jawira\CaseConverter\Convert::toCobol()
+     * @covers       \Jawira\CaseConverter\Convert::toKebab()
+     * @covers       \Jawira\CaseConverter\Convert::toMacro()
+     * @covers       \Jawira\CaseConverter\Convert::toPascal()
+     * @covers       \Jawira\CaseConverter\Convert::toSnake()
+     * @covers       \Jawira\CaseConverter\Convert::toTrain()
+     *
+     * @param string $converterMethod
+     *
+     * @throws \ReflectionException
+     */
+    public function testConverterMethodCallsGlueString(string $converterMethod)
+    {
+        // Disabling constructor without stub methods
+        $mock = $this->getMockBuilder(Convert::class)
+                     ->disableOriginalConstructor()
+                     ->setMethods(['glueString'])
+                     ->getMock();
+
+        // Stub called once and returns value
+        $mock->expects($this->once())
+             ->method('glueString');
+
+        // Removing protected for converter method
+        $reflection = new ReflectionObject($mock);
+        $method     = $reflection->getMethod($converterMethod);
+        $method->setAccessible(true);
+
+        $method->invoke($mock);
+    }
+
+    /**
+     * Return and array with the name of all _converterMethods_.
+     */
+    public function converterMethodProvider()
+    {
+        return [
+            'to' . Convert::ADA    => ['to' . Convert::ADA],
+            'to' . Convert::CAMEL  => ['to' . Convert::CAMEL],
+            'to' . Convert::COBOL  => ['to' . Convert::COBOL],
+            'to' . Convert::KEBAB  => ['to' . Convert::KEBAB],
+            'to' . Convert::MACRO  => ['to' . Convert::MACRO],
+            'to' . Convert::PASCAL => ['to' . Convert::PASCAL],
+            'to' . Convert::SNAKE  => ['to' . Convert::SNAKE],
+            'to' . Convert::TRAIN  => ['to' . Convert::TRAIN],
+        ];
+    }
+
+    /**
+     * @covers \Jawira\CaseConverter\Convert::__toString()
+     *
+     * @throws \ReflectionException
+     */
+    public function testToString()
+    {
+        // Get mock, without the constructor being called
+        $mock = $this->getMockBuilder(Convert::class)
+                     ->disableOriginalConstructor()
+                     ->getMock();
+
+        // set expectations for constructor calls
+        $mock->expects($this->once())
+             ->method('toCamel');
+
+        // now call the magic function
+        $reflectedClass  = new ReflectionClass(Convert::class);
+        $reflectedMethod = $reflectedClass->getMethod('__toString');
+        $reflectedMethod->invoke($mock);
+    }
+
+    /**
+     * @covers       \Jawira\CaseConverter\Convert::detectNamingConvention()
+     *
+     * @param string $analyseReturn Expected value returned by analyse() method
+     * @param string $splitMethod   Split method to be called
+     *
+     * @dataProvider detectNamingConventionProvider()
+     *
+     * @throws \ReflectionException
+     */
+    public function testDetectNamingConvention(string $analyseReturn, string $splitMethod)
+    {
+        $inputString = 'deep-space-nine';
+
+        // Disabling constructor and setting stub methods
+        $mock = $this->getMockBuilder(Convert::class)
+                     ->disableOriginalConstructor()
+                     ->setMethods(['analyse', $splitMethod])
+                     ->getMock();
+
+        // set expectations for analyse()
+        $mock->expects($this->once())
+             ->method('analyse')
+             ->with($inputString)
+             ->will($this->returnValue($analyseReturn));
+
+        // set expectations for $splitMethod
+        $mock->expects($this->once())
+             ->method($splitMethod)
+             ->with($inputString);
+
+        // Making public a protected method
+        $reflection = new ReflectionObject($mock);
+        $method     = $reflection->getMethod('detectNamingConvention');
+        $method->setAccessible(true);
+
+        // Testing
+        $output = $method->invoke($mock, $inputString);
+        $this->assertInstanceOf(Convert::class, $output);
+    }
+
+    public function detectNamingConventionProvider()
+    {
+        return [
+            'underscore' => [Convert::STRATEGY_UNDERSCORE, 'splitUnderscoreString'],
+            'dash'       => [Convert::STRATEGY_DASH, 'splitDashString'],
+            'uppercase'  => [Convert::STRATEGY_UPPERCASE, 'splitUppercaseString'],
+        ];
+    }
+
+    /**
+     * Tested methods should call Convert::splitString() method
+     *
+     * @covers       \Jawira\CaseConverter\Convert::splitDashString()
+     * @covers       \Jawira\CaseConverter\Convert::splitUnderscoreString()
+     *
+     * @dataProvider splitStringCallProvider()
+     *
+     * @param string $splitMethod
+     *
+     * @throws \ReflectionException
+     */
+    public function testSplitStringCall(string $splitMethod)
+    {
+        $splitReturnValue = ['this', 'can', 'be', 'anything'];
+
+        // Disabling constructor and setting stub method
+        $mock = $this->getMockBuilder(Convert::class)
+                     ->disableOriginalConstructor()
+                     ->setMethods(['splitString'])
+                     ->getMock();
+
+        // Making public a protected method
+        $reflection = new ReflectionObject($mock);
+        $method     = $reflection->getMethod($splitMethod);
+        $method->setAccessible(true);
+
+        // Expectation
+        $mock->expects($this->once())
+             ->method('splitString')
+             ->will($this->returnValue($splitReturnValue));
+
+        // Testing
+        $output = $method->invoke($mock, $splitMethod);
+        $this->assertSame($splitReturnValue, $output);
+    }
+
+    public function splitStringCallProvider()
+    {
+        return [
+            'splitDashString'       => ['splitDashString'],
+            'splitUnderscoreString' => ['splitUnderscoreString'],
+        ];
+    }
+
+    /**
+     * @covers       \Jawira\CaseConverter\Convert::splitUppercaseString()
+     * @dataProvider splitUppercaseStringProvider()
+     *
+     * @param string $input
+     * @param string $parameter
+     *
+     * @throws \ReflectionException
+     */
+    public function testSplitUppercaseString(string $input, string $parameter)
+    {
+        // Disabling constructor and setting stub method
+        $mock = $this->getMockBuilder(Convert::class)
+                     ->disableOriginalConstructor()
+                     ->setMethods(['splitUnderscoreString'])
+                     ->getMock();
+
+        // Setting expectation for Stub method
+        $mock->expects($this->once())
+             ->method('splitUnderscoreString')
+             ->with($parameter);
+
+        // Making public a protected method
+        $reflection = new ReflectionObject($mock);
+        $method     = $reflection->getMethod('splitUppercaseString');
+        $method->setAccessible(true);
+
+        // Testing
+        $method->invoke($mock, $input);
+    }
+
+    public function splitUppercaseStringProvider()
+    {
+        return [
+            ['HolaMundo', '_Hola_Mundo'],
+            ['yes', 'yes'],
+            ['airBus', 'air_Bus'],
         ];
     }
 }
