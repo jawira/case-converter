@@ -143,4 +143,12 @@
     </composer>
   </target>
 
+  <target name="git:tags" description="List all git tags">
+    <!--https://stackoverflow.com/a/34239190/4345061-->
+    <exec executable="git" passthru="true">
+      <arg value="log"/>
+      <arg line="--graph --all --decorate --oneline --simplify-by-decoration"/>
+    </exec>
+  </target>
+
 </project>
