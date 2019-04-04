@@ -22,15 +22,19 @@ namespace Jawira\CaseConverter;
  */
 class Convert
 {
+    const ENCODING = 'UTF-8';
+
+    // String separators
     const DASH         = '-';
     const UNDERSCORE   = '_';
     const EMPTY_STRING = '';
-    const ENCODING     = 'UTF-8';
 
+    // Strategies
     const STRATEGY_DASH       = 'dash';
     const STRATEGY_UNDERSCORE = 'underscore';
     const STRATEGY_UPPERCASE  = 'uppercase';
 
+    // Naming conventions
     const ADA    = 'Ada';
     const CAMEL  = 'Camel';
     const COBOL  = 'Cobol';
