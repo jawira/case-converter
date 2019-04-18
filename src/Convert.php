@@ -360,4 +360,14 @@ class Convert
         return $this->glueString(self::DASH, \MB_CASE_TITLE);
     }
 
+    /**
+     * Detected words extracted from original string.
+     *
+     * @return array
+     */
+    public function toArray(): array
+    {
+        return $this->words;
+    }
+
 }
