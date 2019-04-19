@@ -63,6 +63,13 @@ Handled formats
 | Ada case      | `toAda()`     | My_Name_Is_Bond   |
 | Macro case    | `toMacro()`   | MY_NAME_IS_BOND   |
 
+Other methods:
+
+| Name                      | Method    | Example                       |
+| ------------------------- | --------- | ----------------------------- |
+| Get words in array format | toArray() | ['my', 'name', 'is', 'bond']  | 
+
+
 i18n
 ----
 
