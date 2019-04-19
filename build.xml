@@ -59,7 +59,8 @@
     <exec executable="bin/behat" passthru="true" checkreturn="true">
       <arg value="--colors"/>
       <arg value="--no-interaction"/>
-      <!--<arg value="&#45;&#45;stop-on-failure"/>-->
+      <arg value="--stop-on-failure"/>
+      <arg value="--rerun"/>
     </exec>
   </target>
 
