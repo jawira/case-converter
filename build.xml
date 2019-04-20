@@ -17,7 +17,7 @@
           description="Install dependencies"
           depends="composer:install-dev, phive:install, cc:get"/>
 
-  <target name="test"
+  <target name="qa"
           description="Quality assurance"
           depends="php:lint, composer:validate, phpunit:run, behat:run, phpstan:run"/>
 
