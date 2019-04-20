@@ -4,8 +4,8 @@ Case converter
 Use this library to convert string between:
 
 * 🐪 Camel case
-* 👨‍🏫 Pascal case
 * 🐍 Snake case
+* 👨‍🏫 Pascal case
 * 👩‍🏫 Ada case
 * 🔠 Macro case
 * 🥙 Kebab case
@@ -39,7 +39,7 @@ Usage
     $son = new Convert('john-connor');
     ```
 
-    Input string (i.e. _john-connor_) format is going to be detected
+    Note: Input string (i.e. _john-connor_) format is going to be detected
     automatically.
 
 2. Then use the right method to convert the string accordingly to your needs:
@@ -49,10 +49,10 @@ Usage
     echo $son->toSnake();   // output: john_connor
     ```
 
-Handled formats
----------------
+Supported naming conventions
+----------------------------
 
-| Name          | Method        | Example           |
+| Description   | Method        | Example           |
 | ------------- | ------------- | ----------------- |
 | Camel case    | `toCamel()`   | myNameIsBond      |
 | Pascal case   | `toPascal()`  | MyNameIsBond      |
@@ -63,17 +63,17 @@ Handled formats
 | Ada case      | `toAda()`     | My_Name_Is_Bond   |
 | Macro case    | `toMacro()`   | MY_NAME_IS_BOND   |
 
-Other methods:
+Utility methods
+---------------
 
-| Name                      | Method    | Example                       |
+| Description               | Method    | Example                       |
 | ------------------------- | --------- | ----------------------------- |
 | Get words in array format | toArray() | ['my', 'name', 'is', 'bond']  | 
-
 
 i18n
 ----
 
-Fully compatible with multilingual strings:
+Fully compatible with non-english alphabets:
 
 ```php
 // Spanish
