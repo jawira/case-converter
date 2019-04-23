@@ -18,6 +18,7 @@ Features:
 * 🌐 i18n
 
 [![Latest Stable Version](https://poser.pugx.org/jawira/case-converter/v/stable)](https://packagist.org/packages/jawira/case-converter)
+[![PHP from Packagist](https://img.shields.io/packagist/php-v/jawira/case-converter.svg)](https://packagist.org/packages/jawira/case-converter)
 [![Build Status](https://www.travis-ci.org/jawira/case-converter.svg?branch=master)](https://www.travis-ci.org/jawira/case-converter)
 [![Maintainability](https://api.codeclimate.com/v1/badges/35677f6ce7dac27a5d0c/maintainability)](https://codeclimate.com/github/jawira/case-converter/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/35677f6ce7dac27a5d0c/test_coverage)](https://codeclimate.com/github/jawira/case-converter/test_coverage)
@@ -54,21 +55,22 @@ Supported naming conventions
 
 | Description   | Method        | Example           |
 | ------------- | ------------- | ----------------- |
-| Camel case    | `toCamel()`   | myNameIsBond      |
-| Pascal case   | `toPascal()`  | MyNameIsBond      |
-| Kebab case    | `toKebab()`   | my-name-is-bond   |
-| Train case    | `toTrain()`   | My-Name-Is-Bond   |
-| Cobol case    | `toCobol()`   | MY-NAME-IS-BOND   |
-| Snake case    | `toSnake()`   | my_name_is_bond   |
-| Ada case      | `toAda()`     | My_Name_Is_Bond   |
-| Macro case    | `toMacro()`   | MY_NAME_IS_BOND   |
+| Camel case    | `toCamel()`   | `myNameIsBond`    |
+| Pascal case   | `toPascal()`  | `MyNameIsBond`    |
+| Kebab case    | `toKebab()`   | `my-name-is-bond` |
+| Train case    | `toTrain()`   | `My-Name-Is-Bond` |
+| Cobol case    | `toCobol()`   | `MY-NAME-IS-BOND` |
+| Snake case    | `toSnake()`   | `my_name_is_bond` |
+| Ada case      | `toAda()`     | `My_Name_Is_Bond` |
+| Macro case    | `toMacro()`   | `MY_NAME_IS_BOND` |
 
 Utility methods
 ---------------
 
-| Description               | Method    | Example                       |
-| ------------------------- | --------- | ----------------------------- |
-| Get words in array format | toArray() | ['my', 'name', 'is', 'bond']  | 
+| Description                         | Method          | Example                         |
+| ----------------------------------- | --------------- | ------------------------------- |
+| Get array with detected words       | `toArray()`     | `['my', 'name', 'is', 'bond']`  | 
+| Same as Camel case ([magic method]) | `__toString()`  | `myNameIsBond`                  |
 
 i18n
 ----
@@ -154,3 +156,4 @@ This library is licensed under the [MIT LICENSE].
 [MIT LICENSE]: ./LICENSE.md
 [open an issue]: https://github.com/jawira/case-converter/issues/new
 [CONTRIBUTING.md]: ./CONTRIBUTING.md
+[magic method]: https://www.php.net/manual/en/language.oop5.magic.php#object.tostring
