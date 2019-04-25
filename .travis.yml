@@ -20,7 +20,7 @@ before_script:
   - bin/phing cc:before-build
 
 script:
-  - bin/phing test
+  - bin/phing qa
 
 after_script:
   - bin/phing cc:after-build
