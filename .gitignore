@@ -14,3 +14,5 @@
 /bin/cc-test-reporter
 /coverage/codeclimate.json
 /bin/phpDocumentor
+/bin/phploc
+/resources/phploc.txt

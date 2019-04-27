@@ -7,6 +7,7 @@ All notable changes to this project will be documented in this file.
 ### Added
 
 - [#26] New method to get array with words extracted from original string `\Jawira\CaseConverter\Convert::toArray`
+- PHPLoc target in buildfile
 
 ## [v2.0.4] - 2019-04-04
 
