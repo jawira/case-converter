@@ -8,6 +8,7 @@ All notable changes to this project will be documented in this file.
 
 - [#26] New method to get array with words extracted from original string `\Jawira\CaseConverter\Convert::toArray`
 - PHPLoc target in buildfile
+- [#31] Implement countable interface
 
 ## [v2.0.4] - 2019-04-04
 
@@ -198,3 +199,5 @@ All notable changes to this project will be documented in this file.
 [v2.0.2]: https://github.com/jawira/case-converter/compare/v2.0.1...v2.0.2
 [v2.0.3]: https://github.com/jawira/case-converter/compare/v2.0.2...v2.0.3
 [v2.0.4]: https://github.com/jawira/case-converter/compare/v2.0.3...v2.0.4
+
+[#31]: https://github.com/jawira/case-converter/pull/31

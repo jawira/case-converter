@@ -53,7 +53,7 @@ Usage
 Supported naming conventions
 ----------------------------
 
-| Description   | Method        | Example           |
+| Description   | Method        | Output example    |
 | ------------- | ------------- | ----------------- |
 | Camel case    | `toCamel()`   | `myNameIsBond`    |
 | Pascal case   | `toPascal()`  | `MyNameIsBond`    |
@@ -67,10 +67,11 @@ Supported naming conventions
 Utility methods
 ---------------
 
-| Description                         | Method          | Example                         |
-| ----------------------------------- | --------------- | ------------------------------- |
-| Get array with detected words       | `toArray()`     | `['my', 'name', 'is', 'bond']`  | 
-| Same as Camel case ([magic method]) | `__toString()`  | `myNameIsBond`                  |
+| Description                                   | Method          | Output example                  |
+| --------------------------------------------- | --------------- | ------------------------------- |
+| Get array with detected words                 | `toArray()`     | `['my', 'name', 'is', 'bond']`  | 
+| Same as Camel case ([magic method])           | `__toString()`  | `myNameIsBond`                  |
+| Count detected words ([Countable interface])  | `count()`       | `4`                             |
 
 i18n
 ----
@@ -157,3 +158,4 @@ This library is licensed under the [MIT LICENSE].
 [open an issue]: https://github.com/jawira/case-converter/issues/new
 [CONTRIBUTING.md]: ./CONTRIBUTING.md
 [magic method]: https://www.php.net/manual/en/language.oop5.magic.php#object.tostring
+[Countable interface]: https://php.net/manual/en/class.countable.php

@@ -20,6 +20,11 @@ class FeatureContext implements Context
     protected $instance;
 
     /**
+     * @var int Result of count()
+     */
+    protected $count;
+
+    /**
      * @Given /^CaseConverter class is instantiated with "([^"]*)"$/
      * @param string $arg1 String to convert
      *
@@ -109,5 +114,33 @@ class FeatureContext implements Context
 
         // Filtering since CaseConverter does the same.
         return array_filter($exploded);
+    }
+
+    /**
+     * @When I use count function
+     */
+    public function iUseCountFunction()
+    {
+        $this->count = count($this->instance);
+    }
+
+    /**
+     * @Then functions should return :expectedCount
+     *
+     * @param $expectedCount
+     *
+     * @throws \Exception
+     */
+    public function functionsShouldReturn($expectedCount)
+    {
+        if (!is_numeric($expectedCount)) {
+            throw new Exception('Count value is not numeric');
+        }
+
+        $expectedCount = (int)$expectedCount;
+
+        if ($this->count !== $expectedCount) {
+            throw new Exception('Invalid count');
+        }
     }
 }

@@ -159,3 +159,20 @@ Feature: Convert Case
       | NASA         | nasa          |
       | Judo         | judo          |
       | Hello-World  | helloWorld    |
+
+
+  Scenario Outline: Count detected words
+    Given CaseConverter class is instantiated with "<input-string>"
+    When I use count function
+    Then functions should return "<word-count>"
+
+    Examples:
+      | input-string              | word-count |
+      |                           | 0          |
+      | LoremIpsum                | 2          |
+      | visit-our-website         | 3          |
+      | does_that_work            | 3          |
+      | CatsAreGoodPets           | 4          |
+      | HOLLYWOOD                 | 1          |
+      | checked                   | 1          |
+      | APurplePigAndAGreenDonkey | 7          |
