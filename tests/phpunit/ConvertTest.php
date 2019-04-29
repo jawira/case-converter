@@ -185,6 +185,8 @@ class ConvertTest extends TestCase
      * @param int    $mode
      * @param bool   $lcf
      *
+     * @param string $expected
+     *
      * @throws \ReflectionException
      */
     public function testGlueString(array $words, string $glue, int $mode, bool $lcf, string $expected)
@@ -211,33 +213,36 @@ class ConvertTest extends TestCase
         $this->assertSame($expected, $output);
     }
 
+    /**
+     * @return array
+     */
     public function glueStringProvider()
     {
         return [
-            [['foo', 'bar'], Convert::DASH, \MB_CASE_LOWER, false, 'foo-bar'],
-            [['foo', 'bar'], Convert::DASH, \MB_CASE_TITLE, false, 'Foo-Bar'],
-            [['foo', 'bar'], Convert::DASH, \MB_CASE_UPPER, false, 'FOO-BAR'],
-            [['foo', 'bar'], Convert::UNDERSCORE, \MB_CASE_LOWER, false, 'foo_bar'],
-            [['foo', 'bar'], Convert::UNDERSCORE, \MB_CASE_TITLE, false, 'Foo_Bar'],
-            [['foo', 'bar'], Convert::UNDERSCORE, \MB_CASE_UPPER, false, 'FOO_BAR'],
-            [['foo', 'bar'], Convert::EMPTY_STRING, \MB_CASE_LOWER, false, 'foobar'],
-            [['foo', 'bar'], Convert::EMPTY_STRING, \MB_CASE_TITLE, false, 'FooBar'],
-            [['foo', 'bar'], Convert::EMPTY_STRING, \MB_CASE_UPPER, false, 'FOOBAR'],
-            [['foo', 'bar'], '§', \MB_CASE_LOWER, false, 'foo§bar'],
-            [['foo', 'bar'], '§', \MB_CASE_TITLE, false, 'Foo§Bar'],
-            [['foo', 'bar'], '§', \MB_CASE_UPPER, false, 'FOO§BAR'],
-            [['foo', 'bar'], Convert::DASH, \MB_CASE_LOWER, true, 'foo-bar'],
-            [['foo', 'bar'], Convert::DASH, \MB_CASE_TITLE, true, 'foo-Bar'],
-            [['foo', 'bar'], Convert::DASH, \MB_CASE_UPPER, true, 'foo-BAR'],
-            [['foo', 'bar'], Convert::UNDERSCORE, \MB_CASE_LOWER, true, 'foo_bar'],
-            [['foo', 'bar'], Convert::UNDERSCORE, \MB_CASE_TITLE, true, 'foo_Bar'],
-            [['foo', 'bar'], Convert::UNDERSCORE, \MB_CASE_UPPER, true, 'foo_BAR'],
-            [['foo', 'bar'], Convert::EMPTY_STRING, \MB_CASE_LOWER, true, 'foobar'],
-            [['foo', 'bar'], Convert::EMPTY_STRING, \MB_CASE_TITLE, true, 'fooBar'],
-            [['foo', 'bar'], Convert::EMPTY_STRING, \MB_CASE_UPPER, true, 'fooBAR'],
-            [['foo', 'bar'], '§', \MB_CASE_LOWER, true, 'foo§bar'],
-            [['foo', 'bar'], '§', \MB_CASE_TITLE, true, 'foo§Bar'],
-            [['foo', 'bar'], '§', \MB_CASE_UPPER, true, 'foo§BAR'],
+            [['foo', 'bar'], Convert::DASH, MB_CASE_LOWER, false, 'foo-bar'],
+            [['foo', 'bar'], Convert::DASH, MB_CASE_TITLE, false, 'Foo-Bar'],
+            [['foo', 'bar'], Convert::DASH, MB_CASE_UPPER, false, 'FOO-BAR'],
+            [['foo', 'bar'], Convert::UNDERSCORE, MB_CASE_LOWER, false, 'foo_bar'],
+            [['foo', 'bar'], Convert::UNDERSCORE, MB_CASE_TITLE, false, 'Foo_Bar'],
+            [['foo', 'bar'], Convert::UNDERSCORE, MB_CASE_UPPER, false, 'FOO_BAR'],
+            [['foo', 'bar'], Convert::EMPTY_STRING, MB_CASE_LOWER, false, 'foobar'],
+            [['foo', 'bar'], Convert::EMPTY_STRING, MB_CASE_TITLE, false, 'FooBar'],
+            [['foo', 'bar'], Convert::EMPTY_STRING, MB_CASE_UPPER, false, 'FOOBAR'],
+            [['foo', 'bar'], '§', MB_CASE_LOWER, false, 'foo§bar'],
+            [['foo', 'bar'], '§', MB_CASE_TITLE, false, 'Foo§Bar'],
+            [['foo', 'bar'], '§', MB_CASE_UPPER, false, 'FOO§BAR'],
+            [['foo', 'bar'], Convert::DASH, MB_CASE_LOWER, true, 'foo-bar'],
+            [['foo', 'bar'], Convert::DASH, MB_CASE_TITLE, true, 'foo-Bar'],
+            [['foo', 'bar'], Convert::DASH, MB_CASE_UPPER, true, 'foo-BAR'],
+            [['foo', 'bar'], Convert::UNDERSCORE, MB_CASE_LOWER, true, 'foo_bar'],
+            [['foo', 'bar'], Convert::UNDERSCORE, MB_CASE_TITLE, true, 'foo_Bar'],
+            [['foo', 'bar'], Convert::UNDERSCORE, MB_CASE_UPPER, true, 'foo_BAR'],
+            [['foo', 'bar'], Convert::EMPTY_STRING, MB_CASE_LOWER, true, 'foobar'],
+            [['foo', 'bar'], Convert::EMPTY_STRING, MB_CASE_TITLE, true, 'fooBar'],
+            [['foo', 'bar'], Convert::EMPTY_STRING, MB_CASE_UPPER, true, 'fooBAR'],
+            [['foo', 'bar'], '§', MB_CASE_LOWER, true, 'foo§bar'],
+            [['foo', 'bar'], '§', MB_CASE_TITLE, true, 'foo§Bar'],
+            [['foo', 'bar'], '§', MB_CASE_UPPER, true, 'foo§BAR'],
         ];
     }
 
@@ -450,6 +455,46 @@ class ConvertTest extends TestCase
             ['HolaMundo', '_Hola_Mundo'],
             ['yes', 'yes'],
             ['airBus', 'air_Bus'],
+        ];
+    }
+
+    /**
+     * @see          http://beriba.pl/?p=262
+     *
+     * @param array $myArray
+     * @param int   $expectedCount
+     *
+     * @throws \ReflectionException
+     * @covers       Jawira\CaseConverter\Convert::count
+     * @dataProvider countProvider()
+     */
+    public function testCount(array $myArray, int $expectedCount)
+    {
+        // Disabling constructor, keeping original methods
+        /** @var Convert $mock */
+        $mock = $this->getMockBuilder(Convert::class)
+                     ->disableOriginalConstructor()
+                     ->setMethods()
+                     ->getMock();
+
+        // Setting value to protected property
+        $reflectionObject   = new ReflectionObject($mock);
+        $reflectionProperty = $reflectionObject->getProperty('words');
+        $reflectionProperty->setAccessible(true);
+        $reflectionProperty->setValue($mock, $myArray);
+
+        $currentCount = $mock->count();
+
+        $this->assertEquals($expectedCount, $currentCount);
+    }
+
+    public function countProvider()
+    {
+        return [
+            'empty array'  => [[], 0],
+            'small array'  => [['a'], 1],
+            'medium array' => [['a', 'a', 'a', 'a',], 4],
+            'large array'  => [['a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a',], 12],
         ];
     }
 }

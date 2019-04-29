@@ -91,11 +91,10 @@
       <arg value="--force-accept-unsigned"/>
       <arg line="--trust-gpg-keys 4AA394086372C20A,8E730BA25823D8B5,2420BAE0A3BE25C6"/>
     </exec>
-    <symlink description="Allows to have auto-completion with PhpStorm"
-             link="bin/phpunit.phar"
-             target="bin/phpunit"
-             relative="true"
-             overwrite="true"/>
+    <copy description="Allows to have auto-completion with PhpStorm"
+          file="bin/phpunit"
+          tofile="bin/phpunit.phar"
+          overwrite="true"/>
   </target>
 
   <target name="changelog:links" description="Update links in composer.json">
