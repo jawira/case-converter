@@ -4,8 +4,8 @@ Case converter
 Use this library to convert string between:
 
 * 🐪 Camel case
-* 👨‍🏫 Pascal case
 * 🐍 Snake case
+* 👨‍🏫 Pascal case
 * 👩‍🏫 Ada case
 * 🔠 Macro case
 * 🥙 Kebab case
@@ -18,6 +18,7 @@ Features:
 * 🌐 i18n
 
 [![Latest Stable Version](https://poser.pugx.org/jawira/case-converter/v/stable)](https://packagist.org/packages/jawira/case-converter)
+[![PHP from Packagist](https://img.shields.io/packagist/php-v/jawira/case-converter.svg)](https://packagist.org/packages/jawira/case-converter)
 [![Build Status](https://www.travis-ci.org/jawira/case-converter.svg?branch=master)](https://www.travis-ci.org/jawira/case-converter)
 [![Maintainability](https://api.codeclimate.com/v1/badges/35677f6ce7dac27a5d0c/maintainability)](https://codeclimate.com/github/jawira/case-converter/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/35677f6ce7dac27a5d0c/test_coverage)](https://codeclimate.com/github/jawira/case-converter/test_coverage)
@@ -39,7 +40,7 @@ Usage
     $son = new Convert('john-connor');
     ```
 
-    Input string (i.e. _john-connor_) format is going to be detected
+    Note: Input string (i.e. _john-connor_) format is going to be detected
     automatically.
 
 2. Then use the right method to convert the string accordingly to your needs:
@@ -49,24 +50,33 @@ Usage
     echo $son->toSnake();   // output: john_connor
     ```
 
-Handled formats
+Supported naming conventions
+----------------------------
+
+| Description   | Method        | Output example    |
+| ------------- | ------------- | ----------------- |
+| Camel case    | `toCamel()`   | `myNameIsBond`    |
+| Pascal case   | `toPascal()`  | `MyNameIsBond`    |
+| Kebab case    | `toKebab()`   | `my-name-is-bond` |
+| Train case    | `toTrain()`   | `My-Name-Is-Bond` |
+| Cobol case    | `toCobol()`   | `MY-NAME-IS-BOND` |
+| Snake case    | `toSnake()`   | `my_name_is_bond` |
+| Ada case      | `toAda()`     | `My_Name_Is_Bond` |
+| Macro case    | `toMacro()`   | `MY_NAME_IS_BOND` |
+
+Utility methods
 ---------------
 
-| Name          | Method        | Example           |
-| ------------- | ------------- | ----------------- |
-| Camel case    | `toCamel()`   | myNameIsBond      |
-| Pascal case   | `toPascal()`  | MyNameIsBond      |
-| Kebab case    | `toKebab()`   | my-name-is-bond   |
-| Train case    | `toTrain()`   | My-Name-Is-Bond   |
-| Cobol case    | `toCobol()`   | MY-NAME-IS-BOND   |
-| Snake case    | `toSnake()`   | my_name_is_bond   |
-| Ada case      | `toAda()`     | My_Name_Is_Bond   |
-| Macro case    | `toMacro()`   | MY_NAME_IS_BOND   |
+| Description                                   | Method          | Output example                  |
+| --------------------------------------------- | --------------- | ------------------------------- |
+| Get array with detected words                 | `toArray()`     | `['my', 'name', 'is', 'bond']`  | 
+| Same as Camel case ([magic method])           | `__toString()`  | `myNameIsBond`                  |
+| Count detected words ([Countable interface])  | `count()`       | `4`                             |
 
 i18n
 ----
 
-Fully compatible with multilingual strings:
+Fully compatible with non-english alphabets:
 
 ```php
 // Spanish
@@ -147,3 +157,5 @@ This library is licensed under the [MIT LICENSE].
 [MIT LICENSE]: ./LICENSE.md
 [open an issue]: https://github.com/jawira/case-converter/issues/new
 [CONTRIBUTING.md]: ./CONTRIBUTING.md
+[magic method]: https://www.php.net/manual/en/language.oop5.magic.php#object.tostring
+[Countable interface]: https://php.net/manual/en/class.countable.php

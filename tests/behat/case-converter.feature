@@ -4,10 +4,10 @@ Feature: Convert Case
   change case
 
 
-  Scenario Outline: Convert a string calling a CaseConverter method
+  Scenario Outline: Change naming convention from string using explicit methods
     Given CaseConverter class is instantiated with "<input-string>"
     When I call "<method>"
-    Then method should return "<output-string>"
+    Then method should return string "<output-string>"
 
     Examples:
       | method   | input-string         | output-string        |
@@ -131,3 +131,48 @@ Feature: Convert Case
       | toTrain  | Πολύ-καλό            | Πολύ-Καλό            |
       | toTrain  | ОЧЕНЬ_ПРИЯТНО        | Очень-Приятно        |
       | toTrain  | Ես-հայերեն-չգիտեմ    | Ես-Հայերեն-Չգիտեմ    |
+
+
+  Scenario Outline: Convert a string to array
+    Given CaseConverter class is instantiated with "<input-string>"
+    When I call "<method>"
+    Then method should return array "<output-array>"
+
+    Examples:
+      | method  | input-string    | output-array      |
+      | toArray |                 | []                |
+      | toArray | a               | [a]               |
+      | toArray | HugoPacoLuis    | [Hugo;Paco;Luis]  |
+      | toArray | loremIpsum      | [lorem;Ipsum]     |
+      | toArray | aBc_DeF_hIj_KlM | [aBc;DeF;hIj;KlM] |
+      | toArray | one__two        | [one;two]         |
+
+
+  Scenario Outline: Change naming convention from string using magic function
+    Given CaseConverter class is instantiated with "<input-string>"
+    When I cast object to string
+    Then method should return string "<output-string>"
+
+    Examples:
+      | input-string | output-string |
+      |              |               |
+      | NASA         | nasa          |
+      | Judo         | judo          |
+      | Hello-World  | helloWorld    |
+
+
+  Scenario Outline: Count detected words
+    Given CaseConverter class is instantiated with "<input-string>"
+    When I use count function
+    Then functions should return "<word-count>"
+
+    Examples:
+      | input-string              | word-count |
+      |                           | 0          |
+      | LoremIpsum                | 2          |
+      | visit-our-website         | 3          |
+      | does_that_work            | 3          |
+      | CatsAreGoodPets           | 4          |
+      | HOLLYWOOD                 | 1          |
+      | checked                   | 1          |
+      | APurplePigAndAGreenDonkey | 7          |

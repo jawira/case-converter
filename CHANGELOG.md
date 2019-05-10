@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+## [v2.1.0] - 2019-05-10
+
+### Added
+
+- [#26] New method to get array with words extracted from original string `\Jawira\CaseConverter\Convert::toArray`
+- PHPLoc target in buildfile
+- [#31] Implement countable interface
+
 ## [v2.0.4] - 2019-04-04
 
 ### Changed
@@ -163,34 +171,37 @@ All notable changes to this project will be documented in this file.
 - Deleted Convert::old_camelToSnake()
 - Deleted Convert::old_snakeToCamel()
 
-[#12]: https://github.com/jawira/case-converter/pull/12
-[#9]: https://github.com/jawira/case-converter/pull/9
-[v1.1.5]: https://github.com/jawira/case-converter/compare/v1.1.4...v1.1.5
-[v1.1.4]: https://github.com/jawira/case-converter/compare/v1.1.3...v1.1.4
-[v1.1.3]: https://github.com/jawira/case-converter/compare/v1.1.2...v1.1.3
-[v1.1.2]: https://github.com/jawira/case-converter/compare/v1.1.1...v1.1.2
-[v1.1.1]: https://github.com/jawira/case-converter/compare/v1.1.0...v1.1.1
-[v1.1.0]: https://github.com/jawira/case-converter/compare/v1.0.1...v1.1.0
-[v1.0.1]: https://github.com/jawira/case-converter/compare/v1.0.0...v1.0.1
-[v1.0.0]: https://github.com/jawira/case-converter/compare/v0.0.0...v1.0.0
-[v1.1.6]: https://github.com/jawira/case-converter/compare/v1.1.5...v1.1.6
-[#17]: https://github.com/jawira/case-converter/pull/17
-[#16]: https://github.com/jawira/case-converter/pull/16
 [#11]: https://github.com/jawira/case-converter/pull/11
-[v1.1.7]: https://github.com/jawira/case-converter/compare/v1.1.6...v1.1.7
+[#12]: https://github.com/jawira/case-converter/pull/12
+[#16]: https://github.com/jawira/case-converter/pull/16
+[#17]: https://github.com/jawira/case-converter/pull/17
 [#18]: https://github.com/jawira/case-converter/pull/18
 [#19]: https://github.com/jawira/case-converter/pull/19
-[v1.2.0]: https://github.com/jawira/case-converter/compare/v1.1.7...v1.2.0
 [#21]: https://github.com/jawira/case-converter/pull/21
-[v2.0.0]: https://github.com/jawira/case-converter/compare/v1.2.0...v2.0.0
-[#25]: https://github.com/jawira/case-converter/pull/25
-[v2.0.1]: https://github.com/jawira/case-converter/compare/v2.0.0...v2.0.1
-[#27]: https://github.com/jawira/case-converter/pull/27
-[v2.0.2]: https://github.com/jawira/case-converter/compare/v2.0.1...v2.0.2
-[#24]: https://github.com/jawira/case-converter/pull/24
 [#22]: https://github.com/jawira/case-converter/pull/22
-[v2.0.3]: https://github.com/jawira/case-converter/compare/v2.0.2...v2.0.3
-
+[#24]: https://github.com/jawira/case-converter/pull/24
+[#25]: https://github.com/jawira/case-converter/pull/25
+[#26]: https://github.com/jawira/case-converter/pull/26
+[#27]: https://github.com/jawira/case-converter/pull/27
 [#29]: https://github.com/jawira/case-converter/pull/29
-
+[#9]: https://github.com/jawira/case-converter/pull/9
+[v1.0.0]: https://github.com/jawira/case-converter/compare/v0.0.0...v1.0.0
+[v1.0.1]: https://github.com/jawira/case-converter/compare/v1.0.0...v1.0.1
+[v1.1.0]: https://github.com/jawira/case-converter/compare/v1.0.1...v1.1.0
+[v1.1.1]: https://github.com/jawira/case-converter/compare/v1.1.0...v1.1.1
+[v1.1.2]: https://github.com/jawira/case-converter/compare/v1.1.1...v1.1.2
+[v1.1.3]: https://github.com/jawira/case-converter/compare/v1.1.2...v1.1.3
+[v1.1.4]: https://github.com/jawira/case-converter/compare/v1.1.3...v1.1.4
+[v1.1.5]: https://github.com/jawira/case-converter/compare/v1.1.4...v1.1.5
+[v1.1.6]: https://github.com/jawira/case-converter/compare/v1.1.5...v1.1.6
+[v1.1.7]: https://github.com/jawira/case-converter/compare/v1.1.6...v1.1.7
+[v1.2.0]: https://github.com/jawira/case-converter/compare/v1.1.7...v1.2.0
+[v2.0.0]: https://github.com/jawira/case-converter/compare/v1.2.0...v2.0.0
+[v2.0.1]: https://github.com/jawira/case-converter/compare/v2.0.0...v2.0.1
+[v2.0.2]: https://github.com/jawira/case-converter/compare/v2.0.1...v2.0.2
+[v2.0.3]: https://github.com/jawira/case-converter/compare/v2.0.2...v2.0.3
 [v2.0.4]: https://github.com/jawira/case-converter/compare/v2.0.3...v2.0.4
+
+[#31]: https://github.com/jawira/case-converter/pull/31
+
+[v2.1.0]: https://github.com/jawira/case-converter/compare/v2.0.4...v2.1.0
