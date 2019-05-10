@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+## [v2.1.0] - 2019-05-10
+
 ### Added
 
 - [#26] New method to get array with words extracted from original string `\Jawira\CaseConverter\Convert::toArray`
@@ -201,3 +203,5 @@ All notable changes to this project will be documented in this file.
 [v2.0.4]: https://github.com/jawira/case-converter/compare/v2.0.3...v2.0.4
 
 [#31]: https://github.com/jawira/case-converter/pull/31
+
+[v2.1.0]: https://github.com/jawira/case-converter/compare/v2.0.4...v2.1.0
