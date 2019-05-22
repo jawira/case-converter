@@ -249,7 +249,7 @@ class Convert implements Countable
      */
     public function toCamel(): string
     {
-        return $this->glueString(self::EMPTY_STRING, MB_CASE_TITLE, true);
+        return $this->glueString(self::EMPTY_STRING, MB_CASE_TITLE, MB_CASE_LOWER);
     }
 
     /**
@@ -259,31 +259,34 @@ class Convert implements Countable
      *                               character, this method should be capable to use any character as glue.
      * @param int    $wordsMode      The mode of the conversion. It should be one of MB_CASE_UPPER, MB_CASE_LOWER, or
      *                               MB_CASE_TITLE.
-     * @param bool   $firstWordMode  Sometimes first word requires special treatment. Force using \MB_CASE_LOWER for
-     *                               the first word, this parameter is expected to be true only for Camel case.
+     * @param int    $firstWordMode  Sometimes first word requires special treatment. It should be one of
+     *                               MB_CASE_UPPER, or MB_CASE_LOWER.
      *
      * @return string
      */
-    protected function glueString(string $glue, int $wordsMode, bool $firstWordMode = false): string
+    protected function glueString(string $glue, int $wordsMode, int $firstWordMode = null): string
     {
         $convertedWords = $this->changeWordsCase($this->words, $wordsMode);
-        $convertedWords = $this->changeFirstWordCase($convertedWords, $firstWordMode);
+
+        if ($firstWordMode) {
+            $convertedWords = $this->changeFirstWordCase($convertedWords, $firstWordMode);
+        }
 
         return implode($glue, $convertedWords);
     }
 
     /**
-     * @param array $words
-     * @param int   $mode
+     * @param string[] $words
+     * @param int      $caseMode
      *
      * @return array
      */
-    protected function changeWordsCase(array $words, int $mode): array
+    protected function changeWordsCase(array $words, int $caseMode): array
     {
-        assert(in_array($mode, [MB_CASE_UPPER, MB_CASE_LOWER, MB_CASE_TITLE]), 'Invalid MultiByte constant');
+        assert(in_array($caseMode, [MB_CASE_UPPER, MB_CASE_LOWER, MB_CASE_TITLE]), 'Invalid MultiByte constant');
 
-        $closure = function (string $word) use ($mode) {
-            return mb_convert_case($word, $mode, self::ENCODING);
+        $closure = function (string $word) use ($caseMode) {
+            return mb_convert_case($word, $caseMode, self::ENCODING);
         };
 
         $convertedWords = array_map($closure, $words);
@@ -292,22 +295,24 @@ class Convert implements Countable
     }
 
     /**
-     * @param array $convertedWords
-     * @param bool  $lowerCaseFirst
+     * @param string[] $words
+     * @param int      $caseMode
      *
      * @return array
      */
-    protected function changeFirstWordCase(array $convertedWords, bool $lowerCaseFirst): array
+    protected function changeFirstWordCase(array $words, int $caseMode): array
     {
-        if (empty($convertedWords)) {
-            return $convertedWords;
+        assert(in_array($caseMode, [MB_CASE_UPPER, MB_CASE_LOWER]), 'Invalid MultiByte constant');
+
+        if (empty($words)) {
+            return $words;
         }
 
-        if ($lowerCaseFirst && count($this->words) > 0) {
-            $convertedWords[0] = mb_convert_case($convertedWords[0], MB_CASE_LOWER, self::ENCODING);
+        if ($caseMode && count($this->words) > 0) {
+            $words[0] = mb_convert_case($words[0], MB_CASE_LOWER, self::ENCODING);
         }
 
-        return $convertedWords;
+        return $words;
     }
 
     /**
