@@ -19,7 +19,18 @@
 
   <target name="qa"
           description="Quality assurance"
-          depends="php:lint, composer:validate, phpunit:run, behat:run, phpstan:run"/>
+          depends="php:lint, composer:validate, phpunit:run, behat:run, phpstan:run, phploc:run"/>
+
+  <target name="phploc:run">
+    <exec executable="bin/phploc" checkreturn="true" outputProperty="phploc.results">
+      <arg value="--no-interaction"/>
+      <arg path="src"/>
+    </exec>
+    <echo file="resources/phploc.txt">
+      ${phploc.results}
+    </echo>
+    <echo>${phploc.results}</echo>
+  </target>
 
   <target name="composer:validate" description="Check composer.json syntax">
     <composer>
@@ -61,6 +72,7 @@
       <arg value="--no-interaction"/>
       <arg value="--stop-on-failure"/>
       <arg value="--rerun"/>
+      <arg value="--strict"/>
     </exec>
   </target>
 
@@ -79,6 +91,10 @@
       <arg value="--force-accept-unsigned"/>
       <arg line="--trust-gpg-keys 4AA394086372C20A,8E730BA25823D8B5,2420BAE0A3BE25C6"/>
     </exec>
+    <copy description="Allows to have auto-completion with PhpStorm"
+          file="bin/phpunit"
+          tofile="bin/phpunit.phar"
+          overwrite="true"/>
   </target>
 
   <target name="changelog:links" description="Update links in composer.json">

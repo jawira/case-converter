@@ -2,6 +2,25 @@
 
 namespace Jawira\CaseConverter;
 
+use Countable;
+use function array_filter;
+use function array_map;
+use function array_values;
+use function assert;
+use function count;
+use function implode;
+use function is_null;
+use function mb_convert_case;
+use function mb_split;
+use function mb_strpos;
+use function preg_match;
+use function preg_replace_callback;
+use function reset;
+use const COUNT_NORMAL;
+use const MB_CASE_LOWER;
+use const MB_CASE_TITLE;
+use const MB_CASE_UPPER;
+
 /**
  * Convert string between different naming conventions.
  *
@@ -18,9 +37,9 @@ namespace Jawira\CaseConverter;
  *
  * @see     https://softwareengineering.stackexchange.com/questions/322413/bothered-by-an-unknown-letter-case-name
  * @package Jawira\CaseConverter
- * @author  Jawira Portugal
+ * @author  Jawira Portugal <dev@tugal.be>
  */
-class Convert
+class Convert implements Countable
 {
     const ENCODING = 'UTF-8';
 
@@ -189,10 +208,10 @@ class Convert
      *
      * @param string $input
      *
-     * @see https://www.regular-expressions.info/unicode.html#category
-     *
      * @return array Words in $input
      * @throws \Jawira\CaseConverter\CaseConverterException
+     * @see https://www.regular-expressions.info/unicode.html#category
+     *
      */
     protected function splitUppercaseString(string $input): array
     {
@@ -230,7 +249,7 @@ class Convert
      */
     public function toCamel(): string
     {
-        return $this->glueString(self::EMPTY_STRING, \MB_CASE_TITLE, true);
+        return $this->glueString(self::EMPTY_STRING, MB_CASE_TITLE, true);
     }
 
     /**
@@ -247,7 +266,7 @@ class Convert
      */
     protected function glueString(string $glue, int $mode, bool $lowerCaseFirst = false): string
     {
-        assert(in_array($mode, [\MB_CASE_UPPER, \MB_CASE_LOWER, \MB_CASE_TITLE]), 'Invalid MB mode');
+        assert(in_array($mode, [MB_CASE_UPPER, MB_CASE_LOWER, MB_CASE_TITLE]), 'Invalid MB mode');
 
         $closure = function ($word) use ($mode) {
             return mb_convert_case($word, $mode, self::ENCODING);
@@ -256,7 +275,7 @@ class Convert
         $convertedWords = array_map($closure, $this->words);
 
         if ($lowerCaseFirst && count($this->words) > 0) {
-            $convertedWords[0] = mb_convert_case($convertedWords[0], \MB_CASE_LOWER, self::ENCODING);
+            $convertedWords[0] = mb_convert_case($convertedWords[0], MB_CASE_LOWER, self::ENCODING);
         }
 
         return implode($glue, $convertedWords);
@@ -273,7 +292,7 @@ class Convert
      */
     public function toPascal(): string
     {
-        return $this->glueString(self::EMPTY_STRING, \MB_CASE_TITLE);
+        return $this->glueString(self::EMPTY_STRING, MB_CASE_TITLE);
     }
 
     /**
@@ -287,7 +306,7 @@ class Convert
      */
     public function toSnake(): string
     {
-        return $this->glueString(self::UNDERSCORE, \MB_CASE_LOWER);
+        return $this->glueString(self::UNDERSCORE, MB_CASE_LOWER);
     }
 
     /**
@@ -301,7 +320,7 @@ class Convert
      */
     public function toMacro(): string
     {
-        return $this->glueString(self::UNDERSCORE, \MB_CASE_UPPER);
+        return $this->glueString(self::UNDERSCORE, MB_CASE_UPPER);
     }
 
     /**
@@ -315,7 +334,7 @@ class Convert
      */
     public function toAda(): string
     {
-        return $this->glueString(self::UNDERSCORE, \MB_CASE_TITLE);
+        return $this->glueString(self::UNDERSCORE, MB_CASE_TITLE);
     }
 
     /**
@@ -329,7 +348,7 @@ class Convert
      */
     public function toKebab(): string
     {
-        return $this->glueString(self::DASH, \MB_CASE_LOWER);
+        return $this->glueString(self::DASH, MB_CASE_LOWER);
     }
 
     /**
@@ -343,7 +362,7 @@ class Convert
      */
     public function toCobol(): string
     {
-        return $this->glueString(self::DASH, \MB_CASE_UPPER);
+        return $this->glueString(self::DASH, MB_CASE_UPPER);
     }
 
     /**
@@ -357,7 +376,7 @@ class Convert
      */
     public function toTrain(): string
     {
-        return $this->glueString(self::DASH, \MB_CASE_TITLE);
+        return $this->glueString(self::DASH, MB_CASE_TITLE);
     }
 
     /**
@@ -370,4 +389,15 @@ class Convert
         return $this->words;
     }
 
+    /**
+     * Count detected words
+     *
+     * @link  https://php.net/manual/en/countable.count.php
+     *
+     * @return int The custom count as an integer.
+     */
+    public function count(): int
+    {
+        return count($this->words, COUNT_NORMAL);
+    }
 }

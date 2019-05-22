@@ -1,6 +1,7 @@
 <component name="ProjectDictionaryState">
   <dictionary name="jawira">
     <words>
+      <w>buildfile</w>
       <w>cowabunga</w>
       <w>enduml</w>
       <w>eniac</w>
@@ -14,6 +15,7 @@
       <w>oneline</w>
       <w>phing</w>
       <w>phive</w>
+      <w>phploc</w>
       <w>phpstan</w>
       <w>plantuml</w>
       <w>puml</w>

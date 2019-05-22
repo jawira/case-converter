@@ -53,24 +53,25 @@ Usage
 Supported naming conventions
 ----------------------------
 
-| Description   | Method        | Example           |
-| ------------- | ------------- | ----------------- |
-| Camel case    | `toCamel()`   | `myNameIsBond`    |
-| Pascal case   | `toPascal()`  | `MyNameIsBond`    |
-| Kebab case    | `toKebab()`   | `my-name-is-bond` |
-| Train case    | `toTrain()`   | `My-Name-Is-Bond` |
-| Cobol case    | `toCobol()`   | `MY-NAME-IS-BOND` |
-| Snake case    | `toSnake()`   | `my_name_is_bond` |
-| Ada case      | `toAda()`     | `My_Name_Is_Bond` |
-| Macro case    | `toMacro()`   | `MY_NAME_IS_BOND` |
+| Method        | Description | Output example    |
+| ------------- | ----------- | ----------------- |
+| `toCamel()`   | Camel case  | `myNameIsBond`    |
+| `toPascal()`  | Pascal case | `MyNameIsBond`    |
+| `toKebab()`   | Kebab case  | `my-name-is-bond` |
+| `toTrain()`   | Train case  | `My-Name-Is-Bond` |
+| `toCobol()`   | Cobol case  | `MY-NAME-IS-BOND` |
+| `toSnake()`   | Snake case  | `my_name_is_bond` |
+| `toAda()`     | Ada case    | `My_Name_Is_Bond` |
+| `toMacro()`   | Macro case  | `MY_NAME_IS_BOND` |
 
 Utility methods
 ---------------
 
-| Description                         | Method          | Example                         |
-| ----------------------------------- | --------------- | ------------------------------- |
-| Get array with detected words       | `toArray()`     | `['my', 'name', 'is', 'bond']`  | 
-| Same as Camel case ([magic method]) | `__toString()`  | `myNameIsBond`                  |
+| Method          | Description                                   | Output example                  |
+| --------------- | --------------------------------------------- | ------------------------------- |
+| `toArray()`     | Get array with detected words                 | `['my', 'name', 'is', 'bond']`  | 
+| `__toString()`  | Same as Camel case ([magic method])           | `myNameIsBond`                  |
+| `count()`       | Count detected words ([Countable interface])  | `4`                             |
 
 i18n
 ----
@@ -157,3 +158,4 @@ This library is licensed under the [MIT LICENSE].
 [open an issue]: https://github.com/jawira/case-converter/issues/new
 [CONTRIBUTING.md]: ./CONTRIBUTING.md
 [magic method]: https://www.php.net/manual/en/language.oop5.magic.php#object.tostring
+[Countable interface]: https://php.net/manual/en/class.countable.php
