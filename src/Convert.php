@@ -257,28 +257,57 @@ class Convert implements Countable
      *
      * @param string $glue           Character to glue words. Even if is assumed your are using underscore or dash
      *                               character, this method should be capable to use any character as glue.
-     * @param int    $mode           Case mode to apply to each word. Should be a valid mode for mb_convert_case()
-     *                               function.
-     * @param bool   $lowerCaseFirst Force using \MB_CASE_LOWER for the first word, this parameter is expected to be
-     *                               true only for Camel case.
+     * @param int    $wordsMode      The mode of the conversion. It should be one of MB_CASE_UPPER, MB_CASE_LOWER, or
+     *                               MB_CASE_TITLE.
+     * @param bool   $firstWordMode  Sometimes first word requires special treatment. Force using \MB_CASE_LOWER for
+     *                               the first word, this parameter is expected to be true only for Camel case.
      *
      * @return string
      */
-    protected function glueString(string $glue, int $mode, bool $lowerCaseFirst = false): string
+    protected function glueString(string $glue, int $wordsMode, bool $firstWordMode = false): string
     {
-        assert(in_array($mode, [MB_CASE_UPPER, MB_CASE_LOWER, MB_CASE_TITLE]), 'Invalid MB mode');
+        $convertedWords = $this->changeWordsCase($this->words, $wordsMode);
+        $convertedWords = $this->changeFirstWordCase($convertedWords, $firstWordMode);
 
-        $closure = function ($word) use ($mode) {
+        return implode($glue, $convertedWords);
+    }
+
+    /**
+     * @param array $words
+     * @param int   $mode
+     *
+     * @return array
+     */
+    protected function changeWordsCase(array $words, int $mode): array
+    {
+        assert(in_array($mode, [MB_CASE_UPPER, MB_CASE_LOWER, MB_CASE_TITLE]), 'Invalid MultiByte constant');
+
+        $closure = function (string $word) use ($mode) {
             return mb_convert_case($word, $mode, self::ENCODING);
         };
 
-        $convertedWords = array_map($closure, $this->words);
+        $convertedWords = array_map($closure, $words);
+
+        return $convertedWords;
+    }
+
+    /**
+     * @param array $convertedWords
+     * @param bool  $lowerCaseFirst
+     *
+     * @return array
+     */
+    protected function changeFirstWordCase(array $convertedWords, bool $lowerCaseFirst): array
+    {
+        if (empty($convertedWords)) {
+            return $convertedWords;
+        }
 
         if ($lowerCaseFirst && count($this->words) > 0) {
             $convertedWords[0] = mb_convert_case($convertedWords[0], MB_CASE_LOWER, self::ENCODING);
         }
 
-        return implode($glue, $convertedWords);
+        return $convertedWords;
     }
 
     /**
