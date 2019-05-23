@@ -47,6 +47,7 @@ class Convert implements Countable
     const DASH         = '-';
     const UNDERSCORE   = '_';
     const EMPTY_STRING = '';
+    const SPACE        = ' ';
 
     // Strategies
     const STRATEGY_DASH       = 'dash';
@@ -276,10 +277,12 @@ class Convert implements Countable
     }
 
     /**
-     * @param string[] $words
-     * @param int      $caseMode
+     * Changes the case of every $words' element
      *
-     * @return array
+     * @param string[] $words    Words to modifiy
+     * @param int      $caseMode It should be one of MB_CASE_UPPER, MB_CASE_LOWER, or MB_CASE_TITLE.
+     *
+     * @return string[]
      */
     protected function changeWordsCase(array $words, int $caseMode): array
     {
@@ -295,22 +298,22 @@ class Convert implements Countable
     }
 
     /**
-     * @param string[] $words
-     * @param int      $caseMode
+     * Changes the case of first $words' element
      *
-     * @return array
+     * @param string[] $words    Words to modifiy
+     * @param int      $caseMode It should be one of MB_CASE_UPPER, MB_CASE_LOWER, or MB_CASE_TITLE.
+     *
+     * @return string[]
      */
     protected function changeFirstWordCase(array $words, int $caseMode): array
     {
-        assert(in_array($caseMode, [MB_CASE_UPPER, MB_CASE_LOWER]), 'Invalid MultiByte constant');
+        assert(in_array($caseMode, [MB_CASE_UPPER, MB_CASE_LOWER, MB_CASE_TITLE]), 'Invalid MultiByte constant');
 
         if (empty($words)) {
             return $words;
         }
 
-        if ($caseMode && count($this->words) > 0) {
-            $words[0] = mb_convert_case($words[0], MB_CASE_LOWER, self::ENCODING);
-        }
+        $words[0] = mb_convert_case($words[0], $caseMode, self::ENCODING);
 
         return $words;
     }
@@ -411,6 +414,62 @@ class Convert implements Countable
     public function toTrain(): string
     {
         return $this->glueString(self::DASH, MB_CASE_TITLE);
+    }
+
+    /**
+     * Return string in `Title case` format.
+     *
+     * ```
+     * Example: This Is Title Case
+     * ```
+     *
+     * @return string
+     */
+    public function toTitle(): string
+    {
+        return $this->glueString(self::SPACE, MB_CASE_TITLE);
+    }
+
+    /**
+     * Return string in `Upper case` format.
+     *
+     * ```
+     * Example: THIS IS UPPER CASE
+     * ```
+     *
+     * @return string
+     */
+    public function toUpper(): string
+    {
+        return $this->glueString(self::SPACE, MB_CASE_UPPER);
+    }
+
+    /**
+     * Return string in `Lower case` format.
+     *
+     * ```
+     * Example: this is lower case
+     * ```
+     *
+     * @return string
+     */
+    public function toLower(): string
+    {
+        return $this->glueString(self::SPACE, MB_CASE_LOWER);
+    }
+
+    /**
+     * Return string in `Sentence case` format.
+     *
+     * ```
+     * Example: This is sentence case
+     * ```
+     *
+     * @return string
+     */
+    public function toSentence(): string
+    {
+        return $this->glueString(self::SPACE, MB_CASE_LOWER, MB_CASE_TITLE_SIMPLE);
     }
 
     /**
