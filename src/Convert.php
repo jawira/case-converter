@@ -30,10 +30,14 @@ use const MB_CASE_UPPER;
  * - Camel case
  * - Cobol case
  * - Kebab case
+ * - Lower case
  * - Macro case
  * - Pascal case
+ * - Sentence case
  * - Snake case
+ * - Title case
  * - Train case
+ * - Upper case
  *
  * @see     https://softwareengineering.stackexchange.com/questions/322413/bothered-by-an-unknown-letter-case-name
  * @package Jawira\CaseConverter
@@ -45,24 +49,29 @@ class Convert implements Countable
 
     // String separators
     const DASH         = '-';
-    const UNDERSCORE   = '_';
     const EMPTY_STRING = '';
     const SPACE        = ' ';
+    const UNDERSCORE   = '_';
 
     // Strategies
     const STRATEGY_DASH       = 'dash';
+    const STRATEGY_SPACE      = 'space';
     const STRATEGY_UNDERSCORE = 'underscore';
     const STRATEGY_UPPERCASE  = 'uppercase';
 
     // Naming conventions
-    const ADA    = 'Ada';
-    const CAMEL  = 'Camel';
-    const COBOL  = 'Cobol';
-    const KEBAB  = 'Kebab';
-    const MACRO  = 'Macro';
-    const PASCAL = 'Pascal';
-    const SNAKE  = 'Snake';
-    const TRAIN  = 'Train';
+    const ADA      = 'Ada';
+    const CAMEL    = 'Camel';
+    const COBOL    = 'Cobol';
+    const KEBAB    = 'Kebab';
+    const LOWER    = 'Lower';
+    const MACRO    = 'Macro';
+    const PASCAL   = 'Pascal';
+    const SENTENCE = 'Sentence';
+    const SNAKE    = 'Snake';
+    const TITLE    = 'Title';
+    const TRAIN    = 'Train';
+    const UPPER    = 'Upper';
 
     /**
      * @var array Words extracted from input string
@@ -101,6 +110,9 @@ class Convert implements Countable
             case self::STRATEGY_UPPERCASE:
                 $this->words = $this->splitUppercaseString($input);
                 break;
+            case self::STRATEGY_SPACE:
+                $this->words = $this->splitSpaceString($input);
+                break;
             default:
                 throw new CaseConverterException('Unknown naming convention');
                 break;
@@ -125,6 +137,9 @@ class Convert implements Countable
         } elseif (mb_strpos($input, self::DASH)) {
             // Strings like "Judo-Boy"
             $strategy = self::STRATEGY_DASH;
+        } elseif (mb_strpos($input, self::SPACE)) {
+            // Strings like "Hola mundo"
+            $strategy = self::STRATEGY_SPACE;
         } elseif ($this->isUppercaseWord($input)) {
             // Strings like "DROMEDARY"
             $strategy = self::STRATEGY_UNDERSCORE;
@@ -163,7 +178,7 @@ class Convert implements Countable
     }
 
     /**
-     * Splits $input using `_`
+     * Splits $input using `_` as word delimiter
      *
      * @param string $input
      *
@@ -188,7 +203,7 @@ class Convert implements Countable
     }
 
     /**
-     * Splits $input using dash `-`
+     * Splits $input using dash `-` as word delimiter
      *
      * @param string $input
      *
@@ -227,6 +242,18 @@ class Convert implements Countable
         }
 
         return $this->splitUnderscoreString($result);
+    }
+
+    /**
+     * Splits $input using space ` ` as word delimiter
+     *
+     * @param string $input
+     *
+     * @return array Words in $input
+     */
+    protected function splitSpaceString(string $input): array
+    {
+        return $this->splitString(self::SPACE . '+', $input);
     }
 
     /**
@@ -279,7 +306,7 @@ class Convert implements Countable
     /**
      * Changes the case of every $words' element
      *
-     * @param string[] $words    Words to modifiy
+     * @param string[] $words    Words to modify
      * @param int      $caseMode It should be one of MB_CASE_UPPER, MB_CASE_LOWER, or MB_CASE_TITLE.
      *
      * @return string[]
@@ -300,7 +327,7 @@ class Convert implements Countable
     /**
      * Changes the case of first $words' element
      *
-     * @param string[] $words    Words to modifiy
+     * @param string[] $words    Words to modify
      * @param int      $caseMode It should be one of MB_CASE_UPPER, MB_CASE_LOWER, or MB_CASE_TITLE.
      *
      * @return string[]
