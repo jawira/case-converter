@@ -496,7 +496,7 @@ class Convert implements Countable
      */
     public function toSentence(): string
     {
-        return $this->glueString(self::SPACE, MB_CASE_LOWER, MB_CASE_TITLE_SIMPLE);
+        return $this->glueString(self::SPACE, MB_CASE_LOWER, MB_CASE_TITLE);
     }
 
     /**
