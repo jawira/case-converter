@@ -1,7 +1,7 @@
 {
   "name": "jawira/case-converter",
   "type": "library",
-  "description": "Convert string between: Snake case, Camel case, Kebab case, Pascal case, Ada case, Train case, Cobol case and Macro case.",
+  "description": "Convert strings between 12 naming conventions: Snake case, Camel case, Pascal case, Kebab case, Ada case, Train case, Cobol case, Macro case, Upper case, Lower case, Sentence case, and Title case.",
   "keywords": [
     "Camel case",
     "Snake case",
@@ -15,7 +15,9 @@
   "license": "MIT",
   "authors": [
     {
-      "name": "Jawira Portugal"
+      "name": "Jawira Portugal",
+      "email": "dev@tugal.be",
+      "homepage": "http://jawira.com/"
     }
   ],
   "require": {

@@ -3,14 +3,18 @@ Case converter
 
 Use this library to convert string between:
 
-* 🐪 Camel case
-* 🐍 Snake case
-* 👨‍🏫 Pascal case
-* 👩‍🏫 Ada case
-* 🔠 Macro case
-* 🥙 Kebab case
-* 🚆 Train case
-* 🏦 Cobol case
+1. 🐪 Camel case
+1. 🐍 Snake case
+1. 👨‍🏫 Pascal case
+1. 👩‍🏫 Ada case
+1. Ⓜ️ Macro case
+1. 🥙 Kebab case
+1. 🚆 Train case
+1. 🏦 Cobol case
+1. 🔠 Upper case
+1. 🔡 Lower case
+1. 📰 Title case
+1. ✍️ Sentence case
 
 Features:
 
@@ -53,16 +57,20 @@ Usage
 Supported naming conventions
 ----------------------------
 
-| Method        | Description | Output example    |
-| ------------- | ----------- | ----------------- |
-| `toCamel()`   | Camel case  | `myNameIsBond`    |
-| `toPascal()`  | Pascal case | `MyNameIsBond`    |
-| `toKebab()`   | Kebab case  | `my-name-is-bond` |
-| `toTrain()`   | Train case  | `My-Name-Is-Bond` |
-| `toCobol()`   | Cobol case  | `MY-NAME-IS-BOND` |
-| `toSnake()`   | Snake case  | `my_name_is_bond` |
-| `toAda()`     | Ada case    | `My_Name_Is_Bond` |
-| `toMacro()`   | Macro case  | `MY_NAME_IS_BOND` |
+| Method          | Description   | Output example    |
+| --------------- | ------------- | ----------------- |
+| `toCamel()`     | Camel case    | `myNameIsBond`    |
+| `toPascal()`    | Pascal case   | `MyNameIsBond`    |
+| `toKebab()`     | Kebab case    | `my-name-is-bond` |
+| `toTrain()`     | Train case    | `My-Name-Is-Bond` |
+| `toCobol()`     | Cobol case    | `MY-NAME-IS-BOND` |
+| `toSnake()`     | Snake case    | `my_name_is_bond` |
+| `toAda()`       | Ada case      | `My_Name_Is_Bond` |
+| `toMacro()`     | Macro case    | `MY_NAME_IS_BOND` |
+| `toUpper()`     | Upper case    | `MY NAME IS BOND` |
+| `toLower()`     | Lower case    | `my name is bond` |
+| `toTitle()`     | Title case    | `My Name Is Bond` |
+| `toSentence()`  | Sentence case | `My name is bond` |
 
 Utility methods
 ---------------
