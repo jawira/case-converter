@@ -1,9 +1,11 @@
 @startuml
 start
-if ($input  contains **_**) then (yes)
-  :Split using **_**;
-elseif ($input contains **-**) then (yes)
-  :Split using **-**;
+if ($input  contains "**_**") then (yes)
+  :Split using "**_**";
+elseif ($input contains "**-**") then (yes)
+  :Split using "**-**";
+elseif ($input contains "** **") then (yes)
+  :Split using "** **";
 elseif ($input is in uppercase only) then (yes)
   :$input is a single word;
 else (no)
