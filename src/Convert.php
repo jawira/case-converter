@@ -30,10 +30,14 @@ use const MB_CASE_UPPER;
  * - Camel case
  * - Cobol case
  * - Kebab case
+ * - Lower case
  * - Macro case
  * - Pascal case
+ * - Sentence case
  * - Snake case
+ * - Title case
  * - Train case
+ * - Upper case
  *
  * @see     https://softwareengineering.stackexchange.com/questions/322413/bothered-by-an-unknown-letter-case-name
  * @package Jawira\CaseConverter
@@ -45,23 +49,29 @@ class Convert implements Countable
 
     // String separators
     const DASH         = '-';
-    const UNDERSCORE   = '_';
     const EMPTY_STRING = '';
+    const SPACE        = ' ';
+    const UNDERSCORE   = '_';
 
     // Strategies
     const STRATEGY_DASH       = 'dash';
+    const STRATEGY_SPACE      = 'space';
     const STRATEGY_UNDERSCORE = 'underscore';
     const STRATEGY_UPPERCASE  = 'uppercase';
 
     // Naming conventions
-    const ADA    = 'Ada';
-    const CAMEL  = 'Camel';
-    const COBOL  = 'Cobol';
-    const KEBAB  = 'Kebab';
-    const MACRO  = 'Macro';
-    const PASCAL = 'Pascal';
-    const SNAKE  = 'Snake';
-    const TRAIN  = 'Train';
+    const ADA      = 'Ada';
+    const CAMEL    = 'Camel';
+    const COBOL    = 'Cobol';
+    const KEBAB    = 'Kebab';
+    const LOWER    = 'Lower';
+    const MACRO    = 'Macro';
+    const PASCAL   = 'Pascal';
+    const SENTENCE = 'Sentence';
+    const SNAKE    = 'Snake';
+    const TITLE    = 'Title';
+    const TRAIN    = 'Train';
+    const UPPER    = 'Upper';
 
     /**
      * @var array Words extracted from input string
@@ -100,6 +110,9 @@ class Convert implements Countable
             case self::STRATEGY_UPPERCASE:
                 $this->words = $this->splitUppercaseString($input);
                 break;
+            case self::STRATEGY_SPACE:
+                $this->words = $this->splitSpaceString($input);
+                break;
             default:
                 throw new CaseConverterException('Unknown naming convention');
                 break;
@@ -124,6 +137,9 @@ class Convert implements Countable
         } elseif (mb_strpos($input, self::DASH)) {
             // Strings like "Judo-Boy"
             $strategy = self::STRATEGY_DASH;
+        } elseif (mb_strpos($input, self::SPACE)) {
+            // Strings like "Hola mundo"
+            $strategy = self::STRATEGY_SPACE;
         } elseif ($this->isUppercaseWord($input)) {
             // Strings like "DROMEDARY"
             $strategy = self::STRATEGY_UNDERSCORE;
@@ -162,7 +178,7 @@ class Convert implements Countable
     }
 
     /**
-     * Splits $input using `_`
+     * Splits $input using `_` as word delimiter
      *
      * @param string $input
      *
@@ -187,7 +203,7 @@ class Convert implements Countable
     }
 
     /**
-     * Splits $input using dash `-`
+     * Splits $input using dash `-` as word delimiter
      *
      * @param string $input
      *
@@ -229,6 +245,18 @@ class Convert implements Countable
     }
 
     /**
+     * Splits $input using space ` ` as word delimiter
+     *
+     * @param string $input
+     *
+     * @return array Words in $input
+     */
+    protected function splitSpaceString(string $input): array
+    {
+        return $this->splitString(self::SPACE . '+', $input);
+    }
+
+    /**
      * Return a _Camel case_ string
      *
      * @return string
@@ -249,7 +277,7 @@ class Convert implements Countable
      */
     public function toCamel(): string
     {
-        return $this->glueString(self::EMPTY_STRING, MB_CASE_TITLE, true);
+        return $this->glueString(self::EMPTY_STRING, MB_CASE_TITLE, MB_CASE_LOWER);
     }
 
     /**
@@ -257,28 +285,64 @@ class Convert implements Countable
      *
      * @param string $glue           Character to glue words. Even if is assumed your are using underscore or dash
      *                               character, this method should be capable to use any character as glue.
-     * @param int    $mode           Case mode to apply to each word. Should be a valid mode for mb_convert_case()
-     *                               function.
-     * @param bool   $lowerCaseFirst Force using \MB_CASE_LOWER for the first word, this parameter is expected to be
-     *                               true only for Camel case.
+     * @param int    $wordsMode      The mode of the conversion. It should be one of MB_CASE_UPPER, MB_CASE_LOWER, or
+     *                               MB_CASE_TITLE.
+     * @param int    $firstWordMode  Sometimes first word requires special treatment. It should be one of
+     *                               MB_CASE_UPPER, or MB_CASE_LOWER.
      *
      * @return string
      */
-    protected function glueString(string $glue, int $mode, bool $lowerCaseFirst = false): string
+    protected function glueString(string $glue, int $wordsMode, int $firstWordMode = null): string
     {
-        assert(in_array($mode, [MB_CASE_UPPER, MB_CASE_LOWER, MB_CASE_TITLE]), 'Invalid MB mode');
+        $convertedWords = $this->changeWordsCase($this->words, $wordsMode);
 
-        $closure = function ($word) use ($mode) {
-            return mb_convert_case($word, $mode, self::ENCODING);
-        };
-
-        $convertedWords = array_map($closure, $this->words);
-
-        if ($lowerCaseFirst && count($this->words) > 0) {
-            $convertedWords[0] = mb_convert_case($convertedWords[0], MB_CASE_LOWER, self::ENCODING);
+        if ($firstWordMode) {
+            $convertedWords = $this->changeFirstWordCase($convertedWords, $firstWordMode);
         }
 
         return implode($glue, $convertedWords);
+    }
+
+    /**
+     * Changes the case of every $words' element
+     *
+     * @param string[] $words    Words to modify
+     * @param int      $caseMode It should be one of MB_CASE_UPPER, MB_CASE_LOWER, or MB_CASE_TITLE.
+     *
+     * @return string[]
+     */
+    protected function changeWordsCase(array $words, int $caseMode): array
+    {
+        assert(in_array($caseMode, [MB_CASE_UPPER, MB_CASE_LOWER, MB_CASE_TITLE]), 'Invalid MultiByte constant');
+
+        $closure = function (string $word) use ($caseMode) {
+            return mb_convert_case($word, $caseMode, self::ENCODING);
+        };
+
+        $convertedWords = array_map($closure, $words);
+
+        return $convertedWords;
+    }
+
+    /**
+     * Changes the case of first $words' element
+     *
+     * @param string[] $words    Words to modify
+     * @param int      $caseMode It should be one of MB_CASE_UPPER, MB_CASE_LOWER, or MB_CASE_TITLE.
+     *
+     * @return string[]
+     */
+    protected function changeFirstWordCase(array $words, int $caseMode): array
+    {
+        assert(in_array($caseMode, [MB_CASE_UPPER, MB_CASE_LOWER, MB_CASE_TITLE]), 'Invalid MultiByte constant');
+
+        if (empty($words)) {
+            return $words;
+        }
+
+        $words[0] = mb_convert_case($words[0], $caseMode, self::ENCODING);
+
+        return $words;
     }
 
     /**
@@ -377,6 +441,62 @@ class Convert implements Countable
     public function toTrain(): string
     {
         return $this->glueString(self::DASH, MB_CASE_TITLE);
+    }
+
+    /**
+     * Return string in `Title case` format.
+     *
+     * ```
+     * Example: This Is Title Case
+     * ```
+     *
+     * @return string
+     */
+    public function toTitle(): string
+    {
+        return $this->glueString(self::SPACE, MB_CASE_TITLE);
+    }
+
+    /**
+     * Return string in `Upper case` format.
+     *
+     * ```
+     * Example: THIS IS UPPER CASE
+     * ```
+     *
+     * @return string
+     */
+    public function toUpper(): string
+    {
+        return $this->glueString(self::SPACE, MB_CASE_UPPER);
+    }
+
+    /**
+     * Return string in `Lower case` format.
+     *
+     * ```
+     * Example: this is lower case
+     * ```
+     *
+     * @return string
+     */
+    public function toLower(): string
+    {
+        return $this->glueString(self::SPACE, MB_CASE_LOWER);
+    }
+
+    /**
+     * Return string in `Sentence case` format.
+     *
+     * ```
+     * Example: This is sentence case
+     * ```
+     *
+     * @return string
+     */
+    public function toSentence(): string
+    {
+        return $this->glueString(self::SPACE, MB_CASE_LOWER, MB_CASE_TITLE);
     }
 
     /**

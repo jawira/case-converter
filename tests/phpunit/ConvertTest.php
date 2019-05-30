@@ -129,6 +129,9 @@ class ConvertTest extends TestCase
             'Uppercase 4'  => [false, Convert::STRATEGY_UPPERCASE, 'helloWorld'],
             'Dash 1'       => [false, Convert::STRATEGY_DASH, 'hello-World'],
             'Dash 2'       => [false, Convert::STRATEGY_DASH, 'my-name-is-bond'],
+            'Space 1'      => [false, Convert::STRATEGY_SPACE, 'Hola mundo'],
+            'Space 2'      => [false, Convert::STRATEGY_SPACE, 'Mi nombre es bond'],
+            'Space 3'      => [false, Convert::STRATEGY_SPACE, 'Formule courte spéciale été'],
         ];
     }
 
@@ -173,6 +176,11 @@ class ConvertTest extends TestCase
             [Convert::UNDERSCORE, 'Hello_World', ['Hello', 'World']],
             [Convert::UNDERSCORE, 'HELLO_WORLD', ['HELLO', 'WORLD']],
             [Convert::UNDERSCORE, '__hello_____world__', ['hello', 'world']],
+            [Convert::SPACE, 'hEllO wOrlD', ['hEllO', 'wOrlD']],
+            [Convert::SPACE, 'hEllO wOrlD', ['hEllO', 'wOrlD']],
+            [Convert::SPACE, 'hEllO      wOrlD', ['hEllO', 'wOrlD']],
+            [Convert::SPACE, '           hEllO      wOrlD', ['hEllO', 'wOrlD']],
+            [Convert::SPACE, '           hEllO      wOrlD   ', ['hEllO', 'wOrlD']],
         ];
     }
 
@@ -228,6 +236,9 @@ class ConvertTest extends TestCase
             [['foo', 'bar'], Convert::EMPTY_STRING, MB_CASE_LOWER, false, 'foobar'],
             [['foo', 'bar'], Convert::EMPTY_STRING, MB_CASE_TITLE, false, 'FooBar'],
             [['foo', 'bar'], Convert::EMPTY_STRING, MB_CASE_UPPER, false, 'FOOBAR'],
+            [['foo', 'bar'], Convert::SPACE, MB_CASE_LOWER, false, 'foo bar'],
+            [['foo', 'bar'], Convert::SPACE, MB_CASE_TITLE, false, 'Foo Bar'],
+            [['foo', 'bar'], Convert::SPACE, MB_CASE_UPPER, false, 'FOO BAR'],
             [['foo', 'bar'], '§', MB_CASE_LOWER, false, 'foo§bar'],
             [['foo', 'bar'], '§', MB_CASE_TITLE, false, 'Foo§Bar'],
             [['foo', 'bar'], '§', MB_CASE_UPPER, false, 'FOO§BAR'],
@@ -240,6 +251,9 @@ class ConvertTest extends TestCase
             [['foo', 'bar'], Convert::EMPTY_STRING, MB_CASE_LOWER, true, 'foobar'],
             [['foo', 'bar'], Convert::EMPTY_STRING, MB_CASE_TITLE, true, 'fooBar'],
             [['foo', 'bar'], Convert::EMPTY_STRING, MB_CASE_UPPER, true, 'fooBAR'],
+            [['foo', 'bar'], Convert::SPACE, MB_CASE_LOWER, true, 'foo bar'],
+            [['foo', 'bar'], Convert::SPACE, MB_CASE_TITLE, true, 'foo Bar'],
+            [['foo', 'bar'], Convert::SPACE, MB_CASE_UPPER, true, 'foo BAR'],
             [['foo', 'bar'], '§', MB_CASE_LOWER, true, 'foo§bar'],
             [['foo', 'bar'], '§', MB_CASE_TITLE, true, 'foo§Bar'],
             [['foo', 'bar'], '§', MB_CASE_UPPER, true, 'foo§BAR'],
@@ -251,14 +265,18 @@ class ConvertTest extends TestCase
      *
      * @dataProvider converterMethodProvider()
      *
-     * @covers       \Jawira\CaseConverter\Convert::toCamel()
      * @covers       \Jawira\CaseConverter\Convert::toAda()
+     * @covers       \Jawira\CaseConverter\Convert::toCamel()
      * @covers       \Jawira\CaseConverter\Convert::toCobol()
      * @covers       \Jawira\CaseConverter\Convert::toKebab()
+     * @covers       \Jawira\CaseConverter\Convert::toLower()
      * @covers       \Jawira\CaseConverter\Convert::toMacro()
      * @covers       \Jawira\CaseConverter\Convert::toPascal()
+     * @covers       \Jawira\CaseConverter\Convert::toSentence()
      * @covers       \Jawira\CaseConverter\Convert::toSnake()
+     * @covers       \Jawira\CaseConverter\Convert::toTitle()
      * @covers       \Jawira\CaseConverter\Convert::toTrain()
+     * @covers       \Jawira\CaseConverter\Convert::toUpper()
      *
      * @param string $converterMethod
      *
@@ -290,14 +308,18 @@ class ConvertTest extends TestCase
     public function converterMethodProvider()
     {
         return [
-            'to' . Convert::ADA    => ['to' . Convert::ADA],
-            'to' . Convert::CAMEL  => ['to' . Convert::CAMEL],
-            'to' . Convert::COBOL  => ['to' . Convert::COBOL],
-            'to' . Convert::KEBAB  => ['to' . Convert::KEBAB],
-            'to' . Convert::MACRO  => ['to' . Convert::MACRO],
-            'to' . Convert::PASCAL => ['to' . Convert::PASCAL],
-            'to' . Convert::SNAKE  => ['to' . Convert::SNAKE],
-            'to' . Convert::TRAIN  => ['to' . Convert::TRAIN],
+            'to' . Convert::ADA      => ['to' . Convert::ADA],
+            'to' . Convert::CAMEL    => ['to' . Convert::CAMEL],
+            'to' . Convert::COBOL    => ['to' . Convert::COBOL],
+            'to' . Convert::KEBAB    => ['to' . Convert::KEBAB],
+            'to' . Convert::LOWER    => ['to' . Convert::LOWER],
+            'to' . Convert::MACRO    => ['to' . Convert::MACRO],
+            'to' . Convert::PASCAL   => ['to' . Convert::PASCAL],
+            'to' . Convert::SENTENCE => ['to' . Convert::SENTENCE],
+            'to' . Convert::SNAKE    => ['to' . Convert::SNAKE],
+            'to' . Convert::TITLE    => ['to' . Convert::TITLE],
+            'to' . Convert::TRAIN    => ['to' . Convert::TRAIN],
+            'to' . Convert::UPPER    => ['to' . Convert::UPPER],
         ];
     }
 
@@ -370,6 +392,7 @@ class ConvertTest extends TestCase
             'underscore' => [Convert::STRATEGY_UNDERSCORE, 'splitUnderscoreString'],
             'dash'       => [Convert::STRATEGY_DASH, 'splitDashString'],
             'uppercase'  => [Convert::STRATEGY_UPPERCASE, 'splitUppercaseString'],
+            'space'      => [Convert::STRATEGY_SPACE, 'splitSpaceString'],
         ];
     }
 
@@ -378,6 +401,7 @@ class ConvertTest extends TestCase
      *
      * @covers       \Jawira\CaseConverter\Convert::splitDashString()
      * @covers       \Jawira\CaseConverter\Convert::splitUnderscoreString()
+     * @covers       \Jawira\CaseConverter\Convert::splitSpaceString()
      *
      * @dataProvider splitStringCallProvider()
      *
@@ -415,6 +439,7 @@ class ConvertTest extends TestCase
         return [
             'splitDashString'       => ['splitDashString'],
             'splitUnderscoreString' => ['splitUnderscoreString'],
+            'splitSpaceString'      => ['splitSpaceString'],
         ];
     }
 
