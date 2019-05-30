@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+## [v2.2.0] - 2019-05-30
+
+### Added
+
+ - [#33] Added support for space based naming conventions: Title case, Sentence case, Upper case, and Lower case.
+
 ## [v2.1.0] - 2019-05-10
 
 ### Added
@@ -205,3 +211,7 @@ All notable changes to this project will be documented in this file.
 [#31]: https://github.com/jawira/case-converter/pull/31
 
 [v2.1.0]: https://github.com/jawira/case-converter/compare/v2.0.4...v2.1.0
+
+[#33]: https://github.com/jawira/case-converter/pull/33
+
+[v2.2.0]: https://github.com/jawira/case-converter/compare/v2.1.0...v2.2.0

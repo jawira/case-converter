@@ -2,15 +2,18 @@
   <dictionary name="jawira">
     <words>
       <w>buildfile</w>
+      <w>courte</w>
       <w>cowabunga</w>
       <w>enduml</w>
       <w>eniac</w>
+      <w>formule</w>
       <w>hola</w>
       <w>ipsum</w>
       <w>jawira</w>
       <w>lorem</w>
       <w>mbstring</w>
       <w>mundo</w>
+      <w>nombre</w>
       <w>one;two</w>
       <w>oneline</w>
       <w>phing</w>
@@ -19,6 +22,7 @@
       <w>phpstan</w>
       <w>plantuml</w>
       <w>puml</w>
+      <w>spéciale</w>
       <w>startuml</w>
       <w>symplify</w>
       <w>testdox</w>
