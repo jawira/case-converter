@@ -1,0 +1,46 @@
+@startuml
+
+NamingConvention <|-- SpaceBased
+NamingConvention <|-- DashBased
+NamingConvention <|-- UnderscoreBased
+NamingConvention <|-- UppercaseBased
+
+SpaceBased <|-- TitleCase
+SpaceBased <|-- SentenceCase
+SpaceBased <|-- UpperCase
+SpaceBased <|-- LowerCase
+
+DashBased <|-- KebabCase
+DashBased <|-- TrainCase
+DashBased <|-- CobolCase
+
+UnderscoreBased <|-- SnakeCase
+UnderscoreBased <|-- AdaCase
+UnderscoreBased <|-- MacroCase
+
+UppercaseBased <|-- CamelCase
+UppercaseBased <|-- PascalCase
+
+abstract class NamingConvention {
+    {static} {abstract} + split(string $string): string
+    {static} {abstract} + containsSeparator():
+}
+
+abstract class DashBased {
+    + STRATEGY
+}
+
+abstract class SpaceBased {
+    + STRATEGY
+}
+
+abstract class UnderscoreBased {
+    + STRATEGY
+}
+
+abstract class UppercaseBased {
+    + STRATEGY
+}
+
+
+@enduml
