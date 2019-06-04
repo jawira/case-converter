@@ -1,46 +1,98 @@
 @startuml
 
-NamingConvention <|-- SpaceBased
-NamingConvention <|-- DashBased
-NamingConvention <|-- UnderscoreBased
-NamingConvention <|-- UppercaseBased
-
-SpaceBased <|-- TitleCase
-SpaceBased <|-- SentenceCase
-SpaceBased <|-- UpperCase
-SpaceBased <|-- LowerCase
-
+DashBased <|-- CobolCase
 DashBased <|-- KebabCase
 DashBased <|-- TrainCase
-DashBased <|-- CobolCase
-
-UnderscoreBased <|-- SnakeCase
+NamingConvention <|-- DashBased
+NamingConvention <|-- SpaceBased
+NamingConvention <|-- UnderscoreBased
+NamingConvention <|-- UppercaseBased
+SpaceBased <|-- LowerCase
+SpaceBased <|-- SentenceCase
+SpaceBased <|-- TitleCase
+SpaceBased <|-- UpperCase
 UnderscoreBased <|-- AdaCase
 UnderscoreBased <|-- MacroCase
-
+UnderscoreBased <|-- SnakeCase
 UppercaseBased <|-- CamelCase
 UppercaseBased <|-- PascalCase
 
 abstract class NamingConvention {
+    # $words
     {static} {abstract} + split(string $string): string
-    {static} {abstract} + containsSeparator():
+    {abstract} + glue(): string
+    {static}  # splitUsingPattern():string
+    # glueUsingRules(): string
+    # changeWordsCase(): array
+    # changeFirstWordCase(): array
 }
 
 abstract class DashBased {
-    + STRATEGY
+    + DELIMITER
+    {static} + split()
 }
 
 abstract class SpaceBased {
-    + STRATEGY
+    + DELIMITER
+    {static} + split()
 }
 
 abstract class UnderscoreBased {
-    + STRATEGY
+    + DELIMITER
+    {static} + split()
 }
 
 abstract class UppercaseBased {
-    + STRATEGY
+    + DELIMITER
+    {static} + split()
 }
 
+class SnakeCase {
+    + glue(): string
+}
+
+class CobolCase {
+    + glue(): string
+}
+
+class KebabCase {
+    + glue(): string
+}
+
+class TrainCase {
+    + glue(): string
+}
+
+class LowerCase {
+    + glue(): string
+}
+
+class SentenceCase {
+    + glue(): string
+}
+
+class UpperCase {
+    + glue(): string
+}
+
+class TitleCase {
+    + glue(): string
+}
+
+class AdaCase {
+    + glue(): string
+}
+
+class MacroCase {
+    + glue(): string
+}
+
+class CamelCase {
+    + glue(): string
+}
+
+class PascalCase {
+    + glue(): string
+}
 
 @enduml

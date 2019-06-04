@@ -5,7 +5,7 @@ namespace Jawira\CaseConverter;
 trait SplitTrait
 {
     /**
-     * Generic split method
+     * Generic split method.
      *
      * @param string $words
      *
@@ -13,6 +13,8 @@ trait SplitTrait
      */
     static public function split(string $words): array
     {
-        return self::splitUsingPattern($words, self::DELIMITER . '+');
+        $pattern = self::DELIMITER . '+';
+
+        return self::splitUsingPattern($words, $pattern);
     }
 }

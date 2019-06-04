@@ -3,23 +3,10 @@
 namespace Jawira\CaseConverter;
 
 use Countable;
-use function array_filter;
-use function array_map;
-use function array_values;
-use function assert;
 use function count;
-use function implode;
-use function is_null;
-use function mb_convert_case;
-use function mb_split;
 use function mb_strpos;
 use function preg_match;
-use function preg_replace_callback;
-use function reset;
 use const COUNT_NORMAL;
-use const MB_CASE_LOWER;
-use const MB_CASE_TITLE;
-use const MB_CASE_UPPER;
 
 /**
  * Convert string between different naming conventions.
@@ -45,36 +32,8 @@ use const MB_CASE_UPPER;
  */
 class Convert implements Countable
 {
-    const ENCODING = 'UTF-8';
-
-    // String separators
-    const DASH         = '-';
-    const EMPTY_STRING = '';
-    const SPACE        = ' ';
-    const UNDERSCORE   = '_';
-
-    // Strategies
-    const STRATEGY_DASH       = 'dash';
-    const STRATEGY_SPACE      = 'space';
-    const STRATEGY_UNDERSCORE = 'underscore';
-    const STRATEGY_UPPERCASE  = 'uppercase';
-
-    // Naming conventions
-    const ADA      = 'Ada';
-    const CAMEL    = 'Camel';
-    const COBOL    = 'Cobol';
-    const KEBAB    = 'Kebab';
-    const LOWER    = 'Lower';
-    const MACRO    = 'Macro';
-    const PASCAL   = 'Pascal';
-    const SENTENCE = 'Sentence';
-    const SNAKE    = 'Snake';
-    const TITLE    = 'Title';
-    const TRAIN    = 'Train';
-    const UPPER    = 'Upper';
-
     /**
-     * @var array Words extracted from input string
+     * @var string[] Words extracted from input string
      */
     protected $words;
 
@@ -87,7 +46,7 @@ class Convert implements Countable
      */
     public function __construct(string $input)
     {
-        $this->detectNamingConvention($input);
+        $this->extractWords($input);
     }
 
     /**
@@ -98,25 +57,16 @@ class Convert implements Countable
      * @return $this
      * @throws \Jawira\CaseConverter\CaseConverterException
      */
-    protected function detectNamingConvention(string $input): self
+    protected function extractWords(string $input): self
     {
-        switch ($this->analyse($input)) {
-            case self::STRATEGY_UNDERSCORE:
-                $this->words = $this->splitUnderscoreString($input);
-                break;
-            case self::STRATEGY_DASH:
-                $this->words = $this->splitDashString($input);
-                break;
-            case self::STRATEGY_UPPERCASE:
-                $this->words = $this->splitUppercaseString($input);
-                break;
-            case self::STRATEGY_SPACE:
-                $this->words = $this->splitSpaceString($input);
-                break;
-            default:
-                throw new CaseConverterException('Unknown naming convention');
-                break;
+        /** @var \Jawira\CaseConverter\NamingConvention $strategy Class name */
+        $strategy = $this->analyse($input);
+
+        if (!is_subclass_of($strategy, NamingConvention::class)) {
+            throw new CaseConverterException('Unknown naming convention');
         }
+
+        $this->words = $strategy::split($input);
 
         return $this;
     }
@@ -126,26 +76,21 @@ class Convert implements Countable
      *
      * @param string $input String to be analysed
      *
-     * @return string Strategy to use
+     * @return string Abstract class to use as strategy
      * @throws \Jawira\CaseConverter\CaseConverterException
      */
     protected function analyse(string $input): string
     {
-        if (mb_strpos($input, self::UNDERSCORE)) {
-            // Strings like "MARIO_WORLD"
-            $strategy = self::STRATEGY_UNDERSCORE;
-        } elseif (mb_strpos($input, self::DASH)) {
-            // Strings like "Judo-Boy"
-            $strategy = self::STRATEGY_DASH;
-        } elseif (mb_strpos($input, self::SPACE)) {
-            // Strings like "Hola mundo"
-            $strategy = self::STRATEGY_SPACE;
+        if (mb_strpos($input, UnderscoreBased::DELIMITER)) {
+            $strategy = UnderscoreBased::class;
+        } elseif (mb_strpos($input, DashBased::DELIMITER)) {
+            $strategy = DashBased::class;
+        } elseif (mb_strpos($input, SpaceBased::DELIMITER)) {
+            $strategy = SpaceBased::class;
         } elseif ($this->isUppercaseWord($input)) {
-            // Strings like "DROMEDARY"
-            $strategy = self::STRATEGY_UNDERSCORE;
+            $strategy = UnderscoreBased::class;
         } else {
-            // Strings like "getLastName"
-            $strategy = self::STRATEGY_UPPERCASE;
+            $strategy = UppercaseBased::class;
         }
 
         return $strategy;
@@ -178,88 +123,10 @@ class Convert implements Countable
     }
 
     /**
-     * Splits $input using `_` as word delimiter
-     *
-     * @param string $input
-     *
-     * @return array Words in $input
-     */
-    protected function splitUnderscoreString(string $input): array
-    {
-        return $this->splitString(self::UNDERSCORE . '+', $input);
-    }
-
-    /**
-     * Splits $input string using $pattern.
-     *
-     * @param string $pattern
-     * @param string $input
-     *
-     * @return array Words in $input
-     */
-    protected function splitString(string $pattern, string $input): array
-    {
-        return array_values(array_filter(mb_split($pattern, $input)));
-    }
-
-    /**
-     * Splits $input using dash `-` as word delimiter
-     *
-     * @param string $input
-     *
-     * @return array Words in $input
-     */
-    protected function splitDashString(string $input): array
-    {
-        return $this->splitString(self::DASH . '+', $input);
-    }
-
-    /**
-     * Splits $input using Uppercase letters.
-     *
-     * 1. First and underscore character '_' will be prepended before any
-     * uppercase character. Now input string can be treated as an _snake case_
-     * string.
-     * 2. Convert::splitUnderscoreString() is called to split string from step 1.
-     *
-     * @param string $input
-     *
-     * @return array Words in $input
-     * @throws \Jawira\CaseConverter\CaseConverterException
-     * @see https://www.regular-expressions.info/unicode.html#category
-     *
-     */
-    protected function splitUppercaseString(string $input): array
-    {
-        $closure = function ($match) {
-            return self::UNDERSCORE . reset($match);
-        };
-
-        $result = preg_replace_callback('#\p{Lu}{1}#u', $closure, $input);
-
-        if (is_null($result)) {
-            throw new CaseConverterException("Error while processing $input");
-        }
-
-        return $this->splitUnderscoreString($result);
-    }
-
-    /**
-     * Splits $input using space ` ` as word delimiter
-     *
-     * @param string $input
-     *
-     * @return array Words in $input
-     */
-    protected function splitSpaceString(string $input): array
-    {
-        return $this->splitString(self::SPACE . '+', $input);
-    }
-
-    /**
      * Return a _Camel case_ string
      *
      * @return string
+     * @deprecated This is a pet feature, not useful in real life
      */
     public function __toString(): string
     {
@@ -277,72 +144,7 @@ class Convert implements Countable
      */
     public function toCamel(): string
     {
-        return $this->glueString(self::EMPTY_STRING, MB_CASE_TITLE, MB_CASE_LOWER);
-    }
-
-    /**
-     * Implode self::$words array using $glue.
-     *
-     * @param string $glue           Character to glue words. Even if is assumed your are using underscore or dash
-     *                               character, this method should be capable to use any character as glue.
-     * @param int    $wordsMode      The mode of the conversion. It should be one of MB_CASE_UPPER, MB_CASE_LOWER, or
-     *                               MB_CASE_TITLE.
-     * @param int    $firstWordMode  Sometimes first word requires special treatment. It should be one of
-     *                               MB_CASE_UPPER, or MB_CASE_LOWER.
-     *
-     * @return string
-     */
-    protected function glueString(string $glue, int $wordsMode, int $firstWordMode = null): string
-    {
-        $convertedWords = $this->changeWordsCase($this->words, $wordsMode);
-
-        if ($firstWordMode) {
-            $convertedWords = $this->changeFirstWordCase($convertedWords, $firstWordMode);
-        }
-
-        return implode($glue, $convertedWords);
-    }
-
-    /**
-     * Changes the case of every $words' element
-     *
-     * @param string[] $words    Words to modify
-     * @param int      $caseMode It should be one of MB_CASE_UPPER, MB_CASE_LOWER, or MB_CASE_TITLE.
-     *
-     * @return string[]
-     */
-    protected function changeWordsCase(array $words, int $caseMode): array
-    {
-        assert(in_array($caseMode, [MB_CASE_UPPER, MB_CASE_LOWER, MB_CASE_TITLE]), 'Invalid MultiByte constant');
-
-        $closure = function (string $word) use ($caseMode) {
-            return mb_convert_case($word, $caseMode, self::ENCODING);
-        };
-
-        $convertedWords = array_map($closure, $words);
-
-        return $convertedWords;
-    }
-
-    /**
-     * Changes the case of first $words' element
-     *
-     * @param string[] $words    Words to modify
-     * @param int      $caseMode It should be one of MB_CASE_UPPER, MB_CASE_LOWER, or MB_CASE_TITLE.
-     *
-     * @return string[]
-     */
-    protected function changeFirstWordCase(array $words, int $caseMode): array
-    {
-        assert(in_array($caseMode, [MB_CASE_UPPER, MB_CASE_LOWER, MB_CASE_TITLE]), 'Invalid MultiByte constant');
-
-        if (empty($words)) {
-            return $words;
-        }
-
-        $words[0] = mb_convert_case($words[0], $caseMode, self::ENCODING);
-
-        return $words;
+        return (new CamelCase($this->words))->glue();
     }
 
     /**
@@ -356,7 +158,7 @@ class Convert implements Countable
      */
     public function toPascal(): string
     {
-        return $this->glueString(self::EMPTY_STRING, MB_CASE_TITLE);
+        return (new PascalCase($this->words))->glue();
     }
 
     /**
@@ -370,7 +172,7 @@ class Convert implements Countable
      */
     public function toSnake(): string
     {
-        return $this->glueString(self::UNDERSCORE, MB_CASE_LOWER);
+        return (new SnakeCase($this->words))->glue();
     }
 
     /**
@@ -384,7 +186,7 @@ class Convert implements Countable
      */
     public function toMacro(): string
     {
-        return $this->glueString(self::UNDERSCORE, MB_CASE_UPPER);
+        return (new MacroCase($this->words))->glue();
     }
 
     /**
@@ -398,7 +200,7 @@ class Convert implements Countable
      */
     public function toAda(): string
     {
-        return $this->glueString(self::UNDERSCORE, MB_CASE_TITLE);
+        return (new AdaCase($this->words))->glue();
     }
 
     /**
@@ -412,7 +214,7 @@ class Convert implements Countable
      */
     public function toKebab(): string
     {
-        return $this->glueString(self::DASH, MB_CASE_LOWER);
+        return (new KebabCase($this->words))->glue();
     }
 
     /**
@@ -426,7 +228,7 @@ class Convert implements Countable
      */
     public function toCobol(): string
     {
-        return $this->glueString(self::DASH, MB_CASE_UPPER);
+        return (new CobolCase($this->words))->glue();
     }
 
     /**
@@ -440,7 +242,7 @@ class Convert implements Countable
      */
     public function toTrain(): string
     {
-        return $this->glueString(self::DASH, MB_CASE_TITLE);
+        return (new TrainCase($this->words))->glue();
     }
 
     /**
@@ -454,7 +256,7 @@ class Convert implements Countable
      */
     public function toTitle(): string
     {
-        return $this->glueString(self::SPACE, MB_CASE_TITLE);
+        return (new TitleCase($this->words))->glue();
     }
 
     /**
@@ -468,7 +270,7 @@ class Convert implements Countable
      */
     public function toUpper(): string
     {
-        return $this->glueString(self::SPACE, MB_CASE_UPPER);
+        return (new UpperCase($this->words))->glue();
     }
 
     /**
@@ -482,7 +284,7 @@ class Convert implements Countable
      */
     public function toLower(): string
     {
-        return $this->glueString(self::SPACE, MB_CASE_LOWER);
+        return (new LowerCase($this->words))->glue();
     }
 
     /**
@@ -496,7 +298,7 @@ class Convert implements Countable
      */
     public function toSentence(): string
     {
-        return $this->glueString(self::SPACE, MB_CASE_LOWER, MB_CASE_TITLE);
+        return (new SentenceCase($this->words))->glue();
     }
 
     /**
@@ -512,8 +314,9 @@ class Convert implements Countable
     /**
      * Count detected words
      *
-     * @link  https://php.net/manual/en/countable.count.php
+     * @link       https://php.net/manual/en/countable.count.php
      *
+     * @deprecated This is a pet feature, not useful in real life
      * @return int The custom count as an integer.
      */
     public function count(): int

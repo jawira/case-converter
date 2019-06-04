@@ -13,10 +13,15 @@ use function mb_split;
 
 abstract class NamingConvention
 {
+    /**
+     * Encoding to be used by `mb_convert_case()` function.
+     *
+     * This value should never change.
+     */
     const ENCODING = 'UTF-8';
 
     /**
-     * @var array Words extracted from input string
+     * @var string[] Words extracted from input string
      */
     protected $words;
 
@@ -25,6 +30,15 @@ abstract class NamingConvention
         $this->words = $words;
     }
 
+    /**
+     * Tells how to split a string into valid words.
+     *
+     * A generic implementation of this method can be found in \Jawira\CaseConverter\SplitTrait::split
+     *
+     * @param string $words
+     *
+     * @return array
+     */
     abstract static public function split(string $words): array;
 
     /**
@@ -33,7 +47,7 @@ abstract class NamingConvention
      * @param string $words
      * @param string $pattern
      *
-     * @return array
+     * @return string[]
      */
     static protected function splitUsingPattern(string $words, string $pattern): array
     {
@@ -55,11 +69,11 @@ abstract class NamingConvention
      * @param int    $wordsMode      The mode of the conversion. It should be one of MB_CASE_UPPER, MB_CASE_LOWER, or
      *                               MB_CASE_TITLE.
      * @param int    $firstWordMode  Sometimes first word requires special treatment. It should be one of
-     *                               MB_CASE_UPPER, or MB_CASE_LOWER.
+     *                               MB_CASE_UPPER, MB_CASE_LOWER, or MB_CASE_TITLE.
      *
      * @return string
      */
-    protected function glueWithRules(string $glue, int $wordsMode, int $firstWordMode = null): string
+    protected function glueUsingRules(string $glue, int $wordsMode, int $firstWordMode = null): string
     {
         $convertedWords = $this->changeWordsCase($this->words, $wordsMode);
 

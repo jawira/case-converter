@@ -8,6 +8,6 @@ class SnakeCase extends UnderscoreBased
 {
     public function glue(): string
     {
-        return $this->glueWithRules(self::DELIMITER, MB_CASE_LOWER);
+        return $this->glueUsingRules(self::DELIMITER, MB_CASE_LOWER);
     }
 }

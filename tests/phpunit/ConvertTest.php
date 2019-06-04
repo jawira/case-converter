@@ -346,7 +346,7 @@ class ConvertTest extends TestCase
     }
 
     /**
-     * @covers       \Jawira\CaseConverter\Convert::detectNamingConvention()
+     * @covers       \Jawira\CaseConverter\Convert::extractWords()
      *
      * @param string $analyseReturn Expected value returned by analyse() method
      * @param string $splitMethod   Split method to be called

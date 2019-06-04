@@ -8,6 +8,6 @@ class MacroCase extends UnderscoreBased
 {
     public function glue(): string
     {
-        return $this->glueWithRules(self::DELIMITER, MB_CASE_UPPER);
+        return $this->glueUsingRules(self::DELIMITER, MB_CASE_UPPER);
     }
 }
