@@ -1,6 +1,10 @@
 <?php
 
 use Jawira\CaseConverter\Convert;
+use Jawira\CaseConverter\DashBased;
+use Jawira\CaseConverter\SpaceBased;
+use Jawira\CaseConverter\UnderscoreBased;
+use Jawira\CaseConverter\UppercaseBased;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -23,12 +27,12 @@ class ConvertTest extends TestCase
         // Disable constructor mocking one method
         $mock = $this->getMockBuilder(Convert::class)
                      ->disableOriginalConstructor()
-                     ->setMethods(['detectNamingConvention'])
+                     ->setMethods(['extractWords'])
                      ->getMock();
 
         // Configuring stub
         $mock->expects($this->once())
-             ->method('detectNamingConvention')
+             ->method('extractWords')
              ->with($this->equalTo('hello_world'));
 
         $class = new ReflectionObject($mock);
@@ -95,7 +99,7 @@ class ConvertTest extends TestCase
      */
     public function testAnalyse(bool $isUppercaseWordReturn, string $expected, string $input)
     {
-        // Disabling constructor without stub methods
+        // Disabling constructor with one stub method
         $stub = $this->getMockBuilder(Convert::class)
                      ->disableOriginalConstructor()
                      ->setMethods(['isUppercaseWord'])
@@ -119,144 +123,19 @@ class ConvertTest extends TestCase
     public function analyseProvider()
     {
         return [
-            'Underscore 1' => [false, Convert::STRATEGY_UNDERSCORE, 'hola_mundo'],
-            'Underscore 2' => [false, Convert::STRATEGY_UNDERSCORE, 'HELLO_WORLD'],
-            'Underscore 3' => [true, Convert::STRATEGY_UNDERSCORE, 'Ñ'],
-            'Underscore 4' => [true, Convert::STRATEGY_UNDERSCORE, 'HELLO'],
-            'Uppercase 1'  => [false, Convert::STRATEGY_UPPERCASE, ''],
-            'Uppercase 2'  => [false, Convert::STRATEGY_UPPERCASE, 'ñ'],
-            'Uppercase 3'  => [false, Convert::STRATEGY_UPPERCASE, 'one'],
-            'Uppercase 4'  => [false, Convert::STRATEGY_UPPERCASE, 'helloWorld'],
-            'Dash 1'       => [false, Convert::STRATEGY_DASH, 'hello-World'],
-            'Dash 2'       => [false, Convert::STRATEGY_DASH, 'my-name-is-bond'],
-            'Space 1'      => [false, Convert::STRATEGY_SPACE, 'Hola mundo'],
-            'Space 2'      => [false, Convert::STRATEGY_SPACE, 'Mi nombre es bond'],
-            'Space 3'      => [false, Convert::STRATEGY_SPACE, 'Formule courte spéciale été'],
-        ];
-    }
-
-    /**
-     * @covers       \Jawira\CaseConverter\Convert::splitString()
-     * @dataProvider splitStringProvider
-     *
-     * @param string $pattern
-     * @param string $input
-     * @param array  $expected
-     *
-     * @throws \ReflectionException
-     */
-    public function testSplitString(string $pattern, string $input, array $expected)
-    {
-        // Disabling constructor without stub methods
-        $mock = $this->getMockBuilder(Convert::class)
-                     ->disableOriginalConstructor()
-                     ->setMethods()
-                     ->getMock();
-
-        // Making public a protected method
-        $reflection = new ReflectionObject($mock);
-        $method     = $reflection->getMethod('splitString');
-        $method->setAccessible(true);
-
-        // Testing method
-        $output = $method->invoke($mock, $pattern, $input);
-        $this->assertSame($expected, $output);
-    }
-
-    public function splitStringProvider()
-    {
-        return [
-            [Convert::DASH, 'hello-world', ['hello', 'world']],
-            [Convert::DASH, 'HeLlO-WoRlD', ['HeLlO', 'WoRlD']],
-            [Convert::DASH, 'Hello-World', ['Hello', 'World']],
-            [Convert::DASH, 'HELLO-WORLD', ['HELLO', 'WORLD']],
-            [Convert::DASH, '--hello--world--', ['hello', 'world']],
-            [Convert::UNDERSCORE, 'hello_world', ['hello', 'world']],
-            [Convert::UNDERSCORE, 'HeLlO_WoRlD', ['HeLlO', 'WoRlD']],
-            [Convert::UNDERSCORE, 'Hello_World', ['Hello', 'World']],
-            [Convert::UNDERSCORE, 'HELLO_WORLD', ['HELLO', 'WORLD']],
-            [Convert::UNDERSCORE, '__hello_____world__', ['hello', 'world']],
-            [Convert::SPACE, 'hEllO wOrlD', ['hEllO', 'wOrlD']],
-            [Convert::SPACE, 'hEllO wOrlD', ['hEllO', 'wOrlD']],
-            [Convert::SPACE, 'hEllO      wOrlD', ['hEllO', 'wOrlD']],
-            [Convert::SPACE, '           hEllO      wOrlD', ['hEllO', 'wOrlD']],
-            [Convert::SPACE, '           hEllO      wOrlD   ', ['hEllO', 'wOrlD']],
-        ];
-    }
-
-    /**
-     * @covers       \Jawira\CaseConverter\Convert::glueString()
-     * @dataProvider glueStringProvider
-     *
-     * @param array  $words
-     * @param string $glue
-     * @param int    $mode
-     * @param bool   $lcf
-     *
-     * @param string $expected
-     *
-     * @throws \ReflectionException
-     */
-    public function testGlueString(array $words, string $glue, int $mode, bool $lcf, string $expected)
-    {
-        // Disabling constructor without stub methods
-        $mock = $this->getMockBuilder(Convert::class)
-                     ->disableOriginalConstructor()
-                     ->setMethods()
-                     ->getMock();
-
-        // Making "words" property accessible and setting a value
-        $reflection = new ReflectionObject($mock);
-        $property   = $reflection->getProperty('words');
-        $property->setAccessible(true);
-        $property->setValue($mock, $words);
-
-        // Making public a protected method
-        $reflection = new ReflectionObject($mock);
-        $method     = $reflection->getMethod('glueString');
-        $method->setAccessible(true);
-
-        // Testing
-        $output = $method->invoke($mock, $glue, $mode, $lcf);
-        $this->assertSame($expected, $output);
-    }
-
-    /**
-     * @return array
-     */
-    public function glueStringProvider()
-    {
-        return [
-            [['foo', 'bar'], Convert::DASH, MB_CASE_LOWER, false, 'foo-bar'],
-            [['foo', 'bar'], Convert::DASH, MB_CASE_TITLE, false, 'Foo-Bar'],
-            [['foo', 'bar'], Convert::DASH, MB_CASE_UPPER, false, 'FOO-BAR'],
-            [['foo', 'bar'], Convert::UNDERSCORE, MB_CASE_LOWER, false, 'foo_bar'],
-            [['foo', 'bar'], Convert::UNDERSCORE, MB_CASE_TITLE, false, 'Foo_Bar'],
-            [['foo', 'bar'], Convert::UNDERSCORE, MB_CASE_UPPER, false, 'FOO_BAR'],
-            [['foo', 'bar'], Convert::EMPTY_STRING, MB_CASE_LOWER, false, 'foobar'],
-            [['foo', 'bar'], Convert::EMPTY_STRING, MB_CASE_TITLE, false, 'FooBar'],
-            [['foo', 'bar'], Convert::EMPTY_STRING, MB_CASE_UPPER, false, 'FOOBAR'],
-            [['foo', 'bar'], Convert::SPACE, MB_CASE_LOWER, false, 'foo bar'],
-            [['foo', 'bar'], Convert::SPACE, MB_CASE_TITLE, false, 'Foo Bar'],
-            [['foo', 'bar'], Convert::SPACE, MB_CASE_UPPER, false, 'FOO BAR'],
-            [['foo', 'bar'], '§', MB_CASE_LOWER, false, 'foo§bar'],
-            [['foo', 'bar'], '§', MB_CASE_TITLE, false, 'Foo§Bar'],
-            [['foo', 'bar'], '§', MB_CASE_UPPER, false, 'FOO§BAR'],
-            [['foo', 'bar'], Convert::DASH, MB_CASE_LOWER, true, 'foo-bar'],
-            [['foo', 'bar'], Convert::DASH, MB_CASE_TITLE, true, 'foo-Bar'],
-            [['foo', 'bar'], Convert::DASH, MB_CASE_UPPER, true, 'foo-BAR'],
-            [['foo', 'bar'], Convert::UNDERSCORE, MB_CASE_LOWER, true, 'foo_bar'],
-            [['foo', 'bar'], Convert::UNDERSCORE, MB_CASE_TITLE, true, 'foo_Bar'],
-            [['foo', 'bar'], Convert::UNDERSCORE, MB_CASE_UPPER, true, 'foo_BAR'],
-            [['foo', 'bar'], Convert::EMPTY_STRING, MB_CASE_LOWER, true, 'foobar'],
-            [['foo', 'bar'], Convert::EMPTY_STRING, MB_CASE_TITLE, true, 'fooBar'],
-            [['foo', 'bar'], Convert::EMPTY_STRING, MB_CASE_UPPER, true, 'fooBAR'],
-            [['foo', 'bar'], Convert::SPACE, MB_CASE_LOWER, true, 'foo bar'],
-            [['foo', 'bar'], Convert::SPACE, MB_CASE_TITLE, true, 'foo Bar'],
-            [['foo', 'bar'], Convert::SPACE, MB_CASE_UPPER, true, 'foo BAR'],
-            [['foo', 'bar'], '§', MB_CASE_LOWER, true, 'foo§bar'],
-            [['foo', 'bar'], '§', MB_CASE_TITLE, true, 'foo§Bar'],
-            [['foo', 'bar'], '§', MB_CASE_UPPER, true, 'foo§BAR'],
+            'Underscore 1' => [false, UnderscoreBased::class, 'hola_mundo'],
+            'Underscore 2' => [false, UnderscoreBased::class, 'HELLO_WORLD'],
+            'Underscore 3' => [true, UnderscoreBased::class, 'Ñ'],
+            'Underscore 4' => [true, UnderscoreBased::class, 'HELLO'],
+            'Uppercase 1'  => [false, UppercaseBased::class, ''],
+            'Uppercase 2'  => [false, UppercaseBased::class, 'ñ'],
+            'Uppercase 3'  => [false, UppercaseBased::class, 'one'],
+            'Uppercase 4'  => [false, UppercaseBased::class, 'helloWorld'],
+            'Dash 1'       => [false, DashBased::class, 'hello-World'],
+            'Dash 2'       => [false, DashBased::class, 'my-name-is-bond'],
+            'Space 1'      => [false, SpaceBased::class, 'Hola mundo'],
+            'Space 2'      => [false, SpaceBased::class, 'Mi nombre es bond'],
+            'Space 3'      => [false, SpaceBased::class, 'Formule courte spéciale été'],
         ];
     }
 
@@ -351,11 +230,11 @@ class ConvertTest extends TestCase
      * @param string $analyseReturn Expected value returned by analyse() method
      * @param string $splitMethod   Split method to be called
      *
-     * @dataProvider detectNamingConventionProvider()
+     * @dataProvider extractWordsProvider()
      *
      * @throws \ReflectionException
      */
-    public function testDetectNamingConvention(string $analyseReturn, string $splitMethod)
+    public function testextractWords(string $analyseReturn, string $splitMethod)
     {
         $inputString = 'deep-space-nine';
 
@@ -378,7 +257,7 @@ class ConvertTest extends TestCase
 
         // Making public a protected method
         $reflection = new ReflectionObject($mock);
-        $method     = $reflection->getMethod('detectNamingConvention');
+        $method     = $reflection->getMethod('extractWords');
         $method->setAccessible(true);
 
         // Testing
@@ -386,7 +265,7 @@ class ConvertTest extends TestCase
         $this->assertInstanceOf(Convert::class, $output);
     }
 
-    public function detectNamingConventionProvider()
+    public function extractWordsProvider()
     {
         return [
             'underscore' => [Convert::STRATEGY_UNDERSCORE, 'splitUnderscoreString'],
