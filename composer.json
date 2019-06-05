@@ -3,14 +3,18 @@
   "type": "library",
   "description": "Convert strings between 12 naming conventions: Snake case, Camel case, Pascal case, Kebab case, Ada case, Train case, Cobol case, Macro case, Upper case, Lower case, Sentence case, and Title case.",
   "keywords": [
-    "Camel case",
-    "Snake case",
-    "Pascal case",
-    "Kebab case",
     "Ada case",
-    "Train case",
+    "Camel case",
     "Cobol case",
-    "Macro case"
+    "Kebab case",
+    "Lower case",
+    "Macro case",
+    "Pascal case",
+    "Sentence case",
+    "Snake case",
+    "Title case",
+    "Train case",
+    "Upper case"
   ],
   "license": "MIT",
   "authors": [
