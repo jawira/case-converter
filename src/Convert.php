@@ -115,7 +115,7 @@ class Convert implements Countable
     {
         $match = preg_match('#^\p{Lu}+$#u', $input);
 
-        if ($match === false) {
+        if (false === $match) {
             throw new CaseConverterException('Error executing regex');
         }
 
@@ -144,7 +144,24 @@ class Convert implements Countable
      */
     public function toCamel(): string
     {
-        return (new CamelCase($this->words))->glue();
+        $namingConvention = $this->factory(CamelCase::class);
+
+        return $namingConvention->glue();
+    }
+
+    /**
+     * Creates a \Jawira\CaseConverter\NamingConvention concrete object
+     *
+     * @param string $className Class name
+     *
+     * @return \Jawira\CaseConverter\NamingConvention
+     */
+    protected function factory(string $className): NamingConvention
+    {
+        $parent = NamingConvention::class;
+        assert(is_subclass_of($className, $parent), "$className is not a $parent subclass");
+
+        return new $className($this->words);
     }
 
     /**
@@ -158,7 +175,9 @@ class Convert implements Countable
      */
     public function toPascal(): string
     {
-        return (new PascalCase($this->words))->glue();
+        $namingConvention = $this->factory(PascalCase::class);
+
+        return $namingConvention->glue();
     }
 
     /**
@@ -172,7 +191,9 @@ class Convert implements Countable
      */
     public function toSnake(): string
     {
-        return (new SnakeCase($this->words))->glue();
+        $namingConvention = $this->factory(SnakeCase::class);
+
+        return $namingConvention->glue();
     }
 
     /**
@@ -186,7 +207,9 @@ class Convert implements Countable
      */
     public function toMacro(): string
     {
-        return (new MacroCase($this->words))->glue();
+        $namingConvention = $this->factory(MacroCase::class);
+
+        return $namingConvention->glue();
     }
 
     /**
@@ -200,7 +223,9 @@ class Convert implements Countable
      */
     public function toAda(): string
     {
-        return (new AdaCase($this->words))->glue();
+        $namingConvention = $this->factory(AdaCase::class);
+
+        return $namingConvention->glue();
     }
 
     /**
@@ -214,7 +239,9 @@ class Convert implements Countable
      */
     public function toKebab(): string
     {
-        return (new KebabCase($this->words))->glue();
+        $namingConvention = $this->factory(KebabCase::class);
+
+        return $namingConvention->glue();
     }
 
     /**
@@ -228,7 +255,9 @@ class Convert implements Countable
      */
     public function toCobol(): string
     {
-        return (new CobolCase($this->words))->glue();
+        $namingConvention = $this->factory(CobolCase::class);
+
+        return $namingConvention->glue();
     }
 
     /**
@@ -242,7 +271,9 @@ class Convert implements Countable
      */
     public function toTrain(): string
     {
-        return (new TrainCase($this->words))->glue();
+        $namingConvention = $this->factory(TrainCase::class);
+
+        return $namingConvention->glue();
     }
 
     /**
@@ -256,6 +287,10 @@ class Convert implements Countable
      */
     public function toTitle(): string
     {
+        $namingConvention = $this->factory(TitleCase::class);
+
+        return $namingConvention->glue();
+
         return (new TitleCase($this->words))->glue();
     }
 
@@ -270,7 +305,9 @@ class Convert implements Countable
      */
     public function toUpper(): string
     {
-        return (new UpperCase($this->words))->glue();
+        $namingConvention = $this->factory(UpperCase::class);
+
+        return $namingConvention->glue();
     }
 
     /**
@@ -284,7 +321,9 @@ class Convert implements Countable
      */
     public function toLower(): string
     {
-        return (new LowerCase($this->words))->glue();
+        $namingConvention = $this->factory(LowerCase::class);
+
+        return $namingConvention->glue();
     }
 
     /**
@@ -298,7 +337,9 @@ class Convert implements Countable
      */
     public function toSentence(): string
     {
-        return (new SentenceCase($this->words))->glue();
+        $namingConvention = $this->factory(SentenceCase::class);
+
+        return $namingConvention->glue();
     }
 
     /**

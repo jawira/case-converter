@@ -1,9 +1,21 @@
 <?php
 
+use Jawira\CaseConverter\AdaCase;
+use Jawira\CaseConverter\CamelCase;
+use Jawira\CaseConverter\CobolCase;
 use Jawira\CaseConverter\Convert;
 use Jawira\CaseConverter\DashBased;
+use Jawira\CaseConverter\KebabCase;
+use Jawira\CaseConverter\LowerCase;
+use Jawira\CaseConverter\MacroCase;
+use Jawira\CaseConverter\PascalCase;
+use Jawira\CaseConverter\SentenceCase;
+use Jawira\CaseConverter\SnakeCase;
 use Jawira\CaseConverter\SpaceBased;
+use Jawira\CaseConverter\TitleCase;
+use Jawira\CaseConverter\TrainCase;
 use Jawira\CaseConverter\UnderscoreBased;
+use Jawira\CaseConverter\UpperCase;
 use Jawira\CaseConverter\UppercaseBased;
 use PHPUnit\Framework\TestCase;
 
@@ -157,28 +169,35 @@ class ConvertTest extends TestCase
      * @covers       \Jawira\CaseConverter\Convert::toTrain()
      * @covers       \Jawira\CaseConverter\Convert::toUpper()
      *
-     * @param string $converterMethod
+     * @param string $methodName
+     * @param string $className
      *
-     * @throws \ReflectionException
      */
-    public function testConverterMethodCallsGlueString(string $converterMethod)
+    public function testConverterMethodCallsGlueString(string $methodName, string $className)
     {
-        // Disabling constructor without stub methods
-        $mock = $this->getMockBuilder(Convert::class)
-                     ->disableOriginalConstructor()
-                     ->setMethods(['glueString'])
-                     ->getMock();
+        $expected = 'this is a dummy text';
 
-        // Stub called once and returns value
-        $mock->expects($this->once())
-             ->method('glueString');
+        $namingConvention = $this->getMockBuilder($className)
+                                 ->disableOriginalConstructor()
+                                 ->setMethods(['glue'])
+                                 ->getMock();
 
-        // Removing protected for converter method
-        $reflection = new ReflectionObject($mock);
-        $method     = $reflection->getMethod($converterMethod);
-        $method->setAccessible(true);
+        $namingConvention->expects($this->once())
+                         ->method('glue')
+                         ->willReturn($expected);
 
-        $method->invoke($mock);
+        $convertMock = $this->getMockBuilder(Convert::class)
+                            ->disableOriginalConstructor()
+                            ->setMethods(['factory'])
+                            ->getMock();
+
+        $convertMock->expects($this->once())
+                    ->method('factory')
+                    ->willReturn($namingConvention);
+
+        /** @var \Jawira\CaseConverter\NamingConvention $convertMock */
+        $returned = $convertMock->$methodName();
+        $this->assertSame($expected, $returned);
     }
 
     /**
@@ -187,18 +206,18 @@ class ConvertTest extends TestCase
     public function converterMethodProvider()
     {
         return [
-            'to' . Convert::ADA      => ['to' . Convert::ADA],
-            'to' . Convert::CAMEL    => ['to' . Convert::CAMEL],
-            'to' . Convert::COBOL    => ['to' . Convert::COBOL],
-            'to' . Convert::KEBAB    => ['to' . Convert::KEBAB],
-            'to' . Convert::LOWER    => ['to' . Convert::LOWER],
-            'to' . Convert::MACRO    => ['to' . Convert::MACRO],
-            'to' . Convert::PASCAL   => ['to' . Convert::PASCAL],
-            'to' . Convert::SENTENCE => ['to' . Convert::SENTENCE],
-            'to' . Convert::SNAKE    => ['to' . Convert::SNAKE],
-            'to' . Convert::TITLE    => ['to' . Convert::TITLE],
-            'to' . Convert::TRAIN    => ['to' . Convert::TRAIN],
-            'to' . Convert::UPPER    => ['to' . Convert::UPPER],
+            'toAda'      => ['toAda', AdaCase::class],
+            'toCamel'    => ['toCamel', CamelCase::class],
+            'toCobol'    => ['toCobol', CobolCase::class],
+            'toKebab'    => ['toKebab', KebabCase::class],
+            'toLower'    => ['toLower', LowerCase::class],
+            'toMacro'    => ['toMacro', MacroCase::class],
+            'toPascal'   => ['toPascal', PascalCase::class],
+            'toSentence' => ['toSentence', SentenceCase::class],
+            'toSnake'    => ['toSnake', SnakeCase::class],
+            'toTitle'    => ['toTitle', TitleCase::class],
+            'toTrain'    => ['toTrain', TrainCase::class],
+            'toUpper'    => ['toUpper', UpperCase::class],
         ];
     }
 
@@ -234,7 +253,7 @@ class ConvertTest extends TestCase
      *
      * @throws \ReflectionException
      */
-    public function testextractWords(string $analyseReturn, string $splitMethod)
+    public function testExtractWords(string $analyseReturn, string $splitMethod)
     {
         $inputString = 'deep-space-nine';
 
@@ -268,10 +287,10 @@ class ConvertTest extends TestCase
     public function extractWordsProvider()
     {
         return [
-            'underscore' => [Convert::STRATEGY_UNDERSCORE, 'splitUnderscoreString'],
-            'dash'       => [Convert::STRATEGY_DASH, 'splitDashString'],
-            'uppercase'  => [Convert::STRATEGY_UPPERCASE, 'splitUppercaseString'],
-            'space'      => [Convert::STRATEGY_SPACE, 'splitSpaceString'],
+            'underscore' => [UnderscoreBased::class, 'splitUnderscoreString'],
+            'dash'       => [DashBased::class, 'splitDashString'],
+            'uppercase'  => [UppercaseBased::class, 'splitUppercaseString'],
+            'space'      => [SpaceBased::class, 'splitSpaceString'],
         ];
     }
 
