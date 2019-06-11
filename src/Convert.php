@@ -65,7 +65,7 @@ class Convert implements Countable
             throw new CaseConverterException('Unknown naming convention');
         }
 
-        $this->words = $strategy->split($input);
+        $this->words = $strategy->split();
 
         return $this;
     }

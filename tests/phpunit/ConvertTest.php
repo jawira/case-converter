@@ -4,19 +4,19 @@ use Jawira\CaseConverter\AdaCase;
 use Jawira\CaseConverter\CamelCase;
 use Jawira\CaseConverter\CobolCase;
 use Jawira\CaseConverter\Convert;
-use Jawira\CaseConverter\DashGluer;
+use Jawira\CaseConverter\DashSplitter;
 use Jawira\CaseConverter\KebabCase;
 use Jawira\CaseConverter\LowerCase;
 use Jawira\CaseConverter\MacroCase;
 use Jawira\CaseConverter\PascalCase;
 use Jawira\CaseConverter\SentenceCase;
 use Jawira\CaseConverter\SnakeCase;
-use Jawira\CaseConverter\SpaceGluer;
+use Jawira\CaseConverter\SpaceSplitter;
 use Jawira\CaseConverter\TitleCase;
 use Jawira\CaseConverter\TrainCase;
-use Jawira\CaseConverter\UnderscoreGluer;
+use Jawira\CaseConverter\UnderscoreSplitter;
 use Jawira\CaseConverter\UpperCase;
-use Jawira\CaseConverter\UppercaseGluer;
+use Jawira\CaseConverter\UppercaseSplitter;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -100,7 +100,9 @@ class ConvertTest extends TestCase
      *
      * \Jawira\CaseConverter\Convert::analyse should return Convert::SNAKE if $input contains '_'.
      *
-     * @covers       \Jawira\CaseConverter\Convert::analyse()
+     * @covers       \Jawira\CaseConverter\Convert::analyse
+     * @covers       \Jawira\CaseConverter\Splitter::__construct
+     *
      * @dataProvider analyseProvider
      *
      * @param bool   $isUppercaseWordReturn Times that `isUppercaseWord()` method is called.
@@ -129,25 +131,25 @@ class ConvertTest extends TestCase
 
         // Testing
         $output = $method->invoke($stub, $input);
-        $this->assertSame($expected, $output);
+        $this->assertInstanceOf($expected, $output);
     }
 
     public function analyseProvider()
     {
         return [
-            'Underscore 1' => [false, UnderscoreGluer::class, 'hola_mundo'],
-            'Underscore 2' => [false, UnderscoreGluer::class, 'HELLO_WORLD'],
-            'Underscore 3' => [true, UnderscoreGluer::class, 'Ñ'],
-            'Underscore 4' => [true, UnderscoreGluer::class, 'HELLO'],
-            'Uppercase 1'  => [false, UppercaseGluer::class, ''],
-            'Uppercase 2'  => [false, UppercaseGluer::class, 'ñ'],
-            'Uppercase 3'  => [false, UppercaseGluer::class, 'one'],
-            'Uppercase 4'  => [false, UppercaseGluer::class, 'helloWorld'],
-            'Dash 1'       => [false, DashGluer::class, 'hello-World'],
-            'Dash 2'       => [false, DashGluer::class, 'my-name-is-bond'],
-            'Space 1'      => [false, SpaceGluer::class, 'Hola mundo'],
-            'Space 2'      => [false, SpaceGluer::class, 'Mi nombre es bond'],
-            'Space 3'      => [false, SpaceGluer::class, 'Formule courte spéciale été'],
+            'Underscore 1' => [false, UnderscoreSplitter::class, 'hola_mundo'],
+            'Underscore 2' => [false, UnderscoreSplitter::class, 'HELLO_WORLD'],
+            'Underscore 3' => [true, UnderscoreSplitter::class, 'Ñ'],
+            'Underscore 4' => [true, UnderscoreSplitter::class, 'HELLO'],
+            'Uppercase 1'  => [false, UppercaseSplitter::class, ''],
+            'Uppercase 2'  => [false, UppercaseSplitter::class, 'ñ'],
+            'Uppercase 3'  => [false, UppercaseSplitter::class, 'one'],
+            'Uppercase 4'  => [false, UppercaseSplitter::class, 'helloWorld'],
+            'Dash 1'       => [false, DashSplitter::class, 'hello-World'],
+            'Dash 2'       => [false, DashSplitter::class, 'my-name-is-bond'],
+            'Space 1'      => [false, SpaceSplitter::class, 'Hola mundo'],
+            'Space 2'      => [false, SpaceSplitter::class, 'Mi nombre es bond'],
+            'Space 3'      => [false, SpaceSplitter::class, 'Formule courte spéciale été'],
         ];
     }
 

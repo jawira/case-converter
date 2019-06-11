@@ -10,7 +10,7 @@ abstract class Splitter
 {
 
     /**
-     * @var string[] Words extracted from input string
+     * @var string Words extracted from input string
      */
     protected $inputString;
 
