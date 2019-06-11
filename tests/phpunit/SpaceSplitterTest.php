@@ -7,6 +7,7 @@ class SpaceSplitterTest extends TestCase
 {
     /**
      * @covers \Jawira\CaseConverter\SpaceSplitter::split
+     * @throws \ReflectionException
      */
     public function testSplit()
     {

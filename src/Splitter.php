@@ -29,13 +29,13 @@ abstract class Splitter
     /**
      * This is an utility method, typically this method is used by to split a string based on pattern.
      *
-     * @param string $words
+     * @param string $inputString
      * @param string $pattern
      *
      * @return string[]
      */
-    protected function splitUsingPattern(string $words, string $pattern): array
+    protected function splitUsingPattern(string $inputString, string $pattern): array
     {
-        return array_values(array_filter(mb_split($pattern, $words)));
+        return array_values(array_filter(mb_split($pattern, $inputString)));
     }
 }

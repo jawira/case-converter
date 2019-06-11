@@ -7,6 +7,7 @@ class UnderscoreSplitterTest extends TestCase
 {
     /**
      * @covers \Jawira\CaseConverter\UnderscoreSplitter::split
+     * @throws \ReflectionException
      */
     public function testSplit()
     {

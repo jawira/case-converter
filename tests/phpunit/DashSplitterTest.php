@@ -7,6 +7,7 @@ class DashSplitterTest extends TestCase
 {
     /**
      * @covers \Jawira\CaseConverter\DashSplitter::split
+     * @throws \ReflectionException
      */
     public function testSplit()
     {
