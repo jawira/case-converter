@@ -4,7 +4,7 @@ namespace Jawira\CaseConverter;
 
 class DashSplitter extends Splitter
 {
-    const PATTERN = DashBased::DELIMITER . '+';
+    const PATTERN = DashGluer::DELIMITER . '+';
 
     public function split(): array
     {

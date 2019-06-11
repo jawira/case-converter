@@ -5,7 +5,7 @@ namespace Jawira\CaseConverter;
 use const MB_CASE_LOWER;
 use const MB_CASE_TITLE;
 
-class CamelCase extends UppercaseBased
+class CamelCase extends UppercaseGluer
 {
     public function glue(): string
     {

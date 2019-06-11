@@ -4,7 +4,7 @@ namespace Jawira\CaseConverter;
 
 use const MB_CASE_UPPER;
 
-class MacroCase extends UnderscoreBased
+class MacroCase extends UnderscoreGluer
 {
     public function glue(): string
     {

@@ -4,7 +4,7 @@ namespace Jawira\CaseConverter;
 
 use const MB_CASE_TITLE;
 
-class PascalCase extends UppercaseBased
+class PascalCase extends UppercaseGluer
 {
     public function glue(): string
     {

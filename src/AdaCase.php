@@ -4,7 +4,7 @@ namespace Jawira\CaseConverter;
 
 use const MB_CASE_TITLE;
 
-class AdaCase extends UnderscoreBased
+class AdaCase extends UnderscoreGluer
 {
     public function glue(): string
     {

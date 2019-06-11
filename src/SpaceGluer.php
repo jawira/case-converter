@@ -2,7 +2,7 @@
 
 namespace Jawira\CaseConverter;
 
-abstract class DashBased extends Gluer
+abstract class SpaceGluer extends Gluer
 {
-    const DELIMITER = '-';
+    const DELIMITER = ' ';
 }

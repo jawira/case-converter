@@ -4,7 +4,7 @@ namespace Jawira\CaseConverter;
 
 use const MB_CASE_LOWER;
 
-class SnakeCase extends UnderscoreBased
+class SnakeCase extends UnderscoreGluer
 {
     public function glue(): string
     {

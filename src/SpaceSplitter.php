@@ -4,7 +4,7 @@ namespace Jawira\CaseConverter;
 
 class SpaceSplitter extends Splitter
 {
-    const PATTERN = SpaceBased::DELIMITER . '+';
+    const PATTERN = SpaceGluer::DELIMITER . '+';
 
     public function split(): array
     {

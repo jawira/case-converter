@@ -4,7 +4,7 @@ namespace Jawira\CaseConverter;
 
 use const MB_CASE_UPPER;
 
-class CobolCase extends DashBased
+class CobolCase extends DashGluer
 {
     public function glue(): string
     {

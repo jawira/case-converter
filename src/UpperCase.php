@@ -4,7 +4,7 @@ namespace Jawira\CaseConverter;
 
 use const MB_CASE_UPPER;
 
-class UpperCase extends SpaceBased
+class UpperCase extends SpaceGluer
 {
     public function glue(): string
     {

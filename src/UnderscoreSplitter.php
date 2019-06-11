@@ -4,7 +4,7 @@ namespace Jawira\CaseConverter;
 
 class UnderscoreSplitter extends Splitter
 {
-    const PATTERN = UnderscoreBased::DELIMITER . '+';
+    const PATTERN = UnderscoreGluer::DELIMITER . '+';
 
     public function split(): array
     {

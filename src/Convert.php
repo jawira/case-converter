@@ -80,11 +80,11 @@ class Convert implements Countable
      */
     protected function analyse(string $input): Splitter
     {
-        if (mb_strpos($input, UnderscoreBased::DELIMITER)) {
+        if (mb_strpos($input, UnderscoreGluer::DELIMITER)) {
             $strategy = new UnderscoreSplitter($input);
-        } elseif (mb_strpos($input, DashBased::DELIMITER)) {
+        } elseif (mb_strpos($input, DashGluer::DELIMITER)) {
             $strategy = new DashSplitter($input);
-        } elseif (mb_strpos($input, SpaceBased::DELIMITER)) {
+        } elseif (mb_strpos($input, SpaceGluer::DELIMITER)) {
             $strategy = new SpaceSplitter($input);
         } elseif ($this->isUppercaseWord($input)) {
             $strategy = new UnderscoreSplitter($input);

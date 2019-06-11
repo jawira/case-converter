@@ -4,7 +4,7 @@ namespace Jawira\CaseConverter;
 
 use const MB_CASE_TITLE;
 
-class TrainCase extends DashBased
+class TrainCase extends DashGluer
 {
     public function glue(): string
     {

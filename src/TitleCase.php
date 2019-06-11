@@ -4,7 +4,7 @@ namespace Jawira\CaseConverter;
 
 use const MB_CASE_TITLE;
 
-class TitleCase extends SpaceBased
+class TitleCase extends SpaceGluer
 {
     public function glue(): string
     {

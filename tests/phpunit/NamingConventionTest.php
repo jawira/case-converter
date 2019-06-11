@@ -1,9 +1,9 @@
 <?php
 
-use Jawira\CaseConverter\DashBased;
+use Jawira\CaseConverter\DashGluer;
 use Jawira\CaseConverter\Gluer;
-use Jawira\CaseConverter\SpaceBased;
-use Jawira\CaseConverter\UnderscoreBased;
+use Jawira\CaseConverter\SpaceGluer;
+use Jawira\CaseConverter\UnderscoreGluer;
 use PHPUnit\Framework\TestCase;
 
 class NamingConventionTest extends TestCase
@@ -38,21 +38,21 @@ class NamingConventionTest extends TestCase
     public function splitUsingPatternProvider()
     {
         return [
-            [DashBased::DELIMITER, 'hello-world', ['hello', 'world']],
-            [DashBased::DELIMITER, 'HeLlO-WoRlD', ['HeLlO', 'WoRlD']],
-            [DashBased::DELIMITER, 'Hello-World', ['Hello', 'World']],
-            [DashBased::DELIMITER, 'HELLO-WORLD', ['HELLO', 'WORLD']],
-            [DashBased::DELIMITER, '--hello--world--', ['hello', 'world']],
-            [UnderscoreBased::DELIMITER, 'hello_world', ['hello', 'world']],
-            [UnderscoreBased::DELIMITER, 'HeLlO_WoRlD', ['HeLlO', 'WoRlD']],
-            [UnderscoreBased::DELIMITER, 'Hello_World', ['Hello', 'World']],
-            [UnderscoreBased::DELIMITER, 'HELLO_WORLD', ['HELLO', 'WORLD']],
-            [UnderscoreBased::DELIMITER, '__hello_____world__', ['hello', 'world']],
-            [SpaceBased::DELIMITER, 'hEllO wOrlD', ['hEllO', 'wOrlD']],
-            [SpaceBased::DELIMITER, 'hEllO wOrlD', ['hEllO', 'wOrlD']],
-            [SpaceBased::DELIMITER, 'hEllO      wOrlD', ['hEllO', 'wOrlD']],
-            [SpaceBased::DELIMITER, '           hEllO      wOrlD', ['hEllO', 'wOrlD']],
-            [SpaceBased::DELIMITER, '           hEllO      wOrlD   ', ['hEllO', 'wOrlD']],
+            [DashGluer::DELIMITER, 'hello-world', ['hello', 'world']],
+            [DashGluer::DELIMITER, 'HeLlO-WoRlD', ['HeLlO', 'WoRlD']],
+            [DashGluer::DELIMITER, 'Hello-World', ['Hello', 'World']],
+            [DashGluer::DELIMITER, 'HELLO-WORLD', ['HELLO', 'WORLD']],
+            [DashGluer::DELIMITER, '--hello--world--', ['hello', 'world']],
+            [UnderscoreGluer::DELIMITER, 'hello_world', ['hello', 'world']],
+            [UnderscoreGluer::DELIMITER, 'HeLlO_WoRlD', ['HeLlO', 'WoRlD']],
+            [UnderscoreGluer::DELIMITER, 'Hello_World', ['Hello', 'World']],
+            [UnderscoreGluer::DELIMITER, 'HELLO_WORLD', ['HELLO', 'WORLD']],
+            [UnderscoreGluer::DELIMITER, '__hello_____world__', ['hello', 'world']],
+            [SpaceGluer::DELIMITER, 'hEllO wOrlD', ['hEllO', 'wOrlD']],
+            [SpaceGluer::DELIMITER, 'hEllO wOrlD', ['hEllO', 'wOrlD']],
+            [SpaceGluer::DELIMITER, 'hEllO      wOrlD', ['hEllO', 'wOrlD']],
+            [SpaceGluer::DELIMITER, '           hEllO      wOrlD', ['hEllO', 'wOrlD']],
+            [SpaceGluer::DELIMITER, '           hEllO      wOrlD   ', ['hEllO', 'wOrlD']],
         ];
     }
 

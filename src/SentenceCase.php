@@ -5,7 +5,7 @@ namespace Jawira\CaseConverter;
 use const MB_CASE_LOWER;
 use const MB_CASE_TITLE;
 
-class SentenceCase extends SpaceBased
+class SentenceCase extends SpaceGluer
 {
     public function glue(): string
     {

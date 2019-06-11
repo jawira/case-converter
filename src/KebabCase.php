@@ -4,7 +4,7 @@ namespace Jawira\CaseConverter;
 
 use const MB_CASE_LOWER;
 
-class KebabCase extends DashBased
+class KebabCase extends DashGluer
 {
     public function glue(): string
     {

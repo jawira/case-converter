@@ -19,7 +19,7 @@ class UppercaseSplitter extends Splitter
     public function split(): array
     {
         $closure = function ($match) {
-            return UnderscoreBased::DELIMITER . reset($match);
+            return UnderscoreGluer::DELIMITER . reset($match);
         };
 
         $result = preg_replace_callback('#\p{Lu}{1}#u', $closure, $this->inputString);
