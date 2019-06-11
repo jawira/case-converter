@@ -1,98 +1,28 @@
 @startuml
 
-DashBased <|-- CobolCase
-DashBased <|-- KebabCase
-DashBased <|-- TrainCase
-NamingConvention <|-- DashBased
-NamingConvention <|-- SpaceBased
-NamingConvention <|-- UnderscoreBased
-NamingConvention <|-- UppercaseBased
-SpaceBased <|-- LowerCase
-SpaceBased <|-- SentenceCase
-SpaceBased <|-- TitleCase
-SpaceBased <|-- UpperCase
-UnderscoreBased <|-- AdaCase
-UnderscoreBased <|-- MacroCase
-UnderscoreBased <|-- SnakeCase
-UppercaseBased <|-- CamelCase
-UppercaseBased <|-- PascalCase
+Gluer <|-- DashGluer
+DashGluer <|-- KebabCase
+DashGluer <|-- TrainCase
+DashGluer <|-- CobolCase
 
-abstract class NamingConvention {
-    # $words
-    {static} {abstract} + split(string $string): string
-    {abstract} + glue(): string
-    {static}  # splitUsingPattern():string
-    # glueUsingRules(): string
-    # changeWordsCase(): array
-    # changeFirstWordCase(): array
-}
+Gluer <|-- SpaceGluer
+SpaceGluer <|-- SentenceCase
+SpaceGluer <|-- TitleCase
+SpaceGluer <|-- UpperCase
+SpaceGluer <|-- LowerCase
 
-abstract class DashBased {
-    + DELIMITER
-    {static} + split()
-}
+Gluer <|-- UnderscoreGluer
+UnderscoreGluer <|-- SnakeCase
+UnderscoreGluer <|-- AdaCase
+UnderscoreGluer <|-- MacroCase
 
-abstract class SpaceBased {
-    + DELIMITER
-    {static} + split()
-}
+Gluer <|-- UppercaseGluer
+UppercaseGluer <|-- CamelCase
+UppercaseGluer <|-- PascalCase
 
-abstract class UnderscoreBased {
-    + DELIMITER
-    {static} + split()
-}
-
-abstract class UppercaseBased {
-    + DELIMITER
-    {static} + split()
-}
-
-class SnakeCase {
-    + glue(): string
-}
-
-class CobolCase {
-    + glue(): string
-}
-
-class KebabCase {
-    + glue(): string
-}
-
-class TrainCase {
-    + glue(): string
-}
-
-class LowerCase {
-    + glue(): string
-}
-
-class SentenceCase {
-    + glue(): string
-}
-
-class UpperCase {
-    + glue(): string
-}
-
-class TitleCase {
-    + glue(): string
-}
-
-class AdaCase {
-    + glue(): string
-}
-
-class MacroCase {
-    + glue(): string
-}
-
-class CamelCase {
-    + glue(): string
-}
-
-class PascalCase {
-    + glue(): string
-}
+Splitter <|-- DashSplitter
+Splitter <|-- SpaceSplitter
+Splitter <|-- UnderscoreSplitter
+Splitter <|-- UppercaseSplitter
 
 @enduml

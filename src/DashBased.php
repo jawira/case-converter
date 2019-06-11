@@ -2,9 +2,7 @@
 
 namespace Jawira\CaseConverter;
 
-abstract class DashBased extends NamingConvention
+abstract class DashBased extends Gluer
 {
-    use SplitTrait;
-
     const DELIMITER = '-';
 }

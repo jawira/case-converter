@@ -2,9 +2,7 @@
 
 namespace Jawira\CaseConverter;
 
-abstract class UnderscoreBased extends NamingConvention
+abstract class UnderscoreBased extends Gluer
 {
-    use SplitTrait;
-
     const DELIMITER = '_';
 }

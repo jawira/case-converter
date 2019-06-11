@@ -59,14 +59,13 @@ class Convert implements Countable
      */
     protected function extractWords(string $input): self
     {
-        /** @var \Jawira\CaseConverter\NamingConvention $strategy Class name */
         $strategy = $this->analyse($input);
 
-        if (!is_subclass_of($strategy, NamingConvention::class)) {
+        if (!is_subclass_of($strategy, Splitter::class)) {
             throw new CaseConverterException('Unknown naming convention');
         }
 
-        $this->words = $strategy::split($input);
+        $this->words = $strategy->split($input);
 
         return $this;
     }
@@ -76,21 +75,21 @@ class Convert implements Countable
      *
      * @param string $input String to be analysed
      *
-     * @return string Abstract class to use as strategy
+     * @return \Jawira\CaseConverter\Splitter
      * @throws \Jawira\CaseConverter\CaseConverterException
      */
-    protected function analyse(string $input): string
+    protected function analyse(string $input): Splitter
     {
         if (mb_strpos($input, UnderscoreBased::DELIMITER)) {
-            $strategy = UnderscoreBased::class;
+            $strategy = new UnderscoreSplitter($input);
         } elseif (mb_strpos($input, DashBased::DELIMITER)) {
-            $strategy = DashBased::class;
+            $strategy = new DashSplitter($input);
         } elseif (mb_strpos($input, SpaceBased::DELIMITER)) {
-            $strategy = SpaceBased::class;
+            $strategy = new SpaceSplitter($input);
         } elseif ($this->isUppercaseWord($input)) {
-            $strategy = UnderscoreBased::class;
+            $strategy = new UnderscoreSplitter($input);
         } else {
-            $strategy = UppercaseBased::class;
+            $strategy = new UppercaseSplitter($input);
         }
 
         return $strategy;
@@ -154,11 +153,11 @@ class Convert implements Countable
      *
      * @param string $className Class name
      *
-     * @return \Jawira\CaseConverter\NamingConvention
+     * @return \Jawira\CaseConverter\Gluer
      */
-    protected function factory(string $className): NamingConvention
+    protected function factory(string $className): Gluer
     {
-        $parent = NamingConvention::class;
+        $parent = Gluer::class;
         assert(is_subclass_of($className, $parent), "$className is not a $parent subclass");
 
         return new $className($this->words);

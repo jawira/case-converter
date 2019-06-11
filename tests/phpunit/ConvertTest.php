@@ -195,7 +195,7 @@ class ConvertTest extends TestCase
                     ->method('factory')
                     ->willReturn($namingConvention);
 
-        /** @var \Jawira\CaseConverter\NamingConvention $convertMock */
+        /** @var \Jawira\CaseConverter\Gluer $convertMock */
         $returned = $convertMock->$methodName();
         $this->assertSame($expected, $returned);
     }

@@ -1,7 +1,7 @@
 <?php
 
 use Jawira\CaseConverter\DashBased;
-use Jawira\CaseConverter\NamingConvention;
+use Jawira\CaseConverter\Gluer;
 use Jawira\CaseConverter\SpaceBased;
 use Jawira\CaseConverter\UnderscoreBased;
 use PHPUnit\Framework\TestCase;
@@ -9,7 +9,7 @@ use PHPUnit\Framework\TestCase;
 class NamingConventionTest extends TestCase
 {
     /**
-     * @covers       \Jawira\CaseConverter\NamingConvention::splitUsingPattern
+     * @covers       \Jawira\CaseConverter\Gluer::splitUsingPattern
      * @dataProvider splitUsingPatternProvider
      *
      * @param string $pattern
@@ -21,7 +21,7 @@ class NamingConventionTest extends TestCase
     public function testSplitUsingPattern(string $pattern, string $input, array $expected)
     {
         // Mocking abstract method
-        $mock = $this->getMockBuilder(NamingConvention::class)
+        $mock = $this->getMockBuilder(Gluer::class)
                      ->disableOriginalConstructor()
                      ->getMockForAbstractClass();
 
@@ -57,7 +57,7 @@ class NamingConventionTest extends TestCase
     }
 
     /**
-     * @covers       \Jawira\CaseConverter\NamingConvention::glueUsingRules
+     * @covers       \Jawira\CaseConverter\Gluer::glueUsingRules
      * @dataProvider glueUsingRulesProvider
      *
      * @param array  $words
@@ -72,7 +72,7 @@ class NamingConventionTest extends TestCase
     public function testGlueUsingRules(array $words, string $glue, int $wordsMode, $firstWordMode, string $expected)
     {
         // Disabling constructor without stub methods
-        $mock = $this->getMockBuilder(NamingConvention::class)
+        $mock = $this->getMockBuilder(Gluer::class)
                      ->disableOriginalConstructor()
                      ->setMethods(['changeWordsCase', 'changeFirstWordCase'])
                      ->getMockForAbstractClass();

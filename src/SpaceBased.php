@@ -2,9 +2,7 @@
 
 namespace Jawira\CaseConverter;
 
-abstract class SpaceBased extends NamingConvention
+abstract class SpaceBased extends Gluer
 {
-    use SplitTrait;
-
     const DELIMITER = ' ';
 }

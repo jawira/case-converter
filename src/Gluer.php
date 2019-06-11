@@ -2,16 +2,13 @@
 
 namespace Jawira\CaseConverter;
 
-use function array_filter;
 use function array_map;
-use function array_values;
 use function assert;
 use function implode;
 use function in_array;
 use function mb_convert_case;
-use function mb_split;
 
-abstract class NamingConvention
+abstract class Gluer
 {
     /**
      * Encoding to be used by `mb_convert_case()` function.
@@ -28,30 +25,6 @@ abstract class NamingConvention
     public function __construct(array $words)
     {
         $this->words = $words;
-    }
-
-    /**
-     * Tells how to split a string into valid words.
-     *
-     * A generic implementation of this method can be found in \Jawira\CaseConverter\SplitTrait::split
-     *
-     * @param string $words
-     *
-     * @return array
-     */
-    abstract static public function split(string $words): array;
-
-    /**
-     * This is an utility method, typically this method is used by \Jawira\CaseConverter\NamingConvention::split
-     *
-     * @param string $words
-     * @param string $pattern
-     *
-     * @return string[]
-     */
-    static protected function splitUsingPattern(string $words, string $pattern): array
-    {
-        return array_values(array_filter(mb_split($pattern, $words)));
     }
 
     /**
