@@ -17,3 +17,4 @@
 /bin/phpDocumentor
 /bin/phploc
 /resources/phploc.txt
+/resources/coverage-html/
