@@ -22,17 +22,17 @@ class UppercaseSplitter extends Splitter
             return UnderscoreGluer::DELIMITER . reset($match);
         };
 
-        $result = preg_replace_callback('#\p{Lu}{1}#u', $closure, $this->inputString);
+        $newString = preg_replace_callback('#\p{Lu}{1}#u', $closure, $this->inputString);
 
-        if (is_null($result)) {
+        if (is_null($newString)) {
             throw new CaseConverterException("Error while processing '{$this->inputString}'");
         }
 
-        return $this->splitUsingUnderscore($result);
+        return $this->splitUsingUnderscore($newString);
     }
 
-    protected function splitUsingUnderscore(string $result)
+    protected function splitUsingUnderscore(string $inputString): array
     {
-        return (new UnderscoreSplitter($result))->split();
+        return (new UnderscoreSplitter($inputString))->split();
     }
 }
