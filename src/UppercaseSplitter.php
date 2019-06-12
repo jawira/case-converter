@@ -25,7 +25,7 @@ class UppercaseSplitter extends Splitter
         $newString = preg_replace_callback('#\p{Lu}{1}#u', $closure, $this->inputString);
 
         if (is_null($newString)) {
-            throw new CaseConverterException("Error while processing '{$this->inputString}'");
+            throw new CaseConverterException("Error while processing '{$this->inputString}'"); // @codeCoverageIgnore
         }
 
         return $this->splitUsingUnderscore($newString);

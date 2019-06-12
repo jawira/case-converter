@@ -55,6 +55,7 @@ class UppercaseSplitterTest extends TestCase
      * @covers \Jawira\CaseConverter\Splitter::__construct
      * @covers \Jawira\CaseConverter\Splitter::splitUsingPattern
      *
+     * @dataProvider splitUsingUnderscoreProvider
      *
      * @param string $inputString
      * @param array  $expected
@@ -75,5 +76,14 @@ class UppercaseSplitterTest extends TestCase
         $result = $method->invokeArgs($mock, [$inputString]);
 
         $this->assertSame($expected, $result);
+    }
+
+    public function splitUsingUnderscoreProvider()
+    {
+        return [
+            ['input_string', ['input', 'string']],
+            ['___input_string___', ['input', 'string']],
+            ['HeLLo_wORLd', ['HeLLo', 'wORLd']],
+        ];
     }
 }
