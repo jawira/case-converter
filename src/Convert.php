@@ -62,7 +62,7 @@ class Convert implements Countable
         $strategy = $this->analyse($input);
 
         if (!is_subclass_of($strategy, Splitter::class)) {
-            throw new CaseConverterException('Unknown naming convention');
+            throw new CaseConverterException('Unknown naming convention'); // @codeCoverageIgnore
         }
 
         $this->words = $strategy->split();
@@ -115,7 +115,7 @@ class Convert implements Countable
         $match = preg_match('#^\p{Lu}+$#u', $input);
 
         if (false === $match) {
-            throw new CaseConverterException('Error executing regex');
+            throw new CaseConverterException('Error executing regex'); // @codeCoverageIgnore
         }
 
         return $match === 1;
