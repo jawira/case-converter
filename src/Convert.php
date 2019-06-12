@@ -289,8 +289,6 @@ class Convert implements Countable
         $namingConvention = $this->factory(TitleCase::class);
 
         return $namingConvention->glue();
-
-        return (new TitleCase($this->words))->glue();
     }
 
     /**
