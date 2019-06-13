@@ -284,4 +284,69 @@ class ConvertTest extends TestCase
             'large array'  => [['a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a',], 12],
         ];
     }
+
+    /**
+     * @covers Jawira\CaseConverter\Convert::extractWords
+     *
+     * @throws \ReflectionException
+     */
+    public function testExtractWords()
+    {
+        // Preparing Splitter object
+        $splitterMock = $this->getMockBuilder(DashSplitter::class)
+                             ->disableOriginalConstructor()
+                             ->setMethods(['split'])
+                             ->getMock();
+
+        $splitterMock->expects($this->once())
+                     ->method('split')
+                     ->with()
+                     ->willReturn(['dummy', 'array']);
+
+        // Preparing Convert object
+        $convertMock = $this->getMockBuilder(Convert::class)
+                            ->disableOriginalConstructor()
+                            ->setMethods(['analyse'])
+                            ->getMock();
+
+        $convertMock->expects($this->once())
+                    ->method('analyse')
+                    ->with('dummy-value')
+                    ->will($this->returnValue($splitterMock));
+
+        // Calling protected method
+        $reflection = new ReflectionObject($convertMock);
+        $method     = $reflection->getMethod('extractWords');
+        $method->setAccessible(true);
+        $result = $method->invoke($convertMock, 'dummy-value');
+
+        $this->assertAttributeEquals(['dummy', 'array'], 'words', $convertMock);
+        $this->assertInstanceOf(Convert::class, $result);
+    }
+
+    /**
+     * @covers \Jawira\CaseConverter\Convert::toArray
+     *
+     * @throws \ReflectionException
+     */
+    public function testToArray()
+    {
+        // Preparing Convert mock
+        $mock = $this->getMockBuilder(Convert::class)
+                     ->disableOriginalConstructor()
+                     ->setMethods()
+                     ->getMock();
+
+        // Setting value to protected property
+        $reflectionObject   = new ReflectionObject($mock);
+        $reflectionProperty = $reflectionObject->getProperty('words');
+        $reflectionProperty->setAccessible(true);
+        $reflectionProperty->setValue($mock, ['dummy', 'array']);
+
+        /** @var \Jawira\CaseConverter\Convert $mock */
+        $currentArray = $mock->toArray();
+
+        $this->assertIsArray($currentArray);
+        $this->assertEquals(['dummy', 'array'], $currentArray);
+    }
 }
