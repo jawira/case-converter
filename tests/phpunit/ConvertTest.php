@@ -5,6 +5,7 @@ use Jawira\CaseConverter\CamelCase;
 use Jawira\CaseConverter\CobolCase;
 use Jawira\CaseConverter\Convert;
 use Jawira\CaseConverter\DashSplitter;
+use Jawira\CaseConverter\Gluer;
 use Jawira\CaseConverter\KebabCase;
 use Jawira\CaseConverter\LowerCase;
 use Jawira\CaseConverter\MacroCase;
@@ -348,5 +349,54 @@ class ConvertTest extends TestCase
 
         $this->assertIsArray($currentArray);
         $this->assertEquals(['dummy', 'array'], $currentArray);
+    }
+
+    /**
+     * @covers       \Jawira\CaseConverter\Convert::factory
+     * @covers       \Jawira\CaseConverter\Gluer::__construct
+     * @dataProvider factoryProvider
+     *
+     * @param string $className
+     *
+     * @throws \ReflectionException
+     */
+    public function testFactory(string $className)
+    {
+        // Preparing Convert mock
+        $mock = $this->getMockBuilder(Convert::class)
+                     ->disableOriginalConstructor()
+                     ->setMethods()
+                     ->getMock();
+
+        // Setting value to protected property
+        $reflectionObject   = new ReflectionObject($mock);
+        $reflectionProperty = $reflectionObject->getProperty('words');
+        $reflectionProperty->setAccessible(true);
+        $reflectionProperty->setValue($mock, ['dummy', 'array']);
+
+        // Calling protected method
+        $reflectionMethod = $reflectionObject->getMethod('factory');
+        $reflectionMethod->setAccessible(true);
+        $result = $reflectionMethod->invoke($mock, $className);
+
+        $this->assertInstanceOf(Gluer::class, $result);
+    }
+
+    public function factoryProvider()
+    {
+        return [
+            [AdaCase::class],
+            [CamelCase::class],
+            [CobolCase::class],
+            [KebabCase::class],
+            [LowerCase::class],
+            [MacroCase::class],
+            [PascalCase::class],
+            [SentenceCase::class],
+            [SnakeCase::class],
+            [TitleCase::class],
+            [TrainCase::class],
+            [UpperCase::class],
+        ];
     }
 }
