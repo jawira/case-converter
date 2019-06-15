@@ -1,0 +1,28 @@
+@startuml
+
+Gluer <|-- DashGluer
+DashGluer <|-- KebabCase
+DashGluer <|-- TrainCase
+DashGluer <|-- CobolCase
+
+Gluer <|-- SpaceGluer
+SpaceGluer <|-- SentenceCase
+SpaceGluer <|-- TitleCase
+SpaceGluer <|-- UpperCase
+SpaceGluer <|-- LowerCase
+
+Gluer <|-- UnderscoreGluer
+UnderscoreGluer <|-- SnakeCase
+UnderscoreGluer <|-- AdaCase
+UnderscoreGluer <|-- MacroCase
+
+Gluer <|-- UppercaseGluer
+UppercaseGluer <|-- CamelCase
+UppercaseGluer <|-- PascalCase
+
+Splitter <|-- DashSplitter
+Splitter <|-- SpaceSplitter
+Splitter <|-- UnderscoreSplitter
+Splitter <|-- UppercaseSplitter
+
+@enduml

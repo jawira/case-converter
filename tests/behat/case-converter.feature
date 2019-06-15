@@ -251,3 +251,7 @@ Feature: Convert Case
       | checked                     | 1          |
       | APurplePigAndAGreenDonkey   | 7          |
       | Des couverts biodégradables | 3          |
+      | ABC                         | 1          |
+      | abc                         | 1          |
+      | Abc                         | 1          |
+      | aBC                         | 3          |
