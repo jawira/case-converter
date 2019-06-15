@@ -78,8 +78,6 @@ Utility methods
 | Method          | Description                                   | Output example                  |
 | --------------- | --------------------------------------------- | ------------------------------- |
 | `toArray()`     | Get array with detected words                 | `['my', 'name', 'is', 'bond']`  | 
-| `__toString()`  | Same as Camel case ([magic method])           | `myNameIsBond`                  |
-| `count()`       | Count detected words ([Countable interface])  | `4`                             |
 
 i18n
 ----

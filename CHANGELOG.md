@@ -4,6 +4,23 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+## [v2.3.0] - 2019-06-15
+
+### Changed
+
+- [#35] Big refactoring in library's structure, user should not notice this changes
+
+### Deprecated
+
+- [#35] \Jawira\CaseConverter\Convert::__toString
+- [#35] \Jawira\CaseConverter\Convert::count
+
+### Removed
+
+- [#35] Lot of constants have been removed from `Convert` class: ENCODING, DASH, EMPTY_STRING, SPACE, UNDERSCORE, 
+STRATEGY_DASH, STRATEGY_SPACE, STRATEGY_UNDERSCORE, STRATEGY_UPPERCASE, ADA, CAMEL, COBOL, KEBAB, LOWER, MACRO, PASCAL, 
+SENTENCE, SNAKE, TITLE, TRAIN, UPPER.
+
 ## [v2.2.0] - 2019-05-30
 
 ### Added
@@ -215,3 +232,7 @@ All notable changes to this project will be documented in this file.
 [#33]: https://github.com/jawira/case-converter/pull/33
 
 [v2.2.0]: https://github.com/jawira/case-converter/compare/v2.1.0...v2.2.0
+
+[#35]: https://github.com/jawira/case-converter/pull/35
+
+[v2.3.0]: https://github.com/jawira/case-converter/compare/v2.2.0...v2.3.0
