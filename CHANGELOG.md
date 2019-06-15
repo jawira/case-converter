@@ -13,6 +13,12 @@ All notable changes to this project will be documented in this file.
 - [#35] \Jawira\CaseConverter\Convert::__toString
 - [#35] \Jawira\CaseConverter\Convert::count
 
+### Removed
+
+- Lot of constants have been removed from `Convert` class: ENCODING, DASH, EMPTY_STRING, SPACE, UNDERSCORE, 
+STRATEGY_DASH, STRATEGY_SPACE, STRATEGY_UNDERSCORE, STRATEGY_UPPERCASE, ADA, CAMEL, COBOL, KEBAB, LOWER, MACRO, PASCAL, 
+SENTENCE, SNAKE, TITLE, TRAIN, UPPER.
+
 ## [v2.2.0] - 2019-05-30
 
 ### Added
