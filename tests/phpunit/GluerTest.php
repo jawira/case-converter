@@ -66,4 +66,84 @@ class GluerTest extends TestCase
             [['fOo', 'bAr'], 'X', MB_CASE_LOWER, MB_CASE_LOWER, 'fOoXbAr'],
         ];
     }
+
+    /**
+     * @covers       \Jawira\CaseConverter\Gluer::changeWordsCase
+     * @dataProvider changeWordsCaseProvider
+     *
+     * @param array $words
+     * @param int $caseMode
+     * @param array $expected
+     *
+     * @throws \ReflectionException
+     */
+    public function testChangeWordsCase($words, $caseMode, $expected)
+    {
+        // Disabling constructor without stub methods
+        $mock = $this->getMockBuilder(Gluer::class)
+                     ->disableOriginalConstructor()
+                     ->setMethods(['glueUsingRules'])
+                     ->getMockForAbstractClass();
+
+        // Making public a protected method
+        $reflection = new ReflectionObject($mock);
+        $method     = $reflection->getMethod('changeWordsCase');
+        $method->setAccessible(true);
+        $result = $method->invoke($mock, $words, $caseMode);
+
+        $this->assertSame($expected, $result);
+    }
+
+    public function changeWordsCaseProvider()
+    {
+        return [
+            [[], MB_CASE_LOWER, []],
+            [['hola', 'mundo'], MB_CASE_LOWER, ['hola', 'mundo']],
+            [['hola', 'mundo'], MB_CASE_UPPER, ['HOLA', 'MUNDO']],
+            [['hola', 'mundo'], MB_CASE_TITLE, ['Hola', 'Mundo']],
+            [['HoLa', 'MuNdO'], MB_CASE_LOWER, ['hola', 'mundo']],
+            [['HoLa', 'MuNdO'], MB_CASE_UPPER, ['HOLA', 'MUNDO']],
+            [['HoLa', 'MuNdO'], MB_CASE_TITLE, ['Hola', 'Mundo']],
+        ];
+    }
+
+    /**
+     * @covers       \Jawira\CaseConverter\Gluer::changeFirstWordCase
+     * @dataProvider changeFirstWordCaseProvider
+     *
+     * @param array $words
+     * @param int $caseMode
+     * @param array $expected
+     *
+     * @throws \ReflectionException
+     */
+    public function testChangeFirstWordsCase($words, $caseMode, $expected)
+    {
+        // Disabling constructor without stub methods
+        $mock = $this->getMockBuilder(Gluer::class)
+                     ->disableOriginalConstructor()
+                     ->setMethods(['glueUsingRules'])
+                     ->getMockForAbstractClass();
+
+        // Making public a protected method
+        $reflection = new ReflectionObject($mock);
+        $method     = $reflection->getMethod('changeFirstWordCase');
+        $method->setAccessible(true);
+        $result = $method->invoke($mock, $words, $caseMode);
+
+        $this->assertSame($expected, $result);
+    }
+
+    public function changeFirstWordCaseProvider()
+    {
+        return [
+            [[], MB_CASE_LOWER, []],
+            [['hola', 'mundo'], MB_CASE_LOWER, ['hola', 'mundo']],
+            [['hola', 'mundo'], MB_CASE_UPPER, ['HOLA', 'mundo']],
+            [['hola', 'mundo'], MB_CASE_TITLE, ['Hola', 'mundo']],
+            [['HoLa', 'MuNdO'], MB_CASE_LOWER, ['hola', 'MuNdO']],
+            [['HoLa', 'MuNdO'], MB_CASE_UPPER, ['HOLA', 'MuNdO']],
+            [['HoLa', 'MuNdO'], MB_CASE_TITLE, ['Hola', 'MuNdO']],
+        ];
+    }
 }
