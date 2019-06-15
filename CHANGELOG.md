@@ -4,6 +4,15 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+### Changed
+
+- [#35] Big refactoring in library's structure, user should not notice this changes
+
+### Deprecated
+
+- [#35] \Jawira\CaseConverter\Convert::__toString
+- [#35] \Jawira\CaseConverter\Convert::count
+
 ## [v2.2.0] - 2019-05-30
 
 ### Added
@@ -215,3 +224,5 @@ All notable changes to this project will be documented in this file.
 [#33]: https://github.com/jawira/case-converter/pull/33
 
 [v2.2.0]: https://github.com/jawira/case-converter/compare/v2.1.0...v2.2.0
+
+[#35]: https://github.com/jawira/case-converter/pull/35
