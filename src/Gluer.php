@@ -69,6 +69,10 @@ abstract class Gluer
     {
         assert(in_array($caseMode, [MB_CASE_UPPER, MB_CASE_LOWER, MB_CASE_TITLE]), 'Invalid MultiByte constant');
 
+        if (empty($words)) {
+            return $words;
+        }
+
         $closure = function (string $word) use ($caseMode) {
             return mb_convert_case($word, $caseMode, self::ENCODING);
         };
