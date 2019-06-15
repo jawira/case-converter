@@ -58,6 +58,12 @@
     </exec>
   </target>
 
+  <target name="phpunit:open-coverage" description="Open coverage site" depends="phpunit:run">
+    <exec executable="xdg-open">
+      <arg file="resources/coverage-html/index.html"/>
+    </exec>
+  </target>
+
   <target name="php:lint" description="Check syntax on PHP files">
     <phplint>
       <fileset dir="${project.basedir}">
