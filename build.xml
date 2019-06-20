@@ -192,14 +192,14 @@
     </composer>
   </target>
 
-  <target name="mkdocs:deploy" description="Deploy static site">
+  <target name="mkdocs:deploy" description="Deploy documentation to gh-pages">
     <!--Importing useful documentation-->
     <copy file="./README.md" tofile="./docs/index.md" overwrite="true"/>
     <copy file="./CONTRIBUTING.md" tofile="./docs/contributing.md" overwrite="true"/>
     <copy file="./LICENSE.md" tofile="./docs/license.md" overwrite="true"/>
     <!--README.md should not have relative paths-->
     <exec executable="mkdocs" passthru="true" checkreturn="true">
-      <arg value="serve"/>
+      <arg value="gh-deploy"/>
     </exec>
   </target>
 

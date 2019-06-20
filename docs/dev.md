@@ -4,7 +4,7 @@ Development
 Phing targets
 -------------
 
-![Phing targets](./build.png "Phing targets")
+[![Phing targets](./build.png "Phing targets")](./build.png)
 
 
 - `$ phing setup`: Prepare project for development.

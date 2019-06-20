@@ -148,13 +148,10 @@ TheTerminator
 THE-TERMINATOR
 ```
 
-Contributing
-------------
+Documentation
+-------------
 
-Pull requests are welcome, please [open an issue] before committing.
-
-Good development practices are described in [CONTRIBUTING.md], you are not
-required to follow these rules.
+<https://jawira.github.io/case-converter/>
 
 License
 -------
