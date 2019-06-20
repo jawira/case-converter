@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+### Added
+
+- [#36] Static site with documentation <https://jawira.github.io/case-converter/build.png>
+
 ## [v2.3.0] - 2019-06-15
 
 ### Changed
@@ -207,6 +211,10 @@ SENTENCE, SNAKE, TITLE, TRAIN, UPPER.
 [#26]: https://github.com/jawira/case-converter/pull/26
 [#27]: https://github.com/jawira/case-converter/pull/27
 [#29]: https://github.com/jawira/case-converter/pull/29
+[#31]: https://github.com/jawira/case-converter/pull/31
+[#33]: https://github.com/jawira/case-converter/pull/33
+[#35]: https://github.com/jawira/case-converter/pull/35
+[#36]: https://github.com/jawira/case-converter/pull/36
 [#9]: https://github.com/jawira/case-converter/pull/9
 [v1.0.0]: https://github.com/jawira/case-converter/compare/v0.0.0...v1.0.0
 [v1.0.1]: https://github.com/jawira/case-converter/compare/v1.0.0...v1.0.1
@@ -224,15 +232,6 @@ SENTENCE, SNAKE, TITLE, TRAIN, UPPER.
 [v2.0.2]: https://github.com/jawira/case-converter/compare/v2.0.1...v2.0.2
 [v2.0.3]: https://github.com/jawira/case-converter/compare/v2.0.2...v2.0.3
 [v2.0.4]: https://github.com/jawira/case-converter/compare/v2.0.3...v2.0.4
-
-[#31]: https://github.com/jawira/case-converter/pull/31
-
 [v2.1.0]: https://github.com/jawira/case-converter/compare/v2.0.4...v2.1.0
-
-[#33]: https://github.com/jawira/case-converter/pull/33
-
 [v2.2.0]: https://github.com/jawira/case-converter/compare/v2.1.0...v2.2.0
-
-[#35]: https://github.com/jawira/case-converter/pull/35
-
 [v2.3.0]: https://github.com/jawira/case-converter/compare/v2.2.0...v2.3.0

@@ -18,8 +18,12 @@
           depends="composer:install-dev, phive:install, cc:get"/>
 
   <target name="qa"
-          description="Quality assurance"
+          description="Run quality tests"
           depends="php:lint, composer:validate, phpunit:run, behat:run, phpstan:run, phploc:run"/>
+
+  <target name="refresh"
+          description="Update generated files"
+          depends="changelog:links, phing:visualize, plantuml:parse-docs"/>
 
   <target name="phploc:run">
     <exec executable="bin/phploc" checkreturn="true" outputProperty="phploc.results">
@@ -41,7 +45,7 @@
   </target>
 
   <target name="composer:install-dev">
-    <composer composer="bin/composer" command="install">
+    <composer command="install">
       <arg value="--no-suggest"/>
       <arg value="--no-interaction"/>
       <arg value="--profile"/>
@@ -172,6 +176,30 @@
     <exec executable="git" passthru="true">
       <arg value="log"/>
       <arg line="--graph --all --decorate --oneline --simplify-by-decoration"/>
+    </exec>
+  </target>
+
+  <target name="phing:visualize" description="Update build.png">
+    <composer command="require">
+      <arg value="jawira/phing-visualizer"/>
+    </composer>
+    <exec executable="vendor/bin/phing-visualizer">
+      <arg line="--output"/>
+      <arg file="./docs/build.png"/>
+    </exec>
+    <composer command="remove">
+      <arg value="jawira/phing-visualizer"/>
+    </composer>
+  </target>
+
+  <target name="mkdocs:deploy" description="Deploy documentation to gh-pages">
+    <!--Importing useful documentation-->
+    <copy file="./README.md" tofile="./docs/index.md" overwrite="true"/>
+    <copy file="./CONTRIBUTING.md" tofile="./docs/contributing.md" overwrite="true"/>
+    <copy file="./LICENSE.md" tofile="./docs/license.md" overwrite="true"/>
+    <!--README.md should not have relative paths-->
+    <exec executable="mkdocs" passthru="true" checkreturn="true">
+      <arg value="gh-deploy"/>
     </exec>
   </target>
 

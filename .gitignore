@@ -19,3 +19,9 @@
 /resources/phploc.txt
 /resources/coverage-html/
 /bin/phpcs
+/site/
+/docs/CONTRIBUTING.md
+/docs/index.md
+/docs/LICENSE.md
+/docs/license.md
+/docs/contributing.md

@@ -1,0 +1,8 @@
+site_name: Case Converter
+site_author: Jawira Portugal
+copyright: MIT
+theme:
+  name: readthedocs
+  highlightjs: true
+use_directory_urls: false
+strict: true
