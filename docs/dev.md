@@ -26,3 +26,14 @@ This project adheres to:
 - [Semantic Versioning](http://semver.org/)
 - [Keep a changelog](http://keepachangelog.com/en/1.0.0/)
 - [pds/skeleton](https://github.com/php-pds/skeleton)
+
+Phing
+-----
+
+To use Phing tasks you need to previously install:
+
+- [Phive]
+- [mkdocs]
+
+[Phive]: https://phar.io/
+[mkdocs]: https://www.mkdocs.org/#installation

@@ -123,31 +123,6 @@ Then import `Convert` class into your code:
 use Jawira\CaseConverter\Convert;
 ```
 
-Full example
-------------
-
-```php
-<?php declare(strict_types=1);
-
-namespace Demo;
-
-require __DIR__ . '/vendor/autoload.php';
-
-use Jawira\CaseConverter\Convert;
-
-$robot = new Convert('The-Terminator');
-
-echo $robot->toPascal() . PHP_EOL;
-echo $robot->toCobol() . PHP_EOL;
-```
-
-Output:
-
-```text
-TheTerminator
-THE-TERMINATOR
-```
-
 Documentation
 -------------
 
