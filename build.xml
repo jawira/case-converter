@@ -204,20 +204,24 @@
   </target>
 
   <target name="mkdocs:build-n-serve" description="Generate and open static site">
-    <!--Importing useful documentation-->
+    <!--Importing documentation-->
+    <!--*.md files should not have relative paths-->
     <copy file="./README.md" tofile="./docs/index.md" overwrite="true"/>
     <copy file="./CONTRIBUTING.md" tofile="./docs/contributing.md" overwrite="true"/>
     <copy file="./LICENSE.md" tofile="./docs/license.md" overwrite="true"/>
-    <!--README.md should not have relative paths-->
     <exec executable="mkdocs" passthru="true" checkreturn="true">
       <arg value="build"/>
     </exec>
-    <exec executable="mkdocs" passthru="true" checkreturn="true">
-      <arg value="serve"/>
-    </exec>
-    <exec executable="xdg-open" passthru="true" checkreturn="true">
-      <arg value="http://127.0.0.1:8000/"/>
-    </exec>
+    <parallel threadCount="2">
+      <exec executable="mkdocs" passthru="true" checkreturn="true" >
+        <arg value="serve"/>
+      </exec>
+      <sleep seconds="2"/>
+      <exec executable="xdg-open" passthru="true" checkreturn="true">
+        <!--Please F5 after some seconds-->
+        <arg value="http://127.0.0.1:8000/"/>
+      </exec>
+    </parallel>
   </target>
 
 </project>
