@@ -216,7 +216,6 @@
       <exec executable="mkdocs" passthru="true" checkreturn="true" >
         <arg value="serve"/>
       </exec>
-      <sleep seconds="2"/>
       <exec executable="xdg-open" passthru="true" checkreturn="true">
         <!--Please F5 after some seconds-->
         <arg value="http://127.0.0.1:8000/"/>
