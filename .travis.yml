@@ -1,7 +1,9 @@
-language: php
+language: "php"
 
 php:
-  - 7.1.18
+  - "7.1.18"
+  - "7.2.17"
+  - "7.3"
 
 before_install:
   - '#### Installing Phive ####'
@@ -29,6 +31,6 @@ after_script:
 
 cache:
   directories:
-    - /home/travis/.cache/composer
-    - /home/travis/.phive
-    - /home/travis/.gnupg
+    - $HOME/.cache/composer
+    - $HOME/.phive
+    - $HOME/.gnupg
