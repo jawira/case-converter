@@ -10,6 +10,14 @@ Phing targets
 - `$ phing qa`: Run quality tests, use this before every commit.
 - `$ phing refresh`: Update generated files (changelog, images, etc).
 
+Dev requirements
+----------------
+
+To use Phing tasks you need to previously install:
+
+- [Phive]
+- [mkdocs]
+
 Using Phing behind a proxy
 --------------------------
 
@@ -26,13 +34,6 @@ This project adheres to:
 - [Keep a changelog]
 - [pds/skeleton]
 
-Phing
------
-
-To use Phing tasks you need to previously install:
-
-- [Phive]
-- [mkdocs]
 
 [git-flow]: https://github.com/petervanderdoes/gitflow-avh
 [Keep a changelog]: http://keepachangelog.com/en/1.0.0/

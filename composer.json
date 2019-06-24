@@ -1,6 +1,7 @@
 {
   "name": "jawira/case-converter",
   "type": "library",
+  "homepage": "https://jawira.github.io/case-converter/",
   "description": "Convert strings between 12 naming conventions: Snake case, Camel case, Pascal case, Kebab case, Ada case, Train case, Cobol case, Macro case, Upper case, Lower case, Sentence case, and Title case.",
   "keywords": [
     "Ada case",
