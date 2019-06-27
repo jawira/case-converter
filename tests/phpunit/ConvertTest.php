@@ -1,23 +1,23 @@
 <?php
 
-use Jawira\CaseConverter\AdaCase;
-use Jawira\CaseConverter\CamelCase;
-use Jawira\CaseConverter\CobolCase;
 use Jawira\CaseConverter\Convert;
-use Jawira\CaseConverter\DashSplitter;
-use Jawira\CaseConverter\Gluer;
-use Jawira\CaseConverter\KebabCase;
-use Jawira\CaseConverter\LowerCase;
-use Jawira\CaseConverter\MacroCase;
-use Jawira\CaseConverter\PascalCase;
-use Jawira\CaseConverter\SentenceCase;
-use Jawira\CaseConverter\SnakeCase;
-use Jawira\CaseConverter\SpaceSplitter;
-use Jawira\CaseConverter\TitleCase;
-use Jawira\CaseConverter\TrainCase;
-use Jawira\CaseConverter\UnderscoreSplitter;
-use Jawira\CaseConverter\UpperCase;
-use Jawira\CaseConverter\UppercaseSplitter;
+use Jawira\CaseConverter\Glue\AdaCase;
+use Jawira\CaseConverter\Glue\CamelCase;
+use Jawira\CaseConverter\Glue\CobolCase;
+use Jawira\CaseConverter\Glue\Gluer;
+use Jawira\CaseConverter\Glue\KebabCase;
+use Jawira\CaseConverter\Glue\LowerCase;
+use Jawira\CaseConverter\Glue\MacroCase;
+use Jawira\CaseConverter\Glue\PascalCase;
+use Jawira\CaseConverter\Glue\SentenceCase;
+use Jawira\CaseConverter\Glue\SnakeCase;
+use Jawira\CaseConverter\Glue\TitleCase;
+use Jawira\CaseConverter\Glue\TrainCase;
+use Jawira\CaseConverter\Glue\UpperCase;
+use Jawira\CaseConverter\Split\DashSplitter;
+use Jawira\CaseConverter\Split\SpaceSplitter;
+use Jawira\CaseConverter\Split\UnderscoreSplitter;
+use Jawira\CaseConverter\Split\UppercaseSplitter;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -102,7 +102,7 @@ class ConvertTest extends TestCase
      * \Jawira\CaseConverter\Convert::analyse should return Convert::SNAKE if $input contains '_'.
      *
      * @covers       \Jawira\CaseConverter\Convert::analyse
-     * @covers       \Jawira\CaseConverter\Splitter::__construct
+     * @covers       \Jawira\CaseConverter\Split\Splitter::__construct
      *
      * @dataProvider analyseProvider
      *
@@ -198,7 +198,7 @@ class ConvertTest extends TestCase
                     ->method('factory')
                     ->willReturn($namingConvention);
 
-        /** @var \Jawira\CaseConverter\Gluer $convertMock */
+        /** @var \Jawira\CaseConverter\Glue\Gluer $convertMock */
         $returned = $convertMock->$methodName();
         $this->assertSame($expected, $returned);
     }
@@ -353,7 +353,7 @@ class ConvertTest extends TestCase
 
     /**
      * @covers       \Jawira\CaseConverter\Convert::factory
-     * @covers       \Jawira\CaseConverter\Gluer::__construct
+     * @covers       \Jawira\CaseConverter\Glue\Gluer::__construct
      * @dataProvider factoryProvider
      *
      * @param string $className

@@ -4,6 +4,27 @@ namespace Jawira\CaseConverter;
 
 use Countable;
 use function count;
+use Jawira\CaseConverter\Glue\AdaCase;
+use Jawira\CaseConverter\Glue\CamelCase;
+use Jawira\CaseConverter\Glue\CobolCase;
+use Jawira\CaseConverter\Glue\DashGluer;
+use Jawira\CaseConverter\Glue\Gluer;
+use Jawira\CaseConverter\Glue\KebabCase;
+use Jawira\CaseConverter\Glue\LowerCase;
+use Jawira\CaseConverter\Glue\MacroCase;
+use Jawira\CaseConverter\Glue\PascalCase;
+use Jawira\CaseConverter\Glue\SentenceCase;
+use Jawira\CaseConverter\Glue\SnakeCase;
+use Jawira\CaseConverter\Glue\SpaceGluer;
+use Jawira\CaseConverter\Glue\TitleCase;
+use Jawira\CaseConverter\Glue\TrainCase;
+use Jawira\CaseConverter\Glue\UnderscoreGluer;
+use Jawira\CaseConverter\Glue\UpperCase;
+use Jawira\CaseConverter\Split\DashSplitter;
+use Jawira\CaseConverter\Split\SpaceSplitter;
+use Jawira\CaseConverter\Split\Splitter;
+use Jawira\CaseConverter\Split\UnderscoreSplitter;
+use Jawira\CaseConverter\Split\UppercaseSplitter;
 use function mb_strpos;
 use function preg_match;
 use const COUNT_NORMAL;
@@ -75,7 +96,7 @@ class Convert implements Countable
      *
      * @param string $input String to be analysed
      *
-     * @return \Jawira\CaseConverter\Splitter
+     * @return \Jawira\CaseConverter\Split\Splitter
      * @throws \Jawira\CaseConverter\CaseConverterException
      */
     protected function analyse(string $input): Splitter
@@ -153,7 +174,7 @@ class Convert implements Countable
      *
      * @param string $className Class name
      *
-     * @return \Jawira\CaseConverter\Gluer
+     * @return \Jawira\CaseConverter\Glue\Gluer
      */
     protected function factory(string $className): Gluer
     {

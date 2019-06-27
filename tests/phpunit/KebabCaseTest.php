@@ -1,12 +1,12 @@
 <?php
 
-use Jawira\CaseConverter\KebabCase;
+use Jawira\CaseConverter\Glue\KebabCase;
 use PHPUnit\Framework\TestCase;
 
 class KebabCaseTest extends TestCase
 {
     /**
-     * @covers \Jawira\CaseConverter\KebabCase::glue
+     * @covers \Jawira\CaseConverter\Glue\KebabCase::glue
      */
     public function testGlue()
     {
@@ -22,7 +22,7 @@ class KebabCaseTest extends TestCase
              ->with(KebabCase::DELIMITER, MB_CASE_LOWER)
              ->willReturn('e1bfd762321e409cee4ac0b6e841963c');
 
-        /** @var \Jawira\CaseConverter\KebabCase $mock */
+        /** @var \Jawira\CaseConverter\Glue\KebabCase $mock */
         $returned = $mock->glue();
         $this->assertSame('e1bfd762321e409cee4ac0b6e841963c', $returned, 'Returned value is not the expected');
     }

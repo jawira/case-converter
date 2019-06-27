@@ -1,12 +1,12 @@
 <?php
 
-use Jawira\CaseConverter\CobolCase;
+use Jawira\CaseConverter\Glue\CobolCase;
 use PHPUnit\Framework\TestCase;
 
 class CobolCaseTest extends TestCase
 {
     /**
-     * @covers \Jawira\CaseConverter\CobolCase::glue
+     * @covers \Jawira\CaseConverter\Glue\CobolCase::glue
      */
     public function testGlue()
     {
