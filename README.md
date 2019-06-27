@@ -3,18 +3,20 @@ Case converter
 
 Use this library to convert string between:
 
-1. 🐪 Camel case
-1. 🐍 Snake case
-1. 👨‍🏫 Pascal case
-1. 👩‍🏫 Ada case
-1. Ⓜ️ Macro case
-1. 🥙 Kebab case
-1. 🚆 Train case
-1. 🏦 Cobol case
-1. 🔠 Upper case
-1. 🔡 Lower case
-1. 📰 Title case
-1. ✍️ Sentence case
+| Name          | Method          | Output example    |
+| ------------- | --------------- | ----------------- |
+| 🐪 Camel case   | `toCamel()`     | `myNameIsBond`    |
+| 👨‍🏫 Pascal case  | `toPascal()`    | `MyNameIsBond`    |
+| 🐍 Snake case   | `toSnake()`     | `my_name_is_bond` |
+| 👩‍🏫 Ada case     | `toAda()`       | `My_Name_Is_Bond` |
+| Ⓜ️ Macro case | `toMacro()`     | `MY_NAME_IS_BOND` |
+| 🥙 Kebab case   | `toKebab()`     | `my-name-is-bond` |
+| 🚂 Train case   | `toTrain()`     | `My-Name-Is-Bond` |
+| 🏦 Cobol case   | `toCobol()`     | `MY-NAME-IS-BOND` |
+| 🔡 Lower case   | `toLower()`     | `my name is bond` |
+| 🔠 Upper case   | `toUpper()`     | `MY NAME IS BOND` |
+| 📰 Title case     | `toTitle()`     | `My Name Is Bond` |
+| ✍️ Sentence case | `toSentence()`  | `My name is bond` |
 
 Features:
 
@@ -54,25 +56,7 @@ Usage
     echo $son->toCamel();   // output: johnConnor
     echo $son->toSnake();   // output: john_connor
     ```
-
-Supported naming conventions
-----------------------------
-
-| Method          | Description   | Output example    |
-| --------------- | ------------- | ----------------- |
-| `toCamel()`     | Camel case    | `myNameIsBond`    |
-| `toPascal()`    | Pascal case   | `MyNameIsBond`    |
-| `toKebab()`     | Kebab case    | `my-name-is-bond` |
-| `toTrain()`     | Train case    | `My-Name-Is-Bond` |
-| `toCobol()`     | Cobol case    | `MY-NAME-IS-BOND` |
-| `toSnake()`     | Snake case    | `my_name_is_bond` |
-| `toAda()`       | Ada case      | `My_Name_Is_Bond` |
-| `toMacro()`     | Macro case    | `MY_NAME_IS_BOND` |
-| `toUpper()`     | Upper case    | `MY NAME IS BOND` |
-| `toLower()`     | Lower case    | `my name is bond` |
-| `toTitle()`     | Title case    | `My Name Is Bond` |
-| `toSentence()`  | Sentence case | `My name is bond` |
-
+    
 Utility methods
 ---------------
 
@@ -99,14 +83,6 @@ $rus = new Convert('ОЧЕНЬ_ПРИЯТНО');
 echo $rus->toCamel();   // output: оченьПриятно
 ```
 
-Notes
------
-
-* You must use _UTF-8_ encoding.
-* Magic function `__toString` will always print string in _Camel case_ format.
-* Input strings are not supposed to have numbers in it. If you need to handle
-  numbers then please [open an issue].
-
 Installation
 ------------
 
@@ -114,38 +90,6 @@ Install using Composer:
 
 ```console
 composer require jawira/case-converter
-```
-
-Then import `Convert` class into your code:
-
-```php
-<?php
-use Jawira\CaseConverter\Convert;
-```
-
-Full example
-------------
-
-```php
-<?php declare(strict_types=1);
-
-namespace Demo;
-
-require __DIR__ . '/vendor/autoload.php';
-
-use Jawira\CaseConverter\Convert;
-
-$robot = new Convert('The-Terminator');
-
-echo $robot->toPascal() . PHP_EOL;
-echo $robot->toCobol() . PHP_EOL;
-```
-
-Output:
-
-```text
-TheTerminator
-THE-TERMINATOR
 ```
 
 Documentation

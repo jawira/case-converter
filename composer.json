@@ -1,6 +1,7 @@
 {
   "name": "jawira/case-converter",
   "type": "library",
+  "homepage": "https://jawira.github.io/case-converter/",
   "description": "Convert strings between 12 naming conventions: Snake case, Camel case, Pascal case, Kebab case, Ada case, Train case, Cobol case, Macro case, Upper case, Lower case, Sentence case, and Title case.",
   "keywords": [
     "Ada case",
@@ -29,7 +30,8 @@
     "ext-mbstring": "*"
   },
   "suggest": {
-    "pds/skeleton": "PHP Package Development Standards"
+    "pds/skeleton": "PHP Package Development Standards",
+    "phing/phing": "PHP Build Tool"
   },
   "autoload": {
     "psr-4": {
