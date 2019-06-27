@@ -7,6 +7,9 @@ use function assert;
 use function implode;
 use function in_array;
 use function mb_convert_case;
+use const MB_CASE_LOWER;
+use const MB_CASE_TITLE;
+use const MB_CASE_UPPER;
 
 abstract class Gluer
 {
