@@ -92,13 +92,6 @@ Install using Composer:
 composer require jawira/case-converter
 ```
 
-Then import `Convert` class into your code:
-
-```php
-<?php
-use Jawira\CaseConverter\Convert;
-```
-
 Documentation
 -------------
 

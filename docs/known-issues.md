@@ -39,7 +39,7 @@ case-mapping and after _PHP 7.3_ perform full case-mapping.
 
 If you want to maintain the old functionality after _PHP 7.3_, then you have to 
 use `MB_CASE_LOWER_SIMPLE`, `MB_CASE_UPPER_SIMPLE`, and `MB_CASE_TITLE_SIMPLE`. 
-Of course these variables doesnt exist before _PHP 7.3_.
+Of course these variables doesnt exist yet before _PHP 7.3_.
 
 IMHO this is a _breaking change_, PHP people should have keep untouched old 
 constants and create new ones for [full case-mapping], for example: 
