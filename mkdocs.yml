@@ -1,6 +1,6 @@
 site_name: 'Case Converter'
 site_author: 'Jawira Portugal'
-copyright: '© The MIT License (MIT) 2'
+copyright: 'The MIT License (MIT)'
 theme:
   name: 'readthedocs'
   highlightjs: true

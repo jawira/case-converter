@@ -27,4 +27,24 @@ echo $german->toUpper();
 // Produces STRASSE on PHP 7.3
 ```
 
+Internally `Case-Converter` uses [mb_convert_case()], this function uses the 
+following constants:
+
+- MB_CASE_LOWER
+- MB_CASE_TITLE
+- MB_CASE_UPPER
+
+The problem is that, Before _PHP 7.3_, these constants perform simple 
+case-mapping and after _PHP 7.3_ perform full case-mapping.
+
+If you want to maintain the old functionality after _PHP 7.3_, then you have to 
+use `MB_CASE_LOWER_SIMPLE`, `MB_CASE_UPPER_SIMPLE`, and `MB_CASE_TITLE_SIMPLE`. 
+Of course these variables doesnt exist before _PHP 7.3_.
+
+IMHO this is a _breaking change_, PHP people should have keep untouched old 
+constants and create new ones for [full case-mapping], for example: 
+`MB_CASE_LOWER_FULL`, `MB_CASE_TITLE_FULL`, and `MB_CASE_UPPER_FULL` (please 
+note these variables do not exist). 
+
 [full case-mapping]: https://www.php.net/manual/en/migration73.new-features.php#migration73.new-features.mbstring.case-mapping-folding
+[mb_convert_case()]: https://www.php.net/manual/en/function.mb-convert-case.php
