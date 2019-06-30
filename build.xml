@@ -191,9 +191,9 @@
       <arg line="--output"/>
       <arg file="./docs/build.png"/>
     </exec>
-<!--    <composer command="remove">-->
-<!--      <arg value="jawira/phing-visualizer"/>-->
-<!--    </composer>-->
+    <composer command="remove">
+      <arg value="jawira/phing-visualizer"/>
+    </composer>
   </target>
 
   <target name="umlwriter:run" description="Generate Class diagram">

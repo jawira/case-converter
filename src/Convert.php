@@ -3,7 +3,6 @@
 namespace Jawira\CaseConverter;
 
 use Countable;
-use function count;
 use Jawira\CaseConverter\Glue\AdaCase;
 use Jawira\CaseConverter\Glue\CamelCase;
 use Jawira\CaseConverter\Glue\CobolCase;
@@ -25,6 +24,8 @@ use Jawira\CaseConverter\Split\SpaceSplitter;
 use Jawira\CaseConverter\Split\Splitter;
 use Jawira\CaseConverter\Split\UnderscoreSplitter;
 use Jawira\CaseConverter\Split\UppercaseSplitter;
+use function count;
+use function is_subclass_of;
 use function mb_strpos;
 use function preg_match;
 use const COUNT_NORMAL;
@@ -47,12 +48,31 @@ use const COUNT_NORMAL;
  * - Train case
  * - Upper case
  *
+ * @method self fromCamel() Treat input string as Camel case
+ * @method self fromPascal() Treat input string as Pascal case
+ * @method self fromSnake() Treat input string as Snake case
+ * @method self fromAda() Treat input string as Ada case
+ * @method self fromMacro() Treat input string as Macro case
+ * @method self fromKebab() Treat input string as Kebab case
+ * @method self fromTrain() Treat input string as Train case
+ * @method self fromCobol() Treat input string as Cobol case
+ * @method self fromLower() Treat input string as Lower case
+ * @method self fromUpper() Treat input string as Upper case
+ * @method self fromTitle() Treat input string as Title case
+ * @method self fromSentence() Treat input string as Sentence case
+ *
  * @see     https://softwareengineering.stackexchange.com/questions/322413/bothered-by-an-unknown-letter-case-name
+ * @see     http://www.unicode.org/charts/case/
  * @package Jawira\CaseConverter
  * @author  Jawira Portugal <dev@tugal.be>
  */
 class Convert implements Countable
 {
+    /**
+     * @var string Input string to convert
+     */
+    protected $originalString;
+
     /**
      * @var string[] Words extracted from input string
      */
@@ -67,26 +87,20 @@ class Convert implements Countable
      */
     public function __construct(string $input)
     {
-        $this->extractWords($input);
+        $this->originalString = $input;
+        $this->fromAuto();
     }
 
     /**
-     * Main function, receives input string and then it stores extracted words into an array.
+     * Auto-detect naming convention
      *
-     * @param string $input
-     *
-     * @return $this
+     * @return \Jawira\CaseConverter\Convert
      * @throws \Jawira\CaseConverter\CaseConverterException
      */
-    protected function extractWords(string $input): self
+    public function fromAuto(): self
     {
-        $strategy = $this->analyse($input);
-
-        if (!is_subclass_of($strategy, Splitter::class)) {
-            throw new CaseConverterException('Unknown naming convention'); // @codeCoverageIgnore
-        }
-
-        $this->words = $strategy->split();
+        $strategy = $this->analyse($this->originalString);
+        $this->extractWords($strategy);
 
         return $this;
     }
@@ -140,6 +154,65 @@ class Convert implements Countable
         }
 
         return $match === 1;
+    }
+
+    /**
+     * Main function, receives input string and then it stores extracted words into an array.
+     *
+     * @param \Jawira\CaseConverter\Split\Splitter $splitter
+     *
+     * @return $this
+     */
+    protected function extractWords(Splitter $splitter): self
+    {
+        assert(is_subclass_of($splitter, Splitter::class), 'Unknown naming convention');
+
+        $this->words = $splitter->split();
+
+        return $this;
+    }
+
+    /**
+     * Methods to explicitly define naming conventions for input string
+     *
+     * @param string $methodName
+     * @param array  $arguments
+     *
+     * @return $this
+     * @throws \Jawira\CaseConverter\CaseConverterException
+     */
+    public function __call($methodName, $arguments): self
+    {
+        $strategy = null;
+        switch ($methodName) {
+            case 'fromCamel':
+            case 'fromPascal':
+                $strategy = new UppercaseSplitter($this->originalString);
+                break;
+            case 'fromSnake':
+            case 'fromAda':
+            case 'fromMacro':
+                $strategy = new UnderscoreSplitter($this->originalString);
+                break;
+            case 'fromKebab':
+            case 'fromTrain':
+            case 'fromCobol':
+                $strategy = new DashSplitter($this->originalString);
+                break;
+            case 'fromLower':
+            case 'fromUpper':
+            case 'fromTitle':
+            case 'fromSentence':
+                $strategy = new SpaceSplitter($this->originalString);
+                break;
+            default:
+                throw new CaseConverterException("Unknown method: $methodName");
+                break;
+        }
+
+        $this->extractWords($strategy);
+
+        return $this;
     }
 
     /**

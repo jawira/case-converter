@@ -38,31 +38,52 @@ Features:
 [![PDS Skeleton](https://img.shields.io/badge/pds-skeleton-blue.svg)](https://github.com/php-pds/skeleton)
 [![Issues](https://img.shields.io/github/issues/jawira/case-converter.svg?label=HuBoard&color=694DC2)](https://huboard.com/jawira/case-converter)
 
+Installation
+------------
+
+```console
+$ composer require jawira/case-converter
+```
+
 Usage
 -----
 
-1. Instantiate `Convert` class with the string to transform:
+```php
+use Jawira\CaseConverter\Convert;
 
-    ```php
-    $son = new Convert('john-connor');
-    ```
+$hero = new Convert('john-connor');
 
-    Note: Input string (i.e. _john-connor_) format is going to be detected
-    automatically.
+echo $hero->toCamel();   // output: johnConnor
+echo $hero->toSnake();   // output: john_connor
+```
 
-2. Then use the right method to convert the string accordingly to your needs:
+Note: Input string (i.e. _john-connor_) format is going to be detected automatically.
 
-    ```php
-    echo $son->toCamel();   // output: johnConnor
-    echo $son->toSnake();   // output: john_connor
-    ```
-    
+Explicit case detection
+-----------------------
+
+| Method            | Description                                         |
+| ----------------- | --------------------------------------------------- |
+| `fromAuto()`      | (default) Auto-detect naming convention             |
+| `fromCamel()`     | Split input string using uppercase characters       | 
+| `fromPascal()`    | Split input string using uppercase characters       |
+| `fromSnake()`     | Split input string using `_` (underscore character) |
+| `fromAda()`       | Split input string using `_` (underscore character) |
+| `fromMacro()`     | Split input string using `_` (underscore character) |
+| `fromKebab()`     | Split input string using `-` (dash character)       |
+| `fromTrain()`     | Split input string using `-` (dash character)       |
+| `fromCobol()`     | Split input string using `-` (dash character)       |
+| `fromLower()`     | Split input string using `␣` (space character)      |
+| `fromUpper()`     | Split input string using `␣` (space character)      |
+| `fromTitle()`     | Split input string using `␣` (space character)      |
+| `fromSentence()`  | Split input string using `␣` (space character)      |
+
 Utility methods
 ---------------
 
-| Method          | Description                                   | Output example                  |
-| --------------- | --------------------------------------------- | ------------------------------- |
-| `toArray()`     | Get array with detected words                 | `['my', 'name', 'is', 'bond']`  | 
+| Method          | Description                     | Output example                  |
+| --------------- | ------------------------------- | ------------------------------- |
+| `toArray()`     | Get array with detected words   | `['my', 'name', 'is', 'bond']`  | 
 
 i18n
 ----
@@ -81,15 +102,6 @@ echo $grc->toCamel();   // output: πολύΚαλό
 // Russian
 $rus = new Convert('ОЧЕНЬ_ПРИЯТНО');
 echo $rus->toCamel();   // output: оченьПриятно
-```
-
-Installation
-------------
-
-Install using Composer:
-
-```console
-composer require jawira/case-converter
 ```
 
 Documentation

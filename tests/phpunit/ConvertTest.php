@@ -40,13 +40,12 @@ class ConvertTest extends TestCase
         // Disable constructor mocking one method
         $mock = $this->getMockBuilder(Convert::class)
                      ->disableOriginalConstructor()
-                     ->setMethods(['extractWords'])
+                     ->setMethods(['fromAuto'])
                      ->getMock();
 
         // Configuring stub
         $mock->expects($this->once())
-             ->method('extractWords')
-             ->with($this->equalTo('hello_world'));
+             ->method('fromAuto');
 
         $class = new ReflectionObject($mock);
         $class->getConstructor()
@@ -287,14 +286,17 @@ class ConvertTest extends TestCase
     }
 
     /**
-     * @covers Jawira\CaseConverter\Convert::extractWords
+     * @covers       Jawira\CaseConverter\Convert::extractWords
+     * @dataProvider extractWordsProviders
+     *
+     * @param $splitterClass
      *
      * @throws \ReflectionException
      */
-    public function testExtractWords()
+    public function testExtractWords($splitterClass)
     {
         // Preparing Splitter object
-        $splitterMock = $this->getMockBuilder(DashSplitter::class)
+        $splitterMock = $this->getMockBuilder($splitterClass)
                              ->disableOriginalConstructor()
                              ->setMethods(['split'])
                              ->getMock();
@@ -307,22 +309,32 @@ class ConvertTest extends TestCase
         // Preparing Convert object
         $convertMock = $this->getMockBuilder(Convert::class)
                             ->disableOriginalConstructor()
-                            ->setMethods(['analyse'])
+                            ->setMethods([])
                             ->getMock();
-
-        $convertMock->expects($this->once())
-                    ->method('analyse')
-                    ->with('dummy-value')
-                    ->will($this->returnValue($splitterMock));
 
         // Calling protected method
         $reflection = new ReflectionObject($convertMock);
         $method     = $reflection->getMethod('extractWords');
         $method->setAccessible(true);
-        $result = $method->invoke($convertMock, 'dummy-value');
+        $result = $method->invoke($convertMock, $splitterMock);
 
         $this->assertAttributeEquals(['dummy', 'array'], 'words', $convertMock);
         $this->assertInstanceOf(Convert::class, $result);
+    }
+
+    /**
+     * Returns all valid splitters that can be used by Convert::extractWords()
+     *
+     * @return array
+     */
+    public function extractWordsProviders()
+    {
+        return [
+            [SpaceSplitter::class],
+            [DashSplitter::class],
+            [UnderscoreSplitter::class],
+            [UppercaseSplitter::class],
+        ];
     }
 
     /**
