@@ -18,8 +18,12 @@
           depends="composer:install-dev, phive:install, cc:get"/>
 
   <target name="qa"
-          description="Quality assurance"
+          description="Run quality tests"
           depends="php:lint, composer:validate, phpunit:run, behat:run, phpstan:run, phploc:run"/>
+
+  <target name="refresh"
+          description="Update generated files"
+          depends="changelog:links, phing:visualize, plantuml:parse-docs"/>
 
   <target name="phploc:run">
     <exec executable="bin/phploc" checkreturn="true" outputProperty="phploc.results">
@@ -41,7 +45,7 @@
   </target>
 
   <target name="composer:install-dev">
-    <composer composer="bin/composer" command="install">
+    <composer command="install">
       <arg value="--no-suggest"/>
       <arg value="--no-interaction"/>
       <arg value="--profile"/>
@@ -173,6 +177,74 @@
       <arg value="log"/>
       <arg line="--graph --all --decorate --oneline --simplify-by-decoration"/>
     </exec>
+  </target>
+
+  <target name="phing:visualize" description="Update build.png">
+    <composer command="require">
+      <arg value="jawira/phing-visualizer"/>
+    </composer>
+    <exec executable="export">
+      <!-- http://plantuml.com/faq -->
+      <arg value="PLANTUML_LIMIT_SIZE=1000"/>
+    </exec>
+    <exec executable="vendor/bin/phing-visualizer">
+      <arg line="--output"/>
+      <arg file="./docs/build.png"/>
+    </exec>
+    <composer command="remove">
+      <arg value="jawira/phing-visualizer"/>
+    </composer>
+  </target>
+
+  <target name="umlwriter:run" description="Generate Class diagram">
+    <composer command="require">
+      <arg value="bartlett/php-reflect"/>
+      <arg value="bartlett/umlwriter"/>
+    </composer>
+
+    <exec executable="vendor/bin/umlwriter" output="docs/classes.puml">
+      <arg line="diagram:render"/>
+      <arg value="--processor=plantuml"/>
+      <arg path="src"/>
+    </exec>
+
+    <composer command="remove">
+      <arg value="bartlett/php-reflect"/>
+      <arg value="bartlett/umlwriter"/>
+    </composer>
+  </target>
+
+  <target name="mkdocs:deploy"
+          description="Deploy documentation to gh-pages"
+          depends="mkdocs:copy-docs, plantuml:parse-docs, phing:visualize">
+    <exec executable="mkdocs" passthru="true" checkreturn="true">
+      <arg value="gh-deploy"/>
+    </exec>
+  </target>
+
+  <target name="mkdocs:build-n-serve"
+          description="Generate and open static site"
+          depends="mkdocs:copy-docs, plantuml:parse-docs, phing:visualize">
+    <!--Importing documentation-->
+    <exec executable="mkdocs" passthru="true" checkreturn="true">
+      <arg value="build"/>
+    </exec>
+    <parallel threadCount="2">
+      <exec executable="mkdocs" passthru="true" checkreturn="true">
+        <arg value="serve"/>
+      </exec>
+      <exec executable="xdg-open" passthru="true" checkreturn="true">
+        <!--Please F5 after some seconds-->
+        <arg value="http://127.0.0.1:8000/"/>
+      </exec>
+    </parallel>
+  </target>
+
+  <target name="mkdocs:copy-docs" description="Copy md files from root to docs dir">
+    <!--*.md files should not have relative paths-->
+    <copy file="./README.md" tofile="./docs/index.md" overwrite="true"/>
+    <copy file="./CONTRIBUTING.md" tofile="./docs/contributing.md" overwrite="true"/>
+    <copy file="./LICENSE.md" tofile="./docs/license.md" overwrite="true"/>
   </target>
 
 </project>

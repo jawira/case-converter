@@ -1,12 +1,12 @@
 <?php
 
-use Jawira\CaseConverter\SpaceSplitter;
+use Jawira\CaseConverter\Split\SpaceSplitter;
 use PHPUnit\Framework\TestCase;
 
 class SpaceSplitterTest extends TestCase
 {
     /**
-     * @covers \Jawira\CaseConverter\SpaceSplitter::split
+     * @covers \Jawira\CaseConverter\Split\SpaceSplitter::split
      * @throws \ReflectionException
      */
     public function testSplit()
@@ -29,7 +29,7 @@ class SpaceSplitterTest extends TestCase
              ->with('dummyString', ' +')
              ->willReturn(['dummy', 'array']);
 
-        /** @var \Jawira\CaseConverter\SpaceSplitter $mock */
+        /** @var \Jawira\CaseConverter\Split\SpaceSplitter $mock */
         $returned = $mock->split();
         $this->assertSame(['dummy', 'array'], $returned);
     }

@@ -1,12 +1,12 @@
 <?php
 
-use Jawira\CaseConverter\UnderscoreSplitter;
+use Jawira\CaseConverter\Split\UnderscoreSplitter;
 use PHPUnit\Framework\TestCase;
 
 class UnderscoreSplitterTest extends TestCase
 {
     /**
-     * @covers \Jawira\CaseConverter\UnderscoreSplitter::split
+     * @covers \Jawira\CaseConverter\Split\UnderscoreSplitter::split
      * @throws \ReflectionException
      */
     public function testSplit()
@@ -29,7 +29,7 @@ class UnderscoreSplitterTest extends TestCase
              ->with('dummyString', '_+')
              ->willReturn(['dummy', 'array']);
 
-        /** @var \Jawira\CaseConverter\UnderscoreSplitter $mock */
+        /** @var \Jawira\CaseConverter\Split\UnderscoreSplitter $mock */
         $returned = $mock->split();
         $this->assertSame(['dummy', 'array'], $returned);
     }

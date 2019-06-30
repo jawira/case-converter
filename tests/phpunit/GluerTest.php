@@ -1,12 +1,12 @@
 <?php
 
-use Jawira\CaseConverter\Gluer;
+use Jawira\CaseConverter\Glue\Gluer;
 use PHPUnit\Framework\TestCase;
 
 class GluerTest extends TestCase
 {
     /**
-     * @covers       \Jawira\CaseConverter\Gluer::glueUsingRules
+     * @covers       \Jawira\CaseConverter\Glue\Gluer::glueUsingRules
      * @dataProvider glueUsingRulesProvider
      *
      * @param array  $words
@@ -68,7 +68,7 @@ class GluerTest extends TestCase
     }
 
     /**
-     * @covers       \Jawira\CaseConverter\Gluer::changeWordsCase
+     * @covers       \Jawira\CaseConverter\Glue\Gluer::changeWordsCase
      * @dataProvider changeWordsCaseProvider
      *
      * @param array $words
@@ -108,7 +108,7 @@ class GluerTest extends TestCase
     }
 
     /**
-     * @covers       \Jawira\CaseConverter\Gluer::changeFirstWordCase
+     * @covers       \Jawira\CaseConverter\Glue\Gluer::changeFirstWordCase
      * @dataProvider changeFirstWordCaseProvider
      *
      * @param array $words

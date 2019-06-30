@@ -1,0 +1,11 @@
+site_name: 'Case Converter'
+site_author: 'Jawira Portugal'
+copyright: 'The MIT License (MIT)'
+theme:
+  name: 'readthedocs'
+  highlightjs: true
+  titles_only: true
+  prev_next_buttons_location: 'both'
+  collapse_navigation: false
+use_directory_urls: false
+strict: true

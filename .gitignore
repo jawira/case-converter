@@ -1,5 +1,5 @@
 /.idea/
-!/.idea/dictionaries/jawira.xml
+!/.idea/dictionaries/
 /resources/coverage/
 /resources/phpdoc/
 /vendor/
@@ -19,3 +19,9 @@
 /resources/phploc.txt
 /resources/coverage-html/
 /bin/phpcs
+/site/
+/docs/CONTRIBUTING.md
+/docs/index.md
+/docs/LICENSE.md
+/docs/license.md
+/docs/contributing.md

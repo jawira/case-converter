@@ -1,12 +1,12 @@
 <?php
 
-use Jawira\CaseConverter\PascalCase;
+use Jawira\CaseConverter\Glue\PascalCase;
 use PHPUnit\Framework\TestCase;
 
 class PascalCaseTest extends TestCase
 {
     /**
-     * @covers \Jawira\CaseConverter\PascalCase::glue
+     * @covers \Jawira\CaseConverter\Glue\PascalCase::glue
      */
     public function testGlue()
     {
@@ -22,7 +22,7 @@ class PascalCaseTest extends TestCase
              ->with(PascalCase::DELIMITER, MB_CASE_TITLE)
              ->willReturn('e1bfd762321e409cee4ac0b6e841963c');
 
-        /** @var \Jawira\CaseConverter\PascalCase $mock */
+        /** @var \Jawira\CaseConverter\Glue\PascalCase $mock */
         $returned = $mock->glue();
         $this->assertSame('e1bfd762321e409cee4ac0b6e841963c', $returned, 'Returned value is not the expected');
     }

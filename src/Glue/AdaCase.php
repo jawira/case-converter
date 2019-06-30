@@ -1,10 +1,10 @@
 <?php declare(strict_types=1);
 
-namespace Jawira\CaseConverter;
+namespace Jawira\CaseConverter\Glue;
 
 use const MB_CASE_TITLE;
 
-class TitleCase extends SpaceGluer
+class AdaCase extends UnderscoreGluer
 {
     public function glue(): string
     {

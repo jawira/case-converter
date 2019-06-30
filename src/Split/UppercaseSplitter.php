@@ -1,6 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace Jawira\CaseConverter;
+namespace Jawira\CaseConverter\Split;
+
+use Jawira\CaseConverter\CaseConverterException;
+use Jawira\CaseConverter\Glue\UnderscoreGluer;
 
 class UppercaseSplitter extends Splitter
 {

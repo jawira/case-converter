@@ -1,52 +1,43 @@
 Development
 ===========
 
-![Phing targets](../build.png "Phing targets")
+Phing targets
+-------------
 
-Testing
--------
+[![Phing targets](./build.png "Phing targets")](./build.png)
 
-- Test all:
+- `$ phing setup`: Prepare project for development.
+- `$ phing qa`: Run quality tests, use this before every commit.
+- `$ phing refresh`: Update generated files (changelog, images, etc).
 
-    ```bash
-    $ phing test
-    ```
+Dev requirements
+----------------
 
-- PHPUnit:
+To use Phing tasks you need to previously install:
 
-    ```bash
-    $ phing phpunit:run
-    ```
+- [Phive]
+- [mkdocs]
 
-- Behat:
+Using Phing behind a proxy
+--------------------------
 
-    ```bash
-    $ phing behat:run
-    ```
-
-- Php lint:
-
-    ```bash
-    $ phing php:lint
-    ```
-
-- Validate Composer:
-
-    ```bash
-    $ phing composer:validate
-    ```
-
-Using proxy with Phing
-----------------------
-
-To use a proxy to download composer, phing and phpunit, you have to set the
-environment variable `http_proxy`.
+If you are developing behind a proxy, you have to set the environment 
+variable `http_proxy`. This variable is imported in buildfile.
 
 Conventions
 -----------
 
 This project adheres to:
 
- * [Semantic Versioning](http://semver.org/)
- * [Keep a changelog](http://keepachangelog.com/en/1.0.0/)
- * [pds/skeleton](https://github.com/php-pds/skeleton)
+- [git-flow]
+- [Semantic Versioning]
+- [Keep a changelog]
+- [pds/skeleton]
+
+
+[git-flow]: https://github.com/petervanderdoes/gitflow-avh
+[Keep a changelog]: http://keepachangelog.com/en/1.0.0/
+[mkdocs]: https://www.mkdocs.org/#installation
+[pds/skeleton]: https://github.com/php-pds/skeleton
+[Phive]: https://phar.io/
+[Semantic Versioning]: http://semver.org/

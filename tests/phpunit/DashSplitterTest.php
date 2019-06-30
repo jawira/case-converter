@@ -1,12 +1,12 @@
 <?php
 
-use Jawira\CaseConverter\DashSplitter;
+use Jawira\CaseConverter\Split\DashSplitter;
 use PHPUnit\Framework\TestCase;
 
 class DashSplitterTest extends TestCase
 {
     /**
-     * @covers \Jawira\CaseConverter\DashSplitter::split
+     * @covers \Jawira\CaseConverter\Split\DashSplitter::split
      * @throws \ReflectionException
      */
     public function testSplit()
@@ -29,7 +29,7 @@ class DashSplitterTest extends TestCase
              ->with('dummyString', '-+')
              ->willReturn(['dummy', 'array']);
 
-        /** @var \Jawira\CaseConverter\DashSplitter $mock */
+        /** @var \Jawira\CaseConverter\Split\DashSplitter $mock */
         $returned = $mock->split();
         $this->assertSame(['dummy', 'array'], $returned);
     }

@@ -1,12 +1,12 @@
 <?php
 
-use Jawira\CaseConverter\AdaCase;
+use Jawira\CaseConverter\Glue\AdaCase;
 use PHPUnit\Framework\TestCase;
 
 class AdaCaseTest extends TestCase
 {
     /**
-     * @covers \Jawira\CaseConverter\AdaCase::glue
+     * @covers \Jawira\CaseConverter\Glue\AdaCase::glue
      */
     public function testGlue()
     {
@@ -22,7 +22,7 @@ class AdaCaseTest extends TestCase
              ->with(AdaCase::DELIMITER, MB_CASE_TITLE)
              ->willReturn('e1bfd762321e409cee4ac0b6e841963c');
 
-        /** @var \Jawira\CaseConverter\AdaCase $mock */
+        /** @var \Jawira\CaseConverter\Glue\AdaCase $mock */
         $returned = $mock->glue();
         $this->assertSame('e1bfd762321e409cee4ac0b6e841963c', $returned, 'Returned value is not the expected');
     }

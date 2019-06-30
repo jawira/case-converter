@@ -1,12 +1,12 @@
 <?php
 
-use Jawira\CaseConverter\TitleCase;
+use Jawira\CaseConverter\Glue\TitleCase;
 use PHPUnit\Framework\TestCase;
 
 class TitleCaseTest extends TestCase
 {
     /**
-     * @covers \Jawira\CaseConverter\TitleCase::glue
+     * @covers \Jawira\CaseConverter\Glue\TitleCase::glue
      */
     public function testGlue()
     {

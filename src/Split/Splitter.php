@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Jawira\CaseConverter;
+namespace Jawira\CaseConverter\Split;
 
 use function array_filter;
 use function array_values;

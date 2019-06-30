@@ -1,12 +1,15 @@
 <?php declare(strict_types=1);
 
-namespace Jawira\CaseConverter;
+namespace Jawira\CaseConverter\Glue;
 
 use function array_map;
 use function assert;
 use function implode;
 use function in_array;
 use function mb_convert_case;
+use const MB_CASE_LOWER;
+use const MB_CASE_TITLE;
+use const MB_CASE_UPPER;
 
 abstract class Gluer
 {

@@ -16,6 +16,7 @@
     "Train case",
     "Upper case"
   ],
+  "homepage": "https://jawira.github.io/case-converter/",
   "license": "MIT",
   "authors": [
     {
@@ -29,7 +30,8 @@
     "ext-mbstring": "*"
   },
   "suggest": {
-    "pds/skeleton": "PHP Package Development Standards"
+    "pds/skeleton": "PHP Package Development Standards",
+    "phing/phing": "PHP Build Tool"
   },
   "autoload": {
     "psr-4": {
