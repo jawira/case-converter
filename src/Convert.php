@@ -2,7 +2,6 @@
 
 namespace Jawira\CaseConverter;
 
-use Countable;
 use Jawira\CaseConverter\Glue\AdaCase;
 use Jawira\CaseConverter\Glue\CamelCase;
 use Jawira\CaseConverter\Glue\CobolCase;
@@ -24,11 +23,9 @@ use Jawira\CaseConverter\Split\SpaceSplitter;
 use Jawira\CaseConverter\Split\Splitter;
 use Jawira\CaseConverter\Split\UnderscoreSplitter;
 use Jawira\CaseConverter\Split\UppercaseSplitter;
-use function count;
 use function is_subclass_of;
 use function mb_strpos;
 use function preg_match;
-use const COUNT_NORMAL;
 
 /**
  * Convert string between different naming conventions.
@@ -66,7 +63,7 @@ use const COUNT_NORMAL;
  * @package Jawira\CaseConverter
  * @author  Jawira Portugal <dev@tugal.be>
  */
-class Convert implements Countable
+class Convert
 {
     /**
      * @var string Input string to convert
@@ -213,17 +210,6 @@ class Convert implements Countable
         $this->extractWords($strategy);
 
         return $this;
-    }
-
-    /**
-     * Return a _Camel case_ string
-     *
-     * @return string
-     * @deprecated This is a pet feature, not useful in real life
-     */
-    public function __toString(): string
-    {
-        return $this->toCamel();
     }
 
     /**
@@ -441,18 +427,5 @@ class Convert implements Countable
     public function toArray(): array
     {
         return $this->words;
-    }
-
-    /**
-     * Count detected words
-     *
-     * @link       https://php.net/manual/en/countable.count.php
-     *
-     * @deprecated This is a pet feature, not useful in real life
-     * @return int The custom count as an integer.
-     */
-    public function count(): int
-    {
-        return count($this->words, COUNT_NORMAL);
     }
 }

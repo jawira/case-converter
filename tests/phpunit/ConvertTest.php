@@ -224,68 +224,6 @@ class ConvertTest extends TestCase
     }
 
     /**
-     * @covers \Jawira\CaseConverter\Convert::__toString()
-     *
-     * @throws \ReflectionException
-     */
-    public function testToString()
-    {
-        // Get mock, without the constructor being called
-        $mock = $this->getMockBuilder(Convert::class)
-                     ->disableOriginalConstructor()
-                     ->getMock();
-
-        // set expectations for constructor calls
-        $mock->expects($this->once())
-             ->method('toCamel');
-
-        // now call the magic function
-        $reflectedClass  = new ReflectionClass(Convert::class);
-        $reflectedMethod = $reflectedClass->getMethod('__toString');
-        $reflectedMethod->invoke($mock);
-    }
-
-    /**
-     * @see          http://beriba.pl/?p=262
-     *
-     * @param array $myArray
-     * @param int   $expectedCount
-     *
-     * @throws \ReflectionException
-     * @covers       Jawira\CaseConverter\Convert::count
-     * @dataProvider countProvider()
-     */
-    public function testCount(array $myArray, int $expectedCount)
-    {
-        // Disabling constructor, keeping original methods
-        /** @var Convert $mock */
-        $mock = $this->getMockBuilder(Convert::class)
-                     ->disableOriginalConstructor()
-                     ->setMethods()
-                     ->getMock();
-
-        // Setting value to protected property
-        $reflectionObject   = new ReflectionObject($mock);
-        $reflectionProperty = $reflectionObject->getProperty('words');
-        $reflectionProperty->setAccessible(true);
-        $reflectionProperty->setValue($mock, $myArray);
-
-        $currentCount = $mock->count();
-
-        $this->assertEquals($expectedCount, $currentCount);
-    }
-
-    public function countProvider()
-    {
-        return [
-            'empty array'  => [[], 0],
-            'small array'  => [['a'], 1],
-            'medium array' => [['a', 'a', 'a', 'a',], 4],
-            'large array'  => [['a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a',], 12],
-        ];
-    }
-
-    /**
      * @covers       Jawira\CaseConverter\Convert::extractWords
      * @dataProvider extractWordsProviders
      *

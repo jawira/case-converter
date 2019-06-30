@@ -219,39 +219,3 @@ Feature: Convert Case
       | toArray | aBc_DeF_hIj_KlM | [aBc;DeF;hIj;KlM] |
       | toArray | one__two        | [one;two]         |
       | toArray | Le Népal        | [Le;Népal]        |
-
-
-  Scenario Outline: Change naming convention from string using magic function
-    Given CaseConverter class is instantiated with "<input-string>"
-    When I cast object to string
-    Then method should return string "<output-string>"
-
-    Examples:
-      | input-string | output-string |
-      |              |               |
-      | NASA         | nasa          |
-      | Judo         | judo          |
-      | Hello-World  | helloWorld    |
-      | Le Népal     | leNépal       |
-
-
-  Scenario Outline: Count detected words
-    Given CaseConverter class is instantiated with "<input-string>"
-    When I use count function
-    Then functions should return "<word-count>"
-
-    Examples:
-      | input-string                | word-count |
-      |                             | 0          |
-      | LoremIpsum                  | 2          |
-      | visit-our-website           | 3          |
-      | does_that_work              | 3          |
-      | CatsAreGoodPets             | 4          |
-      | HOLLYWOOD                   | 1          |
-      | checked                     | 1          |
-      | APurplePigAndAGreenDonkey   | 7          |
-      | Des couverts biodégradables | 3          |
-      | ABC                         | 1          |
-      | abc                         | 1          |
-      | Abc                         | 1          |
-      | aBC                         | 3          |
