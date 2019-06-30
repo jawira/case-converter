@@ -1,12 +1,12 @@
 <?php
 
-use Jawira\CaseConverter\UpperCase;
+use Jawira\CaseConverter\Glue\UpperCase;
 use PHPUnit\Framework\TestCase;
 
 class UpperCaseTest extends TestCase
 {
     /**
-     * @covers \Jawira\CaseConverter\UpperCase::glue
+     * @covers \Jawira\CaseConverter\Glue\UpperCase::glue
      */
     public function testGlue()
     {
@@ -22,7 +22,7 @@ class UpperCaseTest extends TestCase
              ->with(UpperCase::DELIMITER, MB_CASE_UPPER)
              ->willReturn('e1bfd762321e409cee4ac0b6e841963c');
 
-        /** @var \Jawira\CaseConverter\UpperCase $mock */
+        /** @var \Jawira\CaseConverter\Glue\UpperCase $mock */
         $returned = $mock->glue();
         $this->assertSame('e1bfd762321e409cee4ac0b6e841963c', $returned, 'Returned value is not the expected');
     }

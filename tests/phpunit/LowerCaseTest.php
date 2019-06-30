@@ -1,12 +1,12 @@
 <?php
 
-use Jawira\CaseConverter\LowerCase;
+use Jawira\CaseConverter\Glue\LowerCase;
 use PHPUnit\Framework\TestCase;
 
 class LowerCaseTest extends TestCase
 {
     /**
-     * @covers \Jawira\CaseConverter\LowerCase::glue
+     * @covers \Jawira\CaseConverter\Glue\LowerCase::glue
      */
     public function testGlue()
     {
@@ -22,7 +22,7 @@ class LowerCaseTest extends TestCase
              ->with(LowerCase::DELIMITER, MB_CASE_LOWER)
              ->willReturn('e1bfd762321e409cee4ac0b6e841963c');
 
-        /** @var \Jawira\CaseConverter\LowerCase $mock */
+        /** @var \Jawira\CaseConverter\Glue\LowerCase $mock */
         $returned = $mock->glue();
         $this->assertSame('e1bfd762321e409cee4ac0b6e841963c', $returned, 'Returned value is not the expected');
     }

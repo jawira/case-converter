@@ -1,12 +1,12 @@
 <?php
 
-use Jawira\CaseConverter\SpaceSplitter;
+use Jawira\CaseConverter\Split\SpaceSplitter;
 use PHPUnit\Framework\TestCase;
 
 class SplitterTest extends TestCase
 {
     /**
-     * @covers       \Jawira\CaseConverter\SpaceSplitter::splitUsingPattern
+     * @covers       \Jawira\CaseConverter\Split\SpaceSplitter::splitUsingPattern
      * @dataProvider splitUsingPatternProvider
      *
      * @param $inputString

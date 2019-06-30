@@ -1,12 +1,12 @@
 <?php
 
-use Jawira\CaseConverter\SentenceCase;
+use Jawira\CaseConverter\Glue\SentenceCase;
 use PHPUnit\Framework\TestCase;
 
 class SentenceCaseTest extends TestCase
 {
     /**
-     * @covers \Jawira\CaseConverter\SentenceCase::glue
+     * @covers \Jawira\CaseConverter\Glue\SentenceCase::glue
      */
     public function testGlue()
     {
@@ -22,7 +22,7 @@ class SentenceCaseTest extends TestCase
              ->with(SentenceCase::DELIMITER, MB_CASE_LOWER, MB_CASE_TITLE)
              ->willReturn('e1bfd762321e409cee4ac0b6e841963c');
 
-        /** @var \Jawira\CaseConverter\SentenceCase $mock */
+        /** @var \Jawira\CaseConverter\Glue\SentenceCase $mock */
         $returned = $mock->glue();
         $this->assertSame('e1bfd762321e409cee4ac0b6e841963c', $returned, 'Returned value is not the expected');
     }

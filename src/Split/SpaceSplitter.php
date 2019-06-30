@@ -1,6 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace Jawira\CaseConverter;
+namespace Jawira\CaseConverter\Split;
+
+use Jawira\CaseConverter\Glue\SpaceGluer;
 
 class SpaceSplitter extends Splitter
 {

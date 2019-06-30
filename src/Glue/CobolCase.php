@@ -1,10 +1,10 @@
 <?php declare(strict_types=1);
 
-namespace Jawira\CaseConverter;
+namespace Jawira\CaseConverter\Glue;
 
 use const MB_CASE_UPPER;
 
-class UpperCase extends SpaceGluer
+class CobolCase extends DashGluer
 {
     public function glue(): string
     {

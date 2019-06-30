@@ -7,6 +7,9 @@ All notable changes to this project will be documented in this file.
 ### Added
 
 - [#36] Static site with documentation <https://jawira.github.io/case-converter/build.png>
+- [#30] Added functions to explicitly set the naming conventions of input string: `fromAuto()`, `fromCamel()`, 
+`fromPascal()`, `fromSnake()`, `fromAda()`, `fromMacro()`, `fromKebab()`, `fromTrain()`, `fromCobol()`, `fromLower()`, 
+`fromUpper()`, `fromTitle()`, and `fromSentence()`.    
 
 ## [v2.3.0] - 2019-06-15
 
@@ -235,3 +238,4 @@ SENTENCE, SNAKE, TITLE, TRAIN, UPPER.
 [v2.1.0]: https://github.com/jawira/case-converter/compare/v2.0.4...v2.1.0
 [v2.2.0]: https://github.com/jawira/case-converter/compare/v2.1.0...v2.2.0
 [v2.3.0]: https://github.com/jawira/case-converter/compare/v2.2.0...v2.3.0
+[#30]: https://github.com/jawira/case-converter/pull/30

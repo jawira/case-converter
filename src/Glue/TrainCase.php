@@ -1,10 +1,10 @@
 <?php declare(strict_types=1);
 
-namespace Jawira\CaseConverter;
+namespace Jawira\CaseConverter\Glue;
 
 use const MB_CASE_TITLE;
 
-class PascalCase extends UppercaseGluer
+class TrainCase extends DashGluer
 {
     public function glue(): string
     {

@@ -1,12 +1,12 @@
 <?php
 
-use Jawira\CaseConverter\TrainCase;
+use Jawira\CaseConverter\Glue\TrainCase;
 use PHPUnit\Framework\TestCase;
 
 class TrainCaseTest extends TestCase
 {
     /**
-     * @covers \Jawira\CaseConverter\TrainCase::glue
+     * @covers \Jawira\CaseConverter\Glue\TrainCase::glue
      */
     public function testGlue()
     {
@@ -22,7 +22,7 @@ class TrainCaseTest extends TestCase
              ->with(TrainCase::DELIMITER, MB_CASE_TITLE)
              ->willReturn('e1bfd762321e409cee4ac0b6e841963c');
 
-        /** @var \Jawira\CaseConverter\TrainCase $mock */
+        /** @var \Jawira\CaseConverter\Glue\TrainCase $mock */
         $returned = $mock->glue();
         $this->assertSame('e1bfd762321e409cee4ac0b6e841963c', $returned, 'Returned value is not the expected');
     }

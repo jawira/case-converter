@@ -1,12 +1,12 @@
 <?php
 
-use Jawira\CaseConverter\CamelCase;
+use Jawira\CaseConverter\Glue\CamelCase;
 use PHPUnit\Framework\TestCase;
 
 class CamelCaseTest extends TestCase
 {
     /**
-     * @covers \Jawira\CaseConverter\CamelCase::glue
+     * @covers \Jawira\CaseConverter\Glue\CamelCase::glue
      */
     public function testGlue()
     {

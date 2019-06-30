@@ -1,12 +1,12 @@
 <?php
 
-use Jawira\CaseConverter\UppercaseSplitter;
+use Jawira\CaseConverter\Split\UppercaseSplitter;
 use PHPUnit\Framework\TestCase;
 
 class UppercaseSplitterTest extends TestCase
 {
     /**
-     * @covers       \Jawira\CaseConverter\UppercaseSplitter::split
+     * @covers       \Jawira\CaseConverter\Split\UppercaseSplitter::split
      * @dataProvider splitProvider
      *
      * @param string $inputString
@@ -35,7 +35,7 @@ class UppercaseSplitterTest extends TestCase
              ->with($newString)
              ->willReturn(['dummy', 'array']);
 
-        /** @var \Jawira\CaseConverter\UppercaseSplitter $mock */
+        /** @var \Jawira\CaseConverter\Split\UppercaseSplitter $mock */
         $returned = $mock->split();
         $this->assertSame(['dummy', 'array'], $returned);
     }
@@ -50,10 +50,10 @@ class UppercaseSplitterTest extends TestCase
     }
 
     /**
-     * @covers \Jawira\CaseConverter\UppercaseSplitter::splitUsingUnderscore
-     * @covers \Jawira\CaseConverter\UnderscoreSplitter::split
-     * @covers \Jawira\CaseConverter\Splitter::__construct
-     * @covers \Jawira\CaseConverter\Splitter::splitUsingPattern
+     * @covers \Jawira\CaseConverter\Split\UppercaseSplitter::splitUsingUnderscore
+     * @covers \Jawira\CaseConverter\Split\UnderscoreSplitter::split
+     * @covers \Jawira\CaseConverter\Split\Splitter::__construct
+     * @covers \Jawira\CaseConverter\Split\Splitter::splitUsingPattern
      *
      * @dataProvider splitUsingUnderscoreProvider
      *
