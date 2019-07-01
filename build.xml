@@ -225,7 +225,6 @@
   <target name="mkdocs:build-n-serve"
           description="Generate and open static site"
           depends="mkdocs:copy-docs, plantuml:parse-docs, phing:visualize">
-    <!--Importing documentation-->
     <exec executable="mkdocs" passthru="true" checkreturn="true">
       <arg value="build"/>
     </exec>
@@ -245,6 +244,7 @@
     <copy file="./README.md" tofile="./docs/index.md" overwrite="true"/>
     <copy file="./CONTRIBUTING.md" tofile="./docs/contributing.md" overwrite="true"/>
     <copy file="./LICENSE.md" tofile="./docs/license.md" overwrite="true"/>
+    <copy file="./CHANGELOG.md" tofile="./docs/changelog.md" overwrite="true"/>
   </target>
 
 </project>
