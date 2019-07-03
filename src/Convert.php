@@ -26,6 +26,9 @@ use Jawira\CaseConverter\Split\UppercaseSplitter;
 use function is_subclass_of;
 use function mb_strpos;
 use function preg_match;
+use const MB_CASE_LOWER;
+use const MB_CASE_TITLE;
+use const MB_CASE_UPPER;
 
 /**
  * Convert string between different naming conventions.
@@ -178,7 +181,7 @@ class Convert
             throw new CaseConverterException('Error executing regex'); // @codeCoverageIgnore
         }
 
-        return $match === 1;
+        return 1 === $match;
     }
 
     /**
@@ -190,14 +193,45 @@ class Convert
      */
     protected function extractWords(Splitter $splitter): self
     {
-        assert(is_subclass_of($splitter, Splitter::class), 'Unknown naming convention');
-
         $this->words = $splitter->split();
 
         return $this;
     }
 
     /**
+     * Since PHP 7.3, new constants are used to specify _simple case mapping_. This method handles these new constants.
+     *
+     * Usually you would use:
+     *
+     * - MB_CASE_LOWER
+     * - MB_CASE_UPPER
+     * - MB_CASE_TITLE
+     *
+     * But PHP 7.3 introduced new constants:
+     *
+     * - MB_CASE_LOWER_SIMPLE
+     * - MB_CASE_UPPER_SIMPLE
+     * - MB_CASE_TITLE_SIMPLE
+     *
+     * @see https://www.php.net/manual/en/migration73.constants.php#migration73.constants.mbstring
+     * @see https://www.php.net/manual/en/migration73.new-features.php#migration73.new-features.mbstring.case-mapping-folding
+     */
+    public function useSimpleMapping()
+    {
+        $lowerSimple = '\MB_CASE_LOWER_SIMPLE';
+        $upperSimple = '\MB_CASE_UPPER_SIMPLE';
+        $titleSimple = '\MB_CASE_TITLE_SIMPLE';
+
+        $this->mbCaseLower = defined($lowerSimple) ? constant($lowerSimple) : MB_CASE_LOWER;
+        $this->mbCaseUpper = defined($upperSimple) ? constant($upperSimple) : MB_CASE_UPPER;
+        $this->mbCaseTitle = defined($titleSimple) ? constant($titleSimple) : MB_CASE_TITLE;
+
+        return $this;
+    }
+
+    /**
+     * Handle `to*` methods and `from*` methods
+     *
      * @param string $methodName
      * @param array  $arguments
      *
@@ -259,6 +293,8 @@ class Convert
     }
 
     /**
+     * Handles all methods starting by `to*`
+     *
      * @param string $methodName
      *
      * @return string
@@ -307,25 +343,11 @@ class Convert
                 throw new CaseConverterException("Unknown method: $methodName");
                 break;
         }
+        assert(is_subclass_of($className, Gluer::class));
+        $namingConvention = new $className($this->words);
 
-        $namingConvention = $this->factory($className);
-
+        /** @var \Jawira\CaseConverter\Glue\Gluer $namingConvention Subclass of Gluer (abstract) */
         return $namingConvention->glue();
-    }
-
-    /**
-     * Creates a \Jawira\CaseConverter\NamingConvention concrete object
-     *
-     * @param string $className Class name
-     *
-     * @return \Jawira\CaseConverter\Glue\Gluer
-     */
-    protected function factory(string $className): Gluer
-    {
-        $parent = Gluer::class;
-        assert(is_subclass_of($className, $parent), "$className is not a $parent subclass");
-
-        return new $className($this->words);
     }
 
     /**
