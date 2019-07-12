@@ -16,7 +16,7 @@ input string (i.e. `hello-8-world`), in _kebab case_ this sting is written as
 Full case-mapping
 -----------------
 
-PHP 7.3 introduced [full case-mapping], in practice this means than you can 
+PHP 7.3 introduced [Full Case-Mapping], in practice this means than you can 
 have different results depending on your PHP version.
 
 ```php
@@ -46,5 +46,5 @@ constants and create new ones for [full case-mapping], for example:
 `MB_CASE_LOWER_FULL`, `MB_CASE_TITLE_FULL`, and `MB_CASE_UPPER_FULL` (please 
 note these variables do not exist). 
 
-[full case-mapping]: https://www.php.net/manual/en/migration73.new-features.php#migration73.new-features.mbstring.case-mapping-folding
+[Full Case-Mapping]: https://www.php.net/manual/en/migration73.new-features.php#migration73.new-features.mbstring.case-mapping-folding
 [mb_convert_case()]: https://www.php.net/manual/en/function.mb-convert-case.php

@@ -38,13 +38,6 @@ Features:
 [![PDS Skeleton](https://img.shields.io/badge/pds-skeleton-blue.svg)](https://github.com/php-pds/skeleton)
 [![Issues](https://img.shields.io/github/issues/jawira/case-converter.svg?label=HuBoard&color=694DC2)](https://huboard.com/jawira/case-converter)
 
-Installation
-------------
-
-```console
-$ composer require jawira/case-converter
-```
-
 Usage
 -----
 
@@ -59,31 +52,7 @@ echo $hero->toSnake();   // output: john_connor
 
 Note: Input string (i.e. _john-connor_) format is going to be detected automatically.
 
-Explicit case detection
------------------------
-
-| Method            | Description                                         |
-| ----------------- | --------------------------------------------------- |
-| `fromAuto()`      | (default) Auto-detect naming convention             |
-| `fromCamel()`     | Split input string using uppercase characters       | 
-| `fromPascal()`    | Split input string using uppercase characters       |
-| `fromSnake()`     | Split input string using `_` (underscore character) |
-| `fromAda()`       | Split input string using `_` (underscore character) |
-| `fromMacro()`     | Split input string using `_` (underscore character) |
-| `fromKebab()`     | Split input string using `-` (dash character)       |
-| `fromTrain()`     | Split input string using `-` (dash character)       |
-| `fromCobol()`     | Split input string using `-` (dash character)       |
-| `fromLower()`     | Split input string using `␣` (space character)      |
-| `fromUpper()`     | Split input string using `␣` (space character)      |
-| `fromTitle()`     | Split input string using `␣` (space character)      |
-| `fromSentence()`  | Split input string using `␣` (space character)      |
-
-Utility methods
----------------
-
-| Method          | Description                     | Output example                  |
-| --------------- | ------------------------------- | ------------------------------- |
-| `toArray()`     | Get array with detected words   | `['my', 'name', 'is', 'bond']`  | 
+You can see a list of [all public methods].
 
 i18n
 ----
@@ -104,6 +73,27 @@ $rus = new Convert('ОЧЕНЬ_ПРИЯТНО');
 echo $rus->toCamel();   // output: оченьПриятно
 ```
 
+Full case mapping (only from **PHP 7.3**):
+
+```php
+// German
+$ger = new Convert('Straße');
+echo $ger->toUpper();    // output: STRASSE
+
+// Turkish (requires appropriate locale) 
+$tur = new Convert('istambul');     
+echo $tur->toTrain(); // output: İstanbul
+```
+
+Learn more about [Full Case-Mapping].
+
+Installation
+------------
+
+```
+$ composer require jawira/case-converter
+```
+
 Documentation
 -------------
 
@@ -116,8 +106,10 @@ This library is licensed under the [MIT LICENSE].
 
 <!--mkdocs: Do not use relative path for links and images-->
 
+[all public methods]: https://jawira.github.io/case-converter/api.html
 [CONTRIBUTING.md]: https://jawira.github.io/case-converter/contributing.html
 [Countable interface]: https://php.net/manual/en/class.countable.php
+[Full Case-Mapping]: https://jawira.github.io/case-converter/known-issues.html#full-case-mapping
 [magic method]: https://www.php.net/manual/en/language.oop5.magic.php#object.tostring
 [MIT LICENSE]: https://jawira.github.io/case-converter/license.html
 [open an issue]: https://github.com/jawira/case-converter/issues/new
