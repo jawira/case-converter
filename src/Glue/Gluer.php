@@ -3,14 +3,20 @@
 namespace Jawira\CaseConverter\Glue;
 
 use function array_map;
-use function assert;
 use function implode;
-use function in_array;
 use function mb_convert_case;
 use const MB_CASE_LOWER;
 use const MB_CASE_TITLE;
 use const MB_CASE_UPPER;
 
+/**
+ * Class Gluer
+ *
+ * A Gluer sub-class allow to export an array of words in a single string
+ *
+ * @author Jawira Portugal <dev@tugal.be>
+ * @package Jawira\CaseConverter\Glue
+ */
 abstract class Gluer
 {
     /**
@@ -25,9 +31,64 @@ abstract class Gluer
      */
     protected $words;
 
-    public function __construct(array $words)
+    /**
+     * @var int MB_CASE_LOWER or MB_CASE_LOWER_SIMPLE
+     */
+    protected $lowerCase;
+
+    /**
+     * @var int MB_CASE_UPPER or MB_CASE_UPPER_SIMPLE
+     */
+    protected $upperCase;
+
+    /**
+     * @var int MB_CASE_TITLE or MB_CASE_TITLE_SIMPLE
+     */
+    protected $titleCase;
+
+    public function __construct(array $words, bool $forceSimpleCaseMapping)
     {
-        $this->words = $words;
+        $this->words     = $words;
+        $this->lowerCase = MB_CASE_LOWER;
+        $this->upperCase = MB_CASE_UPPER;
+        $this->titleCase = MB_CASE_TITLE;
+
+        if ($forceSimpleCaseMapping) {
+            $this->setSimpleCaseMappingConstants();
+        }
+    }
+
+    /**
+     * Use new constants if available
+     *
+     * Since PHP 7.3, new constants are used to specify _simple case mapping_. This method handles these new constants.
+     *
+     * Usually you would use:
+     *
+     * - MB_CASE_LOWER
+     * - MB_CASE_UPPER
+     * - MB_CASE_TITLE
+     *
+     * But PHP 7.3 introduced new constants:
+     *
+     * - MB_CASE_LOWER_SIMPLE
+     * - MB_CASE_UPPER_SIMPLE
+     * - MB_CASE_TITLE_SIMPLE
+     *
+     * @see https://www.php.net/manual/en/migration73.constants.php#migration73.constants.mbstring
+     * @see https://www.php.net/manual/en/migration73.new-features.php#migration73.new-features.mbstring.case-mapping-folding
+     */
+    protected function setSimpleCaseMappingConstants()
+    {
+        $newLowerCase = '\MB_CASE_LOWER_SIMPLE';
+        $newUpperCase = '\MB_CASE_UPPER_SIMPLE';
+        $newTitleCase = '\MB_CASE_TITLE_SIMPLE';
+
+        $this->lowerCase = defined($newLowerCase) ? constant($newLowerCase) : MB_CASE_LOWER;
+        $this->upperCase = defined($newUpperCase) ? constant($newUpperCase) : MB_CASE_UPPER;
+        $this->titleCase = defined($newTitleCase) ? constant($newTitleCase) : MB_CASE_TITLE;
+
+        return $this;
     }
 
     /**
@@ -42,10 +103,10 @@ abstract class Gluer
      *
      * @param string $glue           Character to glue words. Even if is assumed your are using underscore or dash
      *                               character, this method should be capable to use any character as glue.
-     * @param int    $wordsMode      The mode of the conversion. It should be one of MB_CASE_UPPER, MB_CASE_LOWER, or
-     *                               MB_CASE_TITLE.
+     * @param int    $wordsMode      The mode of the conversion. It should be one of `Gluer::$lowerCase`,
+     *                               `Gluer::$upperCase` or  `Gluer::$titleCase`.
      * @param int    $firstWordMode  Sometimes first word requires special treatment. It should be one of
-     *                               MB_CASE_UPPER, MB_CASE_LOWER, or MB_CASE_TITLE.
+     *                               `Gluer::$lowerCase`,  `Gluer::$upperCase` or  `Gluer::$titleCase`.
      *
      * @return string
      */
@@ -64,14 +125,12 @@ abstract class Gluer
      * Changes the case of every $words' element
      *
      * @param string[] $words    Words to modify
-     * @param int      $caseMode It should be one of MB_CASE_UPPER, MB_CASE_LOWER, or MB_CASE_TITLE.
+     * @param int      $caseMode It should be one of `Gluer::$lowerCase`,  `Gluer::$upperCase` or  `Gluer::$titleCase`.
      *
      * @return string[]
      */
     protected function changeWordsCase(array $words, int $caseMode): array
     {
-        assert(in_array($caseMode, [MB_CASE_UPPER, MB_CASE_LOWER, MB_CASE_TITLE]), 'Invalid MultiByte constant');
-
         if (empty($words)) {
             return $words;
         }
@@ -89,14 +148,12 @@ abstract class Gluer
      * Changes the case of first $words' element
      *
      * @param string[] $words    Words to modify
-     * @param int      $caseMode It should be one of MB_CASE_UPPER, MB_CASE_LOWER, or MB_CASE_TITLE.
+     * @param int      $caseMode It should be one of `Gluer::$lowerCase`,  `Gluer::$upperCase` or  `Gluer::$titleCase`.
      *
      * @return string[]
      */
     protected function changeFirstWordCase(array $words, int $caseMode): array
     {
-        assert(in_array($caseMode, [MB_CASE_UPPER, MB_CASE_LOWER, MB_CASE_TITLE]), 'Invalid MultiByte constant');
-
         if (empty($words)) {
             return $words;
         }
@@ -105,4 +162,5 @@ abstract class Gluer
 
         return $words;
     }
+
 }

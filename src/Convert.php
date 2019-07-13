@@ -26,9 +26,6 @@ use Jawira\CaseConverter\Split\UppercaseSplitter;
 use function is_subclass_of;
 use function mb_strpos;
 use function preg_match;
-use const MB_CASE_LOWER;
-use const MB_CASE_TITLE;
-use const MB_CASE_UPPER;
 
 /**
  * Convert string between different naming conventions.
@@ -92,19 +89,9 @@ class Convert
     protected $words;
 
     /**
-     * @var int
+     * @var bool
      */
-    protected $mbCaseLower;
-
-    /**
-     * @var int
-     */
-    protected $mbCaseUpper;
-
-    /**
-     * @var int
-     */
-    protected $mbCaseTitle;
+    protected $forceSimpleCaseMapping;
 
     /**
      * Constructor method
@@ -115,7 +102,8 @@ class Convert
      */
     public function __construct(string $input)
     {
-        $this->originalString = $input;
+        $this->originalString         = $input;
+        $this->forceSimpleCaseMapping = false;
         $this->fromAuto();
     }
 
@@ -194,37 +182,6 @@ class Convert
     protected function extractWords(Splitter $splitter): self
     {
         $this->words = $splitter->split();
-
-        return $this;
-    }
-
-    /**
-     * Since PHP 7.3, new constants are used to specify _simple case mapping_. This method handles these new constants.
-     *
-     * Usually you would use:
-     *
-     * - MB_CASE_LOWER
-     * - MB_CASE_UPPER
-     * - MB_CASE_TITLE
-     *
-     * But PHP 7.3 introduced new constants:
-     *
-     * - MB_CASE_LOWER_SIMPLE
-     * - MB_CASE_UPPER_SIMPLE
-     * - MB_CASE_TITLE_SIMPLE
-     *
-     * @see https://www.php.net/manual/en/migration73.constants.php#migration73.constants.mbstring
-     * @see https://www.php.net/manual/en/migration73.new-features.php#migration73.new-features.mbstring.case-mapping-folding
-     */
-    public function useSimpleMapping()
-    {
-        $lowerSimple = '\MB_CASE_LOWER_SIMPLE';
-        $upperSimple = '\MB_CASE_UPPER_SIMPLE';
-        $titleSimple = '\MB_CASE_TITLE_SIMPLE';
-
-        $this->mbCaseLower = defined($lowerSimple) ? constant($lowerSimple) : MB_CASE_LOWER;
-        $this->mbCaseUpper = defined($upperSimple) ? constant($upperSimple) : MB_CASE_UPPER;
-        $this->mbCaseTitle = defined($titleSimple) ? constant($titleSimple) : MB_CASE_TITLE;
 
         return $this;
     }
@@ -344,7 +301,7 @@ class Convert
                 break;
         }
         assert(is_subclass_of($className, Gluer::class));
-        $namingConvention = new $className($this->words);
+        $namingConvention = new $className($this->words, $this->forceSimpleCaseMapping);
 
         /** @var \Jawira\CaseConverter\Glue\Gluer $namingConvention Subclass of Gluer (abstract) */
         return $namingConvention->glue();
@@ -358,5 +315,19 @@ class Convert
     public function toArray(): array
     {
         return $this->words;
+    }
+
+    /**
+     * Forces to use Simple Case-Mapping
+     *
+     * Call this method if you want to maintain the behaviour before PHP 7.3
+     *
+     * @return \Jawira\CaseConverter\Convert
+     */
+    public function forceSimpleCaseMapping(): self
+    {
+        $this->forceSimpleCaseMapping = true;
+
+        return $this;
     }
 }

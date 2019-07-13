@@ -219,3 +219,9 @@ Feature: Convert Case
       | toArray | aBc_DeF_hIj_KlM | [aBc;DeF;hIj;KlM] |
       | toArray | one__two        | [one;two]         |
       | toArray | Le Népal        | [Le;Népal]        |
+
+  Scenario: Force simple case mapping
+    Given CaseConverter class is instantiated with "Straße"
+    When I call "forceSimpleCaseMapping"
+    And I call "toMacro"
+    Then method should return string "STRAßE"
