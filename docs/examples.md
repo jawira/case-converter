@@ -31,7 +31,8 @@ the_terminator
 Explicit case detection 
 -----------------------
 
-Code:
+In some edge cases you have to explicitly set the format of input string to have 
+the desired output:  
 
 ```php
 <?php declare(strict_types=1);
@@ -65,3 +66,30 @@ f_b_i
 FBI
 fbi
 ```
+
+Force _Simple Case-Mapping_
+---------------------------
+
+You can still use `Simple Case-Mapping` even if you are using PHP 7.3 or newer:
+
+```php
+<?php declare(strict_types=1);
+
+require __DIR__ . '/vendor/autoload.php';
+
+use Jawira\CaseConverter\Convert;
+
+$robot = new Convert('Straße');
+
+echo $robot->forceSimpleCaseMapping()->toMacro();
+```
+
+Output:
+
+```
+STRAßE
+```
+
+Learn more about [Full Case-Mapping]. 
+
+[Full Case-Mapping]: https://jawira.github.io/case-converter/known-issues.html#full-case-mapping

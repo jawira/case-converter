@@ -52,6 +52,7 @@ All these methods exists only for sake of completeness.
 Utility methods
 ---------------
 
-| Method          | Description                       |
-| --------------- | --------------------------------- |
-| `toArray()`     | Returns array with detected words | 
+| Method                      | Description                       |
+| --------------------------- | --------------------------------- |
+| `toArray()`                 | Returns array with detected words | 
+| `forceSimpleCaseMapping()`  | Output sting uses _Simple Case-Mapping_ even if you are using PHP 7.3 or newer | 
