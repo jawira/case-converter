@@ -73,7 +73,7 @@ $rus = new Convert('ОЧЕНЬ_ПРИЯТНО');
 echo $rus->toCamel();   // output: оченьПриятно
 ```
 
-Full case mapping (only from **PHP 7.3**):
+_Full Case-Mapping_ (only from **PHP 7.3**):
 
 ```php
 // German
@@ -82,10 +82,20 @@ echo $ger->toUpper();    // output: STRASSE
 
 // Turkish (requires appropriate locale) 
 $tur = new Convert('istambul');     
-echo $tur->toTrain(); // output: İstanbul
+echo $tur->toTrain();   // output: İstanbul
 ```
 
-Learn more about [Full Case-Mapping].
+To force _Single Case-Mapping_ you have to call `->forceSimpleCaseMapping()`:
+
+```php
+// German
+$ger = new Convert('Straße');
+$ger->forceSimpleCaseMapping();
+echo $ger->toUpper();    // output: STRASSE
+```
+
+Please note `->forceSimpleCaseMapping()` has no effect on _PHP 7.1_ and _PHP 7.2_ as they already 
+perform _Single Case-Mapping_. Learn more about [Full Case-Mapping].
 
 Installation
 ------------
