@@ -72,30 +72,9 @@ echo $grc->toCamel();   // output: πολύΚαλό
 $rus = new Convert('ОЧЕНЬ_ПРИЯТНО');
 echo $rus->toCamel();   // output: оченьПриятно
 ```
-
-_Full Case-Mapping_ (only from **PHP 7.3**):
-
-```php
-// German
-$ger = new Convert('Straße');
-echo $ger->toUpper();    // output: STRASSE
-
-// Turkish (requires appropriate locale) 
-$tur = new Convert('istambul');     
-echo $tur->toTrain();   // output: İstanbul
-```
-
-To force _Single Case-Mapping_ you have to call `->forceSimpleCaseMapping()`:
-
-```php
-// German
-$ger = new Convert('Straße');
-$ger->forceSimpleCaseMapping();
-echo $ger->toUpper();    // output: STRASSE
-```
-
-Please note `->forceSimpleCaseMapping()` has no effect on _PHP 7.1_ and _PHP 7.2_ as they already 
-perform _Single Case-Mapping_. Learn more about [Full Case-Mapping].
+ 
+`case-converter` is compatible with _Simple Case-Mapping_ and _Full 
+Case-Mapping_. [Learn more about Case-Mapping][Case-Mapping].
 
 Installation
 ------------
@@ -119,7 +98,7 @@ This library is licensed under the [MIT LICENSE].
 [all public methods]: https://jawira.github.io/case-converter/api.html
 [CONTRIBUTING.md]: https://jawira.github.io/case-converter/contributing.html
 [Countable interface]: https://php.net/manual/en/class.countable.php
-[Full Case-Mapping]: https://jawira.github.io/case-converter/known-issues.html#full-case-mapping
+[Case-Mapping]: https://jawira.github.io/case-converter/case-mapping.html
 [magic method]: https://www.php.net/manual/en/language.oop5.magic.php#object.tostring
 [MIT LICENSE]: https://jawira.github.io/case-converter/license.html
 [open an issue]: https://github.com/jawira/case-converter/issues/new

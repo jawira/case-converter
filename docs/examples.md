@@ -43,34 +43,23 @@ use Jawira\CaseConverter\Convert;
 
 $agency = new Convert('FBI');
 
-echo $agency->fromAda()
-            ->toCobol() . PHP_EOL;   // output: FBI
-echo $agency->toSnake() . PHP_EOL;   // output: fbi
+$agency->fromAda();
+echo $agency->toCobol();   // output: FBI
+echo $agency->toSnake();   // output: fbi
 
-echo $agency->fromCamel()
-            ->toCobol() . PHP_EOL;   // output: F-B-I
-echo $agency->toSnake() . PHP_EOL;   // output: f_b_i
+$agency->fromCamel();
+echo $agency->toCobol();   // output: F-B-I
+echo $agency->toSnake();   // output: f_b_i
 
-echo $agency->fromAuto()
-            ->toCobol() . PHP_EOL;   // output: FBI
-echo $agency->toSnake() . PHP_EOL;   // output: fbi
-```
-
-Output:
-
-```
-FBI
-fbi
-F-B-I
-f_b_i
-FBI
-fbi
+$agency->fromAuto();
+echo $agency->toCobol();   // output: FBI
+echo $agency->toSnake();   // output: fbi
 ```
 
 Force _Simple Case-Mapping_
 ---------------------------
 
-You can still use `Simple Case-Mapping` even if you are using PHP 7.3 or newer:
+You can still use _Simple Case-Mapping_ even if you are using PHP 7.3 or newer:
 
 ```php
 <?php declare(strict_types=1);
@@ -81,15 +70,11 @@ use Jawira\CaseConverter\Convert;
 
 $robot = new Convert('Straße');
 
-echo $robot->forceSimpleCaseMapping()->toMacro();
+$robot->forceSimpleCaseMapping();
+echo $robot->toMacro();     // output: STRAßE
+echo $robot->toCobol();     // output: STRAßE
 ```
 
-Output:
+[Learn more about Case-Mapping][Case-Mapping]. 
 
-```
-STRAßE
-```
-
-Learn more about [Full Case-Mapping]. 
-
-[Full Case-Mapping]: https://jawira.github.io/case-converter/known-issues.html#full-case-mapping
+[Case-Mapping]: https://jawira.github.io/case-converter/case-mapping.html
