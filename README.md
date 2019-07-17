@@ -123,3 +123,24 @@ This library is licensed under the [MIT LICENSE].
 [magic method]: https://www.php.net/manual/en/language.oop5.magic.php#object.tostring
 [MIT LICENSE]: https://jawira.github.io/case-converter/license.html
 [open an issue]: https://github.com/jawira/case-converter/issues/new
+
+***
+
+My other packages
+-----------------
+
+<dl>
+
+<dt><a href="https://packagist.org/packages/jawira/phing-visualizer">jawira/phing-visualizer</a></dt>
+<dd>Graphical representation of Phing's buildfile.</dd>
+
+<dt><a href="https://packagist.org/packages/jawira/plantuml">jawira/plantuml</a></dt>
+<dd>Provides PlantUML integration: plantuml executable and plantuml.jar</dd>
+
+<dt><a href="https://packagist.org/packages/jawira/plantuml-encoding">jawira/plantuml-encoding</a></dt>
+<dd>PlantUML encoding functions.</dd>
+
+<dt><a href="https://packagist.org/packages/jawira/process-maker">jawira/process-maker</a></dt>
+<dd>Easily install and try ProcessMaker using Docker Compose.</dd>
+
+</dl>
