@@ -4,13 +4,20 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+### Added
+
+- [#38] Added `\Jawira\CaseConverter\Convert::forceSimpleCaseMapping` to force the
+usage of _Single Case-Mapping_ in _PHP 7.3_ and newer. This method has no effect
+in _PHP 7.1_ nor _PHP 7.2_.
+
 ## [v3.0.0] - 2019-06-30
 
 ### Added
 
 - [#36] Static site with documentation <https://jawira.github.io/case-converter/build.png>
-- [#30] Added functions to explicitly set the naming conventions of input string: `fromAuto()`, `fromCamel()`, 
-`fromPascal()`, `fromSnake()`, `fromAda()`, `fromMacro()`, `fromKebab()`, `fromTrain()`, `fromCobol()`, `fromLower()`, 
+- [#30] Added functions to explicitly set the naming conventions of input 
+string: `fromAuto()`, `fromCamel()`, `fromPascal()`, `fromSnake()`, `fromAda()`, 
+`fromMacro()`, `fromKebab()`, `fromTrain()`, `fromCobol()`, `fromLower()`, 
 `fromUpper()`, `fromTitle()`, and `fromSentence()`.    
 
 ### Removed
@@ -21,7 +28,8 @@ All notable changes to this project will be documented in this file.
 
 ### Changed
 
-- [#35] Big refactoring in library's structure, user should not notice this changes
+- [#35] Big refactoring in library's structure, user should not notice this 
+changes
 
 ### Deprecated
 
@@ -30,21 +38,24 @@ All notable changes to this project will be documented in this file.
 
 ### Removed
 
-- [#35] Lot of constants have been removed from `Convert` class: ENCODING, DASH, EMPTY_STRING, SPACE, UNDERSCORE, 
-STRATEGY_DASH, STRATEGY_SPACE, STRATEGY_UNDERSCORE, STRATEGY_UPPERCASE, ADA, CAMEL, COBOL, KEBAB, LOWER, MACRO, PASCAL, 
-SENTENCE, SNAKE, TITLE, TRAIN, UPPER.
+- [#35] Lot of constants have been removed from `Convert` class: ENCODING, DASH, 
+EMPTY_STRING, SPACE, UNDERSCORE, STRATEGY_DASH, STRATEGY_SPACE, 
+STRATEGY_UNDERSCORE, STRATEGY_UPPERCASE, ADA, CAMEL, COBOL, KEBAB, LOWER, MACRO, 
+PASCAL, SENTENCE, SNAKE, TITLE, TRAIN, UPPER.
 
 ## [v2.2.0] - 2019-05-30
 
 ### Added
 
- - [#33] Added support for space based naming conventions: Title case, Sentence case, Upper case, and Lower case.
+ - [#33] Added support for space based naming conventions: Title case, Sentence 
+ case, Upper case, and Lower case.
 
 ## [v2.1.0] - 2019-05-10
 
 ### Added
 
-- [#26] New method to get array with words extracted from original string `\Jawira\CaseConverter\Convert::toArray`
+- [#26] New method to get array with words extracted from original string 
+`\Jawira\CaseConverter\Convert::toArray`
 - PHPLoc target in buildfile
 - [#31] Implement countable interface
 
@@ -220,10 +231,13 @@ SENTENCE, SNAKE, TITLE, TRAIN, UPPER.
 [#26]: https://github.com/jawira/case-converter/pull/26
 [#27]: https://github.com/jawira/case-converter/pull/27
 [#29]: https://github.com/jawira/case-converter/pull/29
+[#30]: https://github.com/jawira/case-converter/pull/30
 [#31]: https://github.com/jawira/case-converter/pull/31
 [#33]: https://github.com/jawira/case-converter/pull/33
 [#35]: https://github.com/jawira/case-converter/pull/35
 [#36]: https://github.com/jawira/case-converter/pull/36
+[#37]: https://github.com/jawira/case-converter/pull/37
+[#38]: https://github.com/jawira/case-converter/pull/38
 [#9]: https://github.com/jawira/case-converter/pull/9
 [v1.0.0]: https://github.com/jawira/case-converter/compare/v0.0.0...v1.0.0
 [v1.0.1]: https://github.com/jawira/case-converter/compare/v1.0.0...v1.0.1
@@ -244,7 +258,4 @@ SENTENCE, SNAKE, TITLE, TRAIN, UPPER.
 [v2.1.0]: https://github.com/jawira/case-converter/compare/v2.0.4...v2.1.0
 [v2.2.0]: https://github.com/jawira/case-converter/compare/v2.1.0...v2.2.0
 [v2.3.0]: https://github.com/jawira/case-converter/compare/v2.2.0...v2.3.0
-[#30]: https://github.com/jawira/case-converter/pull/30
-[#37]: https://github.com/jawira/case-converter/pull/37
-
 [v3.0.0]: https://github.com/jawira/case-converter/compare/v2.3.0...v3.0.0
