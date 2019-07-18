@@ -31,7 +31,8 @@ the_terminator
 Explicit case detection 
 -----------------------
 
-Code:
+In some edge cases you have to explicitly set the format of input string to have 
+the desired output:  
 
 ```php
 <?php declare(strict_types=1);
@@ -42,26 +43,38 @@ use Jawira\CaseConverter\Convert;
 
 $agency = new Convert('FBI');
 
-echo $agency->fromAda()
-            ->toCobol() . PHP_EOL;   // output: FBI
-echo $agency->toSnake() . PHP_EOL;   // output: fbi
+$agency->fromAda();
+echo $agency->toCobol();   // output: FBI
+echo $agency->toSnake();   // output: fbi
 
-echo $agency->fromCamel()
-            ->toCobol() . PHP_EOL;   // output: F-B-I
-echo $agency->toSnake() . PHP_EOL;   // output: f_b_i
+$agency->fromCamel();
+echo $agency->toCobol();   // output: F-B-I
+echo $agency->toSnake();   // output: f_b_i
 
-echo $agency->fromAuto()
-            ->toCobol() . PHP_EOL;   // output: FBI
-echo $agency->toSnake() . PHP_EOL;   // output: fbi
+$agency->fromAuto();
+echo $agency->toCobol();   // output: FBI
+echo $agency->toSnake();   // output: fbi
 ```
 
-Output:
+Force _Simple Case-Mapping_
+---------------------------
 
+You can still use _Simple Case-Mapping_ even if you are using PHP 7.3 or newer:
+
+```php
+<?php declare(strict_types=1);
+
+require __DIR__ . '/vendor/autoload.php';
+
+use Jawira\CaseConverter\Convert;
+
+$robot = new Convert('Straße');
+
+$robot->forceSimpleCaseMapping();
+echo $robot->toMacro();     // output: STRAßE
+echo $robot->toCobol();     // output: STRAßE
 ```
-FBI
-fbi
-F-B-I
-f_b_i
-FBI
-fbi
-```
+
+[Learn more about Case-Mapping][Case-Mapping]. 
+
+[Case-Mapping]: https://jawira.github.io/case-converter/case-mapping.html

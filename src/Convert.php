@@ -45,18 +45,31 @@ use function preg_match;
  * - Train case
  * - Upper case
  *
- * @method self fromCamel() Treat input string as Camel case
- * @method self fromPascal() Treat input string as Pascal case
- * @method self fromSnake() Treat input string as Snake case
- * @method self fromAda() Treat input string as Ada case
- * @method self fromMacro() Treat input string as Macro case
- * @method self fromKebab() Treat input string as Kebab case
- * @method self fromTrain() Treat input string as Train case
- * @method self fromCobol() Treat input string as Cobol case
- * @method self fromLower() Treat input string as Lower case
- * @method self fromUpper() Treat input string as Upper case
- * @method self fromTitle() Treat input string as Title case
- * @method self fromSentence() Treat input string as Sentence case
+ * @method self fromAda() Treat input string as _Ada case_
+ * @method self fromCamel() Treat input string as _Camel case_
+ * @method self fromCobol() Treat input string as _Cobol case_
+ * @method self fromKebab() Treat input string as _Kebab case_
+ * @method self fromLower() Treat input string as _Lower case_
+ * @method self fromMacro() Treat input string as _Macro case_
+ * @method self fromPascal() Treat input string as _Pascal case_
+ * @method self fromSentence() Treat input string as _Sentence case_
+ * @method self fromSnake() Treat input string as _Snake case_
+ * @method self fromTitle() Treat input string as _Title case_
+ * @method self fromTrain() Treat input string as _Train case_
+ * @method self fromUpper() Treat input string as _Upper case_
+ *
+ * @method string toAda() Return string in _Ada case_ format
+ * @method string toCamel() Return string in _Camel case_ format
+ * @method string toCobol() Return string in _Cobol case_ format
+ * @method string toKebab() Return string in _Kebab case_ format
+ * @method string toLower() Return string in _Lower case_ format
+ * @method string toMacro() Return string in _Macro case_ format
+ * @method string toPascal() Return string in _Pascal case_ format
+ * @method string toSentence() Return string in _Sentence case_ format
+ * @method string toSnake() Return string in _Snake case_ format
+ * @method string toTitle() Return string in _Title case_ format
+ * @method string toTrain() Return string in _Train case_ format
+ * @method string toUpper() Return string in _Upper case_ format
  *
  * @see     https://softwareengineering.stackexchange.com/questions/322413/bothered-by-an-unknown-letter-case-name
  * @see     http://www.unicode.org/charts/case/
@@ -76,6 +89,11 @@ class Convert
     protected $words;
 
     /**
+     * @var bool
+     */
+    protected $forceSimpleCaseMapping;
+
+    /**
      * Constructor method
      *
      * @param string $input String to convert
@@ -84,7 +102,8 @@ class Convert
      */
     public function __construct(string $input)
     {
-        $this->originalString = $input;
+        $this->originalString         = $input;
+        $this->forceSimpleCaseMapping = false;
         $this->fromAuto();
     }
 
@@ -150,7 +169,7 @@ class Convert
             throw new CaseConverterException('Error executing regex'); // @codeCoverageIgnore
         }
 
-        return $match === 1;
+        return 1 === $match;
     }
 
     /**
@@ -162,25 +181,43 @@ class Convert
      */
     protected function extractWords(Splitter $splitter): self
     {
-        assert(is_subclass_of($splitter, Splitter::class), 'Unknown naming convention');
-
         $this->words = $splitter->split();
 
         return $this;
     }
 
     /**
-     * Methods to explicitly define naming conventions for input string
+     * Handle `to*` methods and `from*` methods
      *
      * @param string $methodName
      * @param array  $arguments
      *
+     * @return string|\Jawira\CaseConverter\Convert
+     * @throws \Jawira\CaseConverter\CaseConverterException
+     */
+    public function __call($methodName, $arguments)
+    {
+        if (0 === mb_strpos($methodName, 'from')) {
+            $result = $this->handleSplitterMethod($methodName);
+        } elseif (0 === mb_strpos($methodName, 'to')) {
+            $result = $this->handleGluerMethod($methodName);
+        } else {
+            throw new CaseConverterException("Unknown method: $methodName");
+        }
+
+        return $result;
+    }
+
+    /**
+     * Methods to explicitly define naming conventions for input string
+     *
+     * @param string $methodName
+     *
      * @return $this
      * @throws \Jawira\CaseConverter\CaseConverterException
      */
-    public function __call($methodName, $arguments): self
+    protected function handleSplitterMethod(string $methodName): self
     {
-        $strategy = null;
         switch ($methodName) {
             case 'fromCamel':
             case 'fromPascal':
@@ -213,209 +250,60 @@ class Convert
     }
 
     /**
-     * Return string in `Camel case` format.
+     * Handles all methods starting by `to*`
      *
-     * ```
-     * Example: thisIsCamelCase
-     * ```
+     * @param string $methodName
      *
      * @return string
+     * @throws \Jawira\CaseConverter\CaseConverterException
      */
-    public function toCamel(): string
+    protected function handleGluerMethod(string $methodName): string
     {
-        $namingConvention = $this->factory(CamelCase::class);
+        switch ($methodName) {
+            case 'toAda':
+                $className = AdaCase::class;
+                break;
+            case 'toCamel':
+                $className = CamelCase::class;
+                break;
+            case 'toCobol':
+                $className = CobolCase::class;
+                break;
+            case 'toKebab':
+                $className = KebabCase::class;
+                break;
+            case 'toLower':
+                $className = LowerCase::class;
+                break;
+            case 'toMacro':
+                $className = MacroCase::class;
+                break;
+            case 'toPascal':
+                $className = PascalCase::class;
+                break;
+            case 'toSentence':
+                $className = SentenceCase::class;
+                break;
+            case 'toSnake':
+                $className = SnakeCase::class;
+                break;
+            case 'toTitle':
+                $className = TitleCase::class;
+                break;
+            case 'toTrain':
+                $className = TrainCase::class;
+                break;
+            case 'toUpper':
+                $className = UpperCase::class;
+                break;
+            default:
+                throw new CaseConverterException("Unknown method: $methodName");
+                break;
+        }
+        assert(is_subclass_of($className, Gluer::class));
+        $namingConvention = new $className($this->words, $this->forceSimpleCaseMapping);
 
-        return $namingConvention->glue();
-    }
-
-    /**
-     * Creates a \Jawira\CaseConverter\NamingConvention concrete object
-     *
-     * @param string $className Class name
-     *
-     * @return \Jawira\CaseConverter\Glue\Gluer
-     */
-    protected function factory(string $className): Gluer
-    {
-        $parent = Gluer::class;
-        assert(is_subclass_of($className, $parent), "$className is not a $parent subclass");
-
-        return new $className($this->words);
-    }
-
-    /**
-     * Return string in `Pascal case` format.
-     *
-     * ```
-     * Example: ThisIsPascalCase
-     * ```
-     *
-     * @return string
-     */
-    public function toPascal(): string
-    {
-        $namingConvention = $this->factory(PascalCase::class);
-
-        return $namingConvention->glue();
-    }
-
-    /**
-     * Return string in `Snake case` format.
-     *
-     * ```
-     * Example: this_is_snake_case
-     * ```
-     *
-     * @return string
-     */
-    public function toSnake(): string
-    {
-        $namingConvention = $this->factory(SnakeCase::class);
-
-        return $namingConvention->glue();
-    }
-
-    /**
-     * Return string in `Macro case` format.
-     *
-     * ```
-     * Example: THIS_IS_MACRO_CASE
-     * ```
-     *
-     * @return string
-     */
-    public function toMacro(): string
-    {
-        $namingConvention = $this->factory(MacroCase::class);
-
-        return $namingConvention->glue();
-    }
-
-    /**
-     * Return string in `Ada case` format.
-     *
-     * ```
-     * Example: This_Is_Ada_Case
-     * ```
-     *
-     * @return string
-     */
-    public function toAda(): string
-    {
-        $namingConvention = $this->factory(AdaCase::class);
-
-        return $namingConvention->glue();
-    }
-
-    /**
-     * Return string in `Kebab case` format.
-     *
-     * ```
-     * Example: this-is-kebab-case
-     * ```
-     *
-     * @return string
-     */
-    public function toKebab(): string
-    {
-        $namingConvention = $this->factory(KebabCase::class);
-
-        return $namingConvention->glue();
-    }
-
-    /**
-     * Return string in `Cobol case` format.
-     *
-     * ```
-     * Example: THIS-IS-COBOL-CASE
-     * ```
-     *
-     * @return string
-     */
-    public function toCobol(): string
-    {
-        $namingConvention = $this->factory(CobolCase::class);
-
-        return $namingConvention->glue();
-    }
-
-    /**
-     * Return string in `Train case` format.
-     *
-     * ```
-     * Example: This-Is-Train-Case
-     * ```
-     *
-     * @return string
-     */
-    public function toTrain(): string
-    {
-        $namingConvention = $this->factory(TrainCase::class);
-
-        return $namingConvention->glue();
-    }
-
-    /**
-     * Return string in `Title case` format.
-     *
-     * ```
-     * Example: This Is Title Case
-     * ```
-     *
-     * @return string
-     */
-    public function toTitle(): string
-    {
-        $namingConvention = $this->factory(TitleCase::class);
-
-        return $namingConvention->glue();
-    }
-
-    /**
-     * Return string in `Upper case` format.
-     *
-     * ```
-     * Example: THIS IS UPPER CASE
-     * ```
-     *
-     * @return string
-     */
-    public function toUpper(): string
-    {
-        $namingConvention = $this->factory(UpperCase::class);
-
-        return $namingConvention->glue();
-    }
-
-    /**
-     * Return string in `Lower case` format.
-     *
-     * ```
-     * Example: this is lower case
-     * ```
-     *
-     * @return string
-     */
-    public function toLower(): string
-    {
-        $namingConvention = $this->factory(LowerCase::class);
-
-        return $namingConvention->glue();
-    }
-
-    /**
-     * Return string in `Sentence case` format.
-     *
-     * ```
-     * Example: This is sentence case
-     * ```
-     *
-     * @return string
-     */
-    public function toSentence(): string
-    {
-        $namingConvention = $this->factory(SentenceCase::class);
-
+        /** @var \Jawira\CaseConverter\Glue\Gluer $namingConvention Subclass of Gluer (abstract) */
         return $namingConvention->glue();
     }
 
@@ -427,5 +315,19 @@ class Convert
     public function toArray(): array
     {
         return $this->words;
+    }
+
+    /**
+     * Forces to use Simple Case-Mapping
+     *
+     * Call this method if you want to maintain the behaviour before PHP 7.3
+     *
+     * @return \Jawira\CaseConverter\Convert
+     */
+    public function forceSimpleCaseMapping(): self
+    {
+        $this->forceSimpleCaseMapping = true;
+
+        return $this;
     }
 }

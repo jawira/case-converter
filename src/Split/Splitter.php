@@ -6,6 +6,14 @@ use function array_filter;
 use function array_values;
 use function mb_split;
 
+/**
+ * Class Splitter
+ *
+ * A Splitter sub-class allows to read the words contained in a string
+ *
+ * @author Jawira Portugal <dev@tugal.be>
+ * @package Jawira\CaseConverter\Split
+ */
 abstract class Splitter
 {
 

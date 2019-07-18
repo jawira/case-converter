@@ -2,12 +2,10 @@
 
 namespace Jawira\CaseConverter\Glue;
 
-use const MB_CASE_LOWER;
-
 class SnakeCase extends UnderscoreGluer
 {
     public function glue(): string
     {
-        return $this->glueUsingRules(self::DELIMITER, MB_CASE_LOWER);
+        return $this->glueUsingRules(self::DELIMITER, $this->lowerCase);
     }
 }
