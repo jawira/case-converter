@@ -225,3 +225,8 @@ Feature: Convert Case
     When I call "forceSimpleCaseMapping"
     And I call "toMacro"
     Then method should return string "STRAßE"
+
+  Scenario: Zero number disappears (should be fixed)
+    Given CaseConverter class is instantiated with "you-have-0-skills"
+    When I call "toCamel"
+    Then method should return string "youHaveSkills"
