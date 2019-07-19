@@ -16,10 +16,16 @@ class TrainCaseTest extends TestCase
                      ->setMethods(['glueUsingRules'])
                      ->getMock();
 
+        // Setting titleCase and lowerCase properties
+        $reflectionObject  = new ReflectionObject($mock);
+        $titleCaseProperty = $reflectionObject->getProperty('titleCase');
+        $titleCaseProperty->setAccessible(true);
+        $titleCaseProperty->setValue($mock, 123);
+
         // Configuring stub
         $mock->expects($this->once())
              ->method('glueUsingRules')
-             ->with(TrainCase::DELIMITER, MB_CASE_TITLE)
+             ->with(TrainCase::DELIMITER, 123)
              ->willReturn('e1bfd762321e409cee4ac0b6e841963c');
 
         /** @var \Jawira\CaseConverter\Glue\TrainCase $mock */
