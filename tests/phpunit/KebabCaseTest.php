@@ -20,7 +20,7 @@ class KebabCaseTest extends TestCase
                      ->getMock();
 
         // Setting lowerCase properties
-        $reflectionObject   = new ReflectionObject($mock);
+        $reflectionObject  = new ReflectionObject($mock);
         $titleCaseProperty = $reflectionObject->getProperty('lowerCase');
         $titleCaseProperty->setAccessible(true);
         $titleCaseProperty->setValue($mock, 456);
@@ -28,7 +28,7 @@ class KebabCaseTest extends TestCase
         // Configuring stub
         $mock->expects($this->once())
              ->method('glueUsingRules')
-             ->with(KebabCase::DELIMITER, MB_CASE_LOWER)
+             ->with(KebabCase::DELIMITER, 456)
              ->willReturn('e1bfd762321e409cee4ac0b6e841963c');
 
         /** @var \Jawira\CaseConverter\Glue\KebabCase $mock */

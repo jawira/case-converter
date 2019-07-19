@@ -23,7 +23,7 @@ class CobolCaseTest extends TestCase
                      ->getMock();
 
         // Setting `upperCase` property value
-        $reflectionObject   = new ReflectionObject($mock);
+        $reflectionObject  = new ReflectionObject($mock);
         $titleCaseProperty = $reflectionObject->getProperty('upperCase');
         $titleCaseProperty->setAccessible(true);
         $titleCaseProperty->setValue($mock, 789);

@@ -24,7 +24,7 @@ class CamelCaseTest extends TestCase
                      ->getMock();
 
         // Setting titleCase and lowerCase properties
-        $reflectionObject   = new ReflectionObject($mock);
+        $reflectionObject  = new ReflectionObject($mock);
         $titleCaseProperty = $reflectionObject->getProperty('titleCase');
         $titleCaseProperty->setAccessible(true);
         $titleCaseProperty->setValue($mock, 123);
