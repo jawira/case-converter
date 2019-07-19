@@ -6,7 +6,7 @@ is analysed to detect the words in it.
 
 This is also the algorithm used by `Convert::fromAuto` method.
 
-![Detection algorithm](detection-algorithm.png "Detection algorithm")
+![Detection algorithm](images/detection-algorithm.png "Detection algorithm")
 
 1. If input string contains `_` (underscore character), then `_` is used to split string.
 2. If input string contains `-` (dash character), then `-` is used to split string. 

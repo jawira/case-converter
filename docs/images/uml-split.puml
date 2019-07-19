@@ -1,0 +1,35 @@
+@startuml
+namespace Jawira.CaseConverter.Split  {
+	class DashSplitter << class >> {
+		+PATTERN
+		--
+		+split()
+	}
+	abstract Splitter << abstract >> {
+		#inputString
+		--
+		+__construct()
+		+<i>split</i>()
+		#splitUsingPattern()
+	}
+	class SpaceSplitter << class >> {
+		+PATTERN
+		--
+		+split()
+	}
+	class UnderscoreSplitter << class >> {
+		+PATTERN
+		--
+		+split()
+	}
+	class UppercaseSplitter << class >> {
+		+split()
+		#splitUsingUnderscore()
+	}
+}
+Jawira.CaseConverter.Split.DashSplitter --|> Jawira.CaseConverter.Split.Splitter
+Jawira.CaseConverter.Split.SpaceSplitter --|> Jawira.CaseConverter.Split.Splitter
+Jawira.CaseConverter.Split.UnderscoreSplitter --|> Jawira.CaseConverter.Split.Splitter
+Jawira.CaseConverter.Split.UppercaseSplitter --|> Jawira.CaseConverter.Split.Splitter
+@enduml
+

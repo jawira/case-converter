@@ -23,7 +23,7 @@
 
   <target name="refresh"
           description="Update generated files"
-          depends="changelog:links, phing:visualize, plantuml:parse-docs"/>
+          depends="changelog:links, uml-writer:run, plantuml:puml-to-png, phing:visualize"/>
 
   <target name="phploc:run">
     <exec executable="bin/phploc" checkreturn="true" outputProperty="phploc.results">
@@ -159,7 +159,7 @@
     </exec>
   </target>
 
-  <target name="plantuml:parse-docs" description="Parse PlantUML files to image from docs dir">
+  <target name="plantuml:puml-to-png" description="Parse PlantUML files to image from docs dir">
     <composer command="require">
       <arg value="jawira/plantuml"/>
     </composer>
@@ -183,29 +183,40 @@
     <composer command="require">
       <arg value="jawira/phing-visualizer"/>
     </composer>
-    <exec executable="export">
-      <!-- http://plantuml.com/faq -->
-      <arg value="PLANTUML_LIMIT_SIZE=1000"/>
-    </exec>
     <exec executable="vendor/bin/phing-visualizer">
       <arg line="--output"/>
-      <arg file="./docs/build.png"/>
+      <arg file="./docs/images/build.png"/>
     </exec>
     <composer command="remove">
       <arg value="jawira/phing-visualizer"/>
     </composer>
   </target>
 
-  <target name="umlwriter:run" description="Generate Class diagram">
+  <target name="uml-writer:run" description="Generate Class diagram">
     <composer command="require">
       <arg value="bartlett/php-reflect"/>
       <arg value="bartlett/umlwriter"/>
     </composer>
 
-    <exec executable="vendor/bin/umlwriter" output="docs/classes.puml">
-      <arg line="diagram:render"/>
+    <exec executable="vendor/bin/umlwriter" output="docs/images/uml-case-converter.puml">
+      <arg line="diagram:render:namespace"/>
       <arg value="--processor=plantuml"/>
       <arg path="src"/>
+      <arg value="Jawira\\CaseConverter"/>
+    </exec>
+
+    <exec executable="vendor/bin/umlwriter" output="docs/images/uml-glue.puml">
+      <arg line="diagram:render:namespace"/>
+      <arg value="--processor=plantuml"/>
+      <arg path="src/Glue"/>
+      <arg value="Jawira\\CaseConverter\\Glue"/>
+    </exec>
+
+    <exec executable="vendor/bin/umlwriter" output="docs/images/uml-split.puml">
+      <arg line="diagram:render:namespace"/>
+      <arg value="--processor=plantuml"/>
+      <arg path="src/Split"/>
+      <arg value="Jawira\\CaseConverter\\Split"/>
     </exec>
 
     <composer command="remove">
@@ -216,7 +227,7 @@
 
   <target name="mkdocs:deploy"
           description="Deploy documentation to gh-pages"
-          depends="mkdocs:copy-docs, plantuml:parse-docs, phing:visualize">
+          depends="mkdocs:copy-docs, uml-writer:run, plantuml:puml-to-png, phing:visualize">
     <exec executable="mkdocs" passthru="true" checkreturn="true">
       <arg value="gh-deploy"/>
     </exec>
@@ -224,7 +235,7 @@
 
   <target name="mkdocs:build-n-serve"
           description="Generate and open static site"
-          depends="mkdocs:copy-docs, plantuml:parse-docs, phing:visualize">
+          depends="mkdocs:copy-docs, uml-writer:run, plantuml:puml-to-png, phing:visualize">
     <exec executable="mkdocs" passthru="true" checkreturn="true">
       <arg value="build"/>
     </exec>
