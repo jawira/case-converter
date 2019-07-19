@@ -54,5 +54,6 @@ Utility methods
 
 | Method                      | Description                       |
 | --------------------------- | --------------------------------- |
+| `getSource()`               | Returns original input string     | 
 | `toArray()`                 | Returns array with detected words | 
 | `forceSimpleCaseMapping()`  | Output sting uses _Simple Case-Mapping_ even if you are using PHP 7.3 or newer | 
