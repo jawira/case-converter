@@ -300,11 +300,25 @@ class Convert
                 throw new CaseConverterException("Unknown method: $methodName");
                 break;
         }
-        assert(is_subclass_of($className, Gluer::class));
-        $namingConvention = new $className($this->words, $this->forceSimpleCaseMapping);
 
-        /** @var \Jawira\CaseConverter\Glue\Gluer $namingConvention Subclass of Gluer (abstract) */
-        return $namingConvention->glue();
+        $gluer = $this->createGluer($className, $this->words, $this->forceSimpleCaseMapping);
+
+        /** @var \Jawira\CaseConverter\Glue\Gluer $gluer Subclass of Gluer (abstract) */
+        return $gluer->glue();
+    }
+
+    /**
+     * @param string $className              Class name in string format
+     * @param array  $words                  Words to glue
+     * @param bool   $forceSimpleCaseMapping Should _Simple Case-Mapping_ be forced?
+     *
+     * @return \Jawira\CaseConverter\Glue\Gluer
+     */
+    protected function createGluer(string $className, array $words, bool $forceSimpleCaseMapping): Gluer
+    {
+        assert(is_subclass_of($className, Gluer::class));
+
+        return new $className($words, $forceSimpleCaseMapping);
     }
 
     /**

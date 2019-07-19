@@ -156,56 +156,61 @@ class ConvertTest extends TestCase
     /**
      * Test _converter methods_: _toCamel_, _toSnake_, ...
      *
-     * @dataProvider converterMethodProvider()
+     * This test do not force the use of _Simple Case-Mapping_ .
      *
-     * @covers       \Jawira\CaseConverter\Convert::toAda()
-     * @covers       \Jawira\CaseConverter\Convert::toCamel()
-     * @covers       \Jawira\CaseConverter\Convert::toCobol()
-     * @covers       \Jawira\CaseConverter\Convert::toKebab()
-     * @covers       \Jawira\CaseConverter\Convert::toLower()
-     * @covers       \Jawira\CaseConverter\Convert::toMacro()
-     * @covers       \Jawira\CaseConverter\Convert::toPascal()
-     * @covers       \Jawira\CaseConverter\Convert::toSentence()
-     * @covers       \Jawira\CaseConverter\Convert::toSnake()
-     * @covers       \Jawira\CaseConverter\Convert::toTitle()
-     * @covers       \Jawira\CaseConverter\Convert::toTrain()
-     * @covers       \Jawira\CaseConverter\Convert::toUpper()
+     * @dataProvider handleGluerMethodProvider()
+     *
+     * @covers       \Jawira\CaseConverter\Convert::handleGluerMethod
      *
      * @param string $methodName
      * @param string $className
      *
+     * @throws \ReflectionException
      */
-    public function testConverterMethodCallsGlueString(string $methodName, string $className)
+    public function testHandleGluerMethod(string $methodName, string $className)
     {
-        $expected = 'this is a dummy text';
+        // Gluer class
+        $gluerMock = $this->getMockBuilder($className)
+                          ->disableOriginalConstructor()
+                          ->setMethods(['glue'])
+                          ->getMock();
+        $gluerMock->expects($this->once())
+                  ->method('glue')
+                  ->willReturn('this is a dummy text');
 
-        $namingConvention = $this->getMockBuilder($className)
-                                 ->disableOriginalConstructor()
-                                 ->setMethods(['glue'])
-                                 ->getMock();
-
-        $namingConvention->expects($this->once())
-                         ->method('glue')
-                         ->willReturn($expected);
-
+        // Convert class
         $convertMock = $this->getMockBuilder(Convert::class)
                             ->disableOriginalConstructor()
-                            ->setMethods(['factory'])
+                            ->setMethods(['createGluer'])
                             ->getMock();
-
         $convertMock->expects($this->once())
-                    ->method('factory')
-                    ->willReturn($namingConvention);
+                    ->method('createGluer')
+                    ->with($className, ['dummy', 'd455b'], false)
+                    ->willReturn($gluerMock);
 
-        /** @var \Jawira\CaseConverter\Glue\Gluer $convertMock */
-        $returned = $convertMock->$methodName();
-        $this->assertSame($expected, $returned);
+        // Setting detected words
+        $reflectionObject = new ReflectionObject($convertMock);
+        $wordsProperty    = $reflectionObject->getProperty('words');
+        $wordsProperty->setAccessible(true);
+        $wordsProperty->setValue($convertMock, ['dummy', 'd455b']);
+        // Setting _Simple Case-Mapping_ as false
+        $forceProperty = $reflectionObject->getProperty('forceSimpleCaseMapping');
+        $forceProperty->setAccessible(true);
+        $forceProperty->setValue($convertMock, false);
+
+
+        // Invoking protected method
+        $method = new ReflectionMethod($convertMock, 'handleGluerMethod');
+        $method->setAccessible(true);
+        $result = $method->invokeArgs($convertMock, [$methodName]);
+
+        $this->assertSame('this is a dummy text', $result);
     }
 
     /**
-     * Return and array with the name of all _converterMethods_.
+     * Return and array with the name of all _converter methods_.
      */
-    public function converterMethodProvider()
+    public function handleGluerMethodProvider()
     {
         return [
             'toAda'      => ['toAda', AdaCase::class],
@@ -242,7 +247,7 @@ class ConvertTest extends TestCase
         $splitterMock->expects($this->once())
                      ->method('split')
                      ->with()
-                     ->willReturn(['dummy', 'array']);
+                     ->willReturn(['dummy', 'array', '8d84d']);
 
         // Preparing Convert object
         $convertMock = $this->getMockBuilder(Convert::class)
@@ -256,7 +261,7 @@ class ConvertTest extends TestCase
         $method->setAccessible(true);
         $result = $method->invoke($convertMock, $splitterMock);
 
-        $this->assertAttributeEquals(['dummy', 'array'], 'words', $convertMock);
+        $this->assertAttributeEquals(['dummy', 'array', '8d84d'], 'words', $convertMock);
         $this->assertInstanceOf(Convert::class, $result);
     }
 
@@ -302,15 +307,15 @@ class ConvertTest extends TestCase
     }
 
     /**
-     * @covers       \Jawira\CaseConverter\Convert::factory
+     * @covers       \Jawira\CaseConverter\Convert::createGluer
      * @covers       \Jawira\CaseConverter\Glue\Gluer::__construct
-     * @dataProvider factoryProvider
+     * @dataProvider createGluerProvider
      *
      * @param string $className
      *
      * @throws \ReflectionException
      */
-    public function testFactory(string $className)
+    public function testCreateGluerProvider(string $className)
     {
         // Preparing Convert mock
         $mock = $this->getMockBuilder(Convert::class)
@@ -318,21 +323,16 @@ class ConvertTest extends TestCase
                      ->setMethods()
                      ->getMock();
 
-        // Setting value to protected property
-        $reflectionObject   = new ReflectionObject($mock);
-        $reflectionProperty = $reflectionObject->getProperty('words');
-        $reflectionProperty->setAccessible(true);
-        $reflectionProperty->setValue($mock, ['dummy', 'array']);
-
         // Calling protected method
-        $reflectionMethod = $reflectionObject->getMethod('factory');
+        $reflectionObject   = new ReflectionObject($mock);
+        $reflectionMethod = $reflectionObject->getMethod('createGluer');
         $reflectionMethod->setAccessible(true);
-        $result = $reflectionMethod->invoke($mock, $className);
+        $gluerObject = $reflectionMethod->invoke($mock, $className, ['dummy', 'array'], false);
 
-        $this->assertInstanceOf(Gluer::class, $result);
+        $this->assertInstanceOf(Gluer::class, $gluerObject);
     }
 
-    public function factoryProvider()
+    public function createGluerProvider()
     {
         return [
             [AdaCase::class],

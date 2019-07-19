@@ -16,10 +16,16 @@ class SnakeCaseTest extends TestCase
                      ->setMethods(['glueUsingRules'])
                      ->getMock();
 
+        // Setting titleCase and lowerCase properties
+        $reflectionObject  = new ReflectionObject($mock);
+        $lowerCaseProperty = $reflectionObject->getProperty('lowerCase');
+        $lowerCaseProperty->setAccessible(true);
+        $lowerCaseProperty->setValue($mock, 456);
+
         // Configuring stub
         $mock->expects($this->once())
              ->method('glueUsingRules')
-             ->with(SnakeCase::DELIMITER, MB_CASE_LOWER)
+             ->with(SnakeCase::DELIMITER, 456)
              ->willReturn('e1bfd762321e409cee4ac0b6e841963c');
 
         /** @var \Jawira\CaseConverter\Glue\SnakeCase $mock */
