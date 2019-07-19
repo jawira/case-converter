@@ -1,0 +1,59 @@
+@startuml
+
+title Case Converter
+skinparam ArrowFontColor Black
+skinparam ArrowThickness 2
+skinparam UseCaseBackgroundColor #FFFECC
+skinparam UseCaseBorderColor #333333
+skinparam UseCaseBorderThickness 2
+skinparam UseCaseFontColor Black
+
+(help)
+(setup)
+(qa)
+(docs:refresh-images)
+(phploc:run)
+(composer:validate)
+(composer:install-dev)
+(phpunit:run)
+(phpunit:open-coverage)
+(php:lint)
+(behat:run)
+(phpstan:run)
+(phive:install)
+(changelog:links)
+(cc:get)
+(cc:before-build)
+(cc:after-build)
+(plantuml:puml-to-png)
+(git:list-tags)
+(phing:visualize)
+(uml-writer:run)
+(mkdocs:deploy)
+(mkdocs:build-n-serve)
+(mkdocs:copy-docs)
+
+
+(setup) -[#5D9CEC]-> (composer:install-dev) : depend:1
+(setup) -[#5D9CEC]-> (phive:install) : depend:2
+(setup) -[#5D9CEC]-> (cc:get) : depend:3
+(setup) -[#5D9CEC]-> (docs:refresh-images) : depend:4
+(qa) -[#5D9CEC]-> (php:lint) : depend:1
+(qa) -[#5D9CEC]-> (composer:validate) : depend:2
+(qa) -[#5D9CEC]-> (phpunit:run) : depend:3
+(qa) -[#5D9CEC]-> (behat:run) : depend:4
+(qa) -[#5D9CEC]-> (phpstan:run) : depend:5
+(qa) -[#5D9CEC]-> (phploc:run) : depend:6
+(docs:refresh-images) -[#5D9CEC]-> (uml-writer:run) : depend:1
+(docs:refresh-images) -[#5D9CEC]-> (plantuml:puml-to-png) : depend:2
+(docs:refresh-images) -[#5D9CEC]-> (phing:visualize) : depend:3
+(phpunit:run) -[#5D9CEC]-> (phive:install) : depend:1
+(phpunit:open-coverage) -[#5D9CEC]-> (phpunit:run) : depend:1
+(behat:run) -[#5D9CEC]-> (phive:install) : depend:1
+(phpstan:run) -[#5D9CEC]-> (phive:install) : depend:1
+(mkdocs:deploy) -[#5D9CEC]-> (mkdocs:copy-docs) : depend:1
+(mkdocs:deploy) -[#5D9CEC]-> (docs:refresh-images) : depend:2
+(mkdocs:build-n-serve) -[#5D9CEC]-> (mkdocs:copy-docs) : depend:1
+(mkdocs:build-n-serve) -[#5D9CEC]-> (docs:refresh-images) : depend:2
+
+@enduml

@@ -15,15 +15,15 @@
 
   <target name="setup"
           description="Install dependencies"
-          depends="composer:install-dev, phive:install, cc:get"/>
+          depends="composer:install-dev, phive:install, cc:get, docs:refresh-images"/>
 
   <target name="qa"
           description="Run quality tests"
           depends="php:lint, composer:validate, phpunit:run, behat:run, phpstan:run, phploc:run"/>
 
-  <target name="refresh"
-          description="Update generated files"
-          depends="changelog:links, uml-writer:run, plantuml:puml-to-png, phing:visualize"/>
+  <target name="docs:refresh-images"
+          description="Update and regenerate docs images"
+          depends="uml-writer:run, plantuml:puml-to-png, phing:visualize"/>
 
   <target name="phploc:run">
     <exec executable="bin/phploc" checkreturn="true" outputProperty="phploc.results">
@@ -171,7 +171,7 @@
     </composer>
   </target>
 
-  <target name="git:tags" description="List all git tags">
+  <target name="git:list-tags" description="List all git tags">
     <!--https://stackoverflow.com/a/34239190/4345061-->
     <exec executable="git" passthru="true">
       <arg value="log"/>
@@ -184,8 +184,10 @@
       <arg value="jawira/phing-visualizer"/>
     </composer>
     <exec executable="vendor/bin/phing-visualizer">
-      <arg line="--output"/>
-      <arg file="./docs/images/build.png"/>
+      <arg value="--format"/>
+      <arg value="puml"/>
+      <arg value="--output"/>
+      <arg file="./docs/images/build.puml"/>
     </exec>
     <composer command="remove">
       <arg value="jawira/phing-visualizer"/>
@@ -227,7 +229,7 @@
 
   <target name="mkdocs:deploy"
           description="Deploy documentation to gh-pages"
-          depends="mkdocs:copy-docs, uml-writer:run, plantuml:puml-to-png, phing:visualize">
+          depends="mkdocs:copy-docs, docs:refresh-images">
     <exec executable="mkdocs" passthru="true" checkreturn="true">
       <arg value="gh-deploy"/>
     </exec>
@@ -235,7 +237,7 @@
 
   <target name="mkdocs:build-n-serve"
           description="Generate and open static site"
-          depends="mkdocs:copy-docs, uml-writer:run, plantuml:puml-to-png, phing:visualize">
+          depends="mkdocs:copy-docs, docs:refresh-images">
     <exec executable="mkdocs" passthru="true" checkreturn="true">
       <arg value="build"/>
     </exec>
