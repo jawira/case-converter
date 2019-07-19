@@ -27,12 +27,14 @@
       <w>oneline</w>
       <w>phing</w>
       <w>phive</w>
+      <w>phpcs</w>
       <w>phploc</w>
       <w>phpstan</w>
       <w>plantuml</w>
       <w>puml</w>
       <w>quico</w>
       <w>readthedocs</w>
+      <w>skinparam</w>
       <w>spéciale</w>
       <w>startuml</w>
       <w>strasse</w>
