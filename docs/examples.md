@@ -1,6 +1,9 @@
 Examples
 ========
 
+To use **Case Converter** you have to instantiate `Convert` class, then you
+should call `to*()` methods.
+
 Basic usage
 -----------
 

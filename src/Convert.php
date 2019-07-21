@@ -81,7 +81,7 @@ class Convert
     /**
      * @var string Input string to convert
      */
-    protected $originalString;
+    protected $source;
 
     /**
      * @var string[] Words extracted from input string
@@ -96,13 +96,13 @@ class Convert
     /**
      * Constructor method
      *
-     * @param string $input String to convert
+     * @param string $source String to convert
      *
      * @throws \Jawira\CaseConverter\CaseConverterException
      */
-    public function __construct(string $input)
+    public function __construct(string $source)
     {
-        $this->originalString         = $input;
+        $this->source                 = $source;
         $this->forceSimpleCaseMapping = false;
         $this->fromAuto();
     }
@@ -115,7 +115,7 @@ class Convert
      */
     public function fromAuto(): self
     {
-        $strategy = $this->analyse($this->originalString);
+        $strategy = $this->analyse($this->source);
         $this->extractWords($strategy);
 
         return $this;
@@ -187,6 +187,16 @@ class Convert
     }
 
     /**
+     * Returns original input string
+     *
+     * @return string Original input string
+     */
+    public function getSource(): string
+    {
+        return $this->source;
+    }
+
+    /**
      * Handle `to*` methods and `from*` methods
      *
      * @param string $methodName
@@ -221,23 +231,23 @@ class Convert
         switch ($methodName) {
             case 'fromCamel':
             case 'fromPascal':
-                $strategy = new UppercaseSplitter($this->originalString);
+                $strategy = new UppercaseSplitter($this->source);
                 break;
             case 'fromSnake':
             case 'fromAda':
             case 'fromMacro':
-                $strategy = new UnderscoreSplitter($this->originalString);
+                $strategy = new UnderscoreSplitter($this->source);
                 break;
             case 'fromKebab':
             case 'fromTrain':
             case 'fromCobol':
-                $strategy = new DashSplitter($this->originalString);
+                $strategy = new DashSplitter($this->source);
                 break;
             case 'fromLower':
             case 'fromUpper':
             case 'fromTitle':
             case 'fromSentence':
-                $strategy = new SpaceSplitter($this->originalString);
+                $strategy = new SpaceSplitter($this->source);
                 break;
             default:
                 throw new CaseConverterException("Unknown method: $methodName");
