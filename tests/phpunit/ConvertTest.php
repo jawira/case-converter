@@ -371,4 +371,22 @@ class ConvertTest extends TestCase
         $result = $convertMock->getSource();
         $this->assertSame('this is source string', $result);
     }
+
+    /**
+     * @covers \Jawira\CaseConverter\Convert::forceSimpleCaseMapping
+     */
+    public function testForceSimpleCaseMapping()
+    {
+        // Preparing Convert object
+        $convertMock = $this->getMockBuilder(Convert::class)
+                            ->disableOriginalConstructor()
+                            ->setMethods()
+                            ->getMock();
+
+        /** @var Convert $convertMock */
+        $result = $convertMock->forceSimpleCaseMapping();
+
+        $this->assertInstanceOf(Convert::class, $result);
+        $this->assertAttributeEquals(true, 'forceSimpleCaseMapping', $convertMock);
+    }
 }
