@@ -230,3 +230,8 @@ Feature: Convert Case
     Given CaseConverter class is instantiated with "you-have-0-skills"
     When I call "toCamel"
     Then method should return string "youHaveSkills"
+
+  Scenario: Retrieving original string
+    Given CaseConverter class is instantiated with "  A commissioned mirror swears.  "
+    When I call "getSource"
+    Then method should return string "  A commissioned mirror swears.  "

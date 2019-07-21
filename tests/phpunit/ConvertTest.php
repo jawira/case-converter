@@ -198,7 +198,6 @@ class ConvertTest extends TestCase
         $forceProperty->setAccessible(true);
         $forceProperty->setValue($convertMock, false);
 
-
         // Invoking protected method
         $method = new ReflectionMethod($convertMock, 'handleGluerMethod');
         $method->setAccessible(true);
@@ -324,7 +323,7 @@ class ConvertTest extends TestCase
                      ->getMock();
 
         // Calling protected method
-        $reflectionObject   = new ReflectionObject($mock);
+        $reflectionObject = new ReflectionObject($mock);
         $reflectionMethod = $reflectionObject->getMethod('createGluer');
         $reflectionMethod->setAccessible(true);
         $gluerObject = $reflectionMethod->invoke($mock, $className, ['dummy', 'array'], false);
@@ -348,5 +347,28 @@ class ConvertTest extends TestCase
             [TrainCase::class],
             [UpperCase::class],
         ];
+    }
+
+    /**
+     * @covers \Jawira\CaseConverter\Convert::getSource
+     * @throws \ReflectionException
+     */
+    public function testGetSource()
+    {
+        // Preparing Convert object
+        $convertMock = $this->getMockBuilder(Convert::class)
+                            ->disableOriginalConstructor()
+                            ->setMethods()
+                            ->getMock();
+
+        // Setting detected words
+        $reflectionObject = new ReflectionObject($convertMock);
+        $sourceProperty   = $reflectionObject->getProperty('source');
+        $sourceProperty->setAccessible(true);
+        $sourceProperty->setValue($convertMock, 'this is source string');
+
+        /** @var Convert $convertMock */
+        $result = $convertMock->getSource();
+        $this->assertSame('this is source string', $result);
     }
 }
