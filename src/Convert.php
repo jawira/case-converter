@@ -115,8 +115,8 @@ class Convert
      */
     public function fromAuto(): self
     {
-        $strategy = $this->analyse($this->source);
-        $this->extractWords($strategy);
+        $splittingStrategy = $this->analyse($this->source);
+        $this->extractWords($splittingStrategy);
 
         return $this;
     }
@@ -132,18 +132,18 @@ class Convert
     protected function analyse(string $input): Splitter
     {
         if (mb_strpos($input, UnderscoreGluer::DELIMITER)) {
-            $strategy = new UnderscoreSplitter($input);
+            $splittingStrategy = new UnderscoreSplitter($input);
         } elseif (mb_strpos($input, DashGluer::DELIMITER)) {
-            $strategy = new DashSplitter($input);
+            $splittingStrategy = new DashSplitter($input);
         } elseif (mb_strpos($input, SpaceGluer::DELIMITER)) {
-            $strategy = new SpaceSplitter($input);
+            $splittingStrategy = new SpaceSplitter($input);
         } elseif ($this->isUppercaseWord($input)) {
-            $strategy = new UnderscoreSplitter($input);
+            $splittingStrategy = new UnderscoreSplitter($input);
         } else {
-            $strategy = new UppercaseSplitter($input);
+            $splittingStrategy = new UppercaseSplitter($input);
         }
 
-        return $strategy;
+        return $splittingStrategy;
     }
 
     /**
@@ -231,30 +231,30 @@ class Convert
         switch ($methodName) {
             case 'fromCamel':
             case 'fromPascal':
-                $strategy = new UppercaseSplitter($this->source);
+                $splittingStrategy = new UppercaseSplitter($this->source);
                 break;
             case 'fromSnake':
             case 'fromAda':
             case 'fromMacro':
-                $strategy = new UnderscoreSplitter($this->source);
+                $splittingStrategy = new UnderscoreSplitter($this->source);
                 break;
             case 'fromKebab':
             case 'fromTrain':
             case 'fromCobol':
-                $strategy = new DashSplitter($this->source);
+                $splittingStrategy = new DashSplitter($this->source);
                 break;
             case 'fromLower':
             case 'fromUpper':
             case 'fromTitle':
             case 'fromSentence':
-                $strategy = new SpaceSplitter($this->source);
+                $splittingStrategy = new SpaceSplitter($this->source);
                 break;
             default:
                 throw new CaseConverterException("Unknown method: $methodName");
                 break;
         }
 
-        $this->extractWords($strategy);
+        $this->extractWords($splittingStrategy);
 
         return $this;
     }
