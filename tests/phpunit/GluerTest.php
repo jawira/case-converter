@@ -72,7 +72,7 @@ class GluerTest extends TestCase
      * @dataProvider changeWordsCaseProvider
      *
      * @param array $words
-     * @param int $caseMode
+     * @param int   $caseMode
      * @param array $expected
      *
      * @throws \ReflectionException
@@ -112,7 +112,7 @@ class GluerTest extends TestCase
      * @dataProvider changeFirstWordCaseProvider
      *
      * @param array $words
-     * @param int $caseMode
+     * @param int   $caseMode
      * @param array $expected
      *
      * @throws \ReflectionException
@@ -144,6 +144,73 @@ class GluerTest extends TestCase
             [['HoLa', 'MuNdO'], MB_CASE_LOWER, ['hola', 'MuNdO']],
             [['HoLa', 'MuNdO'], MB_CASE_UPPER, ['HOLA', 'MuNdO']],
             [['HoLa', 'MuNdO'], MB_CASE_TITLE, ['Hola', 'MuNdO']],
+        ];
+    }
+
+    /**
+     * @requires     PHP 7.3
+     * @covers       \Jawira\CaseConverter\Glue\Gluer::setSimpleCaseMappingConstants
+     * @throws \ReflectionException
+     */
+    public function testSet()
+    {
+        // Disabling constructor without stub methods
+        $mock = $this->getMockBuilder(Gluer::class)
+                     ->disableOriginalConstructor()
+                     ->setMethods(['glueUsingRules'])
+                     ->getMockForAbstractClass();
+
+        // Making accessible a protected method
+        $reflection = new ReflectionObject($mock);
+        $method     = $reflection->getMethod('setSimpleCaseMappingConstants');
+        $method->setAccessible(true);
+        $result = $method->invoke($mock);
+
+        $this->assertInstanceOf(Gluer::class, $result);
+        $this->assertAttributeSame(4, 'upperCase', $mock);
+        $this->assertAttributeSame(5, 'lowerCase', $mock);
+        $this->assertAttributeSame(6, 'titleCase', $mock);
+    }
+
+    /**
+     * @covers       \Jawira\CaseConverter\Glue\Gluer::__construct
+     * @dataProvider constructorProvider
+     *
+     *
+     * @param array $words
+     * @param bool  $forceSimpleCaseMapping
+     * @param int   $callCount
+     *
+     * @throws \ReflectionException
+     */
+    public function testConstructor(array $words = ['ab', 'cd'], bool $forceSimpleCaseMapping = false, int $callCount = 0)
+    {
+        // Disabling constructor without stub methods
+        $mock = $this->getMockBuilder(Gluer::class)
+                     ->disableOriginalConstructor()
+                     ->setMethods(['setSimpleCaseMappingConstants'])
+                     ->getMockForAbstractClass();
+
+        // Method will be called once
+        $mock->expects($this->exactly($callCount))
+             ->method('setSimpleCaseMappingConstants');
+
+        // now call the constructor
+        $reflectedClass = new ReflectionClass($mock);
+        $constructor    = $reflectedClass->getConstructor();
+        $constructor->invoke($mock, $words, $forceSimpleCaseMapping);
+
+        $this->assertAttributeSame(0, 'upperCase', $mock);
+        $this->assertAttributeSame(1, 'lowerCase', $mock);
+        $this->assertAttributeSame(2, 'titleCase', $mock);
+        $this->assertAttributeSame($words, 'words', $mock);
+    }
+
+    public function constructorProvider()
+    {
+        return [
+            [['dummy', 'f4s2Q'], false, 0],
+            [['dummy', '7e7e7'], true, 1],
         ];
     }
 }

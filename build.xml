@@ -59,6 +59,7 @@
       <arg line="--configuration=config/phpunit.xml"/>
       <arg value="--testdox"/>
       <arg value="--verbose"/>
+      <arg value="--stop-on-defect"/>
     </exec>
   </target>
 
