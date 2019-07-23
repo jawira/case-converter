@@ -115,8 +115,8 @@ class Convert
      */
     public function fromAuto(): self
     {
-        $splittingStrategy = $this->analyse($this->source);
-        $this->extractWords($splittingStrategy);
+        $splitter = $this->analyse($this->source);
+        $this->extractWords($splitter);
 
         return $this;
     }
@@ -231,32 +231,46 @@ class Convert
         switch ($methodName) {
             case 'fromCamel':
             case 'fromPascal':
-                $splittingStrategy = new UppercaseSplitter($this->source);
+                $splitterName = UppercaseSplitter::class;
                 break;
             case 'fromSnake':
             case 'fromAda':
             case 'fromMacro':
-                $splittingStrategy = new UnderscoreSplitter($this->source);
+                $splitterName = UnderscoreSplitter::class;
                 break;
             case 'fromKebab':
             case 'fromTrain':
             case 'fromCobol':
-                $splittingStrategy = new DashSplitter($this->source);
+                $splitterName = DashSplitter::class;
                 break;
             case 'fromLower':
             case 'fromUpper':
             case 'fromTitle':
             case 'fromSentence':
-                $splittingStrategy = new SpaceSplitter($this->source);
+                $splitterName = SpaceSplitter::class;
                 break;
             default:
                 throw new CaseConverterException("Unknown method: $methodName");
                 break;
         }
 
-        $this->extractWords($splittingStrategy);
+        $splitter = $this->createSplitter($splitterName, $this->source);
+        $this->extractWords($splitter);
 
         return $this;
+    }
+
+    /**
+     * @param string $className Class name in string format
+     * @param string $source    Input string to be split
+     *
+     * @return \Jawira\CaseConverter\Split\Splitter
+     */
+    protected function createSplitter(string $className, string $source): Splitter
+    {
+        assert(is_subclass_of($className, Splitter::class));
+
+        return new $className($source);
     }
 
     /**
@@ -313,7 +327,6 @@ class Convert
 
         $gluer = $this->createGluer($className, $this->words, $this->forceSimpleCaseMapping);
 
-        /** @var \Jawira\CaseConverter\Glue\Gluer $gluer Subclass of Gluer (abstract) */
         return $gluer->glue();
     }
 
