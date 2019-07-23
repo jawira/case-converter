@@ -461,5 +461,70 @@ class ConvertTest extends TestCase
         $reflectionMethod = $reflectionObject->getMethod('fromAuto');
         $reflectionMethod->setAccessible(true);
         $result = $reflectionMethod->invoke($convertMock, 'fromAuto');
+
+        $this->assertInstanceOf(Convert::class, $result);
+        $this->assertSame($convertMock, $result);
+    }
+
+    /**
+     * @covers       \Jawira\CaseConverter\Convert::handleSplitterMethod
+     *
+     * @param string $methodName
+     * @param string $splitterName
+     *
+     * @dataProvider handleSplitterMethodProvider
+     *
+     * @throws \ReflectionException
+     */
+    public function testHandleSplitterMethod(string $methodName = 'fromKebab', string $splitterName = DashSplitter::class, string $sourceString = 'dummy-azer12')
+    {
+        // Splitter class
+        $splitterMock = $this->getMockBuilder($splitterName)
+                             ->disableOriginalConstructor()
+                             ->getMock();
+
+        // Convert class
+        $convertMock = $this->getMockBuilder(Convert::class)
+                            ->disableOriginalConstructor()
+                            ->setMethods(['createSplitter', 'extractWords'])
+                            ->getMock();
+        $convertMock->expects($this->once())
+                    ->method('createSplitter')
+                    ->with($splitterName, $sourceString)
+                    ->willReturn($splitterMock);
+        $convertMock->expects($this->once())
+                    ->method('extractWords')
+                    ->with($splitterMock);
+
+        // Add source attribute
+        $reflectionObject = new ReflectionObject($convertMock);
+        $wordsProperty    = $reflectionObject->getProperty('source');
+        $wordsProperty->setAccessible(true);
+        $wordsProperty->setValue($convertMock, $sourceString);
+
+        // Invoking protected method
+        $method = new ReflectionMethod($convertMock, 'handleSplitterMethod');
+        $method->setAccessible(true);
+        $result = $method->invoke($convertMock, $methodName);
+
+        $this->assertSame($convertMock, $result);
+    }
+
+    public function handleSplitterMethodProvider()
+    {
+        return [
+            ['fromCamel', UppercaseSplitter::class],
+            ['fromPascal', UppercaseSplitter::class],
+            ['fromSnake', UnderscoreSplitter::class],
+            ['fromAda', UnderscoreSplitter::class],
+            ['fromMacro', UnderscoreSplitter::class],
+            ['fromKebab', DashSplitter::class],
+            ['fromTrain', DashSplitter::class],
+            ['fromCobol', DashSplitter::class],
+            ['fromLower', SpaceSplitter::class],
+            ['fromUpper', SpaceSplitter::class],
+            ['fromTitle', SpaceSplitter::class],
+            ['fromSentence', SpaceSplitter::class],
+        ];
     }
 }
