@@ -587,4 +587,95 @@ class ConvertTest extends TestCase
             [UppercaseSplitter::class, 'dummy-string'],
         ];
     }
+
+    /**
+     * Testing magic function call
+     *
+     * @covers       \Jawira\CaseConverter\Convert::__call
+     * @dataProvider callProvider
+     *
+     * @param string $methodName
+     * @param array  $arguments
+     * @param int    $splitterCount
+     * @param int    $gluerCount
+     * @param mixed  $handlerResult
+     */
+    public function testCall(string $methodName, $arguments, int $splitterCount, int $gluerCount, string $handlerResult = '')
+    {
+        // Preparing Convert mock
+        $convertMock = $this->getMockBuilder(Convert::class)
+                            ->disableOriginalConstructor()
+                            ->setMethods(['handleSplitterMethod', 'handleGluerMethod'])
+                            ->getMock();
+
+        $convertMock->expects($this->exactly($splitterCount))
+                    ->method('handleSplitterMethod')
+                    ->with($methodName)
+                    ->willReturnSelf();
+
+        $convertMock->expects($this->exactly($gluerCount))
+                    ->method('handleGluerMethod')
+                    ->with($methodName)
+                    ->willReturn($handlerResult);
+
+        /** @var string|\Jawira\CaseConverter\Split\Splitter $result */
+        $result = $convertMock->__call($methodName, $arguments);
+
+        if ($splitterCount) {
+            $this->assertInstanceOf(Convert::class, $result);
+        }
+        if ($gluerCount) {
+            $this->assertSame($handlerResult, $result);
+        }
+    }
+
+    public function callProvider()
+    {
+        return [
+            ['toDummy', [], 0, 1, '46d54fd5'],
+            ['toAda', [], 0, 1, 'ed65f'],
+            ['toCamel', [], 0, 1, '65hg4jk45'],
+            ['toCobol', [], 0, 1, 'a1g94a1'],
+            ['toKebab', [], 0, 1, 'd4g2q1df'],
+            ['toLower', [], 0, 1, 'ff4f1f'],
+            ['toMacro', [], 0, 1, 'fe64df'],
+            ['toPascal', [], 0, 1, 'ff1f1f1f'],
+            ['toSentence', [], 0, 1, 'de9e1d'],
+            ['toSnake', [], 0, 1, 'fdq1nh1jl'],
+            ['toTitle', [], 0, 1, 'hjy94'],
+            ['toTrain', [], 0, 1, 'g4i4ol'],
+            ['toUpper', [], 0, 1, 'gu1ioo1'],
+            ['fromDummy', [], 1, 0],
+            ['fromAda', [], 1, 0],
+            ['fromCamel', [], 1, 0],
+            ['fromCobol', [], 1, 0],
+            ['fromKebab', [], 1, 0],
+            ['fromLower', [], 1, 0],
+            ['fromMacro', [], 1, 0],
+            ['fromPascal', [], 1, 0],
+            ['fromSentence', [], 1, 0],
+            ['fromSnake', [], 1, 0],
+            ['fromTitle', [], 1, 0],
+            ['fromTrain', [], 1, 0],
+            ['fromUpper', [], 1, 0],
+        ];
+    }
+
+    /**
+     * @covers       \Jawira\CaseConverter\Convert::__call
+     */
+    public function testCallException()
+    {
+        $this->expectException(Jawira\CaseConverter\CaseConverterException::class);
+        $this->expectExceptionMessage('Unknown method: invalidMethod');
+
+        // Preparing Convert mock
+        $convertMock = $this->getMockBuilder(Convert::class)
+                            ->disableOriginalConstructor()
+                            ->setMethods()
+                            ->getMock();
+
+        /** @var string|\Jawira\CaseConverter\Split\Splitter $result */
+        $convertMock->__call('invalidMethod', []);
+    }
 }
