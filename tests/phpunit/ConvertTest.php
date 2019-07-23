@@ -1,5 +1,6 @@
 <?php
 
+use Jawira\CaseConverter\CaseConverterException;
 use Jawira\CaseConverter\Convert;
 use Jawira\CaseConverter\Glue\AdaCase;
 use Jawira\CaseConverter\Glue\CamelCase;
@@ -16,6 +17,7 @@ use Jawira\CaseConverter\Glue\TrainCase;
 use Jawira\CaseConverter\Glue\UpperCase;
 use Jawira\CaseConverter\Split\DashSplitter;
 use Jawira\CaseConverter\Split\SpaceSplitter;
+use Jawira\CaseConverter\Split\Splitter;
 use Jawira\CaseConverter\Split\UnderscoreSplitter;
 use Jawira\CaseConverter\Split\UppercaseSplitter;
 use PHPUnit\Framework\TestCase;
@@ -50,6 +52,9 @@ class ConvertTest extends TestCase
         $class = new ReflectionObject($mock);
         $class->getConstructor()
               ->invoke($mock, 'hello_world');
+
+        $this->assertAttributeSame('hello_world', 'source', $mock);
+        $this->assertAttributeSame(false, 'forceSimpleCaseMapping', $mock);
     }
 
     /**
@@ -204,6 +209,33 @@ class ConvertTest extends TestCase
         $result = $method->invokeArgs($convertMock, [$methodName]);
 
         $this->assertSame('this is a dummy text', $result);
+    }
+
+    /**
+     * Test _converter methods_: _toCamel_, _toSnake_, ...
+     *
+     * This test do not force the use of _Simple Case-Mapping_ .
+     *
+     * @covers       \Jawira\CaseConverter\Convert::handleGluerMethod
+     *
+     * @throws \ReflectionException
+     */
+    public function testHandleGluerMethodWithException()
+    {
+        // Preparing exception
+        $this->expectException(CaseConverterException::class);
+        $this->expectExceptionMessage('Unknown method: myDummyMethod');
+
+        // Convert class
+        $convertMock = $this->getMockBuilder(Convert::class)
+                            ->disableOriginalConstructor()
+                            ->setMethods()
+                            ->getMock();
+
+        // Invoking protected method
+        $method = new ReflectionMethod($convertMock, 'handleGluerMethod');
+        $method->setAccessible(true);
+        $method->invokeArgs($convertMock, ['myDummyMethod']);
     }
 
     /**
@@ -388,5 +420,46 @@ class ConvertTest extends TestCase
 
         $this->assertInstanceOf(Convert::class, $result);
         $this->assertAttributeEquals(true, 'forceSimpleCaseMapping', $convertMock);
+    }
+
+    /**
+     * @throws \ReflectionException
+     * @covers \Jawira\CaseConverter\Convert::fromAuto
+     */
+    public function testFromAuto()
+    {
+        // Preparing Convert object
+        $convertMock = $this->getMockBuilder(Convert::class)
+                            ->disableOriginalConstructor()
+                            ->setMethods(['analyse', 'extractWords'])
+                            ->getMock();
+
+        $strategyMock = $this->getMockBuilder(Splitter::class)
+                             ->disableOriginalConstructor()
+                             ->getMockForAbstractClass();
+
+        // set 'source' attribute
+        $reflectionObject = new ReflectionObject($convertMock);
+        $wordsProperty    = $reflectionObject->getProperty('source');
+        $wordsProperty->setAccessible(true);
+        $wordsProperty->setValue($convertMock, 'dummy-original-string');
+
+        // stub analyse
+        $convertMock->expects($this->once())
+                    ->method('analyse')
+                    ->with('dummy-original-string')
+                    ->willReturn($strategyMock);
+
+        // stub extractWords
+        $convertMock->expects($this->once())
+                    ->method('extractWords')
+                    ->with($strategyMock)
+                    ->willReturnSelf();
+
+        // Calling protected method
+        $reflectionObject = new ReflectionObject($convertMock);
+        $reflectionMethod = $reflectionObject->getMethod('fromAuto');
+        $reflectionMethod->setAccessible(true);
+        $result = $reflectionMethod->invoke($convertMock, 'fromAuto');
     }
 }
