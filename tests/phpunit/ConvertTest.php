@@ -346,7 +346,7 @@ class ConvertTest extends TestCase
      *
      * @throws \ReflectionException
      */
-    public function testCreateGluerProvider(string $className)
+    public function testCreateGluer(string $className)
     {
         // Preparing Convert mock
         $mock = $this->getMockBuilder(Convert::class)
@@ -525,6 +525,66 @@ class ConvertTest extends TestCase
             ['fromUpper', SpaceSplitter::class],
             ['fromTitle', SpaceSplitter::class],
             ['fromSentence', SpaceSplitter::class],
+        ];
+    }
+
+    /**
+     * @covers \Jawira\CaseConverter\Convert::handleSplitterMethod
+     *
+     * @throws \ReflectionException
+     */
+    public function testHandleSplitterMethodWithException()
+    {
+        // Preparing exception
+        $this->expectException(CaseConverterException::class);
+        $this->expectExceptionMessage('Unknown method: myDummyMethod');
+
+        // Convert class
+        $convertMock = $this->getMockBuilder(Convert::class)
+                            ->disableOriginalConstructor()
+                            ->setMethods()
+                            ->getMock();
+
+        // Invoking protected method
+        $method = new ReflectionMethod($convertMock, 'handleSplitterMethod');
+        $method->setAccessible(true);
+        $method->invokeArgs($convertMock, ['myDummyMethod']);
+    }
+
+    /**
+     * @covers       \Jawira\CaseConverter\Convert::createSplitter
+     * @covers       \Jawira\CaseConverter\Split\Splitter::__construct
+     *
+     * @dataProvider createSplitterProvider
+     *
+     * @param string $className
+     *
+     * @throws \ReflectionException
+     */
+    public function testCreateSplitter(string $className)
+    {
+        // Preparing Convert mock
+        $mock = $this->getMockBuilder(Convert::class)
+                     ->disableOriginalConstructor()
+                     ->setMethods()
+                     ->getMock();
+
+        // Calling protected method
+        $reflectionObject = new ReflectionObject($mock);
+        $reflectionMethod = $reflectionObject->getMethod('createSplitter');
+        $reflectionMethod->setAccessible(true);
+        $splitterObject = $reflectionMethod->invoke($mock, $className, 'dummy-string', false);
+
+        $this->assertInstanceOf($className, $splitterObject);
+    }
+
+    public function createSplitterProvider()
+    {
+        return [
+            [DashSplitter::class, 'dummy-string'],
+            [SpaceSplitter::class, 'dummy-string'],
+            [UnderscoreSplitter::class, 'dummy-string'],
+            [UppercaseSplitter::class, 'dummy-string'],
         ];
     }
 }
