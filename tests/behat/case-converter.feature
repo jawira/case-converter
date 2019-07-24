@@ -220,18 +220,77 @@ Feature: Convert Case
       | toArray | one__two        | [one;two]         |
       | toArray | Le Népal        | [Le;Népal]        |
 
+
   Scenario: Force simple case mapping
     Given CaseConverter class is instantiated with "Straße"
     When I call "forceSimpleCaseMapping"
     And I call "toMacro"
     Then method should return string "STRAßE"
 
-  Scenario: Zero number disappears (should be fixed)
-    Given CaseConverter class is instantiated with "you-have-0-skills"
-    When I call "toCamel"
-    Then method should return string "youHaveSkills"
+
+  Scenario Outline: Using numbers in input strings
+    Given CaseConverter class is instantiated with "<input-string>"
+    When I call "<method>"
+    Then method should return string "<output-string>"
+
+    Examples:
+      | method     | input-string              | output-string          |
+      | toCamel    | I-have-99-problems        | iHave99Problems        |
+      | toPascal   | The Taking of Pelham 123  | TheTakingOfPelham123   |
+      | toSnake    | 3_idiots_2009             | 3_idiots_2009          |
+      | toMacro    | fantastic-4               | FANTASTIC_4            |
+      | toAda      | the6ThDay                 | The6_Th_Day            |
+      | toKebab    | 7samurai                  | 7samurai               |
+      | toCobol    | Super8                    | SUPER8                 |
+      | toTrain    | 8Mm                       | 8-Mm                   |
+      | toLower    | 8MM                       | 8 m m                  |
+      | toUpper    | DISTRICT_9                | DISTRICT 9             |
+      | toTitle    | session9                  | Session9               |
+      | toSentence | 9Songs                    | 9 songs                |
+      | toCamel    | STARTER-FOR-10            | starterFor10           |
+      | toPascal   | Ocean's 11                | Ocean's11              |
+      | toSnake    | 12_angry_men              | 12_angry_men           |
+      | toMacro    | Apollo13                  | APOLLO13               |
+      | toAda      | Friday-the-13th           | Friday_The_13Th        |
+      | toKebab    | 14BLADES                  | 14-b-l-a-d-e-s         |
+      | toCobol    | STALAG17-1953             | STALAG17-1953          |
+      | toTrain    | 21-JUMP-STREET            | 21-Jump-Street         |
+      | toLower    | TheNumber23               | the number23           |
+      | toUpper    | The 40-Year-Old Virgin    | THE 40 YEAR OLD VIRGIN |
+      | toTitle    | planet_51                 | Planet 51              |
+      | toSentence | Passenger 57              | Passenger 57           |
+      | toCamel    | 10-10-a-a-10-10           | 1010AA1010             |
+      | toPascal   | Hello5My5Name5Is5Bond     | Hello5My5Name5Is5Bond  |
+      | toSnake    | 48-HOLA-mundo-6           | 48_hola_mundo_6        |
+      | toMacro    | 0-0-0                     | 0_0_0                  |
+      | toAda      | Interstate 60             | Interstate_60          |
+      | toKebab    | Happy2-see-you            | happy2-see-you         |
+      | toCobol    | 123BC456BC789             | 123-B-C456-B-C789      |
+      | toTrain    | 21-test-test21-21Test     | 21-Test-Test21-21Test  |
+      | toLower    | TheNumber23               | the number23           |
+      | toUpper    | 88 Minutes                | 88 MINUTES             |
+      | toTitle    | United9                   | United9                |
+      | toSentence | 300                       | 300                    |
+      | toCamel    | the__0__is_the_best       | the0IsTheBest          |
+      | toPascal   | i-do--not--0like--number0 | IDoNot0LikeNumber0     |
+      | toSnake    | IDoNot0LikeNumber0        | i_do_not0_like_number0 |
+      | toMacro    | you-have-0-money          | YOU_HAVE_0_MONEY       |
+
 
   Scenario: Retrieving original string
     Given CaseConverter class is instantiated with "  A commissioned mirror swears.  "
     When I call "getSource"
     Then method should return string "  A commissioned mirror swears.  "
+
+
+  Scenario Outline: Using numbers in input strings
+    Given CaseConverter class is instantiated with "<input-string>"
+    When I call "<from-method>"
+    And I call "<to-method>"
+    Then method should return string "<output-string>"
+
+    Examples:
+      | from-method | to-method | input-string    | output-string     |
+      | fromSnake   | toSnake   | C-3PO_and_R2-D2 | c-3po_and_r2-d2   |
+      | fromSnake   | toPascal  | C-3PO_and_R2-D2 | C-3PoAndR2-D2     |
+      | fromPascal  | toSnake   | C-3PoAndR2-D2   | c-3_po_and_r2-_d2 |

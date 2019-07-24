@@ -1,7 +1,5 @@
 @startuml
 namespace Jawira.CaseConverter  {
-	class CaseConverterException << class >> {
-	}
 	class Convert << class >> {
 		#source
 		#words
