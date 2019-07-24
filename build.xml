@@ -15,7 +15,7 @@
 
   <target name="setup"
           description="Install dependencies"
-          depends="composer:install-dev, phive:install, cc:get, docs:refresh-images"/>
+          depends="composer:install-dev, phive:install, cc:get"/>
 
   <target name="qa"
           description="Run quality tests"
@@ -23,7 +23,7 @@
 
   <target name="docs:refresh-images"
           description="Update and regenerate docs images"
-          depends="uml-writer:run, plantuml:puml-to-png, phing:visualize"/>
+          depends="uml-writer:render, phing:visualize, plantuml:puml-to-png"/>
 
   <target name="phploc:run">
     <exec executable="bin/phploc" checkreturn="true" outputProperty="phploc.results">
@@ -53,7 +53,7 @@
     </composer>
   </target>
 
-  <target name="phpunit:run" description="Run unit tests" depends="phive:install">
+  <target name="phpunit:run" description="Run unit tests">
     <mkdir dir="resources/coverage-html/"/>
     <exec executable="bin/phpunit" passthru="true" checkreturn="true">
       <arg line="--configuration=config/phpunit.xml"/>
@@ -78,7 +78,7 @@
     </phplint>
   </target>
 
-  <target name="behat:run" description="Run behat tests" depends="phive:install">
+  <target name="behat:run" description="Run behat tests">
     <exec executable="bin/behat" passthru="true" checkreturn="true">
       <arg value="--colors"/>
       <arg value="--no-interaction"/>
@@ -88,7 +88,7 @@
     </exec>
   </target>
 
-  <target name="phpstan:run" depends="phive:install">
+  <target name="phpstan:run">
     <exec executable="bin/phpstan" passthru="true" checkreturn="true">
       <arg line="--level=max analyze"/>
       <arg value="--no-progress"/>
@@ -103,7 +103,7 @@
       <arg value="--force-accept-unsigned"/>
       <arg line="--trust-gpg-keys 4AA394086372C20A,8E730BA25823D8B5,2420BAE0A3BE25C6,31C7E470E2138192"/>
     </exec>
-    <copy description="Allows to have auto-completion with PhpStorm"
+    <copy description="I do this to have auto-completion in PhpStorm"
           file="bin/phpunit"
           tofile="bin/phpunit.phar"
           overwrite="true"/>
@@ -188,14 +188,14 @@
       <arg value="--format"/>
       <arg value="puml"/>
       <arg value="--output"/>
-      <arg file="./docs/images/build.puml"/>
+      <arg path="./docs/images/"/>
     </exec>
     <composer command="remove">
       <arg value="jawira/phing-visualizer"/>
     </composer>
   </target>
 
-  <target name="uml-writer:run" description="Generate Class diagram">
+  <target name="uml-writer:render" description="Generate Class diagram">
     <composer command="require">
       <arg value="bartlett/php-reflect"/>
       <arg value="bartlett/umlwriter"/>
@@ -228,20 +228,17 @@
     </composer>
   </target>
 
-  <target name="mkdocs:deploy"
+  <target name="docs:deploy"
           description="Deploy documentation to gh-pages"
-          depends="mkdocs:copy-docs, docs:refresh-images">
+          depends="docs:build">
     <exec executable="mkdocs" passthru="true" checkreturn="true">
       <arg value="gh-deploy"/>
     </exec>
   </target>
 
-  <target name="mkdocs:build-n-serve"
+  <target name="docs:serve"
           description="Generate and open static site"
-          depends="mkdocs:copy-docs, docs:refresh-images">
-    <exec executable="mkdocs" passthru="true" checkreturn="true">
-      <arg value="build"/>
-    </exec>
+          depends="docs:build">
     <parallel threadCount="2">
       <exec executable="mkdocs" passthru="true" checkreturn="true">
         <arg value="serve"/>
@@ -253,7 +250,12 @@
     </parallel>
   </target>
 
-  <target name="mkdocs:copy-docs" description="Copy md files from root to docs dir">
+  <target name="docs:build" description="Builds static site" depends="docs:refresh-images, docs:copy-md">
+    <exec executable="mkdocs" passthru="true" checkreturn="true">
+      <arg value="build"/>
+    </exec>
+  </target>
+  <target name="docs:copy-md" description="Copy md files from root to docs dir">
     <!--*.md files should not have relative paths-->
     <copy file="./README.md" tofile="./docs/index.md" overwrite="true"/>
     <copy file="./CONTRIBUTING.md" tofile="./docs/contributing.md" overwrite="true"/>
