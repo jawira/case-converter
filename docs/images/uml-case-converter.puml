@@ -3,7 +3,7 @@ namespace Jawira.CaseConverter  {
 	class CaseConverterException << class >> {
 	}
 	class Convert << class >> {
-		#originalString
+		#source
 		#words
 		#forceSimpleCaseMapping
 		--
@@ -12,9 +12,12 @@ namespace Jawira.CaseConverter  {
 		#analyse()
 		#isUppercaseWord()
 		#extractWords()
+		+getSource()
 		+__call()
 		#handleSplitterMethod()
+		#createSplitter()
 		#handleGluerMethod()
+		#createGluer()
 		+toArray()
 		+forceSimpleCaseMapping()
 	}
