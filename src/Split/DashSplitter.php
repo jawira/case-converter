@@ -8,6 +8,9 @@ class DashSplitter extends Splitter
 {
     const PATTERN = DashGluer::DELIMITER . '+';
 
+    /**
+     * @return string[]
+     */
     public function split(): array
     {
         return $this->splitUsingPattern($this->inputString, self::PATTERN);

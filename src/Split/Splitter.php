@@ -11,12 +11,11 @@ use function mb_split;
  *
  * A Splitter sub-class allows to read the words contained in a string
  *
- * @author Jawira Portugal <dev@tugal.be>
+ * @author  Jawira Portugal <dev@tugal.be>
  * @package Jawira\CaseConverter\Split
  */
 abstract class Splitter
 {
-
     /**
      * @var string Words extracted from input string
      */
@@ -30,7 +29,7 @@ abstract class Splitter
     /**
      * Tells how to split a string into valid words.
      *
-     * @return array
+     * @return string[]
      */
     abstract public function split(): array;
 
@@ -44,6 +43,14 @@ abstract class Splitter
      */
     protected function splitUsingPattern(string $inputString, string $pattern): array
     {
-        return array_values(array_filter(mb_split($pattern, $inputString)));
+        $cleaning = function (string $value): bool {
+            if ($value === '0') {
+                return true;
+            }
+
+            return !empty($value);
+        };
+
+        return array_values(array_filter(mb_split($pattern, $inputString), $cleaning));
     }
 }
