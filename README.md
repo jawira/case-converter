@@ -110,16 +110,16 @@ My other packages
 
 <dl>
 
-<dt><a href="https://packagist.org/packages/jawira/phing-visualizer">jawira/phing-visualizer</a></dt>
+<dt><a href="https://packagist.org/packages/jawira/phing-visualizer">jawira/phing-visualizer</a> (library)</dt>
 <dd>Graphical representation of Phing's buildfile.</dd>
 
-<dt><a href="https://packagist.org/packages/jawira/plantuml">jawira/plantuml</a></dt>
+<dt><a href="https://packagist.org/packages/jawira/plantuml">jawira/plantuml</a> (library)</dt>
 <dd>Provides PlantUML integration: plantuml executable and plantuml.jar</dd>
 
-<dt><a href="https://packagist.org/packages/jawira/plantuml-encoding">jawira/plantuml-encoding</a></dt>
+<dt><a href="https://packagist.org/packages/jawira/plantuml-encoding">jawira/plantuml-encoding</a> (library)</dt>
 <dd>PlantUML encoding functions.</dd>
 
-<dt><a href="https://packagist.org/packages/jawira/process-maker">jawira/process-maker</a></dt>
+<dt><a href="https://packagist.org/packages/jawira/process-maker">jawira/process-maker</a> (project)</dt>
 <dd>Easily install and try ProcessMaker using Docker Compose.</dd>
 
 </dl>

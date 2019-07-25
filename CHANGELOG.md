@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+## [v3.1.0] - 2019-07-25
+
 ### Added
 
 - [#41] Added `\Jawira\CaseConverter\Convert::getSource` method to retrieve 
@@ -267,3 +269,4 @@ PASCAL, SENTENCE, SNAKE, TITLE, TRAIN, UPPER.
 [v3.0.0]: https://github.com/jawira/case-converter/compare/v2.3.0...v3.0.0
 [#41]: https://github.com/jawira/case-converter/pull/41
 [#44]: https://github.com/jawira/case-converter/pull/44
+[v3.1.0]: https://github.com/jawira/case-converter/compare/v3.0.0...v3.1.0
