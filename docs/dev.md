@@ -4,7 +4,7 @@ Development
 Phing targets
 -------------
 
-[![Phing targets](./build.png "Phing targets")](./build.png)
+[![Phing targets](./images/build.png "Phing targets")](./images/build.png)
 
 - `$ phing setup`: Prepare project for development.
 - `$ phing qa`: Run quality tests, use this before every commit.

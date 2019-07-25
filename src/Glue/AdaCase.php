@@ -2,12 +2,22 @@
 
 namespace Jawira\CaseConverter\Glue;
 
-use const MB_CASE_TITLE;
-
+/**
+ * Class AdaCase
+ *
+ * Outputs string in _Ada case_ format: This_Is_Ada_Case
+ *
+ * @package Jawira\CaseConverter\Glue
+ */
 class AdaCase extends UnderscoreGluer
 {
+    /**
+     * Format detected words in _Ada case_
+     *
+     * @return string
+     */
     public function glue(): string
     {
-        return $this->glueUsingRules(self::DELIMITER, MB_CASE_TITLE);
+        return $this->glueUsingRules(self::DELIMITER, $this->titleCase);
     }
 }

@@ -1,0 +1,29 @@
+@startuml
+namespace Jawira.CaseConverter  {
+	class Convert << class >> {
+		#source
+		#words
+		#forceSimpleCaseMapping
+		--
+		+__construct()
+		+fromAuto()
+		#analyse()
+		#isUppercaseWord()
+		#extractWords()
+		+getSource()
+		+__call()
+		#handleSplitterMethod()
+		#createSplitter()
+		#handleGluerMethod()
+		#createGluer()
+		+toArray()
+		+forceSimpleCaseMapping()
+	}
+	class CaseConverterException << class >> {
+	}
+}
+	class Exception << class >> {
+	}
+Jawira.CaseConverter.CaseConverterException --|> Exception
+@enduml
+

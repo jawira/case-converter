@@ -9,3 +9,5 @@ theme:
   collapse_navigation: false
 use_directory_urls: false
 strict: true
+repo_url: 'https://github.com/jawira/case-converter/'
+edit_uri: ''

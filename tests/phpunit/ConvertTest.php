@@ -1,5 +1,6 @@
 <?php
 
+use Jawira\CaseConverter\CaseConverterException;
 use Jawira\CaseConverter\Convert;
 use Jawira\CaseConverter\Glue\AdaCase;
 use Jawira\CaseConverter\Glue\CamelCase;
@@ -16,6 +17,7 @@ use Jawira\CaseConverter\Glue\TrainCase;
 use Jawira\CaseConverter\Glue\UpperCase;
 use Jawira\CaseConverter\Split\DashSplitter;
 use Jawira\CaseConverter\Split\SpaceSplitter;
+use Jawira\CaseConverter\Split\Splitter;
 use Jawira\CaseConverter\Split\UnderscoreSplitter;
 use Jawira\CaseConverter\Split\UppercaseSplitter;
 use PHPUnit\Framework\TestCase;
@@ -50,6 +52,9 @@ class ConvertTest extends TestCase
         $class = new ReflectionObject($mock);
         $class->getConstructor()
               ->invoke($mock, 'hello_world');
+
+        $this->assertAttributeSame('hello_world', 'source', $mock);
+        $this->assertAttributeSame(false, 'forceSimpleCaseMapping', $mock);
     }
 
     /**
@@ -156,56 +161,87 @@ class ConvertTest extends TestCase
     /**
      * Test _converter methods_: _toCamel_, _toSnake_, ...
      *
-     * @dataProvider converterMethodProvider()
+     * This test do not force the use of _Simple Case-Mapping_ .
      *
-     * @covers       \Jawira\CaseConverter\Convert::toAda()
-     * @covers       \Jawira\CaseConverter\Convert::toCamel()
-     * @covers       \Jawira\CaseConverter\Convert::toCobol()
-     * @covers       \Jawira\CaseConverter\Convert::toKebab()
-     * @covers       \Jawira\CaseConverter\Convert::toLower()
-     * @covers       \Jawira\CaseConverter\Convert::toMacro()
-     * @covers       \Jawira\CaseConverter\Convert::toPascal()
-     * @covers       \Jawira\CaseConverter\Convert::toSentence()
-     * @covers       \Jawira\CaseConverter\Convert::toSnake()
-     * @covers       \Jawira\CaseConverter\Convert::toTitle()
-     * @covers       \Jawira\CaseConverter\Convert::toTrain()
-     * @covers       \Jawira\CaseConverter\Convert::toUpper()
+     * @dataProvider handleGluerMethodProvider()
+     *
+     * @covers       \Jawira\CaseConverter\Convert::handleGluerMethod
      *
      * @param string $methodName
      * @param string $className
      *
+     * @throws \ReflectionException
      */
-    public function testConverterMethodCallsGlueString(string $methodName, string $className)
+    public function testHandleGluerMethod(string $methodName, string $className)
     {
-        $expected = 'this is a dummy text';
+        // Gluer class
+        $gluerMock = $this->getMockBuilder($className)
+                          ->disableOriginalConstructor()
+                          ->setMethods(['glue'])
+                          ->getMock();
+        $gluerMock->expects($this->once())
+                  ->method('glue')
+                  ->willReturn('this is a dummy text');
 
-        $namingConvention = $this->getMockBuilder($className)
-                                 ->disableOriginalConstructor()
-                                 ->setMethods(['glue'])
-                                 ->getMock();
-
-        $namingConvention->expects($this->once())
-                         ->method('glue')
-                         ->willReturn($expected);
-
+        // Convert class
         $convertMock = $this->getMockBuilder(Convert::class)
                             ->disableOriginalConstructor()
-                            ->setMethods(['factory'])
+                            ->setMethods(['createGluer'])
                             ->getMock();
-
         $convertMock->expects($this->once())
-                    ->method('factory')
-                    ->willReturn($namingConvention);
+                    ->method('createGluer')
+                    ->with($className, ['dummy', 'd455b'], false)
+                    ->willReturn($gluerMock);
 
-        /** @var \Jawira\CaseConverter\Glue\Gluer $convertMock */
-        $returned = $convertMock->$methodName();
-        $this->assertSame($expected, $returned);
+        // Setting detected words
+        $reflectionObject = new ReflectionObject($convertMock);
+        $wordsProperty    = $reflectionObject->getProperty('words');
+        $wordsProperty->setAccessible(true);
+        $wordsProperty->setValue($convertMock, ['dummy', 'd455b']);
+        // Setting _Simple Case-Mapping_ as false
+        $forceProperty = $reflectionObject->getProperty('forceSimpleCaseMapping');
+        $forceProperty->setAccessible(true);
+        $forceProperty->setValue($convertMock, false);
+
+        // Invoking protected method
+        $method = new ReflectionMethod($convertMock, 'handleGluerMethod');
+        $method->setAccessible(true);
+        $result = $method->invokeArgs($convertMock, [$methodName]);
+
+        $this->assertSame('this is a dummy text', $result);
     }
 
     /**
-     * Return and array with the name of all _converterMethods_.
+     * Test _converter methods_: _toCamel_, _toSnake_, ...
+     *
+     * This test do not force the use of _Simple Case-Mapping_ .
+     *
+     * @covers       \Jawira\CaseConverter\Convert::handleGluerMethod
+     *
+     * @throws \ReflectionException
      */
-    public function converterMethodProvider()
+    public function testHandleGluerMethodWithException()
+    {
+        // Preparing exception
+        $this->expectException(CaseConverterException::class);
+        $this->expectExceptionMessage('Unknown method: myDummyMethod');
+
+        // Convert class
+        $convertMock = $this->getMockBuilder(Convert::class)
+                            ->disableOriginalConstructor()
+                            ->setMethods()
+                            ->getMock();
+
+        // Invoking protected method
+        $method = new ReflectionMethod($convertMock, 'handleGluerMethod');
+        $method->setAccessible(true);
+        $method->invokeArgs($convertMock, ['myDummyMethod']);
+    }
+
+    /**
+     * Return and array with the name of all _converter methods_.
+     */
+    public function handleGluerMethodProvider()
     {
         return [
             'toAda'      => ['toAda', AdaCase::class],
@@ -242,7 +278,7 @@ class ConvertTest extends TestCase
         $splitterMock->expects($this->once())
                      ->method('split')
                      ->with()
-                     ->willReturn(['dummy', 'array']);
+                     ->willReturn(['dummy', 'array', '8d84d']);
 
         // Preparing Convert object
         $convertMock = $this->getMockBuilder(Convert::class)
@@ -256,7 +292,7 @@ class ConvertTest extends TestCase
         $method->setAccessible(true);
         $result = $method->invoke($convertMock, $splitterMock);
 
-        $this->assertAttributeEquals(['dummy', 'array'], 'words', $convertMock);
+        $this->assertAttributeEquals(['dummy', 'array', '8d84d'], 'words', $convertMock);
         $this->assertInstanceOf(Convert::class, $result);
     }
 
@@ -302,15 +338,15 @@ class ConvertTest extends TestCase
     }
 
     /**
-     * @covers       \Jawira\CaseConverter\Convert::factory
+     * @covers       \Jawira\CaseConverter\Convert::createGluer
      * @covers       \Jawira\CaseConverter\Glue\Gluer::__construct
-     * @dataProvider factoryProvider
+     * @dataProvider createGluerProvider
      *
      * @param string $className
      *
      * @throws \ReflectionException
      */
-    public function testFactory(string $className)
+    public function testCreateGluer(string $className)
     {
         // Preparing Convert mock
         $mock = $this->getMockBuilder(Convert::class)
@@ -318,21 +354,16 @@ class ConvertTest extends TestCase
                      ->setMethods()
                      ->getMock();
 
-        // Setting value to protected property
-        $reflectionObject   = new ReflectionObject($mock);
-        $reflectionProperty = $reflectionObject->getProperty('words');
-        $reflectionProperty->setAccessible(true);
-        $reflectionProperty->setValue($mock, ['dummy', 'array']);
-
         // Calling protected method
-        $reflectionMethod = $reflectionObject->getMethod('factory');
+        $reflectionObject = new ReflectionObject($mock);
+        $reflectionMethod = $reflectionObject->getMethod('createGluer');
         $reflectionMethod->setAccessible(true);
-        $result = $reflectionMethod->invoke($mock, $className);
+        $gluerObject = $reflectionMethod->invoke($mock, $className, ['dummy', 'array'], false);
 
-        $this->assertInstanceOf(Gluer::class, $result);
+        $this->assertInstanceOf(Gluer::class, $gluerObject);
     }
 
-    public function factoryProvider()
+    public function createGluerProvider()
     {
         return [
             [AdaCase::class],
@@ -348,5 +379,303 @@ class ConvertTest extends TestCase
             [TrainCase::class],
             [UpperCase::class],
         ];
+    }
+
+    /**
+     * @covers \Jawira\CaseConverter\Convert::getSource
+     * @throws \ReflectionException
+     */
+    public function testGetSource()
+    {
+        // Preparing Convert object
+        $convertMock = $this->getMockBuilder(Convert::class)
+                            ->disableOriginalConstructor()
+                            ->setMethods()
+                            ->getMock();
+
+        // Setting detected words
+        $reflectionObject = new ReflectionObject($convertMock);
+        $sourceProperty   = $reflectionObject->getProperty('source');
+        $sourceProperty->setAccessible(true);
+        $sourceProperty->setValue($convertMock, 'this is source string');
+
+        /** @var Convert $convertMock */
+        $result = $convertMock->getSource();
+        $this->assertSame('this is source string', $result);
+    }
+
+    /**
+     * @covers \Jawira\CaseConverter\Convert::forceSimpleCaseMapping
+     */
+    public function testForceSimpleCaseMapping()
+    {
+        // Preparing Convert object
+        $convertMock = $this->getMockBuilder(Convert::class)
+                            ->disableOriginalConstructor()
+                            ->setMethods()
+                            ->getMock();
+
+        /** @var Convert $convertMock */
+        $result = $convertMock->forceSimpleCaseMapping();
+
+        $this->assertInstanceOf(Convert::class, $result);
+        $this->assertAttributeEquals(true, 'forceSimpleCaseMapping', $convertMock);
+    }
+
+    /**
+     * @throws \ReflectionException
+     * @covers \Jawira\CaseConverter\Convert::fromAuto
+     */
+    public function testFromAuto()
+    {
+        // Preparing Convert object
+        $convertMock = $this->getMockBuilder(Convert::class)
+                            ->disableOriginalConstructor()
+                            ->setMethods(['analyse', 'extractWords'])
+                            ->getMock();
+
+        $strategyMock = $this->getMockBuilder(Splitter::class)
+                             ->disableOriginalConstructor()
+                             ->getMockForAbstractClass();
+
+        // set 'source' attribute
+        $reflectionObject = new ReflectionObject($convertMock);
+        $wordsProperty    = $reflectionObject->getProperty('source');
+        $wordsProperty->setAccessible(true);
+        $wordsProperty->setValue($convertMock, 'dummy-original-string');
+
+        // stub analyse
+        $convertMock->expects($this->once())
+                    ->method('analyse')
+                    ->with('dummy-original-string')
+                    ->willReturn($strategyMock);
+
+        // stub extractWords
+        $convertMock->expects($this->once())
+                    ->method('extractWords')
+                    ->with($strategyMock)
+                    ->willReturnSelf();
+
+        // Calling protected method
+        $reflectionObject = new ReflectionObject($convertMock);
+        $reflectionMethod = $reflectionObject->getMethod('fromAuto');
+        $reflectionMethod->setAccessible(true);
+        $result = $reflectionMethod->invoke($convertMock, 'fromAuto');
+
+        $this->assertInstanceOf(Convert::class, $result);
+        $this->assertSame($convertMock, $result);
+    }
+
+    /**
+     * @covers       \Jawira\CaseConverter\Convert::handleSplitterMethod
+     *
+     * @param string $methodName
+     * @param string $splitterName
+     *
+     * @dataProvider handleSplitterMethodProvider
+     *
+     * @throws \ReflectionException
+     */
+    public function testHandleSplitterMethod(string $methodName = 'fromKebab', string $splitterName = DashSplitter::class, string $sourceString = 'dummy-azer12')
+    {
+        // Splitter class
+        $splitterMock = $this->getMockBuilder($splitterName)
+                             ->disableOriginalConstructor()
+                             ->getMock();
+
+        // Convert class
+        $convertMock = $this->getMockBuilder(Convert::class)
+                            ->disableOriginalConstructor()
+                            ->setMethods(['createSplitter', 'extractWords'])
+                            ->getMock();
+        $convertMock->expects($this->once())
+                    ->method('createSplitter')
+                    ->with($splitterName, $sourceString)
+                    ->willReturn($splitterMock);
+        $convertMock->expects($this->once())
+                    ->method('extractWords')
+                    ->with($splitterMock);
+
+        // Add source attribute
+        $reflectionObject = new ReflectionObject($convertMock);
+        $wordsProperty    = $reflectionObject->getProperty('source');
+        $wordsProperty->setAccessible(true);
+        $wordsProperty->setValue($convertMock, $sourceString);
+
+        // Invoking protected method
+        $method = new ReflectionMethod($convertMock, 'handleSplitterMethod');
+        $method->setAccessible(true);
+        $result = $method->invoke($convertMock, $methodName);
+
+        $this->assertSame($convertMock, $result);
+    }
+
+    public function handleSplitterMethodProvider()
+    {
+        return [
+            ['fromCamel', UppercaseSplitter::class],
+            ['fromPascal', UppercaseSplitter::class],
+            ['fromSnake', UnderscoreSplitter::class],
+            ['fromAda', UnderscoreSplitter::class],
+            ['fromMacro', UnderscoreSplitter::class],
+            ['fromKebab', DashSplitter::class],
+            ['fromTrain', DashSplitter::class],
+            ['fromCobol', DashSplitter::class],
+            ['fromLower', SpaceSplitter::class],
+            ['fromUpper', SpaceSplitter::class],
+            ['fromTitle', SpaceSplitter::class],
+            ['fromSentence', SpaceSplitter::class],
+        ];
+    }
+
+    /**
+     * @covers \Jawira\CaseConverter\Convert::handleSplitterMethod
+     *
+     * @throws \ReflectionException
+     */
+    public function testHandleSplitterMethodWithException()
+    {
+        // Preparing exception
+        $this->expectException(CaseConverterException::class);
+        $this->expectExceptionMessage('Unknown method: myDummyMethod');
+
+        // Convert class
+        $convertMock = $this->getMockBuilder(Convert::class)
+                            ->disableOriginalConstructor()
+                            ->setMethods()
+                            ->getMock();
+
+        // Invoking protected method
+        $method = new ReflectionMethod($convertMock, 'handleSplitterMethod');
+        $method->setAccessible(true);
+        $method->invokeArgs($convertMock, ['myDummyMethod']);
+    }
+
+    /**
+     * @covers       \Jawira\CaseConverter\Convert::createSplitter
+     * @covers       \Jawira\CaseConverter\Split\Splitter::__construct
+     *
+     * @dataProvider createSplitterProvider
+     *
+     * @param string $className
+     *
+     * @throws \ReflectionException
+     */
+    public function testCreateSplitter(string $className)
+    {
+        // Preparing Convert mock
+        $mock = $this->getMockBuilder(Convert::class)
+                     ->disableOriginalConstructor()
+                     ->setMethods()
+                     ->getMock();
+
+        // Calling protected method
+        $reflectionObject = new ReflectionObject($mock);
+        $reflectionMethod = $reflectionObject->getMethod('createSplitter');
+        $reflectionMethod->setAccessible(true);
+        $splitterObject = $reflectionMethod->invoke($mock, $className, 'dummy-string', false);
+
+        $this->assertInstanceOf($className, $splitterObject);
+    }
+
+    public function createSplitterProvider()
+    {
+        return [
+            [DashSplitter::class, 'dummy-string'],
+            [SpaceSplitter::class, 'dummy-string'],
+            [UnderscoreSplitter::class, 'dummy-string'],
+            [UppercaseSplitter::class, 'dummy-string'],
+        ];
+    }
+
+    /**
+     * Testing magic function call
+     *
+     * @covers       \Jawira\CaseConverter\Convert::__call
+     * @dataProvider callProvider
+     *
+     * @param string $methodName
+     * @param array  $arguments
+     * @param int    $splitterCount
+     * @param int    $gluerCount
+     * @param mixed  $handlerResult
+     */
+    public function testCall(string $methodName, $arguments, int $splitterCount, int $gluerCount, string $handlerResult = '')
+    {
+        // Preparing Convert mock
+        $convertMock = $this->getMockBuilder(Convert::class)
+                            ->disableOriginalConstructor()
+                            ->setMethods(['handleSplitterMethod', 'handleGluerMethod'])
+                            ->getMock();
+
+        $convertMock->expects($this->exactly($splitterCount))
+                    ->method('handleSplitterMethod')
+                    ->with($methodName)
+                    ->willReturnSelf();
+
+        $convertMock->expects($this->exactly($gluerCount))
+                    ->method('handleGluerMethod')
+                    ->with($methodName)
+                    ->willReturn($handlerResult);
+
+        /** @var string|\Jawira\CaseConverter\Split\Splitter $result */
+        $result = $convertMock->__call($methodName, $arguments);
+
+        if ($splitterCount) {
+            $this->assertInstanceOf(Convert::class, $result);
+        }
+        if ($gluerCount) {
+            $this->assertSame($handlerResult, $result);
+        }
+    }
+
+    public function callProvider()
+    {
+        return [
+            ['toDummy', [], 0, 1, '46d54fd5'],
+            ['toAda', [], 0, 1, 'ed65f'],
+            ['toCamel', [], 0, 1, '65hg4jk45'],
+            ['toCobol', [], 0, 1, 'a1g94a1'],
+            ['toKebab', [], 0, 1, 'd4g2q1df'],
+            ['toLower', [], 0, 1, 'ff4f1f'],
+            ['toMacro', [], 0, 1, 'fe64df'],
+            ['toPascal', [], 0, 1, 'ff1f1f1f'],
+            ['toSentence', [], 0, 1, 'de9e1d'],
+            ['toSnake', [], 0, 1, 'fdq1nh1jl'],
+            ['toTitle', [], 0, 1, 'hjy94'],
+            ['toTrain', [], 0, 1, 'g4i4ol'],
+            ['toUpper', [], 0, 1, 'gu1ioo1'],
+            ['fromDummy', [], 1, 0],
+            ['fromAda', [], 1, 0],
+            ['fromCamel', [], 1, 0],
+            ['fromCobol', [], 1, 0],
+            ['fromKebab', [], 1, 0],
+            ['fromLower', [], 1, 0],
+            ['fromMacro', [], 1, 0],
+            ['fromPascal', [], 1, 0],
+            ['fromSentence', [], 1, 0],
+            ['fromSnake', [], 1, 0],
+            ['fromTitle', [], 1, 0],
+            ['fromTrain', [], 1, 0],
+            ['fromUpper', [], 1, 0],
+        ];
+    }
+
+    /**
+     * @covers       \Jawira\CaseConverter\Convert::__call
+     */
+    public function testCallException()
+    {
+        $this->expectException(Jawira\CaseConverter\CaseConverterException::class);
+        $this->expectExceptionMessage('Unknown method: invalidMethod');
+
+        // Preparing Convert mock
+        $convertMock = $this->getMockBuilder(Convert::class)
+                            ->disableOriginalConstructor()
+                            ->setMethods()
+                            ->getMock();
+
+        /** @var string|\Jawira\CaseConverter\Split\Splitter $result */
+        $convertMock->__call('invalidMethod', []);
     }
 }

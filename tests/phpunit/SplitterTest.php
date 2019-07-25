@@ -38,6 +38,9 @@ class SplitterTest extends TestCase
             ['hola-mundo', '-+', ['hola', 'mundo']],
             ['-hola-mundo-', '-+', ['hola', 'mundo']],
             ['---hola-----mundo---', '-+', ['hola', 'mundo']],
+            ['0', '-+', ['0']],
+            ['---0---0---', '-+', ['0', '0']],
+            ['---000---000---', '-+', ['000', '000']],
         ];
     }
 }

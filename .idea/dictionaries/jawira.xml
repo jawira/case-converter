@@ -4,6 +4,7 @@
       <w>biodégradables</w>
       <w>buenos</w>
       <w>buildfile</w>
+      <w>codeclimate</w>
       <w>courte</w>
       <w>couverts</w>
       <w>cowabunga</w>
@@ -12,6 +13,8 @@
       <w>eniac</w>
       <w>formule</w>
       <w>förstår</w>
+      <w>gitattributes</w>
+      <w>gitignore</w>
       <w>gluer</w>
       <w>hola</w>
       <w>inte</w>
@@ -27,12 +30,14 @@
       <w>oneline</w>
       <w>phing</w>
       <w>phive</w>
+      <w>phpcs</w>
       <w>phploc</w>
       <w>phpstan</w>
       <w>plantuml</w>
       <w>puml</w>
       <w>quico</w>
       <w>readthedocs</w>
+      <w>skinparam</w>
       <w>spéciale</w>
       <w>startuml</w>
       <w>strasse</w>
