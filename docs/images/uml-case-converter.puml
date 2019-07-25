@@ -19,6 +19,8 @@ namespace Jawira.CaseConverter  {
 		+toArray()
 		+forceSimpleCaseMapping()
 	}
+	class CaseConverterException << class >> {
+	}
 }
 	class Exception << class >> {
 	}
