@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+## [v3.1.0] - 2019-07-25
+
 ### Added
 
 - [#41] Added `\Jawira\CaseConverter\Convert::getSource` method to retrieve 
@@ -11,6 +13,10 @@ original input string.
 - [#38] Added `\Jawira\CaseConverter\Convert::forceSimpleCaseMapping` to force the
 usage of _Single Case-Mapping_ in _PHP 7.3_ and newer. This method has no effect
 in _PHP 7.1_ nor _PHP 7.2_.
+
+### Fixed
+
+- [#44] Strings with `0` in it can be handled correctly. 
 
 ## [v3.0.0] - 2019-06-30
 
@@ -262,3 +268,5 @@ PASCAL, SENTENCE, SNAKE, TITLE, TRAIN, UPPER.
 [v2.3.0]: https://github.com/jawira/case-converter/compare/v2.2.0...v2.3.0
 [v3.0.0]: https://github.com/jawira/case-converter/compare/v2.3.0...v3.0.0
 [#41]: https://github.com/jawira/case-converter/pull/41
+[#44]: https://github.com/jawira/case-converter/pull/44
+[v3.1.0]: https://github.com/jawira/case-converter/compare/v3.0.0...v3.1.0

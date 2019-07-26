@@ -1,7 +1,5 @@
 @startuml
 namespace Jawira.CaseConverter  {
-	class CaseConverterException << class >> {
-	}
 	class Convert << class >> {
 		#source
 		#words
@@ -20,6 +18,8 @@ namespace Jawira.CaseConverter  {
 		#createGluer()
 		+toArray()
 		+forceSimpleCaseMapping()
+	}
+	class CaseConverterException << class >> {
 	}
 }
 	class Exception << class >> {
