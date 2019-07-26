@@ -26,14 +26,9 @@
           depends="uml-writer:render, phing:visualize, plantuml:puml-to-png"/>
 
   <target name="phploc:run">
-    <exec executable="bin/phploc" checkreturn="true" outputProperty="phploc.results">
-      <arg value="--no-interaction"/>
-      <arg path="src"/>
-    </exec>
-    <echo file="resources/phploc.txt">
-      ${phploc.results}
-    </echo>
-    <echo>${phploc.results}</echo>
+    <phploc pharlocation="bin/phploc">
+      <fileset dir="src"/>
+    </phploc>
   </target>
 
   <target name="composer:validate" description="Check composer.json syntax">
