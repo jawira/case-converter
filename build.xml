@@ -250,6 +250,7 @@
       <arg value="build"/>
     </exec>
   </target>
+
   <target name="docs:copy-md" description="Copy md files from root to docs dir">
     <!--*.md files should not have relative paths-->
     <copy file="./README.md" tofile="./docs/index.md" overwrite="true"/>
