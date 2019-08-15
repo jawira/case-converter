@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+### Added
+
+- [#40] Added Factory class and its interface.
+
 ## [v3.1.0] - 2019-07-25
 
 ### Added
@@ -246,6 +250,9 @@ PASCAL, SENTENCE, SNAKE, TITLE, TRAIN, UPPER.
 [#36]: https://github.com/jawira/case-converter/pull/36
 [#37]: https://github.com/jawira/case-converter/pull/37
 [#38]: https://github.com/jawira/case-converter/pull/38
+[#40]: https://github.com/jawira/case-converter/pull/40
+[#41]: https://github.com/jawira/case-converter/pull/41
+[#44]: https://github.com/jawira/case-converter/pull/44
 [#9]: https://github.com/jawira/case-converter/pull/9
 [v1.0.0]: https://github.com/jawira/case-converter/compare/v0.0.0...v1.0.0
 [v1.0.1]: https://github.com/jawira/case-converter/compare/v1.0.0...v1.0.1
@@ -267,6 +274,4 @@ PASCAL, SENTENCE, SNAKE, TITLE, TRAIN, UPPER.
 [v2.2.0]: https://github.com/jawira/case-converter/compare/v2.1.0...v2.2.0
 [v2.3.0]: https://github.com/jawira/case-converter/compare/v2.2.0...v2.3.0
 [v3.0.0]: https://github.com/jawira/case-converter/compare/v2.3.0...v3.0.0
-[#41]: https://github.com/jawira/case-converter/pull/41
-[#44]: https://github.com/jawira/case-converter/pull/44
 [v3.1.0]: https://github.com/jawira/case-converter/compare/v3.0.0...v3.1.0
