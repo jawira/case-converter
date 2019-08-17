@@ -75,9 +75,8 @@ $robot = new Convert('Straße');
 
 $robot->forceSimpleCaseMapping();
 echo $robot->toMacro();     // output: STRAßE
-echo $robot->toCobol();     // output: STRAßE
 ```
 
-[Learn more about Case-Mapping][Case-Mapping]. 
+[Learn more about Case-Mapping][Case-Mapping].
 
 [Case-Mapping]: https://jawira.github.io/case-converter/case-mapping.html

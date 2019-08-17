@@ -8,7 +8,7 @@ Introduction
 a particular form—uppercase, lowercase, or titlecase—possibly for display to 
 the user. 
 
-PHP always performed _Single Case-Mapping_, this is map one-to-one character 
+PHP always performed _Simple Case-Mapping_, this is map one-to-one character 
 mapping. For example, one _lower case_ character is converter to one _upper 
 case_ character.
 
@@ -32,7 +32,7 @@ $tur = new Convert('istambul');
 echo $tur->toTrain();   // output: İstanbul
 ```
 
-Forcing _Single Case-Mapping_
+Forcing _Simple Case-Mapping_
 ------------------------------
 
 _Full Case-Mapping_ (only from **PHP 7.3**):
@@ -43,7 +43,7 @@ $ger = new Convert('Straße');
 echo $ger->toUpper();    // output: STRASSE
 ```
 
-To force _Single Case-Mapping_ you have to call `->forceSimpleCaseMapping()`:
+To force _Simple Case-Mapping_ you have to call `->forceSimpleCaseMapping()`:
 
 ```php
 // German
@@ -53,7 +53,7 @@ echo $ger->toUpper();    // output: STRASSE
 ```
 
 Please note `->forceSimpleCaseMapping()` has no effect on _PHP 7.1_ and _PHP 
-7.2_ as they already perform _Single Case-Mapping_.
+7.2_ as they already perform _Simple Case-Mapping_.
 
 Technical details
 -----------------

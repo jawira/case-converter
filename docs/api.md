@@ -6,20 +6,20 @@ List of `\Jawira\CaseConverter\Convert` public methods.
 String conversion
 -----------------
 
-| Method          | Description                       |
-| --------------- | --------------------------------- |
-| `toCamel()`     | Return string in _Camel case_     |
-| `toPascal()`    | Return string in _Pascal case_    |
-| `toSnake()`     | Return string in _Snake case_     |
-| `toAda()`       | Return string in _Ada case_       |
-| `toMacro()`     | Return string in _Macro case_     |
-| `toKebab()`     | Return string in _Kebab case_     |
-| `toTrain()`     | Return string in _Train case_     |
-| `toCobol()`     | Return string in _Cobol case_     |
-| `toLower()`     | Return string in _Lower case_     |
-| `toUpper()`     | Return string in _Upper case_     |
-| `toTitle()`     | Return string in _Title case_     |
-| `toSentence()`  | Return string in _Sentence case_  |
+| Method          | Description                             |
+| --------------- | --------------------------------------- |
+| `toCamel()`     | Return string in _Camel case_ format    |
+| `toPascal()`    | Return string in _Pascal case_ format   |
+| `toSnake()`     | Return string in _Snake case_ format    |
+| `toAda()`       | Return string in _Ada case_ format      |
+| `toMacro()`     | Return string in _Macro case_ format    |
+| `toKebab()`     | Return string in _Kebab case_ format    |
+| `toTrain()`     | Return string in _Train case_ format    |
+| `toCobol()`     | Return string in _Cobol case_ format    |
+| `toLower()`     | Return string in _Lower case_ format    |
+| `toUpper()`     | Return string in _Upper case_ format    |
+| `toTitle()`     | Return string in _Title case_ format    |
+| `toSentence()`  | Return string in _Sentence case_ format |
 
 Explicit case detection
 -----------------------
@@ -56,4 +56,6 @@ Utility methods
 | --------------------------- | --------------------------------- |
 | `getSource()`               | Returns original input string     | 
 | `toArray()`                 | Returns array with detected words | 
-| `forceSimpleCaseMapping()`  | Output sting uses _Simple Case-Mapping_ even if you are using PHP 7.3 or newer | 
+| `forceSimpleCaseMapping()`  | Output sting uses [Simple Case-Mapping] even if you are using PHP 7.3 or newer | 
+
+[Simple Case-Mapping]: ./case-mapping.md
