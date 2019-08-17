@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+## [v3.2.0] - 2019-08-17
+
 ### Added
 
 - [#40] Added Factory class and its interface.
@@ -275,3 +277,4 @@ PASCAL, SENTENCE, SNAKE, TITLE, TRAIN, UPPER.
 [v2.3.0]: https://github.com/jawira/case-converter/compare/v2.2.0...v2.3.0
 [v3.0.0]: https://github.com/jawira/case-converter/compare/v2.3.0...v3.0.0
 [v3.1.0]: https://github.com/jawira/case-converter/compare/v3.0.0...v3.1.0
+[v3.2.0]: https://github.com/jawira/case-converter/compare/v3.1.0...v3.2.0
