@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+## [v3.2.1] - 2019-08-17
+
+### Changed
+
+- Updated Readme file
+
 ## [v3.2.0] - 2019-08-17
 
 ### Added
@@ -278,3 +284,5 @@ PASCAL, SENTENCE, SNAKE, TITLE, TRAIN, UPPER.
 [v3.0.0]: https://github.com/jawira/case-converter/compare/v2.3.0...v3.0.0
 [v3.1.0]: https://github.com/jawira/case-converter/compare/v3.0.0...v3.1.0
 [v3.2.0]: https://github.com/jawira/case-converter/compare/v3.1.0...v3.2.0
+
+[v3.2.1]: https://github.com/jawira/case-converter/compare/v3.2.0...v3.2.1
