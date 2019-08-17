@@ -1,5 +1,5 @@
-Development
-===========
+Development notes
+=================
 
 Phing targets
 -------------
@@ -34,6 +34,15 @@ This project adheres to:
 - [Keep a changelog]
 - [pds/skeleton]
 
+Creating new convention
+-----------------------
+
+1. Create new Gluer class
+2. Create new split car
+3. Update `\Jawira\CaseConverter\Convert::analyse` if needed
+4. Register into `\Jawira\CaseConverter\Convert::handleSplitterMethod`
+5. Register into `\Jawira\CaseConverter\Convert::handleGluerMethod`
+6. Update docblock `\Jawira\CaseConverter\Convert`
 
 [git-flow]: https://github.com/petervanderdoes/gitflow-avh
 [Keep a changelog]: http://keepachangelog.com/en/1.0.0/

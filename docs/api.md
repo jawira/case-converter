@@ -39,6 +39,7 @@ Explicit case detection
 | `fromUpper()`     | Split input string using `␣` (space character)      |
 | `fromTitle()`     | Split input string using `␣` (space character)      |
 | `fromSentence()`  | Split input string using `␣` (space character)      |
+| `fromDot()`       | Split input string using `.` (dot character)        |
 
 Please note that some methods are equivalent and have the same effect:
 

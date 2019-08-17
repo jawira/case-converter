@@ -79,4 +79,33 @@ echo $robot->toMacro();     // output: STRAßE
 
 [Learn more about Case-Mapping][Case-Mapping].
 
-[Case-Mapping]: https://jawira.github.io/case-converter/case-mapping.html
+Using the factory
+-----------------
+
+[CaseConverter factory] is going to instantiate `Convert` class for you.
+Everything else is the same:
+
+
+```php
+// Convert string to Pascal case
+$this->cc->convert('XML')->toPascal();          // Xml
+
+// Convert string to Snake case
+$this->cc->convert('v3.0.2')->toSnake();        // v3_0_2
+
+// Convert string to Camel case
+$this->cc->convert('first-name')->toCamel();    // firstName
+
+// Convert from Lower case to Dot case
+$this->cc->convert('non-SI units')->fromLower()->toDot(); // non-si.units
+
+// Get detected words
+$this->cc->convert('Mario Bros')->toArray();  // ['Mario', 'Bros']
+
+// Retrieve original string
+$this->cc->convert('use_the_force')->getSource();   // use_the_force
+```
+
+
+[Case-Mapping]: ./case-mapping.md
+[CaseConverter factory]: ./using-the-factory.md
