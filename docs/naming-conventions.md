@@ -17,7 +17,7 @@ Reference matrix
 | `␣` (space)       | Lower case    | Title case    | Upper case    | Sentence case |
 | ` ` (empty string)| -             | Camel case<br>Pascal case | - | -             |
 
-Description table
+Description table (wip)
 -----------------
 
 | Convention name   | Description   | Usage | AKA   |

@@ -98,7 +98,7 @@ Documentation
 Contributing
 ------------
 
-If you liked this project, ⭐ [star it on GitHub][GitHub].
+If you liked this project, ⭐ star it on [GitHub].
 
 License
 -------

@@ -20,6 +20,7 @@ String conversion
 | `toUpper()`     | Return string in _Upper case_ format    |
 | `toTitle()`     | Return string in _Title case_ format    |
 | `toSentence()`  | Return string in _Sentence case_ format |
+| `toDot()`       | Return string in _Dot notation_         |
 
 Explicit case detection
 -----------------------

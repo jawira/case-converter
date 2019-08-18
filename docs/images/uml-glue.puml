@@ -24,6 +24,11 @@ namespace Jawira.CaseConverter.Glue  {
 	class LowerCase << class >> {
 		+glue()
 	}
+	class DotNotation << class >> {
+		+DELIMITER
+		--
+		+glue()
+	}
 	abstract UnderscoreGluer << abstract >> {
 		+DELIMITER
 	}
@@ -67,6 +72,7 @@ namespace Jawira.CaseConverter.Glue  {
 Jawira.CaseConverter.Glue.SpaceGluer --|> Jawira.CaseConverter.Glue.Gluer
 Jawira.CaseConverter.Glue.SentenceCase --|> Jawira.CaseConverter.Glue.SpaceGluer
 Jawira.CaseConverter.Glue.LowerCase --|> Jawira.CaseConverter.Glue.SpaceGluer
+Jawira.CaseConverter.Glue.DotNotation --|> Jawira.CaseConverter.Glue.Gluer
 Jawira.CaseConverter.Glue.UnderscoreGluer --|> Jawira.CaseConverter.Glue.Gluer
 Jawira.CaseConverter.Glue.DashGluer --|> Jawira.CaseConverter.Glue.Gluer
 Jawira.CaseConverter.Glue.TrainCase --|> Jawira.CaseConverter.Glue.DashGluer

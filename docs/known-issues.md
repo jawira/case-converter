@@ -13,6 +13,8 @@ As shown in the previous example, there is no way to go back to the original
 input string (i.e. `hello-8-world`), in _kebab case_ this sting is written as 
 `hello8-world`.
 
+Other example:
+
 | Code                          | Output            |
 | ----------------------------- | ----------------- |
 | $name->toDot('REEL2REAL');    | r.e.e.l2.r.e.a.l  |

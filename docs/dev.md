@@ -8,7 +8,6 @@ Phing targets
 
 - `$ phing setup`: Prepare project for development.
 - `$ phing qa`: Run quality tests, use this before every commit.
-- `$ phing refresh`: Update generated files (changelog, images, etc).
 
 Dev requirements
 ----------------
@@ -17,12 +16,14 @@ To use Phing tasks you need to previously install:
 
 - [Phive]
 - [mkdocs]
+- [Composer]
 
 Using Phing behind a proxy
 --------------------------
 
 If you are developing behind a proxy, you have to set the environment 
-variable `http_proxy`. This variable is imported in buildfile.
+variable `http_proxy`. This variable already is imported in `build.xml`, so you
+have nothing to do.
 
 Conventions
 -----------
@@ -42,7 +43,8 @@ Creating new convention
 3. Update `\Jawira\CaseConverter\Convert::analyse` if needed
 4. Register into `\Jawira\CaseConverter\Convert::handleSplitterMethod`
 5. Register into `\Jawira\CaseConverter\Convert::handleGluerMethod`
-6. Update docblock `\Jawira\CaseConverter\Convert`
+6. Update docblock `\Jawira\CaseConverter\Convert` to register new methods.
+7. Update documentation
 
 [git-flow]: https://github.com/petervanderdoes/gitflow-avh
 [Keep a changelog]: http://keepachangelog.com/en/1.0.0/
@@ -50,3 +52,4 @@ Creating new convention
 [pds/skeleton]: https://github.com/php-pds/skeleton
 [Phive]: https://phar.io/
 [Semantic Versioning]: http://semver.org/
+[Composer]: https://getcomposer.org/

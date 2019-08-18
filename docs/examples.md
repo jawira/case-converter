@@ -88,22 +88,22 @@ Everything else is the same:
 
 ```php
 // Convert string to Pascal case
-$this->cc->convert('XML')->toPascal();          // Xml
+$this->cc->convert('XML')->toPascal();                      // Xml
 
 // Convert string to Snake case
-$this->cc->convert('v3.0.2')->toSnake();        // v3_0_2
+$this->cc->convert('v3.0.2')->toSnake();                  // v3_0_2
 
 // Convert string to Camel case
-$this->cc->convert('first-name')->toCamel();    // firstName
+$this->cc->convert('first-name')->toCamel();              // firstName
 
 // Convert from Lower case to Dot case
 $this->cc->convert('non-SI units')->fromLower()->toDot(); // non-si.units
 
 // Get detected words
-$this->cc->convert('Mario Bros')->toArray();  // ['Mario', 'Bros']
+$this->cc->convert('Mario Bros')->toArray();              // ['Mario', 'Bros']
 
 // Retrieve original string
-$this->cc->convert('use_the_force')->getSource();   // use_the_force
+$this->cc->convert('use_the_force')->getSource();         // use_the_force
 ```
 
 

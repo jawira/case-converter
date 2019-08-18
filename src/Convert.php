@@ -371,6 +371,7 @@ class Convert
      *
      * Call this method if you want to maintain the behaviour before PHP 7.3
      *
+     * @see https://unicode.org/faq/casemap_charprop.html
      * @return \Jawira\CaseConverter\Convert
      */
     public function forceSimpleCaseMapping(): self
