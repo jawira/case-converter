@@ -37,5 +37,8 @@
     "psr-4": {
       "Jawira\\CaseConverter\\": "src/"
     }
+  },
+  "require-dev": {
+    "jawira/skeleton": "^1.11"
   }
 }

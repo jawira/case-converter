@@ -1,21 +1,26 @@
 ;https://EditorConfig.org
-;https://devhints.io/editorconfig
+;https://github.com/editorconfig/editorconfig/wiki
 
 root = true
 
 [*]
 charset = utf-8
+trim_trailing_whitespace = true
 end_of_line = lf
+insert_final_newline = true
 
 [*.php]
 indent_size = 4
 indent_style = space
-insert_final_newline = true
-trim_trailing_whitespace = true
 
-[*.{yml, yaml, xml, md}]
-tab_width = 2
+[*.{yml, yaml, neon, xml, json}]
 indent_size = 2
 indent_style = space
-insert_final_newline = true
-trim_trailing_whitespace = true
+
+[*.{md, markdown}]
+trim_trailing_whitespace = false
+indent_size = 2
+indent_style = space
+
+[{Makefile, *.mk}]
+indent_style = tab
