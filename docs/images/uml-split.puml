@@ -17,12 +17,12 @@ namespace Jawira.CaseConverter.Split  {
 		--
 		+split()
 	}
-	class DotSplitter << class >> {
+	class UnderscoreSplitter << class >> {
 		+PATTERN
 		--
 		+split()
 	}
-	class UnderscoreSplitter << class >> {
+	class DotSplitter << class >> {
 		+PATTERN
 		--
 		+split()
@@ -34,8 +34,8 @@ namespace Jawira.CaseConverter.Split  {
 }
 Jawira.CaseConverter.Split.DashSplitter --|> Jawira.CaseConverter.Split.Splitter
 Jawira.CaseConverter.Split.SpaceSplitter --|> Jawira.CaseConverter.Split.Splitter
-Jawira.CaseConverter.Split.DotSplitter --|> Jawira.CaseConverter.Split.Splitter
 Jawira.CaseConverter.Split.UnderscoreSplitter --|> Jawira.CaseConverter.Split.Splitter
+Jawira.CaseConverter.Split.DotSplitter --|> Jawira.CaseConverter.Split.Splitter
 Jawira.CaseConverter.Split.UppercaseSplitter --|> Jawira.CaseConverter.Split.Splitter
 @enduml
 

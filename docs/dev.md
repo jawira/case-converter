@@ -16,6 +16,7 @@ To use Phing tasks you need to previously install:
 
 - [Phive]
 - [mkdocs]
+- [mkdocs-material]
 - [Composer]
 
 Using Phing behind a proxy
@@ -46,9 +47,19 @@ Creating new convention
 6. Update docblock `\Jawira\CaseConverter\Convert` to register new methods.
 7. Update documentation
 
+Class diagrams
+--------------
+
+[![Phing targets](./images/uml-case-converter.png "CaseConverter namespace")](./images/uml-case-converter.png)
+
+[![Phing targets](./images/uml-glue.png "Glue namespace")](./images/uml-glue.png)
+
+[![Phing targets](./images/uml-split.png "Split namespace")](./images/uml-split.png)
+
 [git-flow]: https://github.com/petervanderdoes/gitflow-avh
 [Keep a changelog]: http://keepachangelog.com/en/1.0.0/
 [mkdocs]: https://www.mkdocs.org/#installation
+[mkdocs-material]: https://github.com/squidfunk/mkdocs-material
 [pds/skeleton]: https://github.com/php-pds/skeleton
 [Phive]: https://phar.io/
 [Semantic Versioning]: http://semver.org/

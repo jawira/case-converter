@@ -17,6 +17,7 @@ Use this library to convert string between:
 | 🔠 Upper case   | `toUpper()`     | `MY NAME IS BOND` |
 | 📰 Title case     | `toTitle()`     | `My Name Is Bond` |
 | ✍️ Sentence case | `toSentence()`  | `My name is bond` |
+| ⚙️ Dot notation  | `toDot()`       | `my.name.is.bond` |
 
 Features:
 
