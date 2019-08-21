@@ -6,6 +6,7 @@
     "Ada case",
     "Camel case",
     "Cobol case",
+    "Dot notation",
     "Kebab case",
     "Lower case",
     "Macro case",
@@ -37,8 +38,5 @@
     "psr-4": {
       "Jawira\\CaseConverter\\": "src/"
     }
-  },
-  "require-dev": {
-    "jawira/skeleton": "^1.11"
   }
 }
