@@ -1,10 +1,12 @@
 API
 ===
 
-List of `\Jawira\CaseConverter\Convert` public methods.
+List of public methods.
 
-String conversion
------------------
+`\Jawira\CaseConverter\Convert`
+-------------------------------
+
+### String conversion
 
 | Method          | Description                             |
 | --------------- | --------------------------------------- |
@@ -20,9 +22,9 @@ String conversion
 | `toUpper()`     | Return string in _Upper case_ format    |
 | `toTitle()`     | Return string in _Title case_ format    |
 | `toSentence()`  | Return string in _Sentence case_ format |
+| `toDot()`       | Return string in _Dot notation_         |
 
-Explicit case detection
------------------------
+### Explicit case detection
 
 | Method            | Description                                         |
 | ----------------- | --------------------------------------------------- |
@@ -39,9 +41,11 @@ Explicit case detection
 | `fromUpper()`     | Split input string using `␣` (space character)      |
 | `fromTitle()`     | Split input string using `␣` (space character)      |
 | `fromSentence()`  | Split input string using `␣` (space character)      |
+| `fromDot()`       | Split input string using `.` (dot character)        |
 
 Please note that some methods are equivalent and have the same effect:
 
+- `fromDot()`
 - `fromCamel()` ≈ `fromPascal()`
 - `fromSnake()` ≈ `fromAda()` ≈ `fromMacro()`
 - `fromKebab()` ≈ `fromTrain()` ≈ `fromCobol()`
@@ -49,13 +53,24 @@ Please note that some methods are equivalent and have the same effect:
 
 All these methods exists only for sake of completeness.
 
-Utility methods
----------------
+### Utility methods
 
 | Method                      | Description                       |
 | --------------------------- | --------------------------------- |
-| `getSource()`               | Returns original input string     | 
-| `toArray()`                 | Returns array with detected words | 
+| `getSource()`               | Returns original input string     |
+| `toArray()`                 | Returns array with detected words |
 | `forceSimpleCaseMapping()`  | Output sting uses [Simple Case-Mapping] even if you are using PHP 7.3 or newer | 
 
+
+`\Jawira\CaseConverter\CaseConverter`
+-------------------------------------
+
+### Factory method
+
+| Method        | Description                 |
+| ------------- | --------------------------- |
+| `convert()`   | Creates a `Convert` object  |
+
+
 [Simple Case-Mapping]: ./case-mapping.md
+

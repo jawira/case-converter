@@ -48,16 +48,6 @@
     </composer>
   </target>
 
-  <target name="phpunit:run" description="Run unit tests">
-    <mkdir dir="resources/coverage-html/"/>
-    <exec executable="bin/phpunit" passthru="true" checkreturn="true">
-      <arg line="--configuration=config/phpunit.xml"/>
-      <arg value="--testdox"/>
-      <arg value="--verbose"/>
-      <arg value="--stop-on-defect"/>
-    </exec>
-  </target>
-
   <target name="phpunit:open-coverage" description="Open coverage site" depends="phpunit:run">
     <exec executable="xdg-open">
       <arg file="resources/coverage-html/index.html"/>
@@ -88,6 +78,16 @@
       <arg line="--level=max analyze"/>
       <arg value="--no-progress"/>
       <arg path="src"/>
+    </exec>
+  </target>
+
+  <target name="phpunit:run" description="Run unit tests">
+    <mkdir dir="resources/coverage-html/"/>
+    <exec executable="bin/phpunit" passthru="true" checkreturn="true">
+      <arg line="--configuration=config/phpunit.xml"/>
+      <arg value="--testdox"/>
+      <arg value="--verbose"/>
+      <arg value="--stop-on-defect"/>
     </exec>
   </target>
 

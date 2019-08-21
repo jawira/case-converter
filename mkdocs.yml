@@ -1,8 +1,8 @@
-site_name: 'Case Converter'
+site_name: 'Case Converter documentation'
 site_author: 'Jawira Portugal'
 copyright: 'The MIT License (MIT)'
 theme:
-  name: 'readthedocs'
+  name: 'material'
   highlightjs: true
   titles_only: true
   prev_next_buttons_location: 'both'
@@ -11,3 +11,5 @@ use_directory_urls: false
 strict: true
 repo_url: 'https://github.com/jawira/case-converter/'
 edit_uri: ''
+markdown_extensions:
+  - codehilite

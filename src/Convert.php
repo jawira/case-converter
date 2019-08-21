@@ -6,6 +6,7 @@ use Jawira\CaseConverter\Glue\AdaCase;
 use Jawira\CaseConverter\Glue\CamelCase;
 use Jawira\CaseConverter\Glue\CobolCase;
 use Jawira\CaseConverter\Glue\DashGluer;
+use Jawira\CaseConverter\Glue\DotNotation;
 use Jawira\CaseConverter\Glue\Gluer;
 use Jawira\CaseConverter\Glue\KebabCase;
 use Jawira\CaseConverter\Glue\LowerCase;
@@ -19,6 +20,7 @@ use Jawira\CaseConverter\Glue\TrainCase;
 use Jawira\CaseConverter\Glue\UnderscoreGluer;
 use Jawira\CaseConverter\Glue\UpperCase;
 use Jawira\CaseConverter\Split\DashSplitter;
+use Jawira\CaseConverter\Split\DotSplitter;
 use Jawira\CaseConverter\Split\SpaceSplitter;
 use Jawira\CaseConverter\Split\Splitter;
 use Jawira\CaseConverter\Split\UnderscoreSplitter;
@@ -48,6 +50,7 @@ use function preg_match;
  * @method self fromAda() Treat input string as _Ada case_
  * @method self fromCamel() Treat input string as _Camel case_
  * @method self fromCobol() Treat input string as _Cobol case_
+ * @method self fromDot() Treat input string as _Dot notation_
  * @method self fromKebab() Treat input string as _Kebab case_
  * @method self fromLower() Treat input string as _Lower case_
  * @method self fromMacro() Treat input string as _Macro case_
@@ -61,6 +64,7 @@ use function preg_match;
  * @method string toAda() Return string in _Ada case_ format
  * @method string toCamel() Return string in _Camel case_ format
  * @method string toCobol() Return string in _Cobol case_ format
+ * @method string toDot() Return string in _Dot notation_
  * @method string toKebab() Return string in _Kebab case_ format
  * @method string toLower() Return string in _Lower case_ format
  * @method string toMacro() Return string in _Macro case_ format
@@ -137,6 +141,8 @@ class Convert
             $splittingStrategy = new DashSplitter($input);
         } elseif (mb_strpos($input, SpaceGluer::DELIMITER)) {
             $splittingStrategy = new SpaceSplitter($input);
+        } elseif (mb_strpos($input, DotNotation::DELIMITER)) {
+            $splittingStrategy = new DotSplitter($input);
         } elseif ($this->isUppercaseWord($input)) {
             $splittingStrategy = new UnderscoreSplitter($input);
         } else {
@@ -249,6 +255,9 @@ class Convert
             case 'fromSentence':
                 $splitterName = SpaceSplitter::class;
                 break;
+            case 'fromDot':
+                $splitterName = DotSplitter::class;
+                break;
             default:
                 throw new CaseConverterException("Unknown method: $methodName");
                 break;
@@ -320,6 +329,9 @@ class Convert
             case 'toUpper':
                 $className = UpperCase::class;
                 break;
+            case 'toDot':
+                $className = DotNotation::class;
+                break;
             default:
                 throw new CaseConverterException("Unknown method: $methodName");
                 break;
@@ -359,6 +371,7 @@ class Convert
      *
      * Call this method if you want to maintain the behaviour before PHP 7.3
      *
+     * @see https://unicode.org/faq/casemap_charprop.html
      * @return \Jawira\CaseConverter\Convert
      */
     public function forceSimpleCaseMapping(): self
