@@ -35,7 +35,9 @@ echo $tur->toTrain();   // output: İstanbul
 Forcing _Simple Case-Mapping_
 ------------------------------
 
-_Full Case-Mapping_ (only from **PHP 7.3**):
+As told before, _Full Case-Mapping_ is only available on PHP 7.3 and newer.
+
+The following code snippet is executed on PHP 7.3:
 
 ```php
 // German
@@ -49,11 +51,11 @@ To force _Simple Case-Mapping_ you have to call `->forceSimpleCaseMapping()`:
 // German
 $ger = new Convert('Straße');
 $ger->forceSimpleCaseMapping();
-echo $ger->toUpper();    // output: STRASSE
+echo $ger->toUpper();    // output: STRAßE
 ```
 
 Please note `->forceSimpleCaseMapping()` has no effect on _PHP 7.1_ and _PHP 
-7.2_ as they already perform _Simple Case-Mapping_.
+7.2_ as these version can only perform _Simple Case-Mapping_.
 
 Technical details
 -----------------
@@ -84,11 +86,6 @@ IMHO this is a _breaking change_, PHP people should have keep untouched old
 constants and create new ones for [Full Case-Mapping], for example: 
 `MB_CASE_LOWER_FULL`, `MB_CASE_TITLE_FULL`, and `MB_CASE_UPPER_FULL` (please 
 note these variables do not exist). 
-
-Sources
--------
-
-- https://unicode.org/faq/casemap_charprop.html
 
 [Full Case-Mapping]: https://www.php.net/manual/en/migration73.new-features.php#migration73.new-features.mbstring.case-mapping-folding
 [mb_convert_case()]: https://www.php.net/manual/en/function.mb-convert-case.php

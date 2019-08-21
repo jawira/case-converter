@@ -48,16 +48,6 @@
     </composer>
   </target>
 
-  <target name="phpunit:run" description="Run unit tests">
-    <mkdir dir="resources/coverage-html/"/>
-    <exec executable="bin/phpunit" passthru="true" checkreturn="true">
-      <arg line="--configuration=config/phpunit.xml"/>
-      <arg value="--testdox"/>
-      <arg value="--verbose"/>
-      <arg value="--stop-on-defect"/>
-    </exec>
-  </target>
-
   <target name="phpunit:open-coverage" description="Open coverage site" depends="phpunit:run">
     <exec executable="xdg-open">
       <arg file="resources/coverage-html/index.html"/>
@@ -88,6 +78,16 @@
       <arg line="--level=max analyze"/>
       <arg value="--no-progress"/>
       <arg path="src"/>
+    </exec>
+  </target>
+
+  <target name="phpunit:run" description="Run unit tests">
+    <mkdir dir="resources/coverage-html/"/>
+    <exec executable="bin/phpunit" passthru="true" checkreturn="true">
+      <arg line="--configuration=config/phpunit.xml"/>
+      <arg value="--testdox"/>
+      <arg value="--verbose"/>
+      <arg value="--stop-on-defect"/>
     </exec>
   </target>
 
@@ -144,13 +144,14 @@
   </target>
 
   <target name="cc:after-build" description="Handle &amp; upload coverage payload">
+    <fail unless="env.CC_TEST_REPORTER_ID"
+          message="you must supply a CC_TEST_REPORTER_ID ENV variable"/>
     <exec executable="bin/cc-test-reporter" passthru="true" checkreturn="true">
       <arg value="format-coverage"/>
       <arg line="--input-type clover"/>
       <arg file="resources/coverage/clover.xml"/>
     </exec>
     <exec executable="bin/cc-test-reporter" passthru="true" checkreturn="true">
-      <!--you must supply a CC_TEST_REPORTER_ID ENV variable-->
       <arg value="upload-coverage"/>
     </exec>
   </target>
@@ -167,8 +168,8 @@
     </composer>
   </target>
 
-  <target name="git:list-tags" description="List all git tags">
-    <!--https://stackoverflow.com/a/34239190/4345061-->
+  <target name="git:tags-listing" description="List all git tags">
+    <!-- https://stackoverflow.com/a/34239190/4345061 -->
     <exec executable="git" passthru="true">
       <arg value="log"/>
       <arg line="--graph --all --decorate --oneline --simplify-by-decoration"/>

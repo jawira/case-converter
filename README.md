@@ -17,6 +17,7 @@ Use this library to convert string between:
 | 🔠 Upper case   | `toUpper()`     | `MY NAME IS BOND` |
 | 📰 Title case     | `toTitle()`     | `My Name Is Bond` |
 | ✍️ Sentence case | `toSentence()`  | `My name is bond` |
+| ⚙️ Dot notation  | `toDot()`       | `my.name.is.bond` |
 
 Features:
 
@@ -41,18 +42,25 @@ Features:
 Usage
 -----
 
+Input string (i.e. _john-connor_) format is going to be 
+[detected automatically][detection algorithm]. Here's an example:
+
 ```php
 use Jawira\CaseConverter\Convert;
 
 $hero = new Convert('john-connor');
 
 echo $hero->toCamel();   // output: johnConnor
-echo $hero->toSnake();   // output: john_connor
 ```
 
-Note: Input string (i.e. _john-connor_) format is going to be detected automatically.
+Of course you can explicitly set the format of input string:
 
-You can see a list of [all public methods].
+```php
+echo $hero->fromKebab()->toSnake();   // output: john_connor
+```
+
+You can also use the [provided factory][factory] to instantiate `Convert` class.
+A list of [all public methods] is also available.
 
 i18n
 ----
@@ -88,6 +96,11 @@ Documentation
 
 <https://jawira.github.io/case-converter/>
 
+Contributing
+------------
+
+If you liked this project, ⭐ star it on [GitHub].
+
 License
 -------
 
@@ -102,6 +115,9 @@ This library is licensed under the [MIT LICENSE].
 [magic method]: https://www.php.net/manual/en/language.oop5.magic.php#object.tostring
 [MIT LICENSE]: https://jawira.github.io/case-converter/license.html
 [open an issue]: https://github.com/jawira/case-converter/issues/new
+[detection algorithm]: https://jawira.github.io/case-converter/detection-algorithm.html
+[factory]: https://jawira.github.io/case-converter/using-the-factory.html
+[GitHub]: https://github.com/jawira/case-converter/
 
 ***
 

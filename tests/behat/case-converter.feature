@@ -20,6 +20,7 @@ Feature: Convert Case
       | toCamel    | dataTransfer         | dataTransfer         |
       | toCamel    | eniac_computer       | eniacComputer        |
       | toCamel    | FIBONACCI_NUMBER     | fibonacciNumber      |
+      | toCamel    | v5.3.0               | v530                 |
       | toCamel    | Good_Morning_Vietnam | goodMorningVietnam   |
       | toCamel    | Buenos Días          | buenosDías           |
       | toCamel    | Jag_förstår_inte     | jagFörstårInte       |
@@ -36,6 +37,7 @@ Feature: Convert Case
       | toPascal   | dataTransfer         | DataTransfer         |
       | toPascal   | eniac_computer       | EniacComputer        |
       | toPascal   | FIBONACCI_NUMBER     | FibonacciNumber      |
+      | toPascal   | v5.3.0               | V530                 |
       | toPascal   | Good_Morning_Vietnam | GoodMorningVietnam   |
       | toPascal   | Buenos Días          | BuenosDías           |
       | toPascal   | Jag_förstår_inte     | JagFörstårInte       |
@@ -52,6 +54,7 @@ Feature: Convert Case
       | toSnake    | dataTransfer         | data_transfer        |
       | toSnake    | eniac_computer       | eniac_computer       |
       | toSnake    | FIBONACCI_NUMBER     | fibonacci_number     |
+      | toSnake    | v5.3.0               | v5_3_0               |
       | toSnake    | Good_Morning_Vietnam | good_morning_vietnam |
       | toSnake    | Good_Morning_Vietnam | good_morning_vietnam |
       | toSnake    | Buenos Días          | buenos_días          |
@@ -68,6 +71,7 @@ Feature: Convert Case
       | toMacro    | dataTransfer         | DATA_TRANSFER        |
       | toMacro    | eniac_computer       | ENIAC_COMPUTER       |
       | toMacro    | FIBONACCI_NUMBER     | FIBONACCI_NUMBER     |
+      | toMacro    | v5.3.0               | V5_3_0               |
       | toMacro    | Good_Morning_Vietnam | GOOD_MORNING_VIETNAM |
       | toMacro    | Buenos Días          | BUENOS_DÍAS          |
       | toMacro    | Jag_förstår_inte     | JAG_FÖRSTÅR_INTE     |
@@ -84,6 +88,7 @@ Feature: Convert Case
       | toAda      | dataTransfer         | Data_Transfer        |
       | toAda      | eniac_computer       | Eniac_Computer       |
       | toAda      | FIBONACCI_NUMBER     | Fibonacci_Number     |
+      | toAda      | v5.3.0               | V5_3_0               |
       | toAda      | Good_Morning_Vietnam | Good_Morning_Vietnam |
       | toAda      | Buenos Días          | Buenos_Días          |
       | toAda      | Jag_förstår_inte     | Jag_Förstår_Inte     |
@@ -100,6 +105,7 @@ Feature: Convert Case
       | toKebab    | dataTransfer         | data-transfer        |
       | toKebab    | eniac_computer       | eniac-computer       |
       | toKebab    | FIBONACCI_NUMBER     | fibonacci-number     |
+      | toKebab    | v5.3.0               | v5-3-0               |
       | toKebab    | Good_Morning_Vietnam | good-morning-vietnam |
       | toKebab    | Buenos Días          | buenos-días          |
       | toKebab    | Jag_förstår_inte     | jag-förstår-inte     |
@@ -116,6 +122,7 @@ Feature: Convert Case
       | toCobol    | dataTransfer         | DATA-TRANSFER        |
       | toCobol    | eniac_computer       | ENIAC-COMPUTER       |
       | toCobol    | FIBONACCI_NUMBER     | FIBONACCI-NUMBER     |
+      | toCobol    | v5.3.0               | V5-3-0               |
       | toCobol    | Good_Morning_Vietnam | GOOD-MORNING-VIETNAM |
       | toCobol    | Buenos Días          | BUENOS-DÍAS          |
       | toCobol    | Jag_förstår_inte     | JAG-FÖRSTÅR-INTE     |
@@ -132,6 +139,7 @@ Feature: Convert Case
       | toTrain    | dataTransfer         | Data-Transfer        |
       | toTrain    | eniac_computer       | Eniac-Computer       |
       | toTrain    | FIBONACCI_NUMBER     | Fibonacci-Number     |
+      | toTrain    | v5.3.0               | V5-3-0               |
       | toTrain    | Good_Morning_Vietnam | Good-Morning-Vietnam |
       | toTrain    | Buenos Días          | Buenos-Días          |
       | toTrain    | Jag_förstår_inte     | Jag-Förstår-Inte     |
@@ -148,6 +156,7 @@ Feature: Convert Case
       | toLower    | dataTransfer         | data transfer        |
       | toLower    | eniac_computer       | eniac computer       |
       | toLower    | FIBONACCI_NUMBER     | fibonacci number     |
+      | toLower    | v5.3.0               | v5 3 0               |
       | toLower    | Good_Morning_Vietnam | good morning vietnam |
       | toLower    | Buenos Días          | buenos días          |
       | toLower    | Jag_förstår_inte     | jag förstår inte     |
@@ -163,6 +172,7 @@ Feature: Convert Case
       | toUpper    | CamelCase            | CAMEL CASE           |
       | toUpper    | dataTransfer         | DATA TRANSFER        |
       | toUpper    | eniac_computer       | ENIAC COMPUTER       |
+      | toUpper    | v5.3.0               | V5 3 0               |
       | toUpper    | FIBONACCI_NUMBER     | FIBONACCI NUMBER     |
       | toUpper    | Good_Morning_Vietnam | GOOD MORNING VIETNAM |
       | toUpper    | Buenos Días          | BUENOS DÍAS          |
@@ -180,6 +190,7 @@ Feature: Convert Case
       | toTitle    | dataTransfer         | Data Transfer        |
       | toTitle    | eniac_computer       | Eniac Computer       |
       | toTitle    | FIBONACCI_NUMBER     | Fibonacci Number     |
+      | toTitle    | v5.3.0               | V5 3 0               |
       | toTitle    | Good_Morning_Vietnam | Good Morning Vietnam |
       | toTitle    | Buenos Días          | Buenos Días          |
       | toTitle    | Jag_förstår_inte     | Jag Förstår Inte     |
@@ -196,6 +207,7 @@ Feature: Convert Case
       | toSentence | dataTransfer         | Data transfer        |
       | toSentence | eniac_computer       | Eniac computer       |
       | toSentence | FIBONACCI_NUMBER     | Fibonacci number     |
+      | toSentence | v5.3.0               | V5 3 0               |
       | toSentence | Good_Morning_Vietnam | Good morning vietnam |
       | toSentence | Buenos Días          | Buenos días          |
       | toSentence | Jag_förstår_inte     | Jag förstår inte     |
@@ -203,6 +215,22 @@ Feature: Convert Case
       | toSentence | Πολύ-καλό            | Πολύ καλό            |
       | toSentence | ОЧЕНЬ_ПРИЯТНО        | Очень приятно        |
       | toSentence | Ես-հայերեն-չգիտեմ    | Ես հայերեն չգիտեմ    |
+      | toDot      |                      |                      |
+      | toDot      | a                    | a                    |
+      | toDot      | NASA                 | nasa                 |
+      | toDot      | Fbi                  | fbi                  |
+      | toDot      | B-C-D                | b.c.d                |
+      | toDot      | CamelCase            | camel.case           |
+      | toDot      | dataTransfer         | data.transfer        |
+      | toDot      | eniac_computer       | eniac.computer       |
+      | toDot      | FIBONACCI_NUMBER     | fibonacci.number     |
+      | toDot      | Good_Morning_Vietnam | good.morning.vietnam |
+      | toDot      | Buenos Días          | buenos.días          |
+      | toDot      | Jag_förstår_inte     | jag.förstår.inte     |
+      | toDot      | quicoYÑoño           | quico.y.ñoño         |
+      | toDot      | Πολύ-καλό            | πολύ.καλό            |
+      | toDot      | ОЧЕНЬ_ПРИЯТНО        | очень.приятно        |
+      | toDot      | Ես-հայերեն-չգիտեմ    | ես.հայերեն.չգիտեմ    |
 
 
   Scenario Outline: Convert a string to array
@@ -219,6 +247,7 @@ Feature: Convert Case
       | toArray | aBc_DeF_hIj_KlM | [aBc;DeF;hIj;KlM] |
       | toArray | one__two        | [one;two]         |
       | toArray | Le Népal        | [Le;Népal]        |
+      | toArray | red.green.blue  | [red;green;blue]  |
 
 
   Scenario: Force simple case mapping
@@ -275,6 +304,11 @@ Feature: Convert Case
       | toPascal   | i-do--not--0like--number0 | IDoNot0LikeNumber0     |
       | toSnake    | IDoNot0LikeNumber0        | i_do_not0_like_number0 |
       | toMacro    | you-have-0-money          | YOU_HAVE_0_MONEY       |
+      | toDot      | se7en                     | se7en                  |
+      | toDot      | Red1Green2Blue3           | red1.green2.blue3      |
+      | toDot      | REEL2REAL                 | r.e.e.l2.r.e.a.l       |
+      | toDot      | reel2real                 | reel2real              |
+      | toDot      | Reel2Real                 | reel2.real             |
 
 
   Scenario: Retrieving original string
@@ -283,7 +317,7 @@ Feature: Convert Case
     Then method should return string "  A commissioned mirror swears.  "
 
 
-  Scenario Outline: Using numbers in input strings
+  Scenario Outline: Handling strings with mixed delimiters
     Given CaseConverter class is instantiated with "<input-string>"
     When I call "<from-method>"
     And I call "<to-method>"
@@ -294,3 +328,15 @@ Feature: Convert Case
       | fromSnake   | toSnake   | C-3PO_and_R2-D2 | c-3po_and_r2-d2   |
       | fromSnake   | toPascal  | C-3PO_and_R2-D2 | C-3PoAndR2-D2     |
       | fromPascal  | toSnake   | C-3PoAndR2-D2   | c-3_po_and_r2-_d2 |
+      | fromUpper   | toDot     | non-SI units    | non-si.units      |
+
+
+  Scenario Outline: Manually set input string format (test from* methods)
+    Given CaseConverter class is instantiated with "<input-string>"
+    When I call "<from-method>"
+    And I call "<to-method>"
+    Then method should return string "<output-string>"
+
+    Examples:
+      | from-method | to-method | input-string | output-string |
+      | fromDot     | toSnake   | v5.0.2       | v5_0_2        |
