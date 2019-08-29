@@ -21,8 +21,9 @@ Use this library to convert string between:
 
 Features:
 
-* 🔁 automatic case detection
 * 🌐 i18n
+* 🔁 [automatic case detection][detection algorithm]
+* 🏭 [factory][]
 
 [![Latest Stable Version](https://poser.pugx.org/jawira/case-converter/v/stable)](https://packagist.org/packages/jawira/case-converter)
 [![PHP from Packagist](https://img.shields.io/packagist/php-v/jawira/case-converter.svg)](https://packagist.org/packages/jawira/case-converter)
@@ -128,6 +129,9 @@ My other packages
 
 <dt><a href="https://packagist.org/packages/jawira/phing-visualizer">jawira/phing-visualizer</a> (library)</dt>
 <dd>Graphical representation of Phing's buildfile.</dd>
+
+<dt><a href="https://packagist.org/packages/jawira/phing-open-task">jawira/phing-open-task</a> (library)</dt>
+<dd>Phing task to open files, directories, and URLs with your favorite software.</dd>
 
 <dt><a href="https://packagist.org/packages/jawira/plantuml">jawira/plantuml</a> (library)</dt>
 <dd>Provides PlantUML integration: plantuml executable and plantuml.jar</dd>
