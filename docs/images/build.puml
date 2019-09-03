@@ -26,7 +26,7 @@ skinparam UseCaseFontColor Black
 (cc:before-build)
 (cc:after-build)
 (plantuml:puml-to-png)
-(git:list-tags)
+(git:tags-listing)
 (phing:visualize)
 (uml-writer:render)
 (docs:deploy)
