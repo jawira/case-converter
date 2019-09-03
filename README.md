@@ -21,7 +21,7 @@ Use this library to convert string between:
 
 Features:
 
-* 🌐 i18n
+* 🌐 [i18n][#i18n]
 * 🔁 [automatic case detection][detection algorithm]
 * 🏭 [factory][]
 
