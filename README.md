@@ -122,10 +122,13 @@ This library is licensed under the [MIT LICENSE].
 
 ***
 
-My other packages
------------------
+Packages from jawira
+--------------------
 
 <dl>
+
+<dt><a href="https://packagist.org/packages/jawira/emoji-catalog">jawira/emoji-catalog</a> (library)</dt>
+<dd>Get access to +3000 emojis as class constants.</dd>
 
 <dt><a href="https://packagist.org/packages/jawira/phing-visualizer">jawira/phing-visualizer</a> (library)</dt>
 <dd>Graphical representation of Phing's buildfile.</dd>
@@ -133,13 +136,5 @@ My other packages
 <dt><a href="https://packagist.org/packages/jawira/phing-open-task">jawira/phing-open-task</a> (library)</dt>
 <dd>Phing task to open files, directories, and URLs with your favorite software.</dd>
 
-<dt><a href="https://packagist.org/packages/jawira/plantuml">jawira/plantuml</a> (library)</dt>
-<dd>Provides PlantUML integration: plantuml executable and plantuml.jar</dd>
-
-<dt><a href="https://packagist.org/packages/jawira/plantuml-encoding">jawira/plantuml-encoding</a> (library)</dt>
-<dd>PlantUML encoding functions.</dd>
-
-<dt><a href="https://packagist.org/packages/jawira/process-maker">jawira/process-maker</a> (project)</dt>
-<dd>Easily install and try ProcessMaker using Docker Compose.</dd>
-
+<dt><a href="https://packagist.org/packages/jawira/">more...</a></dt>
 </dl>
