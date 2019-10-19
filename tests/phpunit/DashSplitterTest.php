@@ -8,6 +8,7 @@ class DashSplitterTest extends TestCase
     /**
      * @covers \Jawira\CaseConverter\Split\DashSplitter::split
      * @throws \ReflectionException
+     * @throws \Jawira\CaseConverter\CaseConverterException
      */
     public function testSplit()
     {
@@ -26,7 +27,7 @@ class DashSplitterTest extends TestCase
         // Configuring stub
         $mock->expects($this->once())
              ->method('splitUsingPattern')
-             ->with('dummyString', '-+')
+             ->with('dummyString', '#-+#u')
              ->willReturn(['dummy', 'array']);
 
         /** @var \Jawira\CaseConverter\Split\DashSplitter $mock */

@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+### Changed
+
+- Changed hack from UppercaseSplitter to proper solution #45
+
 ## [v3.3.3] - 2019-09-03
 
 ### Fixed

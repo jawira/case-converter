@@ -7,36 +7,32 @@ class UppercaseSplitterTest extends TestCase
 {
     /**
      * @covers       \Jawira\CaseConverter\Split\UppercaseSplitter::split
-     * @dataProvider splitProvider
-     *
-     * @param string $inputString
-     * @param string $expected
      *
      * @throws \Jawira\CaseConverter\CaseConverterException
      * @throws \ReflectionException
      */
-    public function testSplit($inputString, $expected)
+    public function testSplit()
     {
         // Disabling constructor with one stub method
         $mock = $this->getMockBuilder(UppercaseSplitter::class)
                      ->disableOriginalConstructor()
-                     ->setMethods()
+                     ->setMethods(['splitUsingPattern'])
                      ->getMock();
 
         // Setting value to protected property
         $reflectionObject   = new ReflectionObject($mock);
         $reflectionProperty = $reflectionObject->getProperty('inputString');
         $reflectionProperty->setAccessible(true);
-        $reflectionProperty->setValue($mock, $inputString);
+        $reflectionProperty->setValue($mock, 'dummyString');
 
-        /** @var \Jawira\CaseConverter\Split\UppercaseSplitter $mock */
+        // Configuring stub
+        $mock->expects($this->once())
+             ->method('splitUsingPattern')
+             ->with('dummyString', '#(?=\p{Lu}{1})#u')
+             ->willReturn(['dummy', 'array']);
+
+        /** @var \Jawira\CaseConverter\Split\UnderscoreSplitter $mock */
         $returned = $mock->split();
-        $this->assertSame($expected, $returned);
-    }
-
-    public function splitProvider()
-    {
-        return [['ABCDE', ['A', 'B', 'C', 'D', 'E']], ['HelloWorld', ['Hello', 'World']],
-                ['helloWorld', ['hello', 'World']],];
+        $this->assertSame(['dummy', 'array'], $returned);
     }
 }
