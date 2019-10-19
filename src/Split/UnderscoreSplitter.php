@@ -6,10 +6,11 @@ use Jawira\CaseConverter\Glue\UnderscoreGluer;
 
 class UnderscoreSplitter extends Splitter
 {
-    const PATTERN = UnderscoreGluer::DELIMITER . '+';
+    const PATTERN = '#' . UnderscoreGluer::DELIMITER . '+#u';
 
     /**
      * @return string[]
+     * @throws \Jawira\CaseConverter\CaseConverterException
      */
     public function split(): array
     {

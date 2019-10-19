@@ -2,12 +2,9 @@
 
 namespace Jawira\CaseConverter\Split;
 
-use Jawira\CaseConverter\CaseConverterException;
-use Jawira\CaseConverter\Glue\UnderscoreGluer;
-
 class UppercaseSplitter extends Splitter
 {
-    /** @lang PhpRegExp */
+    // language=PhpRegExp
     const PATTERN = '#(?=\p{Lu}{1})#u';
 
     /**
@@ -19,12 +16,6 @@ class UppercaseSplitter extends Splitter
      */
     public function split(): array
     {
-        $words = preg_split(self::PATTERN, $this->inputString, 0, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY);
-
-        if ($words === false) {
-            throw new CaseConverterException("Error while processing '{$this->inputString}'"); // @codeCoverageIgnore
-        }
-
-        return $words;
+        return $this->splitUsingPattern($this->inputString, self::PATTERN);
     }
 }
