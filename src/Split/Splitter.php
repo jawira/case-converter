@@ -2,9 +2,7 @@
 
 namespace Jawira\CaseConverter\Split;
 
-use function array_filter;
-use function array_values;
-use function mb_split;
+use Jawira\CaseConverter\CaseConverterException;
 
 /**
  * Class Splitter
@@ -40,17 +38,16 @@ abstract class Splitter
      * @param string $pattern
      *
      * @return string[]
+     * @throws \Jawira\CaseConverter\CaseConverterException
      */
     protected function splitUsingPattern(string $inputString, string $pattern): array
     {
-        $cleaning = function (string $value): bool {
-            if ($value === '0') {
-                return true;
-            }
+        $words = preg_split($pattern, $inputString, 0, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY);
 
-            return !empty($value);
-        };
+        if ($words === false) {
+            throw new CaseConverterException("Error while processing '{$this->inputString}'"); // @codeCoverageIgnore
+        }
 
-        return array_values(array_filter(mb_split($pattern, $inputString), $cleaning));
+        return $words;
     }
 }

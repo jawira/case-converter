@@ -8,6 +8,7 @@ class UnderscoreSplitterTest extends TestCase
     /**
      * @covers \Jawira\CaseConverter\Split\UnderscoreSplitter::split
      * @throws \ReflectionException
+     * @throws \Jawira\CaseConverter\CaseConverterException
      */
     public function testSplit()
     {
@@ -26,7 +27,7 @@ class UnderscoreSplitterTest extends TestCase
         // Configuring stub
         $mock->expects($this->once())
              ->method('splitUsingPattern')
-             ->with('dummyString', '_+')
+             ->with('dummyString', '#_+#u')
              ->willReturn(['dummy', 'array']);
 
         /** @var \Jawira\CaseConverter\Split\UnderscoreSplitter $mock */

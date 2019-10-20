@@ -324,11 +324,12 @@ Feature: Convert Case
     Then method should return string "<output-string>"
 
     Examples:
-      | from-method | to-method | input-string    | output-string     |
-      | fromSnake   | toSnake   | C-3PO_and_R2-D2 | c-3po_and_r2-d2   |
-      | fromSnake   | toPascal  | C-3PO_and_R2-D2 | C-3PoAndR2-D2     |
-      | fromPascal  | toSnake   | C-3PoAndR2-D2   | c-3_po_and_r2-_d2 |
-      | fromUpper   | toDot     | non-SI units    | non-si.units      |
+      | from-method | to-method | input-string        | output-string         |
+      | fromSnake   | toSnake   | C-3PO_and_R2-D2     | c-3po_and_r2-d2       |
+      | fromSnake   | toPascal  | C-3PO_and_R2-D2     | C-3PoAndR2-D2         |
+      | fromPascal  | toSnake   | C-3PoAndR2-D2       | c-3_po_and_r2-_d2     |
+      | fromUpper   | toDot     | non-SI units        | non-si.units          |
+      | fromCamel   | toDot     | EstosSon_losActores | estos.son_los.actores |
 
 
   Scenario Outline: Manually set input string format (test from* methods)

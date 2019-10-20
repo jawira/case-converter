@@ -34,13 +34,13 @@ class SplitterTest extends TestCase
     public function splitUsingPatternProvider()
     {
         return [
-            ['', '-+', []],
-            ['hola-mundo', '-+', ['hola', 'mundo']],
-            ['-hola-mundo-', '-+', ['hola', 'mundo']],
-            ['---hola-----mundo---', '-+', ['hola', 'mundo']],
-            ['0', '-+', ['0']],
-            ['---0---0---', '-+', ['0', '0']],
-            ['---000---000---', '-+', ['000', '000']],
+            ['', '#-+#u', []],
+            ['hola-mundo', '#-+#u', ['hola', 'mundo']],
+            ['-hola-mundo-', '#-+#u', ['hola', 'mundo']],
+            ['---hola-----mundo---', '#-+#u', ['hola', 'mundo']],
+            ['0', '#-+#u', ['0']],
+            ['---0---0---', '#-+#u', ['0', '0']],
+            ['---000---000---', '#-+#u', ['000', '000']],
         ];
     }
 }

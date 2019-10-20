@@ -6,10 +6,11 @@ use Jawira\CaseConverter\Glue\DashGluer;
 
 class DashSplitter extends Splitter
 {
-    const PATTERN = DashGluer::DELIMITER . '+';
+    const PATTERN = '#' . DashGluer::DELIMITER . '+#u';
 
     /**
      * @return string[]
+     * @throws \Jawira\CaseConverter\CaseConverterException
      */
     public function split(): array
     {
