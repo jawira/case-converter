@@ -6,7 +6,11 @@ All notable changes to this project will be documented in this file.
 
 ### Changed
 
-- Changed hack from UppercaseSplitter to proper solution #45
+- [#45] Changed hack from `UppercaseSplitter` to proper solution.
+
+### Fixed
+
+- [#49] Bug fix: string wrongly recognized when starts with a delimiter. 
 
 ## [v3.3.3] - 2019-09-03
 
@@ -318,3 +322,5 @@ PASCAL, SENTENCE, SNAKE, TITLE, TRAIN, UPPER.
 [v3.3.2]: https://github.com/jawira/case-converter/compare/v3.3.1...v3.3.2
 [v3.3.1]: https://github.com/jawira/case-converter/compare/v3.3.0...v3.3.1
 [v3.3.3]: https://github.com/jawira/case-converter/compare/v3.3.2...v3.3.3
+[#49]: https://github.com/jawira/case-converter/pull/49
+[#45]: https://github.com/jawira/case-converter/pull/45
