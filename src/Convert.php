@@ -135,13 +135,13 @@ class Convert
      */
     protected function analyse(string $input): Splitter
     {
-        if (mb_strpos($input, UnderscoreGluer::DELIMITER)) {
+        if (is_int(mb_strpos($input, UnderscoreGluer::DELIMITER))) {
             $splittingStrategy = new UnderscoreSplitter($input);
-        } elseif (mb_strpos($input, DashGluer::DELIMITER)) {
+        } elseif (is_int(mb_strpos($input, DashGluer::DELIMITER))) {
             $splittingStrategy = new DashSplitter($input);
-        } elseif (mb_strpos($input, SpaceGluer::DELIMITER)) {
+        } elseif (is_int(mb_strpos($input, SpaceGluer::DELIMITER))) {
             $splittingStrategy = new SpaceSplitter($input);
-        } elseif (mb_strpos($input, DotNotation::DELIMITER)) {
+        } elseif (is_int(mb_strpos($input, DotNotation::DELIMITER))) {
             $splittingStrategy = new DotSplitter($input);
         } elseif ($this->isUppercaseWord($input)) {
             $splittingStrategy = new UnderscoreSplitter($input);

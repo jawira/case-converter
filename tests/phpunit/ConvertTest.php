@@ -16,6 +16,7 @@ use Jawira\CaseConverter\Glue\TitleCase;
 use Jawira\CaseConverter\Glue\TrainCase;
 use Jawira\CaseConverter\Glue\UpperCase;
 use Jawira\CaseConverter\Split\DashSplitter;
+use Jawira\CaseConverter\Split\DotSplitter;
 use Jawira\CaseConverter\Split\SpaceSplitter;
 use Jawira\CaseConverter\Split\Splitter;
 use Jawira\CaseConverter\Split\UnderscoreSplitter;
@@ -146,15 +147,26 @@ class ConvertTest extends TestCase
             'Underscore 2' => [false, UnderscoreSplitter::class, 'HELLO_WORLD'],
             'Underscore 3' => [true, UnderscoreSplitter::class, 'Ñ'],
             'Underscore 4' => [true, UnderscoreSplitter::class, 'HELLO'],
+            'Underscore 5' => [false, UnderscoreSplitter::class, '_'],
+            'Underscore 6' => [false, UnderscoreSplitter::class, '_____'],
             'Uppercase 1'  => [false, UppercaseSplitter::class, ''],
             'Uppercase 2'  => [false, UppercaseSplitter::class, 'ñ'],
             'Uppercase 3'  => [false, UppercaseSplitter::class, 'one'],
             'Uppercase 4'  => [false, UppercaseSplitter::class, 'helloWorld'],
             'Dash 1'       => [false, DashSplitter::class, 'hello-World'],
             'Dash 2'       => [false, DashSplitter::class, 'my-name-is-bond'],
+            'Dash 3'       => [false, DashSplitter::class, '-my-name-is-bond-'],
+            'Dash 4'       => [false, DashSplitter::class, '-'],
+            'Dash 5'       => [false, DashSplitter::class, '------'],
             'Space 1'      => [false, SpaceSplitter::class, 'Hola mundo'],
             'Space 2'      => [false, SpaceSplitter::class, 'Mi nombre es bond'],
             'Space 3'      => [false, SpaceSplitter::class, 'Formule courte spéciale été'],
+            'Space 4'      => [false, SpaceSplitter::class, ' '],
+            'Space 5'      => [false, SpaceSplitter::class, '      '],
+            'Dot 1'        => [false, DotSplitter::class, 'one.two'],
+            'Dot 2'        => [false, DotSplitter::class, '.hello.'],
+            'Dot 3'        => [false, DotSplitter::class, '.'],
+            'Dot 4'        => [false, DotSplitter::class, '........'],
         ];
     }
 
