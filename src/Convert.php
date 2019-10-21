@@ -130,23 +130,30 @@ class Convert
      *
      * @param string $input String to be analysed
      *
-     * @return \Jawira\CaseConverter\Split\Splitter
      * @throws \Jawira\CaseConverter\CaseConverterException
+     * @return \Jawira\CaseConverter\Split\Splitter
      */
     protected function analyse(string $input): Splitter
     {
-        if ($this->contains($input, UnderscoreGluer::DELIMITER)) {
-            $splittingStrategy = new UnderscoreSplitter($input);
-        } elseif ($this->contains($input, DashGluer::DELIMITER)) {
-            $splittingStrategy = new DashSplitter($input);
-        } elseif ($this->contains($input, SpaceGluer::DELIMITER)) {
-            $splittingStrategy = new SpaceSplitter($input);
-        } elseif ($this->contains($input, DotNotation::DELIMITER)) {
-            $splittingStrategy = new DotSplitter($input);
-        } elseif ($this->isUppercaseWord($input)) {
-            $splittingStrategy = new UnderscoreSplitter($input);
-        } else {
-            $splittingStrategy = new UppercaseSplitter($input);
+        switch (true) {
+            case $this->contains($input, UnderscoreGluer::DELIMITER):
+                $splittingStrategy = new UnderscoreSplitter($input);
+                break;
+            case $this->contains($input, DashGluer::DELIMITER):
+                $splittingStrategy = new DashSplitter($input);
+                break;
+            case $this->contains($input, SpaceGluer::DELIMITER):
+                $splittingStrategy = new SpaceSplitter($input);
+                break;
+            case $this->contains($input, DotNotation::DELIMITER):
+                $splittingStrategy = new DotSplitter($input);
+                break;
+            case $this->isUppercaseWord($input):
+                $splittingStrategy = new UnderscoreSplitter($input);
+                break;
+            default:
+                $splittingStrategy = new UppercaseSplitter($input);
+                break;
         }
 
         return $splittingStrategy;
