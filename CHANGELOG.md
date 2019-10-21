@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+### Added
+
+- #52 Adding badges to readme.
+
 ### Changed
 
 - [#45] Changed hack from `UppercaseSplitter` to proper solution.
