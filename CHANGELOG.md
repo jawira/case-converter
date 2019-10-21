@@ -11,6 +11,7 @@ All notable changes to this project will be documented in this file.
 ### Changed
 
 - [#45] Changed hack from `UppercaseSplitter` to proper solution.
+- #51 Refactoring \Jawira\CaseConverter\Convert::analyse
 
 ### Fixed
 
