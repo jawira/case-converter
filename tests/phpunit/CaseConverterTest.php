@@ -11,6 +11,7 @@ class CaseConverterTest extends TestCase
      *
      * @covers \Jawira\CaseConverter\Convert::__construct
      * @covers \Jawira\CaseConverter\Convert::analyse
+     * @covers \Jawira\CaseConverter\Convert::contains
      * @covers \Jawira\CaseConverter\Convert::extractWords
      * @covers \Jawira\CaseConverter\Convert::fromAuto
      * @covers \Jawira\CaseConverter\Convert::getSource

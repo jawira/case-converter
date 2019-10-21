@@ -32,8 +32,7 @@
   </target>
 
   <target name="composer:validate" description="Check composer.json syntax">
-    <composer>
-      <arg value="validate"/>
+    <composer command="validate">
       <arg value="--strict"/>
       <arg value="--no-check-lock"/>
     </composer>
@@ -83,7 +82,7 @@
 
   <target name="phpunit:run" description="Run unit tests">
     <mkdir dir="resources/coverage-html/"/>
-    <exec executable="bin/phpunit" passthru="true" checkreturn="true">
+    <exec executable="bin/phpunit.phar" passthru="true" checkreturn="true">
       <arg line="--configuration=config/phpunit.xml"/>
       <arg value="--testdox"/>
       <arg value="--verbose"/>
@@ -98,10 +97,6 @@
       <arg value="--force-accept-unsigned"/>
       <arg line="--trust-gpg-keys 4AA394086372C20A,8E730BA25823D8B5,2420BAE0A3BE25C6,31C7E470E2138192"/>
     </exec>
-    <copy description="I do this to have auto-completion in PhpStorm"
-          file="bin/phpunit"
-          tofile="bin/phpunit.phar"
-          overwrite="true"/>
   </target>
 
   <target name="changelog:links" description="Update links in composer.json">

@@ -6,10 +6,11 @@ use Jawira\CaseConverter\Glue\SpaceGluer;
 
 class SpaceSplitter extends Splitter
 {
-    const PATTERN = SpaceGluer::DELIMITER . '+';
+    const PATTERN = '#' . SpaceGluer::DELIMITER . '+#u';
 
     /**
      * @return string[]
+     * @throws \Jawira\CaseConverter\CaseConverterException
      */
     public function split(): array
     {

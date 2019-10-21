@@ -5,6 +5,7 @@ use Jawira\CaseConverter\Convert;
 use Jawira\CaseConverter\Glue\AdaCase;
 use Jawira\CaseConverter\Glue\CamelCase;
 use Jawira\CaseConverter\Glue\CobolCase;
+use Jawira\CaseConverter\Glue\DotNotation;
 use Jawira\CaseConverter\Glue\Gluer;
 use Jawira\CaseConverter\Glue\KebabCase;
 use Jawira\CaseConverter\Glue\LowerCase;
@@ -16,6 +17,7 @@ use Jawira\CaseConverter\Glue\TitleCase;
 use Jawira\CaseConverter\Glue\TrainCase;
 use Jawira\CaseConverter\Glue\UpperCase;
 use Jawira\CaseConverter\Split\DashSplitter;
+use Jawira\CaseConverter\Split\DotSplitter;
 use Jawira\CaseConverter\Split\SpaceSplitter;
 use Jawira\CaseConverter\Split\Splitter;
 use Jawira\CaseConverter\Split\UnderscoreSplitter;
@@ -110,24 +112,30 @@ class ConvertTest extends TestCase
      *
      * @dataProvider analyseProvider
      *
-     * @param bool   $isUppercaseWordReturn Times that `isUppercaseWord()` method is called.
+     * @param bool[]  $containsReturnValues Return values for `contains()`
+     * @param bool   $isUppercaseWordReturn Return value for `isUppercaseWord()`
      * @param string $expected              Expected result
      * @param string $input                 Input string
      *
      * @throws \ReflectionException
      */
-    public function testAnalyse(bool $isUppercaseWordReturn, string $expected, string $input)
+    public function testAnalyse(array $containsReturnValues, bool $isUppercaseWordReturn,  string $expected, string $input)
     {
         // Disabling constructor with one stub method
         $stub = $this->getMockBuilder(Convert::class)
                      ->disableOriginalConstructor()
-                     ->setMethods(['isUppercaseWord'])
+                     ->setMethods(['isUppercaseWord', 'contains'])
                      ->getMock();
 
         // Configuring expectation
         $stub->expects($this->any())
              ->method('isUppercaseWord')
              ->willReturn($isUppercaseWordReturn);
+
+        // Configuring expectation
+        $stub->expects($this->atLeastOnce())
+             ->method('contains')
+             ->willReturnOnConsecutiveCalls(...$containsReturnValues);
 
         // Removing protected for analyse method
         $reflection = new ReflectionObject($stub);
@@ -142,19 +150,30 @@ class ConvertTest extends TestCase
     public function analyseProvider()
     {
         return [
-            'Underscore 1' => [false, UnderscoreSplitter::class, 'hola_mundo'],
-            'Underscore 2' => [false, UnderscoreSplitter::class, 'HELLO_WORLD'],
-            'Underscore 3' => [true, UnderscoreSplitter::class, 'Ñ'],
-            'Underscore 4' => [true, UnderscoreSplitter::class, 'HELLO'],
-            'Uppercase 1'  => [false, UppercaseSplitter::class, ''],
-            'Uppercase 2'  => [false, UppercaseSplitter::class, 'ñ'],
-            'Uppercase 3'  => [false, UppercaseSplitter::class, 'one'],
-            'Uppercase 4'  => [false, UppercaseSplitter::class, 'helloWorld'],
-            'Dash 1'       => [false, DashSplitter::class, 'hello-World'],
-            'Dash 2'       => [false, DashSplitter::class, 'my-name-is-bond'],
-            'Space 1'      => [false, SpaceSplitter::class, 'Hola mundo'],
-            'Space 2'      => [false, SpaceSplitter::class, 'Mi nombre es bond'],
-            'Space 3'      => [false, SpaceSplitter::class, 'Formule courte spéciale été'],
+            'Underscore 1' => [[true, false, false, false], false,  UnderscoreSplitter::class, 'hola_mundo'],
+            'Underscore 2' => [[true, false, false, false], false, UnderscoreSplitter::class, 'HELLO_WORLD'],
+            'Underscore 3' => [[false, false, false, false], true, UnderscoreSplitter::class, 'Ñ'],
+            'Underscore 4' => [[false, false, false, false], true, UnderscoreSplitter::class, 'HELLO'],
+            'Underscore 5' => [[true, false, false, false], false, UnderscoreSplitter::class, '_'],
+            'Underscore 6' => [[true, false, false, false], false, UnderscoreSplitter::class, '_____'],
+            'Uppercase 1'  => [[false, false, false, false], false, UppercaseSplitter::class, ''],
+            'Uppercase 2'  => [[false, false, false, false], false, UppercaseSplitter::class, 'ñ'],
+            'Uppercase 3'  => [[false, false, false, false], false, UppercaseSplitter::class, 'one'],
+            'Uppercase 4'  => [[false, false, false, false], false, UppercaseSplitter::class, 'helloWorld'],
+            'Dash 1'       => [[false, true, false, false], false, DashSplitter::class, 'hello-World'],
+            'Dash 2'       => [[false, true, false, false], false, DashSplitter::class, 'my-name-is-bond'],
+            'Dash 3'       => [[false, true, false, false], false, DashSplitter::class, '-my-name-is-bond-'],
+            'Dash 4'       => [[false, true, false, false], false, DashSplitter::class, '-'],
+            'Dash 5'       => [[false, true, false, false], false, DashSplitter::class, '------'],
+            'Space 1'      => [[false, false, true, false], false, SpaceSplitter::class, 'Hola mundo'],
+            'Space 2'      => [[false, false, true, false], false, SpaceSplitter::class, 'Mi nombre es bond'],
+            'Space 3'      => [[false, false, true, false], false, SpaceSplitter::class, 'Formule courte spéciale été'],
+            'Space 4'      => [[false, false, true, false], false, SpaceSplitter::class, ' '],
+            'Space 5'      => [[false, false, true, false], false, SpaceSplitter::class, '      '],
+            'Dot 1'        => [[false, false, false, true], false, DotSplitter::class, 'one.two'],
+            'Dot 2'        => [[false, false, false, true], false, DotSplitter::class, '.hello.'],
+            'Dot 3'        => [[false, false, false, true], false, DotSplitter::class, '.'],
+            'Dot 4'        => [[false, false, false, true], false, DotSplitter::class, '........'],
         ];
     }
 
@@ -256,6 +275,7 @@ class ConvertTest extends TestCase
             'toTitle'    => ['toTitle', TitleCase::class],
             'toTrain'    => ['toTrain', TrainCase::class],
             'toUpper'    => ['toUpper', UpperCase::class],
+            'toDot'      => ['toDot', DotNotation::class],
         ];
     }
 
@@ -525,6 +545,7 @@ class ConvertTest extends TestCase
             ['fromUpper', SpaceSplitter::class],
             ['fromTitle', SpaceSplitter::class],
             ['fromSentence', SpaceSplitter::class],
+            ['fromDot', DotSplitter::class],
         ];
     }
 

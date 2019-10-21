@@ -7,10 +7,11 @@ use Jawira\CaseConverter\Glue\SpaceGluer;
 
 class DotSplitter extends Splitter
 {
-    const PATTERN = '\\' . DotNotation::DELIMITER . '+';
+    const PATTERN = '#\\' . DotNotation::DELIMITER . '+#u';
 
     /**
      * @return string[]
+     * @throws \Jawira\CaseConverter\CaseConverterException
      */
     public function split(): array
     {

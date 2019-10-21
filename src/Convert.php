@@ -130,26 +130,46 @@ class Convert
      *
      * @param string $input String to be analysed
      *
-     * @return \Jawira\CaseConverter\Split\Splitter
      * @throws \Jawira\CaseConverter\CaseConverterException
+     * @return \Jawira\CaseConverter\Split\Splitter
      */
     protected function analyse(string $input): Splitter
     {
-        if (mb_strpos($input, UnderscoreGluer::DELIMITER)) {
-            $splittingStrategy = new UnderscoreSplitter($input);
-        } elseif (mb_strpos($input, DashGluer::DELIMITER)) {
-            $splittingStrategy = new DashSplitter($input);
-        } elseif (mb_strpos($input, SpaceGluer::DELIMITER)) {
-            $splittingStrategy = new SpaceSplitter($input);
-        } elseif (mb_strpos($input, DotNotation::DELIMITER)) {
-            $splittingStrategy = new DotSplitter($input);
-        } elseif ($this->isUppercaseWord($input)) {
-            $splittingStrategy = new UnderscoreSplitter($input);
-        } else {
-            $splittingStrategy = new UppercaseSplitter($input);
+        switch (true) {
+            case $this->contains($input, UnderscoreGluer::DELIMITER):
+                $splittingStrategy = new UnderscoreSplitter($input);
+                break;
+            case $this->contains($input, DashGluer::DELIMITER):
+                $splittingStrategy = new DashSplitter($input);
+                break;
+            case $this->contains($input, SpaceGluer::DELIMITER):
+                $splittingStrategy = new SpaceSplitter($input);
+                break;
+            case $this->contains($input, DotNotation::DELIMITER):
+                $splittingStrategy = new DotSplitter($input);
+                break;
+            case $this->isUppercaseWord($input):
+                $splittingStrategy = new UnderscoreSplitter($input);
+                break;
+            default:
+                $splittingStrategy = new UppercaseSplitter($input);
+                break;
         }
 
         return $splittingStrategy;
+    }
+
+    /**
+     * Return true if $needle is found in $input string
+     *
+     * @param string $input  String where the search is performed
+     * @param string $needle Needle
+     *
+     * @return bool
+     */
+    protected function contains(string $input, string $needle): bool
+    {
+        return is_int(mb_strpos($input, $needle));
     }
 
     /**

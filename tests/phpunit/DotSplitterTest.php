@@ -1,19 +1,20 @@
 <?php
 
-use Jawira\CaseConverter\Split\DashSplitter;
+use Jawira\CaseConverter\Split\DotSplitter;
 use PHPUnit\Framework\TestCase;
 
-class DashSplitterTest extends TestCase
+class DotSplitterTest extends TestCase
 {
     /**
-     * @covers \Jawira\CaseConverter\Split\DashSplitter::split
-     * @throws \ReflectionException
+     * @covers       \Jawira\CaseConverter\Split\DotSplitter::split
+     *
      * @throws \Jawira\CaseConverter\CaseConverterException
+     * @throws \ReflectionException
      */
     public function testSplit()
     {
         // Disabling constructor with one stub method
-        $mock = $this->getMockBuilder(DashSplitter::class)
+        $mock = $this->getMockBuilder(DotSplitter::class)
                      ->disableOriginalConstructor()
                      ->setMethods(['splitUsingPattern'])
                      ->getMock();
@@ -27,10 +28,10 @@ class DashSplitterTest extends TestCase
         // Configuring stub
         $mock->expects($this->once())
              ->method('splitUsingPattern')
-             ->with('dummyString', '#-+#u')
+             ->with('dummyString', '#\\.+#u')
              ->willReturn(['dummy', 'array']);
 
-        /** @var \Jawira\CaseConverter\Split\DashSplitter $mock */
+        /** @var \Jawira\CaseConverter\Split\UnderscoreSplitter $mock */
         $returned = $mock->split();
         $this->assertSame(['dummy', 'array'], $returned);
     }

@@ -21,9 +21,9 @@ Use this library to convert string between:
 
 Features:
 
-* 🌐 [i18n](#i18n)
 * 🔁 [automatic case detection][detection algorithm]
 * 🏭 [factory][]
+* 🌐 [i18n](#i18n)
 
 [![Latest Stable Version](https://poser.pugx.org/jawira/case-converter/v/stable)](https://packagist.org/packages/jawira/case-converter)
 [![PHP from Packagist](https://img.shields.io/packagist/php-v/jawira/case-converter.svg)](https://packagist.org/packages/jawira/case-converter)
@@ -35,6 +35,8 @@ Features:
 [![Daily Downloads](https://poser.pugx.org/jawira/case-converter/d/daily)](https://packagist.org/packages/jawira/case-converter)
 [![PHPPackages Rank](http://phppackages.org/p/jawira/case-converter/badge/rank.svg)](http://phppackages.org/p/jawira/case-converter)
 [![PHPPackages Referenced By](http://phppackages.org/p/jawira/case-converter/badge/referenced-by.svg)](http://phppackages.org/p/jawira/case-converter)
+[![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/jawira/case-converter.svg)](http://isitmaintained.com/project/jawira/case-converter "Average time to resolve an issue")
+[![Percentage of issues still open](http://isitmaintained.com/badge/open/jawira/case-converter.svg)](http://isitmaintained.com/project/jawira/case-converter "Percentage of issues still open")
 [![License](https://poser.pugx.org/jawira/case-converter/license)](https://packagist.org/packages/jawira/case-converter)
 [![composer.lock](https://poser.pugx.org/jawira/case-converter/composerlock)](https://packagist.org/packages/jawira/case-converter)
 [![PDS Skeleton](https://img.shields.io/badge/pds-skeleton-blue.svg)](https://github.com/php-pds/skeleton)
@@ -122,10 +124,13 @@ This library is licensed under the [MIT LICENSE].
 
 ***
 
-My other packages
------------------
+Packages from jawira
+--------------------
 
 <dl>
+
+<dt><a href="https://packagist.org/packages/jawira/emoji-catalog">jawira/emoji-catalog</a> (library)</dt>
+<dd>Get access to +3000 emojis as class constants.</dd>
 
 <dt><a href="https://packagist.org/packages/jawira/phing-visualizer">jawira/phing-visualizer</a> (library)</dt>
 <dd>Graphical representation of Phing's buildfile.</dd>
@@ -133,13 +138,5 @@ My other packages
 <dt><a href="https://packagist.org/packages/jawira/phing-open-task">jawira/phing-open-task</a> (library)</dt>
 <dd>Phing task to open files, directories, and URLs with your favorite software.</dd>
 
-<dt><a href="https://packagist.org/packages/jawira/plantuml">jawira/plantuml</a> (library)</dt>
-<dd>Provides PlantUML integration: plantuml executable and plantuml.jar</dd>
-
-<dt><a href="https://packagist.org/packages/jawira/plantuml-encoding">jawira/plantuml-encoding</a> (library)</dt>
-<dd>PlantUML encoding functions.</dd>
-
-<dt><a href="https://packagist.org/packages/jawira/process-maker">jawira/process-maker</a> (project)</dt>
-<dd>Easily install and try ProcessMaker using Docker Compose.</dd>
-
+<dt><a href="https://packagist.org/packages/jawira/">more...</a></dt>
 </dl>
