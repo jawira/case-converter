@@ -135,13 +135,13 @@ class Convert
      */
     protected function analyse(string $input): Splitter
     {
-        if (is_int(mb_strpos($input, UnderscoreGluer::DELIMITER))) {
+        if ($this->contains($input, UnderscoreGluer::DELIMITER)) {
             $splittingStrategy = new UnderscoreSplitter($input);
-        } elseif (is_int(mb_strpos($input, DashGluer::DELIMITER))) {
+        } elseif ($this->contains($input, DashGluer::DELIMITER)) {
             $splittingStrategy = new DashSplitter($input);
-        } elseif (is_int(mb_strpos($input, SpaceGluer::DELIMITER))) {
+        } elseif ($this->contains($input, SpaceGluer::DELIMITER)) {
             $splittingStrategy = new SpaceSplitter($input);
-        } elseif (is_int(mb_strpos($input, DotNotation::DELIMITER))) {
+        } elseif ($this->contains($input, DotNotation::DELIMITER)) {
             $splittingStrategy = new DotSplitter($input);
         } elseif ($this->isUppercaseWord($input)) {
             $splittingStrategy = new UnderscoreSplitter($input);
@@ -150,6 +150,19 @@ class Convert
         }
 
         return $splittingStrategy;
+    }
+
+    /**
+     * Return true if $needle is found in $input string
+     *
+     * @param string $input  String where the search is performed
+     * @param string $needle Needle
+     *
+     * @return bool
+     */
+    protected function contains(string $input, string $needle): bool
+    {
+        return is_int(mb_strpos($input, $needle));
     }
 
     /**
