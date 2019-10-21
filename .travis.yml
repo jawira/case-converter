@@ -1,11 +1,15 @@
 language: "php"
 
 php:
-  - "7.1.18"
-  - "7.2.17"
+  - "7.1"
+  - "7.2"
   - "7.3"
 
 before_install:
+  - '### https://makandracards.com/aslamk/28305-how-to-change-the-default-gnupg-version-from-gpg-to-gpg2 ###'
+  - sudo mv /usr/bin/gpg /usr/bin/gpg1
+  - sudo update-alternatives --verbose --install /usr/bin/gpg gnupg /usr/bin/gpg2 50
+  - sudo apt-get -y install dirmngr --install-recommends
   - '#### Installing Phive ####'
   - wget https://phar.io/releases/phive.phar
   - wget https://phar.io/releases/phive.phar.asc
