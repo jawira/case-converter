@@ -6,16 +6,17 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 
-- #52 Adding badges to readme.
+- [#52] Adding badges to readme.
 
 ### Changed
 
 - [#45] Changed hack from `UppercaseSplitter` to proper solution.
-- #51 Refactoring \Jawira\CaseConverter\Convert::analyse
+- [#51] Refactoring \Jawira\CaseConverter\Convert::analyse
+- [#50] Improving PHPUnit coverage
 
 ### Fixed
 
-- [#49] Bug fix: string wrongly recognized when starts with a delimiter. 
+- [#49] Bug fix: string wrongly recognized when starts with a delimiter.
 
 ## [v3.3.3] - 2019-09-03
 
@@ -329,3 +330,6 @@ PASCAL, SENTENCE, SNAKE, TITLE, TRAIN, UPPER.
 [v3.3.3]: https://github.com/jawira/case-converter/compare/v3.3.2...v3.3.3
 [#49]: https://github.com/jawira/case-converter/pull/49
 [#45]: https://github.com/jawira/case-converter/pull/45
+[#52]: https://github.com/jawira/case-converter/pull/52
+[#51]: https://github.com/jawira/case-converter/pull/51
+[#50]: https://github.com/jawira/case-converter/pull/50
