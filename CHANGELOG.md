@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+### Changed
+
+## [v3.4.0] - 2019-10-21
+
 ### Added
 
 - [#52] Adding badges to readme.
@@ -333,3 +337,4 @@ PASCAL, SENTENCE, SNAKE, TITLE, TRAIN, UPPER.
 [#52]: https://github.com/jawira/case-converter/pull/52
 [#51]: https://github.com/jawira/case-converter/pull/51
 [#50]: https://github.com/jawira/case-converter/pull/50
+[v3.4.0]: https://github.com/jawira/case-converter/compare/v3.3.3...v3.4.0
