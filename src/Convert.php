@@ -280,7 +280,6 @@ class Convert
                 break;
             default:
                 throw new CaseConverterException("Unknown method: $methodName");
-                break;
         }
 
         $splitter = $this->createSplitter($splitterName, $this->source);
@@ -354,7 +353,6 @@ class Convert
                 break;
             default:
                 throw new CaseConverterException("Unknown method: $methodName");
-                break;
         }
 
         $gluer = $this->createGluer($className, $this->words, $this->forceSimpleCaseMapping);
