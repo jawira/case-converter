@@ -85,7 +85,7 @@ echo $ger->toUpper();    // output: STRASSE
 IMHO this is a _breaking change_, PHP people should have keep untouched old 
 constants and create new ones for [Full Case-Mapping], for example: 
 `MB_CASE_LOWER_FULL`, `MB_CASE_TITLE_FULL`, and `MB_CASE_UPPER_FULL` (please 
-note these variables do not exist). 
+note these constants do not exist). 
 
 [Full Case-Mapping]: https://www.php.net/manual/en/migration73.new-features.php#migration73.new-features.mbstring.case-mapping-folding
 [mb_convert_case()]: https://www.php.net/manual/en/function.mb-convert-case.php
