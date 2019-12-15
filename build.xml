@@ -101,7 +101,7 @@
 
   <target name="changelog:links" description="Update links in composer.json">
     <composer command="require">
-      <arg value="symplify/changelog-linker"/>
+      <arg value="symplify/changelog-linker:^v6"/>
     </composer>
     <exec executable="vendor/bin/changelog-linker">
       <arg value="link"/>

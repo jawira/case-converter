@@ -4,7 +4,17 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
-### Changed
+## [v3.4.1] - 2019-12-15
+
+### Added
+
+- HitCount badge
+
+### Fixed
+
+- [#53] Removing unreachable statement
+- Fixing typo in doc
+ 
 
 ## [v3.4.0] - 2019-10-21
 
@@ -338,3 +348,5 @@ PASCAL, SENTENCE, SNAKE, TITLE, TRAIN, UPPER.
 [#51]: https://github.com/jawira/case-converter/pull/51
 [#50]: https://github.com/jawira/case-converter/pull/50
 [v3.4.0]: https://github.com/jawira/case-converter/compare/v3.3.3...v3.4.0
+[#53]: https://github.com/jawira/case-converter/pull/53
+[v3.4.1]: https://github.com/jawira/case-converter/compare/v3.4.0...v3.4.1
