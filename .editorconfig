@@ -4,23 +4,23 @@
 root = true
 
 [*]
-charset = utf-8
+charset                  = utf-8
 trim_trailing_whitespace = true
-end_of_line = lf
-insert_final_newline = true
+end_of_line              = lf
+insert_final_newline     = true
 
 [*.php]
-indent_size = 4
+indent_size  = 4
 indent_style = space
 
-[*.{yml, yaml, neon, xml, json}]
-indent_size = 2
+[*.{yml, yaml, neon, xml, svg, json, js}]
+indent_size  = 2
 indent_style = space
 
 [*.{md, markdown}]
 trim_trailing_whitespace = false
-indent_size = 2
-indent_style = space
+indent_size              = 2
+indent_style             = space
 
 [{Makefile, *.mk}]
 indent_style = tab
