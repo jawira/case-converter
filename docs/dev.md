@@ -47,6 +47,11 @@ Creating new convention
 6. Update docblock `\Jawira\CaseConverter\Convert` to register new methods.
 7. Update documentation
 
+Railroad diagram
+----------------
+
+- <https://tabatkins.github.io/railroad-diagrams/generator.html>
+
 Class diagrams
 --------------
 

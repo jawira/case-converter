@@ -1,8 +1,19 @@
-Examples
-========
+Usage
+=====
 
-To use **Case Converter** you have to instantiate `Convert` class, then you
-should call `to*()` methods.
+To use **Case Converter** you have to instantiate `Convert` class, to do so you 
+can use the `new` keyword or the [CaseConverter factory] class.
+
+The string you want to convert should be passed at instantiation. This cannot
+be changed later since `Convert` class is immutable.
+
+```php
+$var = new Convert('string-to-convert');
+```
+
+Typically, you are going to call `Convert` methods this way:
+
+![Method call](./images/railroad.png)
 
 Basic usage
 -----------
@@ -83,12 +94,16 @@ Using the factory
 -----------------
 
 [CaseConverter factory] is going to instantiate `Convert` class for you.
-Everything else is the same:
 
+In the following code `$this->cc` is an instance of 
+`\Jawira\CaseConverter\CaseConverter` and implements 
+`\Jawira\CaseConverter\CaseConverterInterface`. This is useful because the 
+factory should be instantiated by the _Dependency Injection_ mechanism provided
+by your favorite framework.
 
 ```php
 // Convert string to Pascal case
-$this->cc->convert('XML')->toPascal();                      // Xml
+$this->cc->convert('XML')->toPascal();                    // Xml
 
 // Convert string to Snake case
 $this->cc->convert('v3.0.2')->toSnake();                  // v3_0_2
@@ -106,6 +121,7 @@ $this->cc->convert('Mario Bros')->toArray();              // ['Mario', 'Bros']
 $this->cc->convert('use_the_force')->getSource();         // use_the_force
 ```
 
+More about [CaseConverter factory].
 
 [Case-Mapping]: ./case-mapping.md
 [CaseConverter factory]: ./using-the-factory.md

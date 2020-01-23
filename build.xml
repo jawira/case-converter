@@ -250,9 +250,6 @@
   <target name="docs:copy-md" description="Copy md files from root to docs dir">
     <!--*.md files should not have relative paths-->
     <copy file="./README.md" tofile="./docs/index.md" overwrite="true"/>
-    <copy file="./CONTRIBUTING.md" tofile="./docs/contributing.md" overwrite="true"/>
-    <copy file="./LICENSE.md" tofile="./docs/license.md" overwrite="true"/>
-    <copy file="./CHANGELOG.md" tofile="./docs/changelog.md" overwrite="true"/>
   </target>
 
 </project>
