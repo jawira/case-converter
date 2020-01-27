@@ -172,18 +172,7 @@
   </target>
 
   <target name="phing:visualize" description="Update build.png">
-    <composer command="require">
-      <arg value="jawira/phing-visualizer"/>
-    </composer>
-    <exec executable="vendor/bin/phing-visualizer">
-      <arg value="--format"/>
-      <arg value="puml"/>
-      <arg value="--output"/>
-      <arg path="./docs/images/"/>
-    </exec>
-    <composer command="remove">
-      <arg value="jawira/phing-visualizer"/>
-    </composer>
+    <visualizer format="puml" destination="docs/images"/>
   </target>
 
   <target name="uml-writer:render" description="Generate Class diagram">
