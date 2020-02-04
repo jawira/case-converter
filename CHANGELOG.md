@@ -18,7 +18,10 @@ All notable changes to this project will be documented in this file.
 
 - [#53] Removing unreachable statement
 - Fixing typo in doc
- 
+
+### Changed
+
+- [#58] /.idea folder wad added to .gitattributes
 
 ## [v3.4.0] - 2019-10-21
 
