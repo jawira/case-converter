@@ -6,8 +6,6 @@
   <defaultexcludes add="**/.idea"/>
   <defaultexcludes add="**/.idea/**"/>
 
-  <property name="phing.http.proxy" value="${env.http_proxy}"/>
-
   <target name="help">
     <loadfile property="help" file="docs/dev.md"/>
     <echo>${line.separator}${help}</echo>
@@ -15,7 +13,7 @@
 
   <target name="setup"
           description="Install dependencies"
-          depends="composer:install-dev, phive:install, cc:get"/>
+          depends="composer:install-dev, phive:install, rector:install, cc:get"/>
 
   <target name="qa"
           description="Run quality tests"
@@ -233,6 +231,12 @@
   <target name="docs:copy-md" description="Copy md files from root to docs dir">
     <!--*.md files should not have relative paths-->
     <copy file="./README.md" tofile="./docs/index.md" overwrite="true"/>
+  </target>
+
+  <target name="rector:install">
+    <httpget dir="bin" filename="rector" followRedirects="true"
+             url="https://github.com/rectorphp/rector-prefixed/raw/master/rector.phar"/>
+    <chmod file="bin/rector" mode="0775"/>
   </target>
 
 </project>
