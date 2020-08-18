@@ -225,8 +225,8 @@ class Convert
     /**
      * Handle `to*` methods and `from*` methods
      *
-     * @param string $methodName
-     * @param array  $arguments
+     * @param string   $methodName
+     * @param mixed[]  $arguments
      *
      * @return string|\Jawira\CaseConverter\Convert
      * @throws \Jawira\CaseConverter\CaseConverterException
@@ -361,9 +361,9 @@ class Convert
     }
 
     /**
-     * @param string $className              Class name in string format
-     * @param array  $words                  Words to glue
-     * @param bool   $forceSimpleCaseMapping Should _Simple Case-Mapping_ be forced?
+     * @param string   $className              Class name in string format
+     * @param string[] $words                  Words to glue
+     * @param bool     $forceSimpleCaseMapping Should _Simple Case-Mapping_ be forced?
      *
      * @return \Jawira\CaseConverter\Glue\Gluer
      */
@@ -377,7 +377,7 @@ class Convert
     /**
      * Detected words extracted from original string.
      *
-     * @return array
+     * @return string[]
      */
     public function toArray(): array
     {

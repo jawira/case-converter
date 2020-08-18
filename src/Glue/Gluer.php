@@ -46,6 +46,13 @@ abstract class Gluer
      */
     protected $titleCase;
 
+
+    /**
+     * Gluer constructor.
+     *
+     * @param string[] $words
+     * @param bool     $forceSimpleCaseMapping
+     */
     public function __construct(array $words, bool $forceSimpleCaseMapping)
     {
         $this->words     = $words;
@@ -78,7 +85,7 @@ abstract class Gluer
      * @see https://www.php.net/manual/en/migration73.constants.php#migration73.constants.mbstring
      * @see https://www.php.net/manual/en/migration73.new-features.php#migration73.new-features.mbstring.case-mapping-folding
      */
-    protected function setSimpleCaseMappingConstants()
+    protected function setSimpleCaseMappingConstants(): self
     {
         $newLowerCase = '\MB_CASE_LOWER_SIMPLE';
         $newUpperCase = '\MB_CASE_UPPER_SIMPLE';

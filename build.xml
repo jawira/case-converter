@@ -19,17 +19,11 @@
 
   <target name="qa"
           description="Run quality tests"
-          depends="php:lint, composer:validate, phpunit:run, behat:run, phpstan:run, phploc:run"/>
+          depends="php:lint, composer:validate, phpunit:run, behat:run, phpstan:run"/>
 
   <target name="docs:refresh-images"
           description="Update and regenerate docs images"
           depends="uml-writer:render, phing:visualize, plantuml:puml-to-png"/>
-
-  <target name="phploc:run">
-    <phploc pharlocation="bin/phploc">
-      <fileset dir="src"/>
-    </phploc>
-  </target>
 
   <target name="composer:validate" description="Check composer.json syntax">
     <composer command="validate">
