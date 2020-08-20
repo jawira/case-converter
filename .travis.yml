@@ -1,7 +1,6 @@
 language: "php"
 
 php:
-  - "7.1"
   - "7.2"
   - "7.3"
   - "7.4"
@@ -12,8 +11,8 @@ before_install:
   - sudo update-alternatives --verbose --install /usr/bin/gpg gnupg /usr/bin/gpg2 50
   - sudo apt-get -y install dirmngr --install-recommends
   - '#### Installing Phive ####'
-  - wget -O phive.phar https://github.com/phar-io/phive/releases/download/0.13.3/phive-0.13.3.phar
-  - wget -O phive.phar.asc https://github.com/phar-io/phive/releases/download/0.13.3/phive-0.13.3.phar.asc
+  - wget -O phive.phar https://github.com/phar-io/phive/releases/download/0.14.4/phive-0.14.4.phar
+  - wget -O phive.phar.asc https://github.com/phar-io/phive/releases/download/0.14.4/phive-0.14.4.phar.asc
   - gpg --keyserver hkps.pool.sks-keyservers.net --recv-keys 0x9B2D5D79
   - gpg --verify phive.phar.asc phive.phar
   - chmod +x phive.phar
