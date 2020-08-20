@@ -112,6 +112,28 @@ class Convert
     }
 
     /**
+     * Handle `to*` methods and `from*` methods
+     *
+     * @param string   $methodName
+     * @param mixed[]  $arguments
+     *
+     * @return string|\Jawira\CaseConverter\Convert
+     * @throws \Jawira\CaseConverter\CaseConverterException
+     */
+    public function __call($methodName, $arguments)
+    {
+        if (0 === mb_strpos($methodName, 'from')) {
+            $result = $this->handleSplitterMethod($methodName);
+        } elseif (0 === mb_strpos($methodName, 'to')) {
+            $result = $this->handleGluerMethod($methodName);
+        } else {
+            throw new CaseConverterException("Unknown method: $methodName");
+        }
+
+        return $result;
+    }
+
+    /**
      * Auto-detect naming convention
      *
      * @return \Jawira\CaseConverter\Convert
@@ -121,6 +143,41 @@ class Convert
     {
         $splitter = $this->analyse($this->source);
         $this->extractWords($splitter);
+
+        return $this;
+    }
+
+    /**
+     * Returns original input string
+     *
+     * @return string Original input string
+     */
+    public function getSource(): string
+    {
+        return $this->source;
+    }
+
+    /**
+     * Detected words extracted from original string.
+     *
+     * @return string[]
+     */
+    public function toArray(): array
+    {
+        return $this->words;
+    }
+
+    /**
+     * Forces to use Simple Case-Mapping
+     *
+     * Call this method if you want to maintain the behaviour before PHP 7.3
+     *
+     * @see https://unicode.org/faq/casemap_charprop.html
+     * @return \Jawira\CaseConverter\Convert
+     */
+    public function forceSimpleCaseMapping(): self
+    {
+        $this->forceSimpleCaseMapping = true;
 
         return $this;
     }
@@ -210,38 +267,6 @@ class Convert
         $this->words = $splitter->split();
 
         return $this;
-    }
-
-    /**
-     * Returns original input string
-     *
-     * @return string Original input string
-     */
-    public function getSource(): string
-    {
-        return $this->source;
-    }
-
-    /**
-     * Handle `to*` methods and `from*` methods
-     *
-     * @param string $methodName
-     * @param array  $arguments
-     *
-     * @return string|\Jawira\CaseConverter\Convert
-     * @throws \Jawira\CaseConverter\CaseConverterException
-     */
-    public function __call($methodName, $arguments)
-    {
-        if (0 === mb_strpos($methodName, 'from')) {
-            $result = $this->handleSplitterMethod($methodName);
-        } elseif (0 === mb_strpos($methodName, 'to')) {
-            $result = $this->handleGluerMethod($methodName);
-        } else {
-            throw new CaseConverterException("Unknown method: $methodName");
-        }
-
-        return $result;
     }
 
     /**
@@ -361,9 +386,9 @@ class Convert
     }
 
     /**
-     * @param string $className              Class name in string format
-     * @param array  $words                  Words to glue
-     * @param bool   $forceSimpleCaseMapping Should _Simple Case-Mapping_ be forced?
+     * @param string   $className              Class name in string format
+     * @param string[] $words                  Words to glue
+     * @param bool     $forceSimpleCaseMapping Should _Simple Case-Mapping_ be forced?
      *
      * @return \Jawira\CaseConverter\Glue\Gluer
      */
@@ -372,30 +397,5 @@ class Convert
         assert(is_subclass_of($className, Gluer::class));
 
         return new $className($words, $forceSimpleCaseMapping);
-    }
-
-    /**
-     * Detected words extracted from original string.
-     *
-     * @return array
-     */
-    public function toArray(): array
-    {
-        return $this->words;
-    }
-
-    /**
-     * Forces to use Simple Case-Mapping
-     *
-     * Call this method if you want to maintain the behaviour before PHP 7.3
-     *
-     * @see https://unicode.org/faq/casemap_charprop.html
-     * @return \Jawira\CaseConverter\Convert
-     */
-    public function forceSimpleCaseMapping(): self
-    {
-        $this->forceSimpleCaseMapping = true;
-
-        return $this;
     }
 }

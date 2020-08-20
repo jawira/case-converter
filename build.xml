@@ -6,8 +6,6 @@
   <defaultexcludes add="**/.idea"/>
   <defaultexcludes add="**/.idea/**"/>
 
-  <property name="phing.http.proxy" value="${env.http_proxy}"/>
-
   <target name="help">
     <loadfile property="help" file="docs/dev.md"/>
     <echo>${line.separator}${help}</echo>
@@ -15,21 +13,15 @@
 
   <target name="setup"
           description="Install dependencies"
-          depends="composer:install-dev, phive:install, cc:get"/>
+          depends="composer:install-dev, phive:install, rector:install, cc:get"/>
 
   <target name="qa"
           description="Run quality tests"
-          depends="php:lint, composer:validate, phpunit:run, behat:run, phpstan:run, phploc:run"/>
+          depends="php:lint, composer:validate, phpunit:run, behat:run, phpstan:run"/>
 
   <target name="docs:refresh-images"
           description="Update and regenerate docs images"
           depends="uml-writer:render, phing:visualize, plantuml:puml-to-png"/>
-
-  <target name="phploc:run">
-    <phploc pharlocation="bin/phploc">
-      <fileset dir="src"/>
-    </phploc>
-  </target>
 
   <target name="composer:validate" description="Check composer.json syntax">
     <composer command="validate">
@@ -241,4 +233,17 @@
     <copy file="./README.md" tofile="./docs/index.md" overwrite="true"/>
   </target>
 
+  <target name="rector:install">
+    <httpget dir="bin" filename="rector.phar" followRedirects="true"
+             url="https://github.com/rectorphp/rector-prefixed/raw/master/rector.phar"/>
+    <chmod file="bin/rector.phar" mode="0775"/>
+  </target>
+
+  <target name="rector:process">
+    <exec executable="bin/rector.phar" passthru="true" checkreturn="true">
+      <arg value="--no-progress-bar"/>
+      <arg value="process"/>
+      <arg path="src"/>
+    </exec>
+  </target>
 </project>

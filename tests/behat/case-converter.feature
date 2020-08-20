@@ -245,7 +245,7 @@ Feature: Convert Case
       | toArray | HugoPacoLuis    | [Hugo;Paco;Luis]  |
       | toArray | loremIpsum      | [lorem;Ipsum]     |
       | toArray | aBc_DeF_hIj_KlM | [aBc;DeF;hIj;KlM] |
-      | toArray | one__two        | [one;two]         |
+      | toArray | one___two___    | [one;two]         |
       | toArray | Le Népal        | [Le;Népal]        |
       | toArray | red.green.blue  | [red;green;blue]  |
 
