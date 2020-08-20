@@ -22,7 +22,7 @@ before_install:
 
 install:
   - '#### Installing Phive dependencies ####'
-  - phive --no-progress install --force-accept-unsigned --trust-gpg-keys 4AA394086372C20A,8E730BA25823D8B5,2420BAE0A3BE25C6,31C7E470E2138192
+  - phive --no-progress install --force-accept-unsigned --trust-gpg-keys 4AA394086372C20A,8E730BA25823D8B5,2420BAE0A3BE25C6,31C7E470E2138192,CF1A108D0E7AE720
   - '#### Project setup ####'
   - bin/phing setup
 
