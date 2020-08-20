@@ -66,6 +66,13 @@ abstract class Gluer
     }
 
     /**
+     * Creates a string which respects concrete naming convention.
+     *
+     * @return string
+     */
+    abstract public function glue(): string;
+
+    /**
      * Use new constants if available
      *
      * Since PHP 7.3, new constants are used to specify _simple case mapping_. This method handles these new constants.
@@ -97,13 +104,6 @@ abstract class Gluer
 
         return $this;
     }
-
-    /**
-     * Creates a string which respects concrete naming convention.
-     *
-     * @return string
-     */
-    abstract public function glue(): string;
 
     /**
      * Implode self::$words array using $glue.
