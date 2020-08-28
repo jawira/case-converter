@@ -28,6 +28,8 @@ Features:
 [![Latest Stable Version](https://poser.pugx.org/jawira/case-converter/v/stable)](https://packagist.org/packages/jawira/case-converter)
 [![PHP from Packagist](https://img.shields.io/packagist/php-v/jawira/case-converter.svg)](https://packagist.org/packages/jawira/case-converter)
 [![Build Status](https://www.travis-ci.org/jawira/case-converter.svg?branch=master)](https://www.travis-ci.org/jawira/case-converter)
+[![Build Status](https://img.shields.io/github/forks/jawira/case-converter.svg)](https://github.com/jawira/case-converter)
+[![Build Status](https://img.shields.io/github/stars/jawira/case-converter.svg)](https://github.com/jawira/case-converter)
 [![Maintainability](https://api.codeclimate.com/v1/badges/35677f6ce7dac27a5d0c/maintainability)](https://codeclimate.com/github/jawira/case-converter/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/35677f6ce7dac27a5d0c/test_coverage)](https://codeclimate.com/github/jawira/case-converter/test_coverage)
 [![Total Downloads](https://poser.pugx.org/jawira/case-converter/downloads)](https://packagist.org/packages/jawira/case-converter)
@@ -103,7 +105,15 @@ Documentation
 Contributing
 ------------
 
-If you liked this project, ⭐ star it on [GitHub].
+- If you liked this project, ⭐ star it on [GitHub].
+- _Pull requests_ and _issues_ are welcomed.
+
+Contributors
+------------
+
+<a href="https://github.com/jawira/case-converter/graphs/contributors">
+  <img alt="Contributors" src="https://contributors-img.web.app/image?repo=jawira/case-converter" />
+</a>
 
 License
 -------
