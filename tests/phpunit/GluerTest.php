@@ -167,9 +167,9 @@ class GluerTest extends TestCase
         $result = $method->invoke($mock);
 
         $this->assertInstanceOf(Gluer::class, $result);
-        $this->assertAttributeSame(4, 'upperCase', $mock);
-        $this->assertAttributeSame(5, 'lowerCase', $mock);
-        $this->assertAttributeSame(6, 'titleCase', $mock);
+        $this->assertAttributeSame(Gluer::getValueOfConstant(Gluer::BASIC_CONSTANT_CASE_UPPER), 'upperCase', $mock);
+        $this->assertAttributeSame(Gluer::getValueOfConstant(Gluer::BASIC_CONSTANT_CASE_LOWER), 'lowerCase', $mock);
+        $this->assertAttributeSame(Gluer::getValueOfConstant(Gluer::BASIC_CONSTANT_CASE_TITLE), 'titleCase', $mock);
     }
 
     /**

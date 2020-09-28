@@ -28,9 +28,10 @@
   ],
   "require": {
     "php": "^7.1",
-    "ext-mbstring": "*"
+    "symfony/polyfill-mbstring": "^1.18"
   },
   "suggest": {
+    "ext-mbstring": "For best perfomance",
     "pds/skeleton": "PHP Package Development Standards",
     "phing/phing": "PHP Build Tool"
   },

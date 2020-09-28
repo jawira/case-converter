@@ -26,6 +26,12 @@ abstract class Gluer
      */
     const ENCODING = 'UTF-8';
 
+    const BASIC_CONSTANT_CASE_LOWER = '\MB_CASE_LOWER';
+    const BASIC_CONSTANT_CASE_UPPER = '\MB_CASE_UPPER';
+    const BASIC_CONSTANT_CASE_TITLE = '\MB_CASE_TITLE';
+
+    const _SIMPLE = '_SIMPLE';
+
     /**
      * @var string[] Words extracted from input string
      */
@@ -46,6 +52,20 @@ abstract class Gluer
      */
     protected $titleCase;
 
+    /**
+     * Returns value of constant based on PHP version and existence of ext-mbstring.
+     *
+     * @param string $constant
+     * @return int
+     */
+    public static function getValueOfConstant(string $constant): int
+    {
+        if (PHP_VERSION_ID >= 70300 && defined($constant . self::_SIMPLE)) {
+            $constant .= self::_SIMPLE;
+        }
+
+        return constant($constant);
+    }
 
     /**
      * Gluer constructor.
@@ -94,13 +114,9 @@ abstract class Gluer
      */
     protected function setSimpleCaseMappingConstants(): self
     {
-        $newLowerCase = '\MB_CASE_LOWER_SIMPLE';
-        $newUpperCase = '\MB_CASE_UPPER_SIMPLE';
-        $newTitleCase = '\MB_CASE_TITLE_SIMPLE';
-
-        $this->lowerCase = defined($newLowerCase) ? constant($newLowerCase) : MB_CASE_LOWER;
-        $this->upperCase = defined($newUpperCase) ? constant($newUpperCase) : MB_CASE_UPPER;
-        $this->titleCase = defined($newTitleCase) ? constant($newTitleCase) : MB_CASE_TITLE;
+        $this->lowerCase = static::getValueOfConstant(self::BASIC_CONSTANT_CASE_LOWER);
+        $this->upperCase = static::getValueOfConstant(self::BASIC_CONSTANT_CASE_UPPER);
+        $this->titleCase = static::getValueOfConstant(self::BASIC_CONSTANT_CASE_TITLE);
 
         return $this;
     }
