@@ -4,8 +4,11 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+## v3.4.2 - 2020-01-05
+
 ### Changed
 
+- [#67] Add php8 constraint in composer.json
 - [#54] Improving documentation
 
 ## [v3.4.1] - 2019-12-15
