@@ -4,16 +4,8 @@ _shared_script_install_phive: &script_install_phive |
   # Install PHIVE (cached)
   if [ ! -r "${HOME}/.phive/phive.phar" ]; then
     mkdir -p "${HOME}/bin" "${HOME}/.phive"
-    if [ "$(phpenv version-name)" == 7.1 ]; then
-      # PHIVE v0.13.3 last version supporting PHP 7.1
-      travis_retry wget -O "${HOME}/.phive/phive.phar" \
-        "https://github.com/phar-io/phive/releases/download/0.13.3/phive-0.13.3.phar"
-      travis_retry wget -O "${HOME}/.phive/phive.phar.asc" \
-        "https://github.com/phar-io/phive/releases/download/0.13.3/phive-0.13.3.phar.asc"
-    else
-      travis_retry wget -O "${HOME}/.phive/phive.phar" "https://phar.io/releases/phive.phar"
-      travis_retry wget -O "${HOME}/.phive/phive.phar.asc" "https://phar.io/releases/phive.phar.asc"
-    fi
+    travis_retry wget -O "${HOME}/.phive/phive.phar" "https://phar.io/releases/phive.phar"
+    travis_retry wget -O "${HOME}/.phive/phive.phar.asc" "https://phar.io/releases/phive.phar.asc"
     travis_retry gpg --batch --keyserver ha.pool.sks-keyservers.net --keyserver-options timeout=30 \
       --recv-keys 0x9D8A98B29B2D5D79
     if ! gpg --batch --verify "${HOME}/.phive/phive.phar.asc" "${HOME}/.phive/phive.phar"; then
@@ -37,7 +29,6 @@ php:
   - "7.4"
   - "7.3"
   - "7.2"
-  - "7.1"
 
 cache:
   directories:
