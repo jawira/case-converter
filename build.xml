@@ -32,7 +32,6 @@
 
   <target name="composer:install-dev">
     <composer command="install">
-      <arg value="--no-suggest"/>
       <arg value="--no-interaction"/>
       <arg value="--profile"/>
       <arg value="--prefer-dist"/>
@@ -235,7 +234,7 @@
 
   <target name="rector:install">
     <httpget dir="bin" filename="rector.phar" followRedirects="true"
-             url="https://github.com/rectorphp/rector-prefixed/raw/master/rector.phar"/>
+             url="https://github.com/rectorphp/rector-prefixed/raw/v0.8.8/rector.phar"/>
     <chmod file="bin/rector.phar" mode="0775"/>
   </target>
 
