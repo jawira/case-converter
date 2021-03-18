@@ -5,10 +5,10 @@
     <targetDirectory>bin</targetDirectory>
   </configuration>
   <phar name="phpunit" version="^7.4.4" installed="7.5.20" location="./bin/phpunit.phar" copy="false"/>
-  <phar name="phpstan" version="^0.10.5" installed="0.12.37" location="./bin/phpstan" copy="false"/>
-  <phar name="behat/behat" version="^3.3.0" installed="3.3.0" location="./bin/behat" copy="false"/>
+  <phar name="phpstan" version="^0.10.5" installed="0.12.81" location="./bin/phpstan" copy="false"/>
+  <phar name="behat/behat" version="^3.3.0" installed="3.8.1" location="./bin/behat" copy="false"/>
   <phar name="phing" version="^3.0.0-alpha4" installed="3.0.0-alpha4" location="./bin/phing" copy="false"/>
-  <phar name="phploc" version="^7.0.0" installed="7.0.1" location="./bin/phploc" copy="false"/>
-  <phar name="phpcs" version="^3.4.2" installed="3.5.6" location="./bin/phpcs" copy="false"/>
-  <phar name="composer/composer" version="^1.9.0" installed="1.9.0" location="./bin/composer" copy="false"/>
+  <phar name="phploc" version="^7.0.0" installed="7.0.2" location="./bin/phploc" copy="false"/>
+  <phar name="phpcs" version="^3.4.2" installed="3.5.8" location="./bin/phpcs" copy="false"/>
+  <phar name="composer/composer" version="^1.9.0" installed="1.10.20" location="./bin/composer" copy="false"/>
 </phive>

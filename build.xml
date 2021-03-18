@@ -237,8 +237,15 @@
   </target>
 
   <target name="rector:install">
-    <httpget dir="bin" filename="rector.phar" followRedirects="true"
-             url="https://github.com/rectorphp/rector-prefixed/raw/v0.8.8/rector.phar"/>
+    <if>
+      <not>
+        <available file="bin/rector.phar"/>
+      </not>
+      <then>
+        <httpget dir="bin" filename="rector.phar" followRedirects="true"
+                 url="https://github.com/rectorphp/rector-prefixed/raw/v0.8.8/rector.phar"/>
+      </then>
+    </if>
     <chmod file="bin/rector.phar" mode="0775"/>
   </target>
 
