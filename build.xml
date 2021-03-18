@@ -1,19 +1,21 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<project name="Case Converter" description="Case Converter class" default="help" phingVersion="3.0">
+<project name="Case Converter" description="Case Converter class" default="help" phingVersion="3">
 
   <defaultexcludes default="true"/><!--Initializing default excludes-->
   <defaultexcludes add="**/.idea"/>
   <defaultexcludes add="**/.idea/**"/>
 
   <target name="help">
-    <loadfile property="help" file="docs/dev.md"/>
-    <echo>${line.separator}${help}</echo>
+    <visualizer format="svg"/>
+    <exec executable="xdg-open" spawn="true">
+      <arg file="build.svg"/>
+    </exec>
   </target>
 
   <target name="setup"
           description="Install dependencies"
-          depends="composer:install-dev, phive:install, rector:install, cc:get"/>
+          depends="composer:install, phive:install, rector:install, cc:get"/>
 
   <target name="qa"
           description="Run quality tests"
@@ -30,10 +32,11 @@
     </composer>
   </target>
 
-  <target name="composer:install-dev">
+  <target name="composer:install">
     <composer command="install">
       <arg value="--no-interaction"/>
       <arg value="--profile"/>
+      <arg value="--ansi"/>
       <arg value="--prefer-dist"/>
     </composer>
   </target>
@@ -74,6 +77,7 @@
   <target name="phpunit:run" description="Run unit tests">
     <mkdir dir="resources/coverage-html/"/>
     <exec executable="bin/phpunit.phar" passthru="true" checkreturn="true">
+      <env key="XDEBUG_MODE" value="coverage"/>
       <arg line="--configuration=config/phpunit.xml"/>
       <arg value="--testdox"/>
       <arg value="--verbose"/>

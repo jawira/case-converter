@@ -1,6 +1,3 @@
-# https://madewithlove.be/gitattributes/
-
-# Ignore all test and documentation with "export-ignore".
 /.codeclimate.yml   export-ignore
 /.editorconfig      export-ignore
 /.gitattributes     export-ignore
@@ -17,3 +14,4 @@
 /phive.xml          export-ignore
 /resources          export-ignore
 /tests              export-ignore
+/rector.php         export-ignore
