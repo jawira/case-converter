@@ -28,7 +28,8 @@
   ],
   "require": {
     "php": ">=7.1",
-    "ext-mbstring": "*"
+    "ext-mbstring": "*",
+    "phpunit/phpunit": "^7"
   },
   "suggest": {
     "pds/skeleton": "PHP Package Development Standards",
@@ -38,5 +39,9 @@
     "psr-4": {
       "Jawira\\CaseConverter\\": "src/"
     }
+  },
+  "require-dev": {
+    "phpstan/phpstan": "^1.0",
+    "behat/behat": "^3.9"
   }
 }

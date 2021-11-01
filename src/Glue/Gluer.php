@@ -94,13 +94,17 @@ abstract class Gluer
      */
     protected function setSimpleCaseMappingConstants(): self
     {
-        $newLowerCase = '\MB_CASE_LOWER_SIMPLE';
-        $newUpperCase = '\MB_CASE_UPPER_SIMPLE';
-        $newTitleCase = '\MB_CASE_TITLE_SIMPLE';
+        $lowerCase = defined('\MB_CASE_LOWER_SIMPLE') ? constant('\MB_CASE_LOWER_SIMPLE') : MB_CASE_LOWER;
+        $upperCase = defined('\MB_CASE_UPPER_SIMPLE') ? constant('\MB_CASE_UPPER_SIMPLE') : MB_CASE_UPPER;
+        $titleCase = defined('\MB_CASE_TITLE_SIMPLE') ? constant('\MB_CASE_TITLE_SIMPLE') : MB_CASE_TITLE;
 
-        $this->lowerCase = defined($newLowerCase) ? constant($newLowerCase) : MB_CASE_LOWER;
-        $this->upperCase = defined($newUpperCase) ? constant($newUpperCase) : MB_CASE_UPPER;
-        $this->titleCase = defined($newTitleCase) ? constant($newTitleCase) : MB_CASE_TITLE;
+        assert(is_int($lowerCase));
+        assert(is_int($upperCase));
+        assert(is_int($titleCase));
+
+        $this->lowerCase = $lowerCase;
+        $this->upperCase = $upperCase;
+        $this->titleCase = $titleCase;
 
         return $this;
     }
