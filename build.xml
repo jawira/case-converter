@@ -8,14 +8,12 @@
 
   <target name="help">
     <visualizer format="svg"/>
-    <exec executable="xdg-open" spawn="true">
-      <arg file="build.svg"/>
-    </exec>
+    <open path="build.svg"/>
   </target>
 
   <target name="setup"
           description="Install dependencies"
-          depends="composer:install, phive:install, rector:install, cc:get"/>
+          depends="composer:install, rector:install, cc:get"/>
 
   <target name="qa"
           description="Run quality tests"
@@ -57,7 +55,7 @@
   </target>
 
   <target name="behat:run" description="Run behat tests">
-    <exec executable="bin/behat" passthru="true" checkreturn="true">
+    <exec executable="vendor/bin/behat" passthru="true" checkreturn="true">
       <arg value="--colors"/>
       <arg value="--no-interaction"/>
       <arg value="--stop-on-failure"/>
@@ -67,7 +65,7 @@
   </target>
 
   <target name="phpstan:run">
-    <exec executable="bin/phpstan" passthru="true" checkreturn="true">
+    <exec executable="vendor/bin/phpstan" passthru="true" checkreturn="true">
       <arg line="--level=max analyze"/>
       <arg value="--no-progress"/>
       <arg path="src"/>
@@ -76,21 +74,12 @@
 
   <target name="phpunit:run" description="Run unit tests">
     <mkdir dir="resources/coverage-html/"/>
-    <exec executable="bin/phpunit.phar" passthru="true" checkreturn="true">
+    <exec executable="vendor/bin/phpunit" passthru="true" checkreturn="true">
       <env key="XDEBUG_MODE" value="coverage"/>
       <arg line="--configuration=config/phpunit.xml"/>
       <arg value="--testdox"/>
       <arg value="--verbose"/>
       <arg value="--stop-on-defect"/>
-    </exec>
-  </target>
-
-  <target name="phive:install" description="Install Phar">
-    <exec executable="phive" passthru="true" checkreturn="true">
-      <arg value="--no-progress"/>
-      <arg value="install"/>
-      <arg value="--force-accept-unsigned"/>
-      <arg line="--trust-gpg-keys 4AA394086372C20A,8E730BA25823D8B5,2420BAE0A3BE25C6,31C7E470E2138192"/>
     </exec>
   </target>
 
@@ -237,13 +226,14 @@
   </target>
 
   <target name="rector:install">
+    <mkdir dir="bin"/>
     <if>
       <not>
         <available file="bin/rector.phar"/>
       </not>
       <then>
-        <httpget dir="bin" filename="rector.phar" followRedirects="true"
-                 url="https://github.com/rectorphp/rector-prefixed/raw/v0.8.8/rector.phar"/>
+        <httpget dir="bin" filename="rector.phar" followRedirects="true" sslVerifyPeer="false"
+                 url="https://raw.githubusercontent.com/deprecated-packages/rector-prefixed/v0.8.8/rector.phar"/>
       </then>
     </if>
     <chmod file="bin/rector.phar" mode="0775"/>
