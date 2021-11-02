@@ -25,30 +25,17 @@ Features:
 * 🏭 [factory][]
 * 🌐 [i18n](#i18n)
 
-[![Latest Stable Version](https://poser.pugx.org/jawira/case-converter/v/stable)](https://packagist.org/packages/jawira/case-converter)
-[![PHP from Packagist](https://img.shields.io/packagist/php-v/jawira/case-converter.svg)](https://packagist.org/packages/jawira/case-converter)
-[![Build Status](https://www.travis-ci.org/jawira/case-converter.svg?branch=master)](https://www.travis-ci.org/jawira/case-converter)
-[![Build Status](https://img.shields.io/github/forks/jawira/case-converter.svg)](https://github.com/jawira/case-converter)
-[![Build Status](https://img.shields.io/github/stars/jawira/case-converter.svg)](https://github.com/jawira/case-converter)
+[![Latest Stable Version](http://poser.pugx.org/jawira/case-converter/v)](https://packagist.org/packages/jawira/case-converter)
+[![PHP Version Require](http://poser.pugx.org/jawira/case-converter/require/php)](https://packagist.org/packages/jawira/case-converter)
+[![Total Downloads](http://poser.pugx.org/jawira/case-converter/downloads)](https://packagist.org/packages/jawira/case-converter)
+[![License](http://poser.pugx.org/jawira/case-converter/license)](https://packagist.org/packages/jawira/case-converter)
 [![Maintainability](https://api.codeclimate.com/v1/badges/35677f6ce7dac27a5d0c/maintainability)](https://codeclimate.com/github/jawira/case-converter/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/35677f6ce7dac27a5d0c/test_coverage)](https://codeclimate.com/github/jawira/case-converter/test_coverage)
-[![Total Downloads](https://poser.pugx.org/jawira/case-converter/downloads)](https://packagist.org/packages/jawira/case-converter)
-[![Monthly Downloads](https://poser.pugx.org/jawira/case-converter/d/monthly)](https://packagist.org/packages/jawira/case-converter)
-[![Daily Downloads](https://poser.pugx.org/jawira/case-converter/d/daily)](https://packagist.org/packages/jawira/case-converter)
-[![PHPPackages Rank](http://phppackages.org/p/jawira/case-converter/badge/rank.svg)](http://phppackages.org/p/jawira/case-converter)
-[![PHPPackages Referenced By](http://phppackages.org/p/jawira/case-converter/badge/referenced-by.svg)](http://phppackages.org/p/jawira/case-converter)
-[![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/jawira/case-converter.svg)](http://isitmaintained.com/project/jawira/case-converter "Average time to resolve an issue")
-[![Percentage of issues still open](http://isitmaintained.com/badge/open/jawira/case-converter.svg)](http://isitmaintained.com/project/jawira/case-converter "Percentage of issues still open")
-[![License](https://poser.pugx.org/jawira/case-converter/license)](https://packagist.org/packages/jawira/case-converter)
-[![composer.lock](https://poser.pugx.org/jawira/case-converter/composerlock)](https://packagist.org/packages/jawira/case-converter)
-[![PDS Skeleton](https://img.shields.io/badge/pds-skeleton-blue.svg)](https://github.com/php-pds/skeleton)
-[![Issues](https://img.shields.io/github/issues/jawira/case-converter.svg?label=HuBoard&color=694DC2)](https://huboard.com/jawira/case-converter)
-[![HitCount](http://hits.dwyl.io/jawira/case-converter.svg)](http://hits.dwyl.io/jawira/case-converter)
 
 Usage
 -----
 
-Input string (i.e. _john-connor_) format is going to be 
+Input string (i.e. _john-connor_) format is going to be
 [detected automatically][detection algorithm]. Here's an example:
 
 ```php
@@ -65,8 +52,8 @@ Of course you can explicitly set the format of input string:
 echo $hero->fromKebab()->toSnake();   // output: john_connor
 ```
 
-You can also use the [provided factory][factory] to instantiate `Convert` class.
-A list of [all public methods] is also available.
+You can also use the [provided factory][factory] to instantiate `Convert` class. A list of [all public methods] is also
+available.
 
 i18n
 ----
@@ -86,15 +73,15 @@ echo $grc->toCamel();   // output: πολύΚαλό
 $rus = new Convert('ОЧЕНЬ_ПРИЯТНО');
 echo $rus->toCamel();   // output: оченьПриятно
 ```
- 
-`case-converter` is compatible with _Simple Case-Mapping_ and _Full 
-Case-Mapping_. [Learn more about Case-Mapping][Case-Mapping].
+
+`case-converter` is compatible with _Simple Case-Mapping_ and _Full Case-Mapping_.
+[Learn more about Case-Mapping][Case-Mapping].
 
 Installation
 ------------
 
-```
-$ composer require jawira/case-converter
+```console
+composer require jawira/case-converter
 ```
 
 Documentation
@@ -105,8 +92,9 @@ Documentation
 Contributing
 ------------
 
-- If you liked this project, ⭐ star it on [GitHub].
-- _Pull requests_ and _issues_ are welcomed.
+- If you liked this project, ⭐ star it on
+  GitHub. ![GitHub Repo stars](https://img.shields.io/github/stars/jawira/case-converter?style=social)
+- Or follow me on Twitter. ![Twitter Follow](https://img.shields.io/twitter/follow/jawira?style=social)
 
 Contributors
 ------------
@@ -123,14 +111,23 @@ This library is licensed under the [MIT LICENSE].
 <!--mkdocs: Do not use relative path for links and images-->
 
 [all public methods]: https://jawira.github.io/case-converter/api.html
+
 [CONTRIBUTING.md]: https://jawira.github.io/case-converter/contributing.html
+
 [Countable interface]: https://php.net/manual/en/class.countable.php
+
 [Case-Mapping]: https://jawira.github.io/case-converter/case-mapping.html
+
 [magic method]: https://www.php.net/manual/en/language.oop5.magic.php#object.tostring
+
 [MIT LICENSE]: https://jawira.github.io/case-converter/license.html
+
 [open an issue]: https://github.com/jawira/case-converter/issues/new
+
 [detection algorithm]: https://jawira.github.io/case-converter/detection-algorithm.html
+
 [factory]: https://jawira.github.io/case-converter/using-the-factory.html
+
 [GitHub]: https://github.com/jawira/case-converter/
 
 ***
