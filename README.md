@@ -25,10 +25,10 @@ Features:
 * 🏭 [factory][]
 * 🌐 [i18n](#i18n)
 
-[![Latest Stable Version](http://poser.pugx.org/jawira/case-converter/v)](https://packagist.org/packages/jawira/case-converter)
-[![PHP Version Require](http://poser.pugx.org/jawira/case-converter/require/php)](https://packagist.org/packages/jawira/case-converter)
-[![Total Downloads](http://poser.pugx.org/jawira/case-converter/downloads)](https://packagist.org/packages/jawira/case-converter)
-[![License](http://poser.pugx.org/jawira/case-converter/license)](https://packagist.org/packages/jawira/case-converter)
+[![Packagist Version](https://img.shields.io/packagist/v/jawira/case-converter?style=for-the-badge)](https://packagist.org/packages/jawira/case-converter)
+[![Packagist PHP Version Support](https://img.shields.io/packagist/php-v/jawira/case-converter?style=for-the-badge)](https://packagist.org/packages/jawira/case-converter)
+[![Packagist Downloads](https://img.shields.io/packagist/dt/jawira/case-converter?style=for-the-badge)](https://packagist.org/packages/jawira/case-converter)
+[![Packagist License](https://img.shields.io/packagist/l/jawira/case-converter?style=for-the-badge)](https://packagist.org/packages/jawira/case-converter)  
 [![Maintainability](https://api.codeclimate.com/v1/badges/35677f6ce7dac27a5d0c/maintainability)](https://codeclimate.com/github/jawira/case-converter/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/35677f6ce7dac27a5d0c/test_coverage)](https://codeclimate.com/github/jawira/case-converter/test_coverage)
 
@@ -92,16 +92,10 @@ Documentation
 Contributing
 ------------
 
-- If you liked this project, ⭐ star it on
-  GitHub. ![GitHub Repo stars](https://img.shields.io/github/stars/jawira/case-converter?style=social)
-- Or follow me on Twitter. ![Twitter Follow](https://img.shields.io/twitter/follow/jawira?style=social)
-
-Contributors
-------------
-
-<a href="https://github.com/jawira/case-converter/graphs/contributors">
-  <img alt="Contributors" src="https://contributors-img.web.app/image?repo=jawira/case-converter" />
-</a>
+- If you liked this project, ⭐ star it on GitHub.
+  [![GitHub Repo stars](https://img.shields.io/github/stars/jawira/case-converter?style=social)](https://github.com/jawira/case-converter)
+- Or follow me on Twitter. 
+  [![Twitter Follow](https://img.shields.io/twitter/follow/jawira?style=social)](https://twitter.com/jawira)
 
 License
 -------
@@ -137,14 +131,23 @@ Packages from jawira
 
 <dl>
 
-<dt><a href="https://packagist.org/packages/jawira/emoji-catalog">jawira/emoji-catalog</a> (library)</dt>
+<dt>
+    <a href="https://packagist.org/packages/jawira/emoji-catalog">jawira/emoji-catalog
+    <img alt="GitHub stars" src="https://badgen.net/github/stars/jawira/emoji-catalog?icon=github"/></a>
+</dt>
 <dd>Get access to +3000 emojis as class constants.</dd>
 
-<dt><a href="https://packagist.org/packages/jawira/phing-visualizer">jawira/phing-visualizer</a> (library)</dt>
-<dd>Graphical representation of Phing's buildfile.</dd>
+<dt>
+    <a href="https://packagist.org/packages/jawira/plantuml-client"> jawira/plantuml-client
+    <img alt="GitHub stars" src="https://badgen.net/github/stars/jawira/plantuml-client?icon=github"/></a>
+</dt>
+<dd>Convert PlantUML diagrams into images (svg, png, ...).</dd>
 
-<dt><a href="https://packagist.org/packages/jawira/phing-open-task">jawira/phing-open-task</a> (library)</dt>
-<dd>Phing task to open files, directories, and URLs with your favorite software.</dd>
+<dt>
+    <a href="https://packagist.org/packages/jawira/doctrine-diagram-bundle">jawira/doctrine-diagram-bundle
+    <img alt="GitHub stars" src="https://badgen.net/github/stars/jawira/doctrine-diagram-bundle?icon=github"/></a>
+</dt>
+<dd>Symfony Bundle to generate database diagrams.</dd>
 
 <dt><a href="https://packagist.org/packages/jawira/">more...</a></dt>
 </dl>
