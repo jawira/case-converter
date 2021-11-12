@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-
+<?xml version="1.0" encoding="UTF-8"?>
 <project name="Case Converter" description="Case Converter class" default="help" phingVersion="3">
 
   <defaultexcludes default="true"/><!--Initializing default excludes-->
