@@ -10,16 +10,12 @@
     <open path="build.svg"/>
   </target>
 
-  <target name="setup"
-          description="Install dependencies"
-          depends="composer:install, cc:get"/>
+  <target name="setup" description="Install dependencies" depends="composer:install, cc:get"/>
 
-  <target name="qa"
-          description="Run quality tests"
-          depends="php:lint, composer:validate, phpunit:run, behat:run, phpstan:run"/>
+  <target name="qa" description="Run quality tests"
+          depends="php:lint, composer:validate, phpunit:run, behat:run, phpstan:analyse, psalm:run"/>
 
-  <target name="docs:refresh-images"
-          description="Update and regenerate docs images"
+  <target name="docs:refresh-images" description="Update and regenerate docs images"
           depends="uml-writer:render, phing:visualize, plantuml:puml-to-png"/>
 
   <target name="composer:validate" description="Check composer.json syntax">
@@ -63,21 +59,12 @@
     </exec>
   </target>
 
-  <target name="phpstan:run">
-    <exec executable="vendor/bin/phpstan" passthru="true" checkreturn="true">
-      <arg line="--level=max analyze"/>
-      <arg value="--no-progress"/>
-      <arg path="src"/>
-    </exec>
-  </target>
-
   <target name="phpunit:run" description="Run unit tests">
     <mkdir dir="resources/coverage-html/"/>
     <exec executable="vendor/bin/phpunit" passthru="true" checkreturn="true">
       <env key="XDEBUG_MODE" value="coverage"/>
       <arg line="--configuration=config/phpunit.xml"/>
       <arg value="--testdox"/>
-      <arg value="--verbose"/>
       <arg value="--stop-on-defect"/>
     </exec>
   </target>
@@ -103,9 +90,7 @@
       </not>
       <then>
         <mkdir dir="${cc.dir}"/>
-        <httpget dir="${cc.dir}"
-                 filename="${cc.filename}"
-                 followRedirects="true"
+        <httpget dir="${cc.dir}" filename="${cc.filename}" followRedirects="true"
                  url="https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64"/>
       </then>
     </if>
@@ -116,21 +101,17 @@
   </target>
 
   <target name="cc:before-build" description="To run before a build">
+    <fail unless="env.CC_TEST_REPORTER_ID" message="you must supply a CC_TEST_REPORTER_ID ENV variable"/>
     <exec executable="bin/cc-test-reporter" passthru="true" checkreturn="true">
       <arg value="before-build"/>
     </exec>
   </target>
 
   <target name="cc:after-build" description="Handle &amp; upload coverage payload">
-    <fail unless="env.CC_TEST_REPORTER_ID"
-          message="you must supply a CC_TEST_REPORTER_ID ENV variable"/>
+    <fail unless="env.CC_TEST_REPORTER_ID" message="you must supply a CC_TEST_REPORTER_ID ENV variable"/>
     <exec executable="bin/cc-test-reporter" passthru="true" checkreturn="true">
-      <arg value="format-coverage"/>
-      <arg line="--input-type clover"/>
-      <arg file="resources/coverage/clover.xml"/>
-    </exec>
-    <exec executable="bin/cc-test-reporter" passthru="true" checkreturn="true">
-      <arg value="upload-coverage"/>
+      <arg value="after-build"/>
+      <arg line="--coverage-input-type clover"/>
     </exec>
   </target>
 
@@ -191,17 +172,13 @@
     </composer>
   </target>
 
-  <target name="docs:deploy"
-          description="Deploy documentation to gh-pages"
-          depends="docs:build">
+  <target name="docs:deploy" description="Deploy documentation to gh-pages" depends="docs:build">
     <exec executable="mkdocs" passthru="true" checkreturn="true">
       <arg value="gh-deploy"/>
     </exec>
   </target>
 
-  <target name="docs:serve"
-          description="Generate and open static site"
-          depends="docs:build">
+  <target name="docs:serve" description="Generate and open static site" depends="docs:build">
     <parallel threadCount="2">
       <exec executable="mkdocs" passthru="true" checkreturn="true">
         <arg value="serve"/>
@@ -222,6 +199,23 @@
   <target name="docs:copy-md" description="Copy md files from root to docs dir">
     <!--*.md files should not have relative paths-->
     <copy file="./README.md" tofile="./docs/index.md" overwrite="true"/>
+  </target>
+
+  <target name="psalm:run" description="Check code with Psalm">
+    <exec executable="vendor/bin/psalm" checkreturn="true" passthru="true">
+      <arg line="--no-cache --long-progress"/>
+    </exec>
+  </target>
+
+  <target name="phpstan:analyse" description="Analyse at max level">
+    <exec executable="vendor/bin/phpstan" passthru="true" checkreturn="true">
+      <arg value="analyse"/>
+      <arg line="--level=max"/>
+      <arg value="--no-progress"/>
+      <arg value="--no-interaction"/>
+      <arg value="--ansi"/>
+      <arg path="src"/>
+    </exec>
   </target>
 
 </project>

@@ -6,5 +6,3 @@ plugins:
         - tests/**
   fixme:
     enabled: true
-  markdownlint:
-    enabled: true

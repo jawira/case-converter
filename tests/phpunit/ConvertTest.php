@@ -33,33 +33,6 @@ class ConvertTest extends TestCase
 {
 
     /**
-     * Testing \Jawira\CaseConverter\Convert::__construct
-     *
-     * Tests if constructor calls \Jawira\CaseConverter\Convert::load.
-     *
-     * @covers \Jawira\CaseConverter\Convert::__construct()
-     */
-    public function testConstructor()
-    {
-        // Disable constructor mocking one method
-        $mock = $this->getMockBuilder(Convert::class)
-                     ->disableOriginalConstructor()
-                     ->setMethods(['fromAuto'])
-                     ->getMock();
-
-        // Configuring stub
-        $mock->expects($this->once())
-             ->method('fromAuto');
-
-        $class = new ReflectionObject($mock);
-        $class->getConstructor()
-              ->invoke($mock, 'hello_world');
-
-        $this->assertAttributeSame('hello_world', 'source', $mock);
-        $this->assertAttributeSame(false, 'forceSimpleCaseMapping', $mock);
-    }
-
-    /**
      * @covers       \Jawira\CaseConverter\Convert::isUppercaseWord()
      *
      * @param string $inputString
@@ -280,43 +253,6 @@ class ConvertTest extends TestCase
     }
 
     /**
-     * @covers       Jawira\CaseConverter\Convert::extractWords
-     * @dataProvider extractWordsProviders
-     *
-     * @param $splitterClass
-     *
-     * @throws \ReflectionException
-     */
-    public function testExtractWords($splitterClass)
-    {
-        // Preparing Splitter object
-        $splitterMock = $this->getMockBuilder($splitterClass)
-                             ->disableOriginalConstructor()
-                             ->setMethods(['split'])
-                             ->getMock();
-
-        $splitterMock->expects($this->once())
-                     ->method('split')
-                     ->with()
-                     ->willReturn(['dummy', 'array', '8d84d']);
-
-        // Preparing Convert object
-        $convertMock = $this->getMockBuilder(Convert::class)
-                            ->disableOriginalConstructor()
-                            ->setMethods([])
-                            ->getMock();
-
-        // Calling protected method
-        $reflection = new ReflectionObject($convertMock);
-        $method     = $reflection->getMethod('extractWords');
-        $method->setAccessible(true);
-        $result = $method->invoke($convertMock, $splitterMock);
-
-        $this->assertAttributeEquals(['dummy', 'array', '8d84d'], 'words', $convertMock);
-        $this->assertInstanceOf(Convert::class, $result);
-    }
-
-    /**
      * Returns all valid splitters that can be used by Convert::extractWords()
      *
      * @return array
@@ -422,24 +358,6 @@ class ConvertTest extends TestCase
         /** @var Convert $convertMock */
         $result = $convertMock->getSource();
         $this->assertSame('this is source string', $result);
-    }
-
-    /**
-     * @covers \Jawira\CaseConverter\Convert::forceSimpleCaseMapping
-     */
-    public function testForceSimpleCaseMapping()
-    {
-        // Preparing Convert object
-        $convertMock = $this->getMockBuilder(Convert::class)
-                            ->disableOriginalConstructor()
-                            ->setMethods()
-                            ->getMock();
-
-        /** @var Convert $convertMock */
-        $result = $convertMock->forceSimpleCaseMapping();
-
-        $this->assertInstanceOf(Convert::class, $result);
-        $this->assertAttributeEquals(true, 'forceSimpleCaseMapping', $convertMock);
     }
 
     /**
