@@ -62,14 +62,14 @@ qa:trivy:
     - 'trivy --cache-dir=$(realpath .cache) config -o trivy.config.json ${PWD}'
   artifacts:
     name: trivy
+    when: on_failure
     expose_as: trivy
     expire_in: 1 week
     paths:
       - 'trivy.filesystem.json'
       - 'trivy.config.json'
-  dependencies:
-    - phing:build
   tags:
     - docker
   only:
     - merge_requests
+    - master
