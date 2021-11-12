@@ -10,15 +10,15 @@ stages:
     paths:
       - .cache
   before_script:
-    - ### phing ###
+    - '### phing ###'
     - mkdir -p .cache/phar
     - wget -c -O $(realpath .cache/phar/phing.phar) https://github.com/phingofficial/phing/releases/download/3.0.0-RC3/phing-3.0.0-RC3.phar
     - cp -a $(realpath .cache/phar/phing.phar) /usr/local/bin/phing
-    - ### composer ###
+    - '### composer ###'
     - mkdir -p .cache/phar
     - wget -c -O $(realpath .cache/phar/composer.phar) https://getcomposer.org/download/latest-2.x/composer.phar
     - cp -a $(realpath .cache/phar/composer.phar) /usr/local/bin/composer
-    - ### composer cache ###
+    - '### composer cache ###'
     - mkdir -p .cache/composer
     - composer config cache-files-dir $(realpath .cache/composer)
   tags:
