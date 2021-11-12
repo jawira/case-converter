@@ -1,0 +1,75 @@
+stages:
+  - build
+  - qa
+
+.build:
+  image: php
+  stage: build
+  cache:
+    key: one-key-to-rule-them-all
+    paths:
+      - .cache
+  before_script:
+    - '### phing ###'
+    - mkdir -p .cache/phar
+    - wget -c -O $(realpath .cache/phar/phing.phar) https://github.com/phingofficial/phing/releases/download/3.0.0-RC3/phing-3.0.0-RC3.phar
+    - cp -a $(realpath .cache/phar/phing.phar) /usr/local/bin/phing
+    - '### composer ###'
+    - mkdir -p .cache/phar
+    - wget -c -O $(realpath .cache/phar/composer.phar) https://getcomposer.org/download/latest-2.x/composer.phar
+    - cp -a $(realpath .cache/phar/composer.phar) /usr/local/bin/composer
+    - '### composer cache ###'
+    - mkdir -p .cache/composer
+    - composer config cache-files-dir $(realpath .cache/composer)
+  tags:
+    - docker
+
+#variables:
+#  CI_DEBUG_TRACE: "true"
+
+
+phing:build:
+  extends: .build
+  script: phing setup -longtargets -logger "Phing\Listener\AnsiColorLogger"
+  artifacts:
+    name: dependencies
+    expire_in: 1 week
+    paths:
+      - bin
+      - vendor
+      - composer.lock
+  only:
+    - merge_requests
+
+qa:trivy:
+  stage: qa
+  image:
+    name: aquasec/trivy
+    entrypoint: [""]
+  cache:
+    key: trivy
+    paths:
+      - .cache
+  variables:
+    TRIVY_EXIT_CODE: 1
+    TRIVY_NO_PROGRESS: 'true'
+    TRIVY_SEVERITY: 'CRITICAL'
+    TRIVY_NEW_JSON_SCHEMA: 'true'
+  before_script:
+    - 'mkdir -p .cache'
+  script:
+    - 'trivy --cache-dir=$(realpath .cache) filesystem -o trivy.filesystem.json ${PWD}'
+    - 'trivy --cache-dir=$(realpath .cache) config -o trivy.config.json ${PWD}'
+  artifacts:
+    name: trivy
+    when: on_failure
+    expose_as: trivy
+    expire_in: 1 week
+    paths:
+      - 'trivy.filesystem.json'
+      - 'trivy.config.json'
+  tags:
+    - docker
+  only:
+    - merge_requests
+    - master

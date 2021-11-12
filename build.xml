@@ -12,7 +12,7 @@
 
   <target name="setup"
           description="Install dependencies"
-          depends="composer:install, rector:install, cc:get"/>
+          depends="composer:install, cc:get"/>
 
   <target name="qa"
           description="Run quality tests"
@@ -224,25 +224,4 @@
     <copy file="./README.md" tofile="./docs/index.md" overwrite="true"/>
   </target>
 
-  <target name="rector:install">
-    <mkdir dir="bin"/>
-    <if>
-      <not>
-        <available file="bin/rector.phar"/>
-      </not>
-      <then>
-        <httpget dir="bin" filename="rector.phar" followRedirects="true" sslVerifyPeer="false"
-                 url="https://raw.githubusercontent.com/deprecated-packages/rector-prefixed/v0.8.8/rector.phar"/>
-      </then>
-    </if>
-    <chmod file="bin/rector.phar" mode="0775"/>
-  </target>
-
-  <target name="rector:process">
-    <exec executable="bin/rector.phar" passthru="true" checkreturn="true">
-      <arg value="--no-progress-bar"/>
-      <arg value="process"/>
-      <arg path="src"/>
-    </exec>
-  </target>
 </project>
