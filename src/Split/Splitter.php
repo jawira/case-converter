@@ -19,7 +19,7 @@ abstract class Splitter
      */
     protected $inputString;
 
-    public function __construct(string $inputString)
+    final public function __construct(string $inputString)
     {
         $this->inputString = $inputString;
     }
