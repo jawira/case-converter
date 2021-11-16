@@ -53,7 +53,7 @@ abstract class Gluer
      * @param string[] $words
      * @param bool     $forceSimpleCaseMapping
      */
-    public function __construct(array $words, bool $forceSimpleCaseMapping)
+    final public function __construct(array $words, bool $forceSimpleCaseMapping)
     {
         $this->words     = $words;
         $this->lowerCase = MB_CASE_LOWER;
@@ -94,13 +94,12 @@ abstract class Gluer
      */
     protected function setSimpleCaseMappingConstants(): self
     {
+        /** @var int $lowerCase */
         $lowerCase = defined('\MB_CASE_LOWER_SIMPLE') ? constant('\MB_CASE_LOWER_SIMPLE') : MB_CASE_LOWER;
+        /** @var int $upperCase */
         $upperCase = defined('\MB_CASE_UPPER_SIMPLE') ? constant('\MB_CASE_UPPER_SIMPLE') : MB_CASE_UPPER;
+        /** @var int $titleCase */
         $titleCase = defined('\MB_CASE_TITLE_SIMPLE') ? constant('\MB_CASE_TITLE_SIMPLE') : MB_CASE_TITLE;
-
-        assert(is_int($lowerCase));
-        assert(is_int($upperCase));
-        assert(is_int($titleCase));
 
         $this->lowerCase = $lowerCase;
         $this->upperCase = $upperCase;
@@ -146,7 +145,7 @@ abstract class Gluer
             return $words;
         }
 
-        $closure = function (string $word) use ($caseMode) {
+        $closure = function (string $word) use ($caseMode): string {
             return mb_convert_case($word, $caseMode, self::ENCODING);
         };
 
