@@ -16,7 +16,7 @@
           depends="php:lint, composer:validate, phpunit:run, behat:run, phpstan:analyse, psalm:run"/>
 
   <target name="docs:refresh-images" description="Update and regenerate docs images"
-          depends="uml-writer:render, phing:visualize, plantuml:puml-to-png"/>
+          depends="phing:visualize, plantuml:puml-to-png"/>
 
   <target name="composer:validate" description="Check composer.json syntax">
     <composer command="validate">
@@ -120,7 +120,7 @@
       <arg value="jawira/plantuml"/>
     </composer>
     <exec executable="vendor/bin/plantuml" passthru="true" checkreturn="true">
-      <arg path="docs/**.puml/"/>
+      <arg path="docs/**.puml"/>
     </exec>
     <composer command="remove">
       <arg value="jawira/plantuml"/>
@@ -139,45 +139,6 @@
     <visualizer format="puml" destination="docs/images"/>
   </target>
 
-  <target name="uml-writer:render" description="Generate Class diagram">
-    <composer command="require">
-      <arg value="bartlett/php-reflect"/>
-      <arg value="bartlett/umlwriter"/>
-    </composer>
-
-    <exec executable="vendor/bin/umlwriter" output="docs/images/uml-case-converter.puml">
-      <arg line="diagram:render:namespace"/>
-      <arg value="--processor=plantuml"/>
-      <arg path="src"/>
-      <arg value="Jawira\\CaseConverter"/>
-    </exec>
-
-    <exec executable="vendor/bin/umlwriter" output="docs/images/uml-glue.puml">
-      <arg line="diagram:render:namespace"/>
-      <arg value="--processor=plantuml"/>
-      <arg path="src/Glue"/>
-      <arg value="Jawira\\CaseConverter\\Glue"/>
-    </exec>
-
-    <exec executable="vendor/bin/umlwriter" output="docs/images/uml-split.puml">
-      <arg line="diagram:render:namespace"/>
-      <arg value="--processor=plantuml"/>
-      <arg path="src/Split"/>
-      <arg value="Jawira\\CaseConverter\\Split"/>
-    </exec>
-
-    <composer command="remove">
-      <arg value="bartlett/php-reflect"/>
-      <arg value="bartlett/umlwriter"/>
-    </composer>
-  </target>
-
-  <target name="docs:deploy" description="Deploy documentation to gh-pages" depends="docs:build">
-    <exec executable="mkdocs" passthru="true" checkreturn="true">
-      <arg value="gh-deploy"/>
-    </exec>
-  </target>
-
   <target name="docs:serve" description="Generate and open static site" depends="docs:build">
     <parallel threadCount="2">
       <exec executable="mkdocs" passthru="true" checkreturn="true">
@@ -190,15 +151,10 @@
     </parallel>
   </target>
 
-  <target name="docs:build" description="Builds static site" depends="docs:refresh-images, docs:copy-md">
+  <target name="docs:build" description="Builds static site" depends="docs:refresh-images">
     <exec executable="mkdocs" passthru="true" checkreturn="true">
       <arg value="build"/>
     </exec>
-  </target>
-
-  <target name="docs:copy-md" description="Copy md files from root to docs dir">
-    <!--*.md files should not have relative paths-->
-    <copy file="./README.md" tofile="./docs/index.md" overwrite="true"/>
   </target>
 
   <target name="psalm:run" description="Check code with Psalm">

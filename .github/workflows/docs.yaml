@@ -1,0 +1,20 @@
+name: Publish documentation
+
+on:
+  release:
+    types: [ published ]
+
+jobs:
+  build:
+    name: Deploy docs
+    runs-on: ubuntu-20.04
+    steps:
+
+      - name: Checkout main
+        uses: actions/checkout@v2
+
+      - name: Deploy docs
+        uses: mhausenblas/mkdocs-deploy-gh-pages@master
+        env:
+          SITE_NAME: "Case Converter ${{ github.event.release.tag_name }}"
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

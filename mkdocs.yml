@@ -1,4 +1,4 @@
-site_name: 'Case Converter documentation'
+site_name: !ENV [SITE_NAME, 'Case Converter']
 site_author: 'Jawira Portugal'
 copyright: 'The MIT License (MIT)'
 theme:
