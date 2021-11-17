@@ -9,15 +9,18 @@ Phing targets
 - `$ phing setup`: Prepare project for development.
 - `$ phing qa`: Run quality tests, use this before every commit.
 
-Dev requirements
-----------------
+Documentation
+-------------
 
-To use Phing tasks you need to previously install:
+Documentation is built when a `release` is created.
 
-- [Phive]
-- [mkdocs]
-- [mkdocs-material]
-- [Composer]
+To install mkdocs locally type:
+
+[comment]: <> (https://stackoverflow.com/a/41352413/4345061)
+
+```console
+sudo -H pip install mkdocs
+```
 
 Using Phing behind a proxy
 --------------------------

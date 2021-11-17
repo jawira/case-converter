@@ -1,5 +1,5 @@
-Usage
-=====
+Case Converter
+==============
 
 To use **Case Converter** you have to instantiate `Convert` class, to do so you 
 can use the `new` keyword or the [CaseConverter factory] class.

@@ -1,4 +1,5 @@
 name: Quality assurance
+
 on:
   pull_request:
   push:
@@ -6,7 +7,6 @@ on:
       - master
 
 jobs:
-
   tests:
     strategy:
       matrix:
@@ -20,7 +20,7 @@ jobs:
           extensions: mbstring, intl
           coverage: xdebug
           tools: composer:v2
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
       - name: Download phing
         run: mkdir bin && curl -L -C - -s -S -o bin/phing https://github.com/phingofficial/phing/releases/download/3.0.0-RC3/phing-3.0.0-RC3.phar && chmod +x bin/phing
       - name: Phing setup
