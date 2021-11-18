@@ -29,16 +29,6 @@ If you are developing behind a proxy, you have to set the environment
 variable `http_proxy`. This variable already is imported in `build.xml`, so you
 have nothing to do.
 
-Conventions
------------
-
-This project adheres to:
-
-- [git-flow]
-- [Semantic Versioning]
-- [Keep a changelog]
-- [pds/skeleton]
-
 Creating new convention
 -----------------------
 
