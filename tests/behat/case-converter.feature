@@ -231,6 +231,7 @@ Feature: Convert Case
       | toDot      | Πολύ-καλό            | πολύ.καλό            |
       | toDot      | ОЧЕНЬ_ПРИЯТНО        | очень.приятно        |
       | toDot      | Ես-հայերեն-չգիտեմ    | ես.հայերեն.չգիտեմ    |
+      | toDot      | XMLHttpRequest       | x.m.l.http.request   |
 
 
   Scenario Outline: Convert a string to array
