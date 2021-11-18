@@ -25,7 +25,7 @@ sudo -H pip install mkdocs
 Using Phing behind a proxy
 --------------------------
 
-If you are developing behind a proxy, you have to set the environment 
+If you are developing behind a proxy, you have to set the environment
 variable `http_proxy`. This variable already is imported in `build.xml`, so you
 have nothing to do.
 
@@ -55,10 +55,17 @@ Class diagrams
 [![Phing targets](./images/uml-split.png "Split namespace")](./images/uml-split.png)
 
 [git-flow]: https://github.com/petervanderdoes/gitflow-avh
+
 [Keep a changelog]: http://keepachangelog.com/en/1.0.0/
+
 [mkdocs]: https://www.mkdocs.org/#installation
+
 [mkdocs-material]: https://github.com/squidfunk/mkdocs-material
+
 [pds/skeleton]: https://github.com/php-pds/skeleton
+
 [Phive]: https://phar.io/
+
 [Semantic Versioning]: http://semver.org/
+
 [Composer]: https://getcomposer.org/
