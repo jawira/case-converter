@@ -13,6 +13,7 @@ jobs:
         php: ['7.3','7.4','8.0','8.1']
     runs-on: ubuntu-20.04
     steps:
+
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
@@ -20,27 +21,38 @@ jobs:
           extensions: mbstring, intl
           coverage: xdebug
           tools: composer:v2
+
       - uses: actions/checkout@v2
+
       - name: Download phing
         run: mkdir bin && curl -L -C - -s -S -o bin/phing https://github.com/phingofficial/phing/releases/download/3.0.0-RC3/phing-3.0.0-RC3.phar && chmod +x bin/phing
+
       - name: Phing setup
         run: bin/phing setup
+
       - name: lint php
         run: bin/phing php:lint
+
       - name: validate composer
         run: bin/phing composer:validate
+
       - name: behat
         run: bin/phing behat:run
+
       - name: psalm
         run: bin/phing psalm:run
+
       - name: phpstan
         run: bin/phing phpstan:analyse
+
       - name: CC before build
         run: bin/phing cc:before-build
         env:
           CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
+
       - name: PHPUnit
         run: bin/phing phpunit:run
+
       - name: CC after build
         run: bin/phing cc:after-build
         env:

@@ -1,5 +1,6 @@
 site_name: !ENV [SITE_NAME, 'Case Converter']
 site_author: 'Jawira Portugal'
+site_url: 'https://jawira.github.io/case-converter/'
 copyright: 'The MIT License (MIT)'
 theme:
   name: 'material'
@@ -13,3 +14,5 @@ repo_url: 'https://github.com/jawira/case-converter/'
 edit_uri: ''
 markdown_extensions:
   - codehilite
+extra:
+  disqus: case-converter

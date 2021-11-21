@@ -61,7 +61,6 @@ All these methods exists only for sake of completeness.
 | `toArray()`                 | Returns array with detected words |
 | `forceSimpleCaseMapping()`  | Output sting uses [Simple Case-Mapping] even if you are using PHP 7.3 or newer | 
 
-
 `\Jawira\CaseConverter\CaseConverter`
 -------------------------------------
 
@@ -70,7 +69,6 @@ All these methods exists only for sake of completeness.
 | Method        | Description                 |
 | ------------- | --------------------------- |
 | `convert()`   | Creates a `Convert` object  |
-
 
 [Simple Case-Mapping]: ./case-mapping.md
 
