@@ -26,7 +26,6 @@ use Jawira\CaseConverter\Split\Splitter;
 use Jawira\CaseConverter\Split\UnderscoreSplitter;
 use Jawira\CaseConverter\Split\UppercaseSplitter;
 use function is_subclass_of;
-use function mb_strpos;
 use function preg_match;
 
 /**
@@ -77,25 +76,17 @@ use function preg_match;
  *
  * @see     https://softwareengineering.stackexchange.com/questions/322413/bothered-by-an-unknown-letter-case-name
  * @see     http://www.unicode.org/charts/case/
- * @package Jawira\CaseConverter
  * @author  Jawira Portugal <dev@tugal.be>
  */
 class Convert
 {
-    /**
-     * @var string Input string to convert
-     */
-    protected $source;
+    /** @var string Input string to convert */
+    protected string $source;
 
-    /**
-     * @var string[] Words extracted from input string
-     */
-    protected $words;
+    /** @var string[] Words extracted from input string */
+    protected array $words;
 
-    /**
-     * @var bool
-     */
-    protected $forceSimpleCaseMapping;
+    protected bool $forceSimpleCaseMapping;
 
     /**
      * Constructor method
@@ -114,17 +105,17 @@ class Convert
     /**
      * Handle `to*` methods and `from*` methods
      *
-     * @param string   $methodName
-     * @param mixed[]  $arguments
+     * @param string  $methodName
+     * @param mixed[] $arguments
      *
      * @return string|\Jawira\CaseConverter\Convert
      * @throws \Jawira\CaseConverter\CaseConverterException
      */
     public function __call($methodName, $arguments)
     {
-        if (0 === mb_strpos($methodName, 'from')) {
+        if (str_starts_with($methodName, 'from')) {
             $result = $this->handleSplitterMethod($methodName);
-        } elseif (0 === mb_strpos($methodName, 'to')) {
+        } elseif (str_starts_with($methodName, 'to')) {
             $result = $this->handleGluerMethod($methodName);
         } else {
             throw new CaseConverterException("Unknown method: $methodName");
@@ -136,7 +127,6 @@ class Convert
     /**
      * Auto-detect naming convention
      *
-     * @return \Jawira\CaseConverter\Convert
      * @throws \Jawira\CaseConverter\CaseConverterException
      */
     public function fromAuto(): self
@@ -187,46 +177,19 @@ class Convert
      *
      * @param string $input String to be analysed
      *
-     * @throws \Jawira\CaseConverter\CaseConverterException
      * @return \Jawira\CaseConverter\Split\Splitter
+     * @throws \Jawira\CaseConverter\CaseConverterException
      */
     protected function analyse(string $input): Splitter
     {
-        switch (true) {
-            case $this->contains($input, UnderscoreGluer::DELIMITER):
-                $splittingStrategy = new UnderscoreSplitter($input);
-                break;
-            case $this->contains($input, DashGluer::DELIMITER):
-                $splittingStrategy = new DashSplitter($input);
-                break;
-            case $this->contains($input, SpaceGluer::DELIMITER):
-                $splittingStrategy = new SpaceSplitter($input);
-                break;
-            case $this->contains($input, DotNotation::DELIMITER):
-                $splittingStrategy = new DotSplitter($input);
-                break;
-            case $this->isUppercaseWord($input):
-                $splittingStrategy = new UnderscoreSplitter($input);
-                break;
-            default:
-                $splittingStrategy = new UppercaseSplitter($input);
-                break;
-        }
-
-        return $splittingStrategy;
-    }
-
-    /**
-     * Return true if $needle is found in $input string
-     *
-     * @param string $input  String where the search is performed
-     * @param string $needle Needle
-     *
-     * @return bool
-     */
-    protected function contains(string $input, string $needle): bool
-    {
-        return is_int(mb_strpos($input, $needle));
+        return match (true) {
+            str_contains($input, UnderscoreGluer::DELIMITER) => new UnderscoreSplitter($input),
+            str_contains($input, DashGluer::DELIMITER)       => new DashSplitter($input),
+            str_contains($input, SpaceGluer::DELIMITER)      => new SpaceSplitter($input),
+            str_contains($input, DotNotation::DELIMITER)     => new DotSplitter($input),
+            $this->isUppercaseWord($input)                   => new UnderscoreSplitter($input),
+            default                                          => new UppercaseSplitter($input),
+        };
     }
 
     /**
@@ -279,33 +242,14 @@ class Convert
      */
     protected function handleSplitterMethod(string $methodName): self
     {
-        switch ($methodName) {
-            case 'fromCamel':
-            case 'fromPascal':
-                $splitterName = UppercaseSplitter::class;
-                break;
-            case 'fromSnake':
-            case 'fromAda':
-            case 'fromMacro':
-                $splitterName = UnderscoreSplitter::class;
-                break;
-            case 'fromKebab':
-            case 'fromTrain':
-            case 'fromCobol':
-                $splitterName = DashSplitter::class;
-                break;
-            case 'fromLower':
-            case 'fromUpper':
-            case 'fromTitle':
-            case 'fromSentence':
-                $splitterName = SpaceSplitter::class;
-                break;
-            case 'fromDot':
-                $splitterName = DotSplitter::class;
-                break;
-            default:
-                throw new CaseConverterException("Unknown method: $methodName");
-        }
+        $splitterName = match ($methodName) {
+            'fromCamel', 'fromPascal'                             => UppercaseSplitter::class,
+            'fromSnake', 'fromAda', 'fromMacro'                   => UnderscoreSplitter::class,
+            'fromKebab', 'fromTrain', 'fromCobol'                 => DashSplitter::class,
+            'fromLower', 'fromUpper', 'fromTitle', 'fromSentence' => SpaceSplitter::class,
+            'fromDot'                                             => DotSplitter::class,
+            default                                               => throw new CaseConverterException("Unknown method: $methodName"),
+        };
 
         $splitter = $this->createSplitter($splitterName, $this->source);
         $this->extractWords($splitter);
@@ -336,49 +280,22 @@ class Convert
      */
     protected function handleGluerMethod(string $methodName): string
     {
-        switch ($methodName) {
-            case 'toAda':
-                $className = AdaCase::class;
-                break;
-            case 'toCamel':
-                $className = CamelCase::class;
-                break;
-            case 'toCobol':
-                $className = CobolCase::class;
-                break;
-            case 'toKebab':
-                $className = KebabCase::class;
-                break;
-            case 'toLower':
-                $className = LowerCase::class;
-                break;
-            case 'toMacro':
-                $className = MacroCase::class;
-                break;
-            case 'toPascal':
-                $className = PascalCase::class;
-                break;
-            case 'toSentence':
-                $className = SentenceCase::class;
-                break;
-            case 'toSnake':
-                $className = SnakeCase::class;
-                break;
-            case 'toTitle':
-                $className = TitleCase::class;
-                break;
-            case 'toTrain':
-                $className = TrainCase::class;
-                break;
-            case 'toUpper':
-                $className = UpperCase::class;
-                break;
-            case 'toDot':
-                $className = DotNotation::class;
-                break;
-            default:
-                throw new CaseConverterException("Unknown method: $methodName");
-        }
+        $className = match ($methodName) {
+            'toAda'      => AdaCase::class,
+            'toCamel'    => CamelCase::class,
+            'toCobol'    => CobolCase::class,
+            'toKebab'    => KebabCase::class,
+            'toLower'    => LowerCase::class,
+            'toMacro'    => MacroCase::class,
+            'toPascal'   => PascalCase::class,
+            'toSentence' => SentenceCase::class,
+            'toSnake'    => SnakeCase::class,
+            'toTitle'    => TitleCase::class,
+            'toTrain'    => TrainCase::class,
+            'toUpper'    => UpperCase::class,
+            'toDot'      => DotNotation::class,
+            default      => throw new CaseConverterException("Unknown method: $methodName"),
+        };
 
         $gluer = $this->createGluer($className, $this->words, $this->forceSimpleCaseMapping);
 

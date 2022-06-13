@@ -9,7 +9,8 @@ namespace Jawira\CaseConverter\Glue;
  */
 class DotNotation extends Gluer
 {
-    const DELIMITER = '.';
+    /** @internal */
+    public const DELIMITER = '.';
 
     /**
      * Format detected words in _dot notation_

@@ -5,7 +5,6 @@ namespace Jawira\CaseConverter;
 /**
  * Interface CaseConverterInterface
  *
- * @package Jawira\CaseConverter
  * @author  Jawira Portugal <dev@tugal.be>
  */
 interface CaseConverterInterface

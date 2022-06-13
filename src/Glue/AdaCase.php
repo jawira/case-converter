@@ -6,8 +6,6 @@ namespace Jawira\CaseConverter\Glue;
  * Class AdaCase
  *
  * Outputs string in _Ada case_ format: This_Is_Ada_Case
- *
- * @package Jawira\CaseConverter\Glue
  */
 class AdaCase extends UnderscoreGluer
 {

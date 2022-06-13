@@ -5,7 +5,7 @@ namespace Jawira\CaseConverter\Split;
 class UppercaseSplitter extends Splitter
 {
     // language=PhpRegExp
-    const PATTERN = '#(?=\p{Lu}{1})#u';
+    public const PATTERN = '#(?=\p{Lu}{1})#u';
 
     /**
      * Splits $words using Uppercase letters.

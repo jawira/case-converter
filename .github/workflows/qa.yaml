@@ -10,8 +10,8 @@ jobs:
   tests:
     strategy:
       matrix:
-        php: ['7.3','7.4','8.0','8.1']
-    runs-on: ubuntu-20.04
+        php: [ '7.4','8.0','8.1' ]
+    runs-on: ubuntu-22.04
     steps:
 
       - name: Setup PHP

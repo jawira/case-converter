@@ -6,7 +6,8 @@ use Jawira\CaseConverter\Glue\DashGluer;
 
 class DashSplitter extends Splitter
 {
-    const PATTERN = '#' . DashGluer::DELIMITER . '+#u';
+    /** @internal */
+    public const PATTERN = '#' . DashGluer::DELIMITER . '+#u';
 
     /**
      * @return string[]

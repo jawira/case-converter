@@ -6,7 +6,8 @@ use Jawira\CaseConverter\Glue\SpaceGluer;
 
 class SpaceSplitter extends Splitter
 {
-    const PATTERN = '#' . SpaceGluer::DELIMITER . '+#u';
+    /** @internal */
+    public const PATTERN = '#' . SpaceGluer::DELIMITER . '+#u';
 
     /**
      * @return string[]

@@ -4,8 +4,8 @@ Case-Mapping
 Introduction
 ------------
 
-> Case mapping or case conversion is a process whereby strings are converted 
-> to a particular form—uppercase, lowercase, or titlecase—possibly for display 
+> Case mapping or case conversion is a process whereby strings are converted
+> to a particular form—uppercase, lowercase, or titlecase—possibly for display
 > to the user.
 
 PHP always performed _Simple Case-Mapping_, this is map one-to-one character
@@ -28,7 +28,7 @@ Please note that _Full Case-Mapping_ is locale dependent:
 
 ```php
 // Turkish (requires appropriate locale)
-$tur = new Convert('istambul');     
+$tur = new Convert('istambul');
 echo $tur->toTrain();   // output: İstanbul
 ```
 

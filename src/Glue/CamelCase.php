@@ -6,8 +6,6 @@ namespace Jawira\CaseConverter\Glue;
  * Class CamelCase
  *
  * Outputs string in _Camel case_ format: thisIsCamelCase
- *
- * @package Jawira\CaseConverter\Glue
  */
 class CamelCase extends UppercaseGluer
 {

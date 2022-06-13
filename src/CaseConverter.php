@@ -7,7 +7,6 @@ namespace Jawira\CaseConverter;
  *
  * Factory class which returns a Convert object.
  *
- * @package Jawira\CaseConverter
  * @author  Jawira Portugal <dev@tugal.be>
  */
 class CaseConverter implements CaseConverterInterface

@@ -4,5 +4,6 @@ namespace Jawira\CaseConverter\Glue;
 
 abstract class DashGluer extends Gluer
 {
-    const DELIMITER = '-';
+    /** @internal */
+    public const DELIMITER = '-';
 }

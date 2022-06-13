@@ -3,21 +3,21 @@ Case converter
 
 Use this library to convert string between:
 
-| Name          | Method          | Output example    |
-| ------------- | --------------- | ----------------- |
-| 🐪 Camel case   | `toCamel()`     | `myNameIsBond`    |
-| 👨‍🏫 Pascal case  | `toPascal()`    | `MyNameIsBond`    |
-| 🐍 Snake case   | `toSnake()`     | `my_name_is_bond` |
-| 👩‍🏫 Ada case     | `toAda()`       | `My_Name_Is_Bond` |
-| Ⓜ️ Macro case | `toMacro()`     | `MY_NAME_IS_BOND` |
-| 🥙 Kebab case   | `toKebab()`     | `my-name-is-bond` |
-| 🚂 Train case   | `toTrain()`     | `My-Name-Is-Bond` |
-| 🏦 Cobol case   | `toCobol()`     | `MY-NAME-IS-BOND` |
-| 🔡 Lower case   | `toLower()`     | `my name is bond` |
-| 🔠 Upper case   | `toUpper()`     | `MY NAME IS BOND` |
-| 📰 Title case     | `toTitle()`     | `My Name Is Bond` |
-| ✍️ Sentence case | `toSentence()`  | `My name is bond` |
-| ⚙️ Dot notation  | `toDot()`       | `my.name.is.bond` |
+| Name              | Method         | Output example    |
+|-------------------|----------------|-------------------|
+| 🐪 Camel case     | `toCamel()`    | `myNameIsBond`    |
+| 👨‍🏫 Pascal case | `toPascal()`   | `MyNameIsBond`    |
+| 🐍 Snake case     | `toSnake()`    | `my_name_is_bond` |
+| 👩‍🏫 Ada case    | `toAda()`      | `My_Name_Is_Bond` |
+| Ⓜ️ Macro case     | `toMacro()`    | `MY_NAME_IS_BOND` |
+| 🥙 Kebab case     | `toKebab()`    | `my-name-is-bond` |
+| 🚂 Train case     | `toTrain()`    | `My-Name-Is-Bond` |
+| 🏦 Cobol case     | `toCobol()`    | `MY-NAME-IS-BOND` |
+| 🔡 Lower case     | `toLower()`    | `my name is bond` |
+| 🔠 Upper case     | `toUpper()`    | `MY NAME IS BOND` |
+| 📰 Title case     | `toTitle()`    | `My Name Is Bond` |
+| ✍️ Sentence case  | `toSentence()` | `My name is bond` |
+| ⚙️ Dot notation   | `toDot()`      | `my.name.is.bond` |
 
 Features:
 
@@ -52,8 +52,8 @@ Of course you can explicitly set the format of input string:
 echo $hero->fromKebab()->toSnake();   // output: john_connor
 ```
 
-You can also use the [provided factory][factory] to instantiate `Convert` class. A list of [all public methods] is also
-available.
+You can also use the [provided factory][factory] to instantiate `Convert` class.
+A list of [all public methods] is also available.
 
 i18n
 ----
@@ -74,7 +74,8 @@ $rus = new Convert('ОЧЕНЬ_ПРИЯТНО');
 echo $rus->toCamel();   // output: оченьПриятно
 ```
 
-`case-converter` is compatible with _Simple Case-Mapping_ and _Full Case-Mapping_.
+`case-converter` is compatible with _Simple Case-Mapping_ and _Full
+Case-Mapping_.
 [Learn more about Case-Mapping][Case-Mapping].
 
 Installation
@@ -94,7 +95,7 @@ Contributing
 
 - If you liked this project, ⭐ star it on GitHub.
   [![GitHub Repo stars](https://img.shields.io/github/stars/jawira/case-converter?style=social)](https://github.com/jawira/case-converter)
-- Or follow me on Twitter. 
+- Or follow me on Twitter.
   [![Twitter Follow](https://img.shields.io/twitter/follow/jawira?style=social)](https://twitter.com/jawira)
 
 License

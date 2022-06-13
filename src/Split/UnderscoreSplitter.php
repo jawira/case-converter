@@ -6,7 +6,7 @@ use Jawira\CaseConverter\Glue\UnderscoreGluer;
 
 class UnderscoreSplitter extends Splitter
 {
-    const PATTERN = '#' . UnderscoreGluer::DELIMITER . '+#u';
+    public const PATTERN = '#' . UnderscoreGluer::DELIMITER . '+#u';
 
     /**
      * @return string[]

@@ -3,11 +3,11 @@
 namespace Jawira\CaseConverter\Split;
 
 use Jawira\CaseConverter\Glue\DotNotation;
-use Jawira\CaseConverter\Glue\SpaceGluer;
 
 class DotSplitter extends Splitter
 {
-    const PATTERN = '#\\' . DotNotation::DELIMITER . '+#u';
+    /** @internal */
+    public const PATTERN = '#\\' . DotNotation::DELIMITER . '+#u';
 
     /**
      * @return string[]
