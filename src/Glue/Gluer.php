@@ -70,11 +70,11 @@ abstract class Gluer
     /**
      * Implode self::$words array using $glue.
      *
-     * @param string   $glue          Character to glue words. Even if is assumed your are using underscore or dash character, this method should be capable to use any character as glue.
+     * @param string   $glue          Character to glue words. Even if is assumed you are using underscore or dash character, this method should be capable to use any character as glue.
      * @param int      $wordsMode     The mode of the conversion. It should be one of `Gluer::$lowerCase`, `Gluer::$upperCase` or  `Gluer::$titleCase`.
      * @param null|int $firstWordMode Sometimes first word requires special treatment. It should be one of `Gluer::$lowerCase`,  `Gluer::$upperCase` or  `Gluer::$titleCase`.
      *
-     * @return string
+     * @return string Converted words.
      */
     protected function glueUsingRules(string $glue, int $wordsMode, ?int $firstWordMode = null): string
     {
@@ -88,7 +88,7 @@ abstract class Gluer
     }
 
     /**
-     * Changes the case of every $words' element
+     * Changes the case of every $words element
      *
      * @param string[] $words    Words to modify
      * @param int      $caseMode It should be one of `Gluer::$lowerCase`,  `Gluer::$upperCase` or  `Gluer::$titleCase`.
@@ -101,7 +101,7 @@ abstract class Gluer
             return $words;
         }
 
-        $closure = function (string $word) use ($caseMode): string {
+        $closure = static function (string $word) use ($caseMode): string {
             return mb_convert_case($word, $caseMode, self::ENCODING);
         };
 
@@ -109,7 +109,7 @@ abstract class Gluer
     }
 
     /**
-     * Changes the case of first $words' element
+     * Changes the case of first $words element
      *
      * @param string[] $words    Words to modify
      * @param int      $caseMode It should be one of `Gluer::$lowerCase`,  `Gluer::$upperCase` or  `Gluer::$titleCase`.

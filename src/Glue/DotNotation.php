@@ -4,8 +4,6 @@ namespace Jawira\CaseConverter\Glue;
 
 /**
  * Class DotNotation
- *
- * @package Jawira\CaseConverter\Glue
  */
 class DotNotation extends Gluer
 {
