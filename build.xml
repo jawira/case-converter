@@ -119,6 +119,7 @@
       <arg value="jawira/plantuml"/>
     </composer>
     <exec executable="vendor/bin/plantuml" passthru="true" checkreturn="true">
+      <arg value="-checkmetadata"/>
       <arg path="docs/**.puml"/>
     </exec>
     <composer command="remove">

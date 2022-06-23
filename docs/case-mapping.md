@@ -4,90 +4,100 @@ Case-Mapping
 Introduction
 ------------
 
-> Case mapping or case conversion is a process whereby strings are converted
-> to a particular form—uppercase, lowercase, or titlecase—possibly for display
-> to the user.
+_Case-mapping_ or _case conversion_ is performed everytime a character is
+changed from _upper case_ to _lower case_, or from _lower case_ to _upper case_.
+_Case converter_ performs _case-mapping_ everytime you use it.
 
-PHP always performed _Simple Case-Mapping_, this is map one-to-one character
-mapping. For example, one _lower case_ character is converter to one _upper
-case_ character.
+There are two kind of case-mapping:
 
-PHP 7.3 introduced [Full Case-Mapping], you can have one-to-many character
+1. _Simple case-mapping_
+2. _Full case-mapping_
+
+_Simple case-mapping_ is one-to-one character mapping, for example a single
+character "`A`" is replaced with another single character "`a`".
+
+As you can image, _Full case-mapping_ performs one-to-many character
+replacements (more precisely one-to-many code-points).
+In real world use-cases, it's rare to perform _full case-mapping_, this is
+because it only concerns a very small set of characters. For example in german
+language, the letter "`ß`" is strictly lowercase and should be mapped to "`SS`"
+in uppercase words.
+
+Case-Converter behaviour
+------------------------
+
+By default, Case-Converter will perform _full case-mapping_
+
+```php
+// Full case-mapping
+$ger = new Convert('Straße');
+echo $ger->toUpper(); // output: STRASSE
+```
+
+If you want to perform _simple case-mapping_ then you have to
+call `->forceSimpleCaseMapping()`:
+
+```php
+// Simple case-mapping
+$ger = new Convert('Straße');
+$ger->forceSimpleCaseMapping();
+echo $ger->toUpper(); // output: STRAßE
+```
+
+As you can see, in _full case-mapping_ string length can change.
+
+Case-Mapping in PHP
+-------------------
+
+PHP 7.3 introduced _full case-mapping_, you can have one-to-many character
 mapping. In practice this means than you can have different results depending on
 your PHP version.
 
-```php
-$german = new Convert('Straße');
-
-echo $german->toUpper();
-// Produces STRAßE on PHP 7.2
-// Produces STRASSE on PHP 7.3
-```
-
-Please note that _Full Case-Mapping_ is locale dependent:
+Internally Case-Converter uses _mb_convert_case()_ . This function works in
+conjunction with specific constants to tell what action to perform. For example:
 
 ```php
-// Turkish (requires appropriate locale)
-$tur = new Convert('istambul');
-echo $tur->toTrain();   // output: İstanbul
+mb_convert_case('Foo', MB_CASE_UPPER); // FOO
 ```
 
-Forcing _Simple Case-Mapping_
-------------------------------
+Prior to PHP 7.3, these were the available constants and their use:
 
-As told before, _Full Case-Mapping_ is only available on PHP 7.3 and newer.
+| Constant      | Meaning                                     |
+|---------------|---------------------------------------------|
+| MB_CASE_UPPER | Performs simple upper-case fold conversion. |
+| MB_CASE_LOWER | Performs simple lower-case fold conversion. |
+| MB_CASE_TITLE | Performs simple title-case fold conversion. |
 
-The following code snippet is executed on PHP 7.3:
+But from PHP 7.3, new constants were added and their meaning changed:
 
-```php
-// German
-$ger = new Convert('Straße');
-echo $ger->toUpper();    // output: STRASSE
-```
+| Constant             | Meaning                                     |
+|----------------------|---------------------------------------------|
+| MB_CASE_UPPER        | Performs a full upper-case folding.         |
+| MB_CASE_LOWER        | Performs a full lower-case folding.         |
+| MB_CASE_TITLE        | Performs a full title-case conversion.      |
+| MB_CASE_UPPER_SIMPLE | Performs simple upper-case fold conversion. |
+| MB_CASE_LOWER_SIMPLE | Performs simple lower-case fold conversion. |
+| MB_CASE_TITLE_SIMPLE | Performs simple title-case fold conversion. |
 
-To force _Simple Case-Mapping_ you have to call `->forceSimpleCaseMapping()`:
+Locale dependent mapping
+------------------------
 
-```php
-// German
-$ger = new Convert('Straße');
-$ger->forceSimpleCaseMapping();
-echo $ger->toUpper();    // output: STRAßE
-```
+Some case-mapping are locale dependent. This is the case of Turkish where the
+small letter "`i`" should be replaced by a capital letter with a dot "`İ`".
+However, according to documentation:
 
-Please note `->forceSimpleCaseMapping()` has no effect on _PHP 7.1_ and _PHP
-7.2_ as these version can only perform _Simple Case-Mapping_.
+> Only unconditional, language agnostic full case-mapping is performed.
 
-Technical details
------------------
+This means that locale dependent mapping are ignored and not performed.
 
-Internally `Case-Converter` uses [mb_convert_case()], this function uses the
-following constants:
+Resources
+---------
 
-- MB_CASE_LOWER
-- MB_CASE_TITLE
-- MB_CASE_UPPER
-
-The problem is that, Before _PHP 7.3_, these constants perform simple
-case-mapping and after _PHP 7.3_ perform full case-mapping.
-
-If you want to maintain the old functionality after _PHP 7.3_ you have to call
-`->forceSimpleCaseMapping()`:
-
-```php
-// German
-$ger = new Convert('Straße');
-$ger->forceSimpleCaseMapping();
-echo $ger->toUpper();    // output: STRASSE
-```
-
-***
-
-IMHO this is a _breaking change_, PHP people should have keep untouched old
-constants and create new ones for [Full Case-Mapping], for example:
-`MB_CASE_LOWER_FULL`, `MB_CASE_TITLE_FULL`, and `MB_CASE_UPPER_FULL` (please
-note these constants do not exist).
-
-[Full Case-Mapping]: https://www.php.net/manual/en/migration73.new-features.php#migration73.new-features.mbstring.case-mapping-folding
-
-[mb_convert_case()]: https://www.php.net/manual/en/function.mb-convert-case.php
-
+<dl>
+<dt>PHP 7.3 Full Case-Mapping and Case-Folding Support</dt>
+<dd><a href="https://www.php.net/manual/en/migration73.new-features.php#migration73.new-features.mbstring.case-mapping-folding">https://www.php.net/manual/en/migration73.new-features.php#migration73.new-features.mbstring.case-mapping-folding</a></dd>
+<dt>mb_convert_case()</dt>
+<dd><a href="https://www.php.net/manual/en/function.mb-convert-case.php">https://www.php.net/manual/en/function.mb-convert-case.php</a></dd>
+<dt>mbstring constant</dt>
+<dd><a href="https://www.php.net/manual/en/mbstring.constants.php">https://www.php.net/manual/en/mbstring.constants.php</a></dd>
+</dl>
