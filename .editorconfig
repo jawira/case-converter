@@ -10,6 +10,15 @@ ij_visual_guides = 80, 120
 
 [*.php]
 indent_size = 4
+max_line_length = 120
+ij_php_align_multiline_chained_methods = true
+ij_php_align_phpdoc_comments = true
+ij_php_align_phpdoc_param_names = true
+ij_php_align_assignments = true
+ij_php_align_multiline_array_initializer_expression = true
+ij_php_align_key_value_pairs = true
+ij_php_align_match_arm_bodies = true
+ij_php_phpdoc_use_fqcn = true
 
 [*.{yml, yaml, neon, xml, svg, json, js}]
 indent_size = 2
@@ -18,3 +27,4 @@ indent_size = 2
 trim_trailing_whitespace = false
 indent_size = 2
 max_line_length = 80
+ij_markdown_wrap_text_if_long = true

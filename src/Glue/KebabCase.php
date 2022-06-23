@@ -6,8 +6,6 @@ namespace Jawira\CaseConverter\Glue;
  * Class KebabCase
  *
  * Outputs string in _Cobol case_ format: this-is-kebab-case
- *
- * @package Jawira\CaseConverter\Glue
  */
 class KebabCase extends DashGluer
 {

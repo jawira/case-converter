@@ -2,9 +2,8 @@
 
 namespace Jawira\CaseConverter;
 
-use Exception;
+use RuntimeException;
 
-class CaseConverterException extends Exception
+class CaseConverterException extends RuntimeException
 {
-
 }

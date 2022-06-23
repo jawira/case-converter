@@ -4,5 +4,6 @@ namespace Jawira\CaseConverter\Glue;
 
 abstract class UnderscoreGluer extends Gluer
 {
-    const DELIMITER = '_';
+    /** @internal */
+    public const DELIMITER = '_';
 }

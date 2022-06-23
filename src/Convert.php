@@ -26,7 +26,6 @@ use Jawira\CaseConverter\Split\Splitter;
 use Jawira\CaseConverter\Split\UnderscoreSplitter;
 use Jawira\CaseConverter\Split\UppercaseSplitter;
 use function is_subclass_of;
-use function mb_strpos;
 use function preg_match;
 
 /**
@@ -77,25 +76,17 @@ use function preg_match;
  *
  * @see     https://softwareengineering.stackexchange.com/questions/322413/bothered-by-an-unknown-letter-case-name
  * @see     http://www.unicode.org/charts/case/
- * @package Jawira\CaseConverter
  * @author  Jawira Portugal <dev@tugal.be>
  */
 class Convert
 {
-    /**
-     * @var string Input string to convert
-     */
-    protected $source;
+    /** @var string Input string to convert */
+    protected string $source;
 
-    /**
-     * @var string[] Words extracted from input string
-     */
-    protected $words;
+    /** @var string[] Words extracted from input string */
+    protected array $words;
 
-    /**
-     * @var bool
-     */
-    protected $forceSimpleCaseMapping;
+    protected bool $forceSimpleCaseMapping;
 
     /**
      * Constructor method
@@ -114,17 +105,18 @@ class Convert
     /**
      * Handle `to*` methods and `from*` methods
      *
-     * @param string   $methodName
-     * @param mixed[]  $arguments
+     * @param string  $methodName
+     * @param mixed[] $arguments
      *
      * @return string|\Jawira\CaseConverter\Convert
      * @throws \Jawira\CaseConverter\CaseConverterException
      */
-    public function __call($methodName, $arguments)
+    public function __call(string $methodName, array $arguments)
     {
-        if (0 === mb_strpos($methodName, 'from')) {
+        $strStartsWith = static fn(string $haystack, string $needle): bool => 0 === mb_strpos($haystack, $needle);
+        if ($strStartsWith($methodName, 'from')) {
             $result = $this->handleSplitterMethod($methodName);
-        } elseif (0 === mb_strpos($methodName, 'to')) {
+        } elseif ($strStartsWith($methodName, 'to')) {
             $result = $this->handleGluerMethod($methodName);
         } else {
             throw new CaseConverterException("Unknown method: $methodName");
@@ -136,7 +128,6 @@ class Convert
     /**
      * Auto-detect naming convention
      *
-     * @return \Jawira\CaseConverter\Convert
      * @throws \Jawira\CaseConverter\CaseConverterException
      */
     public function fromAuto(): self
@@ -187,22 +178,24 @@ class Convert
      *
      * @param string $input String to be analysed
      *
-     * @throws \Jawira\CaseConverter\CaseConverterException
      * @return \Jawira\CaseConverter\Split\Splitter
+     * @throws \Jawira\CaseConverter\CaseConverterException
      */
     protected function analyse(string $input): Splitter
     {
+        $strContains = static fn(string $input, string $needle): bool => is_int(mb_strpos($input, $needle));
+
         switch (true) {
-            case $this->contains($input, UnderscoreGluer::DELIMITER):
+            case $strContains($input, UnderscoreGluer::DELIMITER):
                 $splittingStrategy = new UnderscoreSplitter($input);
                 break;
-            case $this->contains($input, DashGluer::DELIMITER):
+            case $strContains($input, DashGluer::DELIMITER):
                 $splittingStrategy = new DashSplitter($input);
                 break;
-            case $this->contains($input, SpaceGluer::DELIMITER):
+            case $strContains($input, SpaceGluer::DELIMITER):
                 $splittingStrategy = new SpaceSplitter($input);
                 break;
-            case $this->contains($input, DotNotation::DELIMITER):
+            case $strContains($input, DotNotation::DELIMITER):
                 $splittingStrategy = new DotSplitter($input);
                 break;
             case $this->isUppercaseWord($input):
@@ -214,19 +207,6 @@ class Convert
         }
 
         return $splittingStrategy;
-    }
-
-    /**
-     * Return true if $needle is found in $input string
-     *
-     * @param string $input  String where the search is performed
-     * @param string $needle Needle
-     *
-     * @return bool
-     */
-    protected function contains(string $input, string $needle): bool
-    {
-        return is_int(mb_strpos($input, $needle));
     }
 
     /**
@@ -336,6 +316,7 @@ class Convert
      */
     protected function handleGluerMethod(string $methodName): string
     {
+
         switch ($methodName) {
             case 'toAda':
                 $className = AdaCase::class;

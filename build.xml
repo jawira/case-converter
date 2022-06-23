@@ -41,7 +41,7 @@
   </target>
 
   <target name="php:lint" description="Check syntax on PHP files">
-    <phplint>
+    <phplint haltonfailure="true">
       <fileset dir="${project.basedir}">
         <include name="**/*.php"/>
         <exclude name="vendor/"/>
@@ -65,7 +65,6 @@
       <env key="XDEBUG_MODE" value="coverage"/>
       <arg line="--configuration=config/phpunit.xml"/>
       <arg value="--testdox"/>
-      <arg value="--stop-on-defect"/>
     </exec>
   </target>
 
@@ -120,6 +119,7 @@
       <arg value="jawira/plantuml"/>
     </composer>
     <exec executable="vendor/bin/plantuml" passthru="true" checkreturn="true">
+      <arg value="-checkmetadata"/>
       <arg path="docs/**.puml"/>
     </exec>
     <composer command="remove">

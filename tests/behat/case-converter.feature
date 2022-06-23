@@ -232,15 +232,17 @@ Feature: Convert Case
       | toDot      | ОЧЕНЬ_ПРИЯТНО        | очень.приятно        |
       | toDot      | Ես-հայերեն-չգիտեմ    | ես.հայերեն.չգիտեմ    |
       | toDot      | XMLHttpRequest       | x.m.l.http.request   |
+      | toLower    | ĲSJE                 | ĳsje                 |
+      | toUpper    | ĳsje                 | ĲSJE                 |
 
 
   Scenario Outline: Convert a string to array
     Given CaseConverter class is instantiated with "<input-string>"
     When I call "<method>"
-    Then method should return array "<output-array>"
+    Then method should return array "<output-string>"
 
     Examples:
-      | method  | input-string    | output-array      |
+      | method  | input-string    | output-string     |
       | toArray |                 | []                |
       | toArray | a               | [a]               |
       | toArray | HugoPacoLuis    | [Hugo;Paco;Luis]  |
@@ -251,11 +253,31 @@ Feature: Convert Case
       | toArray | red.green.blue  | [red;green;blue]  |
 
 
-  Scenario: Force simple case mapping
-    Given CaseConverter class is instantiated with "Straße"
+  Scenario Outline: Full case mapping (default behaviour)
+    Given CaseConverter class is instantiated with "<input-string>"
+    When I call "<method>"
+    Then method should return string "<output-string>"
+
+    Examples:
+      | method  | input-string | output-string |
+      | toUpper | Straße       | STRASSE       |
+      | toLower | İstanbul     | i̇stanbul     |
+      | toUpper | ŉ            | ʼN            |
+      | toUpper | ﬄ            | FFL           |
+
+
+  Scenario Outline: Simple case mapping
+    Given CaseConverter class is instantiated with "<input-string>"
     When I call "forceSimpleCaseMapping"
-    And I call "toMacro"
-    Then method should return string "STRAßE"
+    And I call "<method>"
+    Then method should return string "<output-string>"
+
+    Examples:
+      | method  | input-string | output-string |
+      | toUpper | Straße       | STRAßE        |
+      | toLower | İstanbul     | istanbul      |
+      | toUpper | ŉ            | ŉ             |
+      | toUpper | ﬄ            | ﬄ             |
 
 
   Scenario Outline: Using numbers in input strings
