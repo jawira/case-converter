@@ -101,9 +101,7 @@ abstract class Gluer
             return $words;
         }
 
-        $closure = static function (string $word) use ($caseMode): string {
-            return mb_convert_case($word, $caseMode, self::ENCODING);
-        };
+        $closure = static fn(string $word): string => mb_convert_case($word, $caseMode, self::ENCODING);
 
         return array_map($closure, $words);
     }
