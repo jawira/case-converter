@@ -1,0 +1,42 @@
+// https://tabatkins.github.io/railroad-diagrams/generator.html
+Diagram(
+  Choice(0,
+    Sequence(
+      Optional('->forceSimpleCaseMapping()', 'skip'),
+      Choice(7,
+        '->fromAda()',
+        '->fromAuto()',
+        '->fromCamel()',
+        '->fromCobol()',
+        '->fromDot()',
+        '->fromKebab()',
+        '->fromLower()',
+        Skip(),
+        '->fromMacro()',
+        '->fromPascal()',
+        '->fromSentence()',
+        '->fromSnake()',
+        '->fromTitle()',
+        '->fromTrain()',
+        '->fromUpper()'
+      ),
+      Choice(7,
+        '->toAda()',
+        '->toArray()',
+        '->toCamel()',
+        '->toCobol()',
+        '->toDot()',
+        '->toKebab()',
+        '->toLower()',
+        '->toMacro()',
+        '->toPascal()',
+        '->toSentence()',
+        '->toSnake()',
+        '->toTitle()',
+        '->toTrain()',
+        '->toUpper()'
+      )
+    ),
+    '->getSource()'
+  )
+);
