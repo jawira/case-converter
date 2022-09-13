@@ -32,7 +32,7 @@
   "require-dev": {
     "behat/behat": "^3.0",
     "phpstan/phpstan": "^1.0",
-    "phpunit/phpunit": "^9.0",
+    "phpunit/phpunit": "^9.5.23",
     "vimeo/psalm": "^4.0"
   },
   "suggest": {
