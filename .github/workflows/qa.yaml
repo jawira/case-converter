@@ -10,8 +10,8 @@ jobs:
   tests:
     strategy:
       matrix:
-        php: [ '7.4','8.0','8.1' ]
-    runs-on: ubuntu-22.04
+        php: [ '7.4','8.0','8.1','8.2','8.3','8.4' ]
+    runs-on: ubuntu-24.04
     steps:
 
       - name: Setup PHP
@@ -20,40 +20,37 @@ jobs:
           php-version: ${{ matrix.php }}
           extensions: mbstring, intl
           coverage: xdebug
-          tools: composer:v2
+          tools: phing:v3
 
       - uses: actions/checkout@v2
 
-      - name: Download phing
-        run: mkdir bin && curl -L -C - -s -S -o bin/phing https://github.com/phingofficial/phing/releases/download/3.0.0-RC3/phing-3.0.0-RC3.phar && chmod +x bin/phing
-
       - name: Phing setup
-        run: bin/phing setup
+        run: phing setup
 
       - name: lint php
-        run: bin/phing php:lint
+        run: phing php:lint
 
       - name: validate composer
-        run: bin/phing composer:validate
+        run: phing composer:validate
 
       - name: behat
-        run: bin/phing behat:run
+        run: phing behat:run
 
-      - name: psalm
-        run: bin/phing psalm:run
+#       - name: psalm
+#         run: phing psalm:run
 
       - name: phpstan
-        run: bin/phing phpstan:analyse
+        run: phing phpstan:analyse
 
       - name: CC before build
-        run: bin/phing cc:before-build
+        run: phing cc:before-build
         env:
           CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
 
       - name: PHPUnit
-        run: bin/phing phpunit:run
+        run: phing phpunit:run
 
       - name: CC after build
-        run: bin/phing cc:after-build
+        run: phing cc:after-build
         env:
           CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}

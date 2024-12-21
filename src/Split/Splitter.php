@@ -41,6 +41,10 @@ abstract class Splitter
      */
     protected function splitUsingPattern(string $inputString, string $pattern): array
     {
+        if (empty($pattern)) {
+            throw new CaseConverterException('Pattern must not be empty.'); // @codeCoverageIgnore
+        }
+
         $words = preg_split($pattern, $inputString, 0, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY);
 
         if ($words === false) {

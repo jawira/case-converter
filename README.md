@@ -95,7 +95,7 @@ Contributing
 
 - If you liked this project, ⭐ star it on GitHub.
   [![GitHub Repo stars](https://img.shields.io/github/stars/jawira/case-converter?style=social)](https://github.com/jawira/case-converter)
-- Or follow me on Twitter.
+- Or follow me on X.
   [![Twitter Follow](https://img.shields.io/twitter/follow/jawira?style=social)](https://twitter.com/jawira)
 
 License
