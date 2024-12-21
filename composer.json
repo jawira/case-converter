@@ -31,9 +31,8 @@
   },
   "require-dev": {
     "behat/behat": "^3.0",
-    "phpstan/phpstan": "^1.0",
-    "phpunit/phpunit": "^9.0",
-    "vimeo/psalm": "^4.0"
+    "phpstan/phpstan": "^v2",
+    "phpunit/phpunit": "^9.0"
   },
   "suggest": {
     "pds/skeleton": "PHP Package Development Standards",

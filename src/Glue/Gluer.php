@@ -80,7 +80,7 @@ abstract class Gluer
     {
         $convertedWords = $this->changeWordsCase($this->words, $wordsMode);
 
-        if ($firstWordMode) {
+        if (is_int($firstWordMode)) {
             $convertedWords = $this->changeFirstWordCase($convertedWords, $firstWordMode);
         }
 
