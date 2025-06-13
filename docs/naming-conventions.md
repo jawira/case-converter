@@ -9,32 +9,32 @@ Naming conventions are also referred as:
 Reference matrix
 ----------------
 
-|                   | Lower case    | Title case    | Upper case    | Sentence case |
-| ----------------- | ------------- | ------------- | ------------- | ------------- |
-| `_` (underscore)  | Snake case    | Ada case      | Macro case    | -             |
-| `-` (dash)        | Kebab case    | Train case    | Cobol case    | -             |
-| `.` (dot)         | Dot notation  | -             | -             | -             |
-| `␣` (space)       | Lower case    | Title case    | Upper case    | Sentence case |
-| ` ` (empty string)| -             | Camel case<br>Pascal case | - | -             |
+|                    | Lower case   | Title case                | Upper case | Sentence case |
+|--------------------|--------------|---------------------------|------------|---------------|
+| `_` (underscore)   | Snake case   | Ada case                  | Macro case | -             |
+| `-` (dash)         | Kebab case   | Train case                | Cobol case | -             |
+| `.` (dot)          | Dot notation | -                         | -          | -             |
+| `␣` (space)        | Lower case   | Title case                | Upper case | Sentence case |
+| ` ` (empty string) | -            | Camel case<br>Pascal case | -          | -             |
 
 Description table (wip)
 -----------------
 
-| Convention name   | Description   | Usage | AKA   |
-| ----------------- | ------------- | ----- | ----- |
-| Camel case        |               | PHP method names      | Camel caps, Medial capitals, Lower camel case      |
-| Pascal case       |               | PHP class names       | Upper camel case      |
-| Snake case        | All letters in lower-case separated with a `_` (underscore) | PHP functions      |     |
-| Ada case          |               |       |       |
-| Macro case        |               | PHP constants         |       |
-| Kebab case        |               |       |       |
-| Train case        |               |       |       |
-| Cobol case        |               |       |       |
-| Dot notation      |               |       |       |
-| Lower case        |               |       |       |
-| Title case        |               |       |       |
-| Upper case        |               |       |       |
-| Sentence case     |               |       |       |
+| Convention name | Description                                                 | Usage            | AKA                                           |
+|-----------------|-------------------------------------------------------------|------------------|-----------------------------------------------|
+| Camel case      |                                                             | PHP method names | Camel caps, Medial capitals, Lower camel case |
+| Pascal case     |                                                             | PHP class names  | Upper camel case                              |
+| Snake case      | All letters in lower-case separated with a `_` (underscore) | PHP functions    |                                               |
+| Ada case        |                                                             |                  |                                               |
+| Macro case      |                                                             | PHP constants    |                                               |
+| Kebab case      |                                                             |                  |                                               |
+| Train case      |                                                             |                  |                                               |
+| Cobol case      |                                                             |                  |                                               |
+| Dot notation    |                                                             |                  |                                               |
+| Lower case      |                                                             |                  |                                               |
+| Title case      |                                                             |                  |                                               |
+| Upper case      |                                                             |                  |                                               |
+| Sentence case   |                                                             |                  |                                               |
 
 Resources
 ---------

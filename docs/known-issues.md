@@ -39,9 +39,9 @@ The correct way to name this string (for Case Converter) should have been `XmlHt
 
 Another example of mixed conventions:
 
-| ❌ Wrong           | ✅ Good           |
-| ----------------- | ----------------- |
-| PHP_CodeSniffer   | php_code_sniffer  |
-| PHP_CodeSniffer   | PhpCodeSniffer    |
-| PHPUnit           | PhpUnit           |
-| PHPUnit           | php-unit          |
+| ❌ Wrong         | ✅ Good           |
+|-----------------|------------------|
+| PHP_CodeSniffer | php_code_sniffer |
+| PHP_CodeSniffer | PhpCodeSniffer   |
+| PHPUnit         | PhpUnit          |
+| PHPUnit         | php-unit         |

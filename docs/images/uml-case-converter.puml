@@ -1,6 +1,6 @@
 @startuml
 namespace Jawira.CaseConverter  {
-	class CaseConverterException << class >> {
+	exception CaseConverterException {
 	}
 	interface CaseConverterInterface << interface >> {
 		+convert()
@@ -29,9 +29,9 @@ namespace Jawira.CaseConverter  {
 		+forceSimpleCaseMapping()
 	}
 }
-	class Exception << class >> {
+	exception Exception {
 	}
-Jawira.CaseConverter.CaseConverterException --|> Exception
-Jawira.CaseConverter.CaseConverter ..|> Jawira.CaseConverter.CaseConverterInterface
+Exception <|-- Jawira.CaseConverter.CaseConverterException
+Jawira.CaseConverter.CaseConverterInterface <|.. Jawira.CaseConverter.CaseConverter
 @enduml
 
