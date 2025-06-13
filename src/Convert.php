@@ -126,13 +126,16 @@ class Convert
     }
 
     /**
-     * Auto-detect naming convention
+     * Auto-detect naming convention.
      *
-     * @throws \Jawira\CaseConverter\CaseConverterException
+     * This is the default method when you don't call a "from*" method.
+     *
+     * @param bool $digitsAreLowercase When `true`, digits in input string are considered to be equivalent to a lowercase character. When `false` digits are considered to be uppercase.
+     * @return \Jawira\CaseConverter\Convert
      */
-    public function fromAuto(): self
+    public function fromAuto(bool $digitsAreLowercase = true): self
     {
-        $splitter = $this->analyse($this->source);
+        $splitter = $this->analyse($this->source, $digitsAreLowercase);
         $this->extractWords($splitter);
 
         return $this;
@@ -176,12 +179,13 @@ class Convert
     /**
      * Detects word separator of $input string and tells you what strategy you should use.
      *
-     * @param string $input String to be analysed
+     * @param string $input              String to be analysed
+     * @param bool   $digitsAreLowercase When `true`, digits in input string are considered to be equivalent to a lowercase character. When `false` digits are considered to be uppercase.
      *
      * @return \Jawira\CaseConverter\Split\Splitter
      * @throws \Jawira\CaseConverter\CaseConverterException
      */
-    protected function analyse(string $input): Splitter
+    protected function analyse(string $input, bool $digitsAreLowercase): Splitter
     {
         $strContains = static fn(string $input, string $needle): bool => is_int(mb_strpos($input, $needle));
 
@@ -198,7 +202,7 @@ class Convert
             case $strContains($input, DotNotation::DELIMITER):
                 $splittingStrategy = new DotSplitter($input);
                 break;
-            case $this->isUppercaseWord($input):
+            case $this->isUppercaseWord($input, $digitsAreLowercase):
                 $splittingStrategy = new UnderscoreSplitter($input);
                 break;
             default:
@@ -224,9 +228,10 @@ class Convert
      * @return bool
      * @throws \Jawira\CaseConverter\CaseConverterException
      */
-    protected function isUppercaseWord(string $input): bool
+    protected function isUppercaseWord(string $input, bool $digitsAreLowercase): bool
     {
-        $match = preg_match('#^\p{Lu}+$#u', $input);
+        $pattern = $digitsAreLowercase ? '#^\p{Lu}+$#u' : '#^[\p{Lu}\p{Nd}]+$#u';
+        $match   = preg_match($pattern, $input);
 
         if (false === $match) {
             throw new CaseConverterException('Error executing regex'); // @codeCoverageIgnore

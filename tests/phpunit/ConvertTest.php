@@ -42,7 +42,7 @@ class ConvertTest extends TestCase
      *
      * @throws \ReflectionException
      */
-    public function testIsUppercaseWord(string $inputString, bool $expectedResult)
+    public function testIsUppercaseWord(string $inputString, bool $digitsAreLowercase, bool $expectedResult)
     {
         // Disabling constructor without stub methods
         $stub = $this->getMockBuilder(Convert::class)
@@ -50,12 +50,12 @@ class ConvertTest extends TestCase
                      ->setMethods()
                      ->getMock();
 
-        // Removing protected for analyse method
+        // Removing protected for analyze method
         $reflection = new ReflectionObject($stub);
         $method     = $reflection->getMethod('isUppercaseWord');
         $method->setAccessible(true);
 
-        $output = $method->invoke($stub, $inputString);
+        $output = $method->invoke($stub, $inputString, $digitsAreLowercase);
 
         $this->assertSame($expectedResult, $output);
     }
@@ -63,15 +63,21 @@ class ConvertTest extends TestCase
     public function isUppercaseWordProvider()
     {
         return [
-            ['X', true],
-            ['YES', true],
-            ['HELLO', true],
-            ['', false],
-            ['x', false],
-            ['HELLOxWORLD', false],
-            ['HELLO-WORLD', false],
-            ['HELLO_WORLD', false],
-            ['HelloWorld', false],
+            ['X', true, true],
+            ['YES', true, true],
+            ['HELLO', true, true],
+            ['', true, false],
+            ['x', true, false],
+            ['HELLOxWORLD', true, false],
+            ['HELLO-WORLD', true, false],
+            ['HELLO_WORLD', true, false],
+            ['HelloWorld', true, false],
+            ['CPU486', true, false],
+            ['CPU486', false, true],
+            ['IR35', true, false],
+            ['IR35', false, true],
+            ['ISO8601', true, false],
+            ['ISO8601', false, true],
         ];
     }
 
@@ -87,11 +93,11 @@ class ConvertTest extends TestCase
      *
      * @param bool   $isUppercaseWordReturn Return value for `isUppercaseWord()`
      * @param string $expected              Expected result
-     * @param string $input                 Input string
+     * @param string $inputString           Input string
      *
      * @throws \ReflectionException
      */
-    public function testAnalyse(bool $isUppercaseWordReturn, string $expected, string $input)
+    public function testAnalyse(bool $isUppercaseWordReturn, string $expected, string $inputString)
     {
         // Disabling constructor with one stub method
         $stub = $this->getMockBuilder(Convert::class)
@@ -102,16 +108,16 @@ class ConvertTest extends TestCase
         // Configuring expectation
         $stub->expects($this->any())
              ->method('isUppercaseWord')
+             ->withAnyParameters()
              ->willReturn($isUppercaseWordReturn);
 
-
-        // Removing protected for analyse method
+        // Removing protected for analyze method
         $reflection = new ReflectionObject($stub);
         $method     = $reflection->getMethod('analyse');
         $method->setAccessible(true);
 
         // Testing
-        $output = $method->invoke($stub, $input);
+        $output = $method->invoke($stub, $inputString, true);
         $this->assertInstanceOf($expected, $output);
     }
 

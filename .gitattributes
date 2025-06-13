@@ -10,5 +10,4 @@
 /.gitignore         export-ignore
 /build.xml          export-ignore
 /mkdocs.yml         export-ignore
-/psalm.xml          export-ignore
 /README.md          export-ignore

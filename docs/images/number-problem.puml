@@ -9,7 +9,6 @@ state "hello8-world" as state3
 state1 --> state2: toCamel
 state2 --> state3: toKebab
 state3 --> state2: toCamel
-}
 
 center footer It's impossible to go back to original string when a number is used as a word
 @enduml

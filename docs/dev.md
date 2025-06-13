@@ -14,7 +14,7 @@ Documentation
 
 Documentation is built when a `release` is created.
 
-To install mkdocs locally type:
+To install **mkdocs** locally type:
 
 [comment]: <> (https://stackoverflow.com/a/41352413/4345061)
 
@@ -32,13 +32,13 @@ have nothing to do.
 Creating new convention
 -----------------------
 
-1. Create new Gluer class
-2. Create new split car
-3. Update `\Jawira\CaseConverter\Convert::analyse` if needed
-4. Register into `\Jawira\CaseConverter\Convert::handleSplitterMethod`
-5. Register into `\Jawira\CaseConverter\Convert::handleGluerMethod`
+1. Create new Gluer class.
+2. Create new Split class.
+3. Update `\Jawira\CaseConverter\Convert::analyse` if needed.
+4. Register into `\Jawira\CaseConverter\Convert::handleSplitterMethod`.
+5. Register into `\Jawira\CaseConverter\Convert::handleGluerMethod`.
 6. Update docblock `\Jawira\CaseConverter\Convert` to register new methods.
-7. Update documentation
+7. Update documentation.
 
 Railroad diagram
 ----------------

@@ -36,9 +36,6 @@ jobs:
       - name: behat
         run: phing behat:run
 
-#       - name: psalm
-#         run: phing psalm:run
-
       - name: phpstan
         run: phing phpstan:analyse
 
