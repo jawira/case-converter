@@ -10,7 +10,7 @@
     <open path="build.svg"/>
   </target>
 
-  <target name="setup" description="Install dependencies" depends="composer:install, cc:get"/>
+  <target name="setup" description="Install dependencies" depends="composer:install"/>
 
   <target name="qa" description="Run quality tests"
           depends="php:lint, composer:validate, phpunit:run, behat:run, phpstan:analyse"/>
@@ -78,40 +78,6 @@
     <composer command="remove">
       <arg value="symplify/changelog-linker"/>
     </composer>
-  </target>
-
-  <target name="cc:get" description="Download Code Climate">
-    <property name="cc.dir" value="bin"/>
-    <property name="cc.filename" value="cc-test-reporter"/>
-    <if>
-      <not>
-        <available file="${cc.dir}/${cc.filename}"/>
-      </not>
-      <then>
-        <mkdir dir="${cc.dir}"/>
-        <httpget dir="${cc.dir}" filename="${cc.filename}" followRedirects="true"
-                 url="https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64"/>
-      </then>
-    </if>
-    <chmod file="${cc.dir}/${cc.filename}" mode="0775"/>
-    <exec executable="${cc.dir}/${cc.filename}" passthru="true" checkreturn="true">
-      <arg value="--version"/>
-    </exec>
-  </target>
-
-  <target name="cc:before-build" description="To run before a build">
-    <fail unless="env.CC_TEST_REPORTER_ID" message="you must supply a CC_TEST_REPORTER_ID ENV variable"/>
-    <exec executable="bin/cc-test-reporter" passthru="true" checkreturn="true">
-      <arg value="before-build"/>
-    </exec>
-  </target>
-
-  <target name="cc:after-build" description="Handle &amp; upload coverage payload">
-    <fail unless="env.CC_TEST_REPORTER_ID" message="you must supply a CC_TEST_REPORTER_ID ENV variable"/>
-    <exec executable="bin/cc-test-reporter" passthru="true" checkreturn="true">
-      <arg value="after-build"/>
-      <arg line="--coverage-input-type clover"/>
-    </exec>
   </target>
 
   <target name="plantuml:puml-to-png" description="Parse PlantUML files to image from docs dir">

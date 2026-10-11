@@ -10,7 +10,7 @@ jobs:
   tests:
     strategy:
       matrix:
-        php: [ '7.4','8.0','8.1','8.2','8.3','8.4' ]
+        php: [ '8.2','8.3','8.4','8.5' ]
     runs-on: ubuntu-24.04
     steps:
 
@@ -24,8 +24,8 @@ jobs:
 
       - uses: actions/checkout@v2
 
-      - name: Phing setup
-        run: phing setup
+      - name: Install dependencies
+        run: phing composer:install
 
       - name: lint php
         run: phing php:lint
@@ -39,15 +39,5 @@ jobs:
       - name: phpstan
         run: phing phpstan:analyse
 
-      - name: CC before build
-        run: phing cc:before-build
-        env:
-          CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
-
       - name: PHPUnit
         run: phing phpunit:run
-
-      - name: CC after build
-        run: phing cc:after-build
-        env:
-          CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}

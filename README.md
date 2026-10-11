@@ -1,23 +1,22 @@
-Case converter
-==============
+# Case converter
 
 Use this library to convert string between:
 
-| Name              | Method         | Output example    |
-|-------------------|----------------|-------------------|
-| 🐪 Camel case     | `toCamel()`    | `myNameIsBond`    |
-| 👨‍🏫 Pascal case | `toPascal()`   | `MyNameIsBond`    |
-| 🐍 Snake case     | `toSnake()`    | `my_name_is_bond` |
-| 👩‍🏫 Ada case    | `toAda()`      | `My_Name_Is_Bond` |
+| Name             | Method         | Output example    |
+|------------------|----------------|-------------------|
+| 🐪 Camel case    | `toCamel()`    | `myNameIsBond`    |
+| 👨‍🏫 Pascal case   | `toPascal()`   | `MyNameIsBond`    |
+| 🐍 Snake case    | `toSnake()`    | `my_name_is_bond` |
+| 👩‍🏫 Ada case      | `toAda()`      | `My_Name_Is_Bond` |
 | Ⓜ️ Macro case     | `toMacro()`    | `MY_NAME_IS_BOND` |
-| 🥙 Kebab case     | `toKebab()`    | `my-name-is-bond` |
-| 🚂 Train case     | `toTrain()`    | `My-Name-Is-Bond` |
-| 🏦 Cobol case     | `toCobol()`    | `MY-NAME-IS-BOND` |
-| 🔡 Lower case     | `toLower()`    | `my name is bond` |
-| 🔠 Upper case     | `toUpper()`    | `MY NAME IS BOND` |
-| 📰 Title case     | `toTitle()`    | `My Name Is Bond` |
-| ✍️ Sentence case  | `toSentence()` | `My name is bond` |
-| ⚙️ Dot notation   | `toDot()`      | `my.name.is.bond` |
+| 🥙 Kebab case    | `toKebab()`    | `my-name-is-bond` |
+| 🚂 Train case    | `toTrain()`    | `My-Name-Is-Bond` |
+| 🏦 Cobol case    | `toCobol()`    | `MY-NAME-IS-BOND` |
+| 🔡 Lower case    | `toLower()`    | `my name is bond` |
+| 🔠 Upper case    | `toUpper()`    | `MY NAME IS BOND` |
+| 📰 Title case    | `toTitle()`    | `My Name Is Bond` |
+| ✍️ Sentence case | `toSentence()` | `My name is bond` |
+| ⚙️ Dot notation  | `toDot()`      | `my.name.is.bond` |
 
 Features:
 
@@ -25,15 +24,12 @@ Features:
 * 🏭 [factory][]
 * 🌐 [i18n](#i18n)
 
-[![Packagist Version](https://img.shields.io/packagist/v/jawira/case-converter?style=for-the-badge)](https://packagist.org/packages/jawira/case-converter)
-[![Packagist PHP Version Support](https://img.shields.io/packagist/php-v/jawira/case-converter?style=for-the-badge)](https://packagist.org/packages/jawira/case-converter)
-[![Packagist Downloads](https://img.shields.io/packagist/dt/jawira/case-converter?style=for-the-badge)](https://packagist.org/packages/jawira/case-converter)
-[![Packagist License](https://img.shields.io/packagist/l/jawira/case-converter?style=for-the-badge)](https://packagist.org/packages/jawira/case-converter)  
-[![Maintainability](https://api.codeclimate.com/v1/badges/35677f6ce7dac27a5d0c/maintainability)](https://codeclimate.com/github/jawira/case-converter/maintainability)
-[![Test Coverage](https://api.codeclimate.com/v1/badges/35677f6ce7dac27a5d0c/test_coverage)](https://codeclimate.com/github/jawira/case-converter/test_coverage)
+[![PHP Version Require](http://poser.pugx.org/jawira/case-converter/require/php?style=for-the-badge)](https://packagist.org/packages/jawira/case-converter)
+[![Latest Stable Version](http://poser.pugx.org/jawira/case-converter/v?style=for-the-badge)](https://packagist.org/packages/jawira/case-converter)
+[![Total Downloads](http://poser.pugx.org/jawira/case-converter/downloads?style=for-the-badge)](https://packagist.org/packages/jawira/case-converter)
+[![License](http://poser.pugx.org/jawira/case-converter/license?style=for-the-badge)](https://packagist.org/packages/jawira/case-converter)
 
-Usage
------
+## Usage
 
 Input string (i.e. _john-connor_) format is going to be
 [detected automatically][detection algorithm]. Here's an example:
@@ -55,8 +51,7 @@ echo $hero->fromKebab()->toSnake();   // output: john_connor
 You can also use the [provided factory][factory] to instantiate `Convert` class.
 A list of [all public methods] is also available.
 
-i18n
-----
+## i18n
 
 Fully compatible with non-english alphabets:
 
@@ -78,28 +73,24 @@ echo $rus->toCamel();   // output: оченьПриятно
 Case-Mapping_.
 [Learn more about Case-Mapping][Case-Mapping].
 
-Installation
-------------
+## Installation
 
-```console
+```shell
 composer require jawira/case-converter
 ```
 
-Documentation
--------------
+## Documentation
 
 <https://jawira.github.io/case-converter/>
 
-Contributing
-------------
+## Contributing
 
 - If you liked this project, ⭐ star it on GitHub.
   [![GitHub Repo stars](https://img.shields.io/github/stars/jawira/case-converter?style=social)](https://github.com/jawira/case-converter)
 - Or follow me on X.
   [![Twitter Follow](https://img.shields.io/twitter/follow/jawira?style=social)](https://twitter.com/jawira)
 
-License
--------
+## License
 
 This library is licensed under the [MIT LICENSE].
 
@@ -127,8 +118,7 @@ This library is licensed under the [MIT LICENSE].
 
 ***
 
-Packages from jawira
---------------------
+## Packages from jawira
 
 <dl>
 
