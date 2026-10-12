@@ -11,7 +11,7 @@ jobs:
     strategy:
       matrix:
         php: [ '8.2','8.3','8.4','8.5' ]
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-latest
     steps:
 
       - name: Setup PHP
@@ -34,10 +34,10 @@ jobs:
         run: phing composer:validate
 
       - name: behat
-        run: phing behat:run
+        run: phing behat:check
 
       - name: phpstan
-        run: phing phpstan:analyse
+        run: phing phpstan:check
 
       - name: PHPUnit
-        run: phing phpunit:run
+        run: phing phpunit:check

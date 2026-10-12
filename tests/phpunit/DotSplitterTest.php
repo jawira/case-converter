@@ -1,5 +1,7 @@
 <?php
 
+namespace Jawira\CaseConverterTests;
+
 use Jawira\CaseConverter\Split\DotSplitter;
 use PHPUnit\Framework\TestCase;
 
@@ -20,7 +22,7 @@ class DotSplitterTest extends TestCase
                      ->getMock();
 
         // Setting value to protected property
-        $reflectionObject   = new ReflectionObject($mock);
+        $reflectionObject   = new \ReflectionObject($mock);
         $reflectionProperty = $reflectionObject->getProperty('inputString');
         $reflectionProperty->setAccessible(true);
         $reflectionProperty->setValue($mock, 'dummyString');

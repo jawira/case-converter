@@ -21,7 +21,7 @@ skinparam UseCaseFontColor Black
 (qa) -[#1A85FF]-> (composer:validate) : depend:2
 (qa) -[#1A85FF]-> (phpunit:run) : depend:3
 (qa) -[#1A85FF]-> (behat:run) : depend:4
-(qa) -[#1A85FF]-> (phpstan:analyse) : depend:5
+(qa) -[#1A85FF]-> (phpstan:check) : depend:5
 (qa) -[#1A85FF]-> (psalm:run) : depend:6
 (docs:refresh-images) -[#1A85FF]-> (phing:visualize) : depend:1
 (docs:refresh-images) -[#1A85FF]-> (plantuml:puml-to-png) : depend:2
@@ -48,7 +48,7 @@ skinparam UseCaseFontColor Black
 (docs:serve)
 (docs:build)
 (psalm:run)
-(phpstan:analyse)
+(phpstan:check)
 
 
 @enduml

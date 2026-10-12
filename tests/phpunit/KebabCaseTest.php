@@ -1,5 +1,7 @@
 <?php
 
+namespace Jawira\CaseConverterTests;
+
 use Jawira\CaseConverter\Glue\KebabCase;
 use PHPUnit\Framework\TestCase;
 
@@ -20,7 +22,7 @@ class KebabCaseTest extends TestCase
                      ->getMock();
 
         // Setting lowerCase properties
-        $reflectionObject  = new ReflectionObject($mock);
+        $reflectionObject  = new \ReflectionObject($mock);
         $titleCaseProperty = $reflectionObject->getProperty('lowerCase');
         $titleCaseProperty->setAccessible(true);
         $titleCaseProperty->setValue($mock, 456);

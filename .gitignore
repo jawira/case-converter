@@ -17,5 +17,6 @@
 /docs/changelog.md
 /build.png
 /build.svg
-/config/.phpunit.result.cache
 /clover.xml
+/.phpunit.result.cache
+/.phpunit.cache

@@ -1,5 +1,7 @@
 <?php
 
+namespace Jawira\CaseConverterTests;
+
 use Jawira\CaseConverter\Split\SpaceSplitter;
 use PHPUnit\Framework\TestCase;
 
@@ -24,7 +26,7 @@ class SplitterTest extends TestCase
                      ->getMock();
 
         // Invoking protected method
-        $method = new ReflectionMethod($mock, 'splitUsingPattern');
+        $method = new \ReflectionMethod($mock, 'splitUsingPattern');
         $method->setAccessible(true);
         $result = $method->invokeArgs($mock, [$inputString, $pattern]);
 

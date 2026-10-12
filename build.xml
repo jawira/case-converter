@@ -13,7 +13,7 @@
   <target name="setup" description="Install dependencies" depends="composer:install"/>
 
   <target name="qa" description="Run quality tests"
-          depends="php:lint, composer:validate, phpunit:run, behat:run, phpstan:analyse"/>
+          depends="php:lint, composer:validate, phpunit:check, behat:check, phpstan:check"/>
 
   <target name="docs:refresh-images" description="Update and regenerate docs images"
           depends="phing:visualize, plantuml:puml-to-png"/>
@@ -34,7 +34,7 @@
     </composer>
   </target>
 
-  <target name="phpunit:open-coverage" description="Open coverage site" depends="phpunit:run">
+  <target name="phpunit:open-coverage" description="Open coverage site" depends="phpunit:check">
     <exec executable="xdg-open">
       <arg file="resources/coverage-html/index.html"/>
     </exec>
@@ -49,21 +49,21 @@
     </phplint>
   </target>
 
-  <target name="behat:run" description="Run behat tests">
+  <target name="behat:check" description="Run behat tests">
     <exec executable="vendor/bin/behat" passthru="true" checkreturn="true">
       <arg value="--colors"/>
       <arg value="--no-interaction"/>
       <arg value="--stop-on-failure"/>
+      <arg value="--fail-on-behat-deprecations"/>
       <arg value="--rerun"/>
       <arg value="--strict"/>
     </exec>
   </target>
 
-  <target name="phpunit:run" description="Run unit tests">
+  <target name="phpunit:check" description="Run unit tests">
     <mkdir dir="resources/coverage-html/"/>
     <exec executable="vendor/bin/phpunit" passthru="true" checkreturn="true">
       <env key="XDEBUG_MODE" value="coverage"/>
-      <arg line="--configuration=config/phpunit.xml"/>
       <arg value="--testdox"/>
     </exec>
   </target>
@@ -123,7 +123,7 @@
     </exec>
   </target>
 
-  <target name="phpstan:analyse" description="Analyse at max level">
+  <target name="phpstan:check" description="Analyse at max level">
     <exec executable="vendor/bin/phpstan" passthru="true" checkreturn="true">
       <arg value="analyse"/>
       <arg line="--level=max"/>

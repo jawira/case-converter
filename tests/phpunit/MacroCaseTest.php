@@ -1,5 +1,7 @@
 <?php
 
+namespace Jawira\CaseConverterTests;
+
 use Jawira\CaseConverter\Glue\MacroCase;
 use PHPUnit\Framework\TestCase;
 
@@ -17,7 +19,7 @@ class MacroCaseTest extends TestCase
                      ->getMock();
 
         // Setting `upperCase` property value
-        $reflectionObject  = new ReflectionObject($mock);
+        $reflectionObject  = new \ReflectionObject($mock);
         $titleCaseProperty = $reflectionObject->getProperty('upperCase');
         $titleCaseProperty->setAccessible(true);
         $titleCaseProperty->setValue($mock, 789);

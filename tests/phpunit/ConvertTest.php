@@ -1,5 +1,7 @@
 <?php
 
+namespace Jawira\CaseConverterTests;
+
 use Jawira\CaseConverter\CaseConverterException;
 use Jawira\CaseConverter\Convert;
 use Jawira\CaseConverter\Glue\AdaCase;
@@ -51,7 +53,7 @@ class ConvertTest extends TestCase
                      ->getMock();
 
         // Removing protected for analyze method
-        $reflection = new ReflectionObject($stub);
+        $reflection = new \ReflectionObject($stub);
         $method     = $reflection->getMethod('isUppercaseWord');
         $method->setAccessible(true);
 
@@ -112,7 +114,7 @@ class ConvertTest extends TestCase
              ->willReturn($isUppercaseWordReturn);
 
         // Removing protected for analyze method
-        $reflection = new ReflectionObject($stub);
+        $reflection = new \ReflectionObject($stub);
         $method     = $reflection->getMethod('analyse');
         $method->setAccessible(true);
 
@@ -187,7 +189,7 @@ class ConvertTest extends TestCase
                     ->willReturn($gluerMock);
 
         // Setting detected words
-        $reflectionObject = new ReflectionObject($convertMock);
+        $reflectionObject = new \ReflectionObject($convertMock);
         $wordsProperty    = $reflectionObject->getProperty('words');
         $wordsProperty->setAccessible(true);
         $wordsProperty->setValue($convertMock, ['dummy', 'd455b']);
@@ -197,7 +199,7 @@ class ConvertTest extends TestCase
         $forceProperty->setValue($convertMock, false);
 
         // Invoking protected method
-        $method = new ReflectionMethod($convertMock, 'handleGluerMethod');
+        $method = new \ReflectionMethod($convertMock, 'handleGluerMethod');
         $method->setAccessible(true);
         $result = $method->invokeArgs($convertMock, [$methodName]);
 
@@ -226,7 +228,7 @@ class ConvertTest extends TestCase
                             ->getMock();
 
         // Invoking protected method
-        $method = new ReflectionMethod($convertMock, 'handleGluerMethod');
+        $method = new \ReflectionMethod($convertMock, 'handleGluerMethod');
         $method->setAccessible(true);
         $method->invokeArgs($convertMock, ['myDummyMethod']);
     }
@@ -282,7 +284,7 @@ class ConvertTest extends TestCase
                      ->getMock();
 
         // Setting value to protected property
-        $reflectionObject   = new ReflectionObject($mock);
+        $reflectionObject   = new \ReflectionObject($mock);
         $reflectionProperty = $reflectionObject->getProperty('words');
         $reflectionProperty->setAccessible(true);
         $reflectionProperty->setValue($mock, ['dummy', 'array']);
@@ -312,7 +314,7 @@ class ConvertTest extends TestCase
                      ->getMock();
 
         // Calling protected method
-        $reflectionObject = new ReflectionObject($mock);
+        $reflectionObject = new \ReflectionObject($mock);
         $reflectionMethod = $reflectionObject->getMethod('createGluer');
         $reflectionMethod->setAccessible(true);
         $gluerObject = $reflectionMethod->invoke($mock, $className, ['dummy', 'array'], false);
@@ -351,7 +353,7 @@ class ConvertTest extends TestCase
                             ->getMock();
 
         // Setting detected words
-        $reflectionObject = new ReflectionObject($convertMock);
+        $reflectionObject = new \ReflectionObject($convertMock);
         $sourceProperty   = $reflectionObject->getProperty('source');
         $sourceProperty->setAccessible(true);
         $sourceProperty->setValue($convertMock, 'this is source string');
@@ -378,7 +380,7 @@ class ConvertTest extends TestCase
                              ->getMockForAbstractClass();
 
         // set 'source' attribute
-        $reflectionObject = new ReflectionObject($convertMock);
+        $reflectionObject = new \ReflectionObject($convertMock);
         $wordsProperty    = $reflectionObject->getProperty('source');
         $wordsProperty->setAccessible(true);
         $wordsProperty->setValue($convertMock, 'dummy-original-string');
@@ -396,7 +398,7 @@ class ConvertTest extends TestCase
                     ->willReturnSelf();
 
         // Calling protected method
-        $reflectionObject = new ReflectionObject($convertMock);
+        $reflectionObject = new \ReflectionObject($convertMock);
         $reflectionMethod = $reflectionObject->getMethod('fromAuto');
         $reflectionMethod->setAccessible(true);
         $result = $reflectionMethod->invoke($convertMock, 'fromAuto');
@@ -436,13 +438,13 @@ class ConvertTest extends TestCase
                     ->with($splitterMock);
 
         // Add source attribute
-        $reflectionObject = new ReflectionObject($convertMock);
+        $reflectionObject = new \ReflectionObject($convertMock);
         $wordsProperty    = $reflectionObject->getProperty('source');
         $wordsProperty->setAccessible(true);
         $wordsProperty->setValue($convertMock, $sourceString);
 
         // Invoking protected method
-        $method = new ReflectionMethod($convertMock, 'handleSplitterMethod');
+        $method = new \ReflectionMethod($convertMock, 'handleSplitterMethod');
         $method->setAccessible(true);
         $result = $method->invoke($convertMock, $methodName);
 
@@ -486,7 +488,7 @@ class ConvertTest extends TestCase
                             ->getMock();
 
         // Invoking protected method
-        $method = new ReflectionMethod($convertMock, 'handleSplitterMethod');
+        $method = new \ReflectionMethod($convertMock, 'handleSplitterMethod');
         $method->setAccessible(true);
         $method->invokeArgs($convertMock, ['myDummyMethod']);
     }
@@ -510,7 +512,7 @@ class ConvertTest extends TestCase
                      ->getMock();
 
         // Calling protected method
-        $reflectionObject = new ReflectionObject($mock);
+        $reflectionObject = new \ReflectionObject($mock);
         $reflectionMethod = $reflectionObject->getMethod('createSplitter');
         $reflectionMethod->setAccessible(true);
         $splitterObject = $reflectionMethod->invoke($mock, $className, 'dummy-string', false);
@@ -606,7 +608,7 @@ class ConvertTest extends TestCase
      */
     public function testCallException()
     {
-        $this->expectException(Jawira\CaseConverter\CaseConverterException::class);
+        $this->expectException(\Jawira\CaseConverter\CaseConverterException::class);
         $this->expectExceptionMessage('Unknown method: invalidMethod');
 
         // Preparing Convert mock
