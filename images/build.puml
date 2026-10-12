@@ -1,0 +1,51 @@
+@startuml
+
+title
+Case Converter
+end title
+
+top to bottom direction
+
+skinparam Shadowing false
+skinparam ArrowFontColor Black
+skinparam ArrowThickness 2
+skinparam UseCaseBackgroundColor #FFFECC
+skinparam UseCaseBorderColor #333333
+skinparam UseCaseBorderThickness 2
+skinparam UseCaseFontColor Black
+
+
+(setup) -[#1A85FF]-> (composer:install) : depend:1
+(qa) -[#1A85FF]-> (php:lint) : depend:1
+(qa) -[#1A85FF]-> (composer:validate) : depend:2
+(qa) -[#1A85FF]-> (cs:check) : depend:3
+(qa) -[#1A85FF]-> (phpunit:check) : depend:4
+(qa) -[#1A85FF]-> (behat:check) : depend:5
+(qa) -[#1A85FF]-> (phpstan:check) : depend:6
+(docs:refresh-images) -[#1A85FF]-> (phing:visualize) : depend:1
+(docs:refresh-images) -[#1A85FF]-> (plantuml:puml-to-png) : depend:2
+(phpunit:open-coverage) -[#1A85FF]-> (phpunit:check) : depend:1
+(docs:serve) -[#1A85FF]-> (docs:build) : depend:1
+(docs:build) -[#1A85FF]-> (docs:refresh-images) : depend:1
+(help)
+(setup)
+(qa)
+(docs:refresh-images)
+(composer:validate)
+(composer:install)
+(phpunit:open-coverage)
+(php:lint)
+(behat:check)
+(phpunit:check)
+(changelog:links)
+(plantuml:puml-to-png)
+(git:tags-listing)
+(phing:visualize)
+(docs:serve)
+(docs:build)
+(phpstan:check)
+(cs:fix)
+(cs:check)
+
+
+@enduml

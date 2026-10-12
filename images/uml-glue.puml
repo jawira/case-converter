@@ -1,0 +1,90 @@
+@startuml
+namespace Jawira.CaseConverter.Glue  {
+	class TitleCase << class >> {
+		+glue()
+	}
+	abstract SpaceGluer << abstract >> {
+		+DELIMITER
+	}
+	abstract Gluer << abstract >> {
+		+ENCODING
+		..
+		#words
+		#lowerCase
+		#upperCase
+		#titleCase
+		--
+		+__construct()
+		#setSimpleCaseMappingConstants()
+		+<i>glue</i>()
+		#glueUsingRules()
+		#changeWordsCase()
+		#changeFirstWordCase()
+	}
+	abstract DashGluer << abstract >> {
+		+DELIMITER
+	}
+	class CamelCase << class >> {
+		+glue()
+	}
+	abstract UppercaseGluer << abstract >> {
+		+DELIMITER
+	}
+	class AdaCase << class >> {
+		+glue()
+	}
+	abstract UnderscoreGluer << abstract >> {
+		+DELIMITER
+	}
+	class SnakeCase << class >> {
+		+glue()
+	}
+	class KebabCase << class >> {
+		+glue()
+	}
+	class CobolCase << class >> {
+		+glue()
+	}
+	class DotNotation << class >> {
+		+DELIMITER
+		--
+		+glue()
+	}
+	class UpperCase << class >> {
+		+glue()
+	}
+	class TrainCase << class >> {
+		+glue()
+	}
+	class SentenceCase << class >> {
+		+glue()
+	}
+	class PascalCase << class >> {
+		+glue()
+	}
+	class MacroCase << class >> {
+		+glue()
+	}
+	class LowerCase << class >> {
+		+glue()
+	}
+}
+Jawira.CaseConverter.Glue.SpaceGluer --|> Jawira.CaseConverter.Glue.Gluer
+Jawira.CaseConverter.Glue.TitleCase --|> Jawira.CaseConverter.Glue.SpaceGluer
+Jawira.CaseConverter.Glue.DashGluer --|> Jawira.CaseConverter.Glue.Gluer
+Jawira.CaseConverter.Glue.UppercaseGluer --|> Jawira.CaseConverter.Glue.Gluer
+Jawira.CaseConverter.Glue.CamelCase --|> Jawira.CaseConverter.Glue.UppercaseGluer
+Jawira.CaseConverter.Glue.UnderscoreGluer --|> Jawira.CaseConverter.Glue.Gluer
+Jawira.CaseConverter.Glue.AdaCase --|> Jawira.CaseConverter.Glue.UnderscoreGluer
+Jawira.CaseConverter.Glue.SnakeCase --|> Jawira.CaseConverter.Glue.UnderscoreGluer
+Jawira.CaseConverter.Glue.KebabCase --|> Jawira.CaseConverter.Glue.DashGluer
+Jawira.CaseConverter.Glue.CobolCase --|> Jawira.CaseConverter.Glue.DashGluer
+Jawira.CaseConverter.Glue.DotNotation --|> Jawira.CaseConverter.Glue.Gluer
+Jawira.CaseConverter.Glue.UpperCase --|> Jawira.CaseConverter.Glue.SpaceGluer
+Jawira.CaseConverter.Glue.TrainCase --|> Jawira.CaseConverter.Glue.DashGluer
+Jawira.CaseConverter.Glue.SentenceCase --|> Jawira.CaseConverter.Glue.SpaceGluer
+Jawira.CaseConverter.Glue.PascalCase --|> Jawira.CaseConverter.Glue.UppercaseGluer
+Jawira.CaseConverter.Glue.MacroCase --|> Jawira.CaseConverter.Glue.UnderscoreGluer
+Jawira.CaseConverter.Glue.LowerCase --|> Jawira.CaseConverter.Glue.SpaceGluer
+@enduml
+
