@@ -1,6 +1,6 @@
 # Case converter
 
-Use this library to convert string between:
+Use this library to convert strings between the following cases:
 
 | Name             | Method         | Output example    |
 |------------------|----------------|-------------------|
@@ -24,15 +24,16 @@ Features:
 * 🏭 [factory][]
 * 🌐 [i18n](#i18n)
 
+[![Total Downloads](http://poser.pugx.org/jawira/case-converter/downloads?style=for-the-badge)](https://packagist.org/packages/jawira/case-converter)
 [![PHP Version Require](http://poser.pugx.org/jawira/case-converter/require/php?style=for-the-badge)](https://packagist.org/packages/jawira/case-converter)
 [![Latest Stable Version](http://poser.pugx.org/jawira/case-converter/v?style=for-the-badge)](https://packagist.org/packages/jawira/case-converter)
-[![Total Downloads](http://poser.pugx.org/jawira/case-converter/downloads?style=for-the-badge)](https://packagist.org/packages/jawira/case-converter)
 [![License](http://poser.pugx.org/jawira/case-converter/license?style=for-the-badge)](https://packagist.org/packages/jawira/case-converter)
 
 ## Usage
 
-Input string (i.e. _john-connor_) format is going to be
-[detected automatically][detection algorithm]. Here's an example:
+The input string's format is [detected automatically][detection algorithm].
+
+For example:
 
 ```php
 use Jawira\CaseConverter\Convert;
@@ -42,18 +43,18 @@ $hero = new Convert('john-connor');
 echo $hero->toCamel();   // output: johnConnor
 ```
 
-Of course you can explicitly set the format of input string:
+You can also specify the input string's format explicitly:
 
 ```php
 echo $hero->fromKebab()->toSnake();   // output: john_connor
 ```
 
-You can also use the [provided factory][factory] to instantiate `Convert` class.
-A list of [all public methods] is also available.
+You can also use the [provided factory][factory] to create a `Convert` instance.
+See the list of [all public methods] for more options.
 
 ## i18n
 
-Fully compatible with non-english alphabets:
+The library supports non-English alphabets:
 
 ```php
 // Spanish
@@ -69,8 +70,7 @@ $rus = new Convert('ОЧЕНЬ_ПРИЯТНО');
 echo $rus->toCamel();   // output: оченьПриятно
 ```
 
-`case-converter` is compatible with _Simple Case-Mapping_ and _Full
-Case-Mapping_.
+`case-converter` supports both _Simple Case-Mapping_ and _Full Case-Mapping_.
 [Learn more about Case-Mapping][Case-Mapping].
 
 ## Installation

@@ -1,47 +1,54 @@
-Known issues
-============
+# Behavior and limitations
 
-Number is not a word
---------------------
+## Digits and word boundaries
 
-When using `case-converter` you cannot use a number as separator.
-In practice this means a number is always identified as a lower case letter.
-
-![Phing targets](./images/number-problem.png "Phing targets")
-
-As shown in the previous example, there is no way to go back to the original input string (i.e. `hello-8-world`), in _
-kebab case_ this sting is written as
-`hello8-world`.
-
-Other examples (with automatic case detection):
+Digits are not treated as word separators. In automatic detection, digits are
+also treated like lowercase characters by default when checking whether an
+input consists only of uppercase letters. This can make strings containing
+digits split differently than expected:
 
 ```php
+use Jawira\CaseConverter\Convert;
+
 (new Convert('REEL2REAL'))->toDot(); // r.e.e.l2.r.e.a.l
 (new Convert('reel2real'))->toDot(); // reel2real
 (new Convert('Reel2Real'))->toDot(); // reel2.real
 ```
 
-I strongly suggest to avoid numbers in strings to be converted.
+For example, `hello8World` converts to `hello8-world` in kebab case. The
+converter cannot infer that the `8` should have been a separate word. If a
+particular split is required, preprocess the input to add a separator where
+needed.
 
-Mixed conventions
------------------
+![number problem](./images/number-problem.png)
 
-It might be evident, but _Case Converter_ cannot handle string with mixed naming conventions.
+## Acronyms and mixed capitalization
 
-For example the string `XMLHttpRequest` will result in `x.m.l.http.request` when using _dot notation_:
+The converter splits before every uppercase letter in unseparated input. It
+does not infer acronym boundaries.
 
-```php
-$xhr = new Convert('XMLHttpRequest');
-$xhr->toDot() // x.m.l.http.request
-```
+For example, `XMLHttpRequest` is split as
+`X`, `M`, `L`, `Http`, `Request`, and converts to `x.m.l.http.request` in dot
+notation. If the intended words are `Xml`, `Http`, and `Request`, write the
+input as `XmlHttpRequest`.
 
-The correct way to name this string (for Case Converter) should have been `XmlHttpRequest`.
-
-Another example of mixed conventions:
-
-| ❌ Wrong         | ✅ Good           |
+| ❌ Wrong        | ✅ Good          |
 |-----------------|------------------|
 | PHP_CodeSniffer | php_code_sniffer |
 | PHP_CodeSniffer | PhpCodeSniffer   |
-| PHPUnit         | PhpUnit          |
+| PHPUnit         | PhpUnit          | 
 | PHPUnit         | php-unit         |
+
+Use consistent separators and capitalization in the source. For example,
+`PHP_CodeSniffer` mixes an acronym with an underscore-separated name, while
+`php_code_sniffer` and `PhpCodeSniffer` have unambiguous boundaries.
+
+!!! note "Acronyms in PHP"
+
+    This acronym problem has also affected PHP's own class naming conventions. A
+    2024 [PHP RFC on acronym casing](https://wiki.php.net/rfc/class-naming-acronyms)
+    was accepted to treat acronyms and initialisms like regular words in Pascal
+    case: for example, prefer `HttpRequest` over `HTTPRequest`. The RFC updates
+    PHP's policy for internal classes; it does not rename existing classes. This
+    mixed-case style also makes word boundaries easier for Case Converter to
+    detect.

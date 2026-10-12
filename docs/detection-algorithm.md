@@ -1,21 +1,30 @@
-Detection algorithm
-===================
+Automatic format detection
+==========================
 
-When `\Jawira\CaseConverter\Convert` class is instantiated, the input string is
-analyzed to detect the words in it.
+When a `Convert` object is created, the library splits the source string into
+words. `fromAuto()` reruns this detection on the original source. Detection
+chooses the first matching rule below:
 
-This is also the algorithm used by `Convert::fromAuto` method.
+1. If the string contains an underscore (`_`), split on one or more underscores.
+2. Otherwise, if it contains a hyphen (`-`), split on one or more hyphens.
+3. Otherwise, if it contains a space (`␣`), split on one or more spaces.
+4. Otherwise, if it contains a dot (`.`), split on one or more dots.
+5. Otherwise, if the whole string contains only uppercase letters, treat it as
+   one word.
+6. Otherwise, split before every uppercase letter.
 
-![Detection algorithm](images/detection-algorithm.png "Detection algorithm")
+The diagram below illustrates the detection order.
 
-1. If input string contains `_` (underscore character), then `_` is used to
-   split string.
-2. If input string contains `-` (dash character), then `-` is used to split
-   string.
-3. If input string contains `␣` (space character), then `␣` is used to split
-   string.
-4. If input string contains `.` (space character), then `.` is used to split
-   string.
-5. If input string contains uppercase characters only, then the input string is
-   considered to be a single word.
-6. Finally, uppercase characters are used to split string.
+![Automatic format detection](images/detection-algorithm.png "Automatic format detection")
+
+The order matters. For example, if a string contains both underscores and
+hyphens, automatic detection uses underscores and leaves hyphens inside the
+resulting words. Choose an explicit `from*()` method when the source format is
+known or when the automatic result is not what you want.
+
+!!! tip
+
+    By default, digits count like lowercase characters in the uppercase-only
+    check. For example, `fromAuto()` treats `ABC123` as one word. Pass `false` to
+    `fromAuto(false)` to count digits like uppercase characters in that check.
+    This option affects only automatic detection of uppercase-only strings.

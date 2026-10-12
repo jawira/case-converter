@@ -6,28 +6,24 @@ Phing targets
 
 [![Phing targets](./images/build.png "Phing targets")](./images/build.png)
 
-- `$ phing setup`: Prepare project for development.
-- `$ phing qa`: Run quality tests, use this before every commit.
+- `phing setup`: Install the Composer dependencies.
+- `phing qa`: Run the configured PHP lint, style, unit, behavior, and static-analysis checks.
 
 Documentation
 -------------
 
-Documentation is built when a `release` is created.
+The documentation site is built with MkDocs. To build it locally, install
+MkDocs with the Material theme, then run `phing docs:build`. To preview changes
+while editing, run `phing docs:serve`.
 
-To install **mkdocs** locally type:
-
-[comment]: <> (https://stackoverflow.com/a/41352413/4345061)
-
-```console
-sudo -H pip install mkdocs
-```
+`docs:build` also refreshes generated diagrams, so the project's development
+dependencies must be installed first.
 
 Using Phing behind a proxy
 --------------------------
 
-If you are developing behind a proxy, you have to set the environment
-variable `http_proxy`. This variable already is imported in `build.xml`, so you
-have nothing to do.
+If you are developing behind a proxy, configure the `http_proxy` environment
+variable. `build.xml` passes it to Phing tasks that need it.
 
 Creating new convention
 -----------------------
@@ -39,11 +35,6 @@ Creating new convention
 5. Register into `\Jawira\CaseConverter\Convert::handleGluerMethod`.
 6. Update docblock `\Jawira\CaseConverter\Convert` to register new methods.
 7. Update documentation.
-
-Railroad diagram
-----------------
-
-- <https://tabatkins.github.io/railroad-diagrams/generator.html>
 
 Class diagrams
 --------------

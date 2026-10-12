@@ -1,0 +1,39 @@
+@startebnf
+method-chaining = (
+  [
+    "->forceSimpleCaseMapping()"
+  ],
+  (
+    "->fromAuto()" |
+    "->fromAda()" |
+    "->fromCamel()" |
+    "->fromCobol()" |
+    "->fromDot()" |
+    "->fromKebab()" |
+    "->fromLower()" |
+    "->fromMacro()" |
+    "->fromPascal()" |
+    "->fromSentence()" |
+    "->fromSnake()" |
+    "->fromTitle()" |
+    "->fromTrain()" |
+    "->fromUpper()"
+  ),
+  (
+    "->toArray()" |
+    "->toAda()" |
+    "->toCamel()" |
+    "->toCobol()" |
+    "->toDot()" |
+    "->toKebab()" |
+    "->toLower()" |
+    "->toMacro()" |
+    "->toPascal()" |
+    "->toSentence()" |
+    "->toSnake()" |
+    "->toTitle()" |
+    "->toTrain()" |
+    "->toUpper()"
+  )
+) | "->getSource()";
+@endebnf
