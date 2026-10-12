@@ -14,5 +14,8 @@ repo_url: 'https://github.com/jawira/case-converter/'
 edit_uri: ''
 markdown_extensions:
   - codehilite
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
 extra:
   disqus: case-converter

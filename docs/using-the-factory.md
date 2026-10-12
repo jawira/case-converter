@@ -1,62 +1,47 @@
-Using the factory
-=================
+# Using the factory
 
-Besides `\Jawira\CaseConverter\Convert` you also have at your disposal:
+The package provides `Jawira\CaseConverter\CaseConverter` and the
+`CaseConverterInterface`. The factory's `convert()` method creates a new
+`Convert` instance for the supplied source string.
 
-- `\Jawira\CaseConverter\CaseConverter`
-- `\Jawira\CaseConverter\CaseConverterInterface`
-
-Instead of using `new Convert();` you can use the convenience method from
-`CaseConverter` class.
-
-In concrete, you have to call `\Jawira\CaseConverter\CaseConverter::convert` to
-create `Convert` objects.
-
-Here an example:
+Using the interface in your services makes the dependency easy to configure
+and replace in tests:
 
 ```php
-<?php
 namespace App;
 
 use Jawira\CaseConverter\CaseConverterInterface;
 
-class MySuperNameCreator
+final class NameFormatter
 {
-    protected $cc;
+    public function __construct(private CaseConverterInterface $converter) {}
 
-    public function __construct(CaseConverterInterface $cc)
+    public function variableName(string $text): string
     {
-        $this->cc = $cc;
+        return $this->converter->convert($text)->toCamel();
     }
 
-    public function variableName(string $slug): string
+    public function constantName(string $text): string
     {
-        // `->convert()` returns a `Convert` object.
-        $myConvert = $this->cc->convert($slug);
-        return $myConvert->toCamel();
-    }
-
-    public function constantName(string $slug): string
-    {
-        // Of course you can also chain everything.
-        return $this->cc->convert($slug)->fromKebab()->toMacro();
+        return $this->converter->convert($text)->fromKebab()->toMacro();
     }
 }
 ```
 
-Please note that an interface -`CaseConverterInterface`- is also provided. If
-you are using _Symfony_ you can use this interface with [Symfony autowiring][]
-to automatically instantiate `CaseConverter`, otherwise if you are working in a
-standalone project you should try [php-di project][].
+In Symfony, register `CaseConverterInterface` as a service and use [autowiring](https://symfony.com/doc/current/service_container/autowiring.html#working-with-interfaces)
+to inject it through the interface. 
 
-Using `\Jawira\CaseConverter\CaseConverter::convert` is preferred because:
+The factory can also be instantiated directly:
 
-- Usually the `new` operator is considered harmful.
-- You can easily mock dependencies when writing tests.
-- [It's SOLID]
+```php
+use Jawira\CaseConverter\CaseConverter;
 
-[It's SOLID]: https://github.com/jawira/case-converter/issues/40
+$converter = new CaseConverter();
+$result = $converter->convert('first-name')->toCamel(); // firstName
+```
 
-[php-di project]: http://php-di.org/#autowiring
+Using the factory `\Jawira\CaseConverter\CaseConverter::convert` is preferred because:
 
-[Symfony autowiring]: https://symfony.com/doc/current/service_container/autowiring.html
+* Usually the new operator is considered harmful.
+* You can easily mock dependencies when writing tests.
+* [It's SOLID.](https://github.com/jawira/case-converter/issues/40)

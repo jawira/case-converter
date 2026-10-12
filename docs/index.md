@@ -1,112 +1,124 @@
 Case Converter
 ==============
 
-To use **Case Converter** you have to instantiate `Convert` class, to do so you
-can use the `new` keyword or the [CaseConverter factory] class.
+Case Converter converts a string into one of 13 naming formats.
+Create a `Jawira\CaseConverter\Convert` instance with the source string,
+optionally you can also use [the factory class](using-the-factory.md).
 
-The string you want to convert should be passed at instantiation. This cannot be
-changed later since `Convert` class is immutable.
+The Convert class was designed to be immutable, the source cannot be changed
+after construction.
 
-```php
-$var = new Convert('string-to-convert');
+## Installation
+
+Install the package with Composer.
+
+```console
+composer require jawira/case-converter
 ```
 
-Typically, you are going to call `Convert` methods this way:
+## Basic usage
 
-![Method call](./images/railroad.png)
-
-Basic usage
------------
-
-Code:
+The library detects the input format automatically:
 
 ```php
 use Jawira\CaseConverter\Convert;
 
-$robot = new Convert('The-Terminator');
+$convert = new Convert('The-Terminator');
 
-echo $robot->toPascal(); // TheTerminator
-echo $robot->toCobol();  // THE-TERMINATOR
-echo $robot->toSnake();  // the_terminator
+echo $convert->toPascal(); // TheTerminator
+echo $convert->toCobol();  // THE-TERMINATOR
+echo $convert->toSnake();  // the_terminator
 ```
 
-Explicit case detection
------------------------
+See [all supported formats and methods](api.md).
 
-In some edge cases you have to explicitly set the format of input string to have
-the desired output:
+## Choose the input format
+
+Automatic detection follows a fixed order. If the format is known, use the
+matching `from*()` method to control how the original string is split:
 
 ```php
-use Jawira\CaseConverter\Convert;
+$convert = new Convert('FBI');
 
-$agency = new Convert('FBI');
-
-$agency->fromAda();
-echo $agency->toCobol();   // FBI
-echo $agency->toSnake();   // fbi
-
-$agency->fromCamel();
-echo $agency->toCobol();   // F-B-I
-echo $agency->toSnake();   // f_b_i
-
-$agency->fromAuto();
-echo $agency->toCobol();   // FBI
-echo $agency->toSnake();   // fbi
+$convert->fromAda()->toSnake();   // fbi: one word separated by underscores
+$convert->fromCamel()->toSnake(); // f_b_i: split before each uppercase letter
 ```
 
-Force _Simple Case-Mapping_
----------------------------
+`from*()` methods return the same object and can be chained with conversion
+methods. See [automatic format detection](detection-algorithm.md) for the rules.
 
-You can still use _Simple Case-Mapping_ even if you are using PHP 7.3 or newer:
+## Inspect the input
+
+`getSource()` returns the original string, and `toArray()` returns the words
+currently detected from it:
 
 ```php
-<?php declare(strict_types=1);
+$convert = new Convert('Mario Bros');
 
-require __DIR__ . '/vendor/autoload.php';
-
-use Jawira\CaseConverter\Convert;
-
-$robot = new Convert('Straße');
-
-$robot->forceSimpleCaseMapping();
-echo $robot->toMacro();     // output: STRAßE
+$convert->getSource(); // Mario Bros
+$convert->toArray();   // ['Mario', 'Bros']
 ```
 
-[Learn more about Case-Mapping][Case-Mapping].
+## Unicode case mapping
 
-Using the factory
------------------
-
-[CaseConverter factory] is going to instantiate `Convert` class for you.
-
-In the following code `$this->cc` is an instance of
-`\Jawira\CaseConverter\CaseConverter` and implements
-`\Jawira\CaseConverter\CaseConverterInterface`. This is useful because the
-factory should be instantiated by the _Dependency Injection_ mechanism provided
-by your favorite framework.
+The library supports Unicode case conversion. By default it uses full case
+mapping, which can change a string's length. Call `forceSimpleCaseMapping()` to
+request simple case mapping instead:
 
 ```php
+$convert = new Convert('Straße');
+
+$convert->toUpper(); // STRASSE
+$convert->forceSimpleCaseMapping()->toUpper(); // STRAßE
+```
+
+See [case mapping](case-mapping.md) for details and limitations.
+
+## Use the factory
+
+This library also provides `\Jawira\CaseConverter\CaseConverter` as a factory.
+Call `convert()` to create a `Convert` instance:
+
+```php
+use \Jawira\CaseConverter\CaseConverter;
+
+$cc = new CaseConverter();
+
 // Convert string to Pascal case
-$this->cc->convert('XML')->toPascal(); // Xml
+$cc->convert('XML')->toPascal(); // Xml
 
 // Convert string to Snake case
-$this->cc->convert('v3.0.2')->toSnake(); // v3_0_2
+$cc->convert('v3.0.2')->toSnake(); // v3_0_2
 
 // Convert string to Camel case
-$this->cc->convert('first-name')->toCamel(); // firstName
+$cc->convert('first-name')->toCamel(); // firstName
 
 // Convert from Lower case to Dot case
-$this->cc->convert('non-SI units')->fromLower()->toDot(); // non-si.units
+$cc->convert('non-SI units')->fromLower()->toDot(); // non-si.units
 
 // Get detected words
-$this->cc->convert('Mario Bros')->toArray(); // ['Mario', 'Bros']
+$cc->convert('Mario Bros')->toArray(); // ['Mario', 'Bros']
 
 // Retrieve original string
-$this->cc->convert('use_the_force')->getSource(); // use_the_force
+$cc->convert('use_the_force')->getSource(); // use_the_force
 ```
 
-More about [CaseConverter factory].
+For dependency injection, `CaseConverter` implements `CaseConverterInterface`.
 
-[Case-Mapping]: ./case-mapping.md
+```php
+use Jawira\CaseConverter\CaseConverterInterface;
 
-[CaseConverter factory]: ./using-the-factory.md
+final class NameFormatter
+{
+    public function __construct(private CaseConverterInterface $cc) {}
+
+    public function format(string $slug): string
+    {
+        return $this->cc->convert($slug)->toCamel();
+    }
+}
+```
+
+
+
+See [using the factory](using-the-factory.md) for framework configuration.
