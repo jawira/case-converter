@@ -33,11 +33,14 @@ jobs:
       - name: validate composer
         run: phing composer:validate
 
+      - name: php-cs-fixer
+        run: phing cs:check
+
+      - name: PHPUnit
+        run: phing phpunit:check
+
       - name: behat
         run: phing behat:check
 
       - name: phpstan
         run: phing phpstan:check
-
-      - name: PHPUnit
-        run: phing phpunit:check

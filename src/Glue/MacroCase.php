@@ -2,10 +2,14 @@
 
 namespace Jawira\CaseConverter\Glue;
 
+/**
+ * @author Jawira Portugal <dev@tugal.be>
+ * @copyright © 2015-2026 Jawira Portugal
+ */
 class MacroCase extends UnderscoreGluer
 {
-    public function glue(): string
-    {
-        return $this->glueUsingRules(self::DELIMITER, $this->upperCase);
-    }
+  public function glue(): string
+  {
+    return $this->glueUsingRules(self::DELIMITER, $this->upperCase);
+  }
 }

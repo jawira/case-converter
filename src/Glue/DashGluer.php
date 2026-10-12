@@ -2,8 +2,12 @@
 
 namespace Jawira\CaseConverter\Glue;
 
+/**
+ * @author Jawira Portugal <dev@tugal.be>
+ * @copyright © 2015-2026 Jawira Portugal
+ */
 abstract class DashGluer extends Gluer
 {
-    /** @internal */
-    public const DELIMITER = '-';
+  /** @internal */
+  public const DELIMITER = '-';
 }

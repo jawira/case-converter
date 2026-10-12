@@ -3,11 +3,12 @@
 namespace Jawira\CaseConverter;
 
 /**
- * Interface CaseConverterInterface
+ * Interface CaseConverterInterface.
  *
  * @author  Jawira Portugal <dev@tugal.be>
+ * @copyright © 2015-2026 Jawira Portugal
  */
 interface CaseConverterInterface
 {
-    public function convert(string $source): Convert;
+  public function convert(string $source): Convert;
 }

@@ -7,9 +7,9 @@ end_of_line = lf
 insert_final_newline = true
 indent_style = space
 ij_visual_guides = 80, 120
+indent_size = 2
 
 [*.php]
-indent_size = 4
 max_line_length = 120
 ij_php_align_multiline_chained_methods = true
 ij_php_align_phpdoc_comments = true
@@ -20,11 +20,7 @@ ij_php_align_key_value_pairs = true
 ij_php_align_match_arm_bodies = true
 ij_php_phpdoc_use_fqcn = true
 
-[*.{yml, yaml, neon, xml, svg, json, js}]
-indent_size = 2
-
-[*.{md, markdown}]
+[*.md]
 trim_trailing_whitespace = false
-indent_size = 2
 max_line_length = 80
 ij_markdown_wrap_text_if_long = true

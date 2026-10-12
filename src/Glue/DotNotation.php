@@ -3,20 +3,21 @@
 namespace Jawira\CaseConverter\Glue;
 
 /**
- * Class DotNotation
+ * Class DotNotation.
+ *
+ * @author Jawira Portugal <dev@tugal.be>
+ * @copyright © 2015-2026 Jawira Portugal
  */
 class DotNotation extends Gluer
 {
-    /** @internal */
-    public const DELIMITER = '.';
+  /** @internal */
+  public const DELIMITER = '.';
 
-    /**
-     * Format detected words in _dot notation_
-     *
-     * @return string
-     */
-    public function glue(): string
-    {
-        return $this->glueUsingRules(self::DELIMITER, $this->lowerCase);
-    }
+  /**
+   * Format detected words in _dot notation_.
+   */
+  public function glue(): string
+  {
+    return $this->glueUsingRules(self::DELIMITER, $this->lowerCase);
+  }
 }

@@ -1,40 +1,53 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Jawira\CaseConverterTests;
 
 use Jawira\CaseConverter\Glue\KebabCase;
 use PHPUnit\Framework\TestCase;
+use ReflectionException;
+use ReflectionObject;
 
+/**
+ * @internal
+ *
+ * @author Jawira Portugal <dev@tugal.be>
+ * @copyright © 2015-2026 Jawira Portugal
+ *
+ * @coversNothing
+ */
 class KebabCaseTest extends TestCase
 {
-    /**
-     * Testing that `glue` method is called and `lowerCase` property is used.
-     *
-     * @covers \Jawira\CaseConverter\Glue\KebabCase::glue
-     * @throws \ReflectionException
-     */
-    public function testGlue()
-    {
-        // Disabling constructor with one stub method
-        $mock = $this->getMockBuilder(KebabCase::class)
-                     ->disableOriginalConstructor()
-                     ->setMethods(['glueUsingRules'])
-                     ->getMock();
+  /**
+   * Testing that `glue` method is called and `lowerCase` property is used.
+   *
+   * @covers \Jawira\CaseConverter\Glue\KebabCase::glue
+   *
+   * @throws ReflectionException
+   */
+  public function testGlue()
+  {
+    // Disabling constructor with one stub method
+    $mock = $this->getMockBuilder(KebabCase::class)
+      ->disableOriginalConstructor()
+      ->setMethods(['glueUsingRules'])
+      ->getMock()
+    ;
 
-        // Setting lowerCase properties
-        $reflectionObject  = new \ReflectionObject($mock);
-        $titleCaseProperty = $reflectionObject->getProperty('lowerCase');
-        $titleCaseProperty->setAccessible(true);
-        $titleCaseProperty->setValue($mock, 456);
+    // Setting lowerCase properties
+    $reflectionObject = new ReflectionObject($mock);
+    $titleCaseProperty = $reflectionObject->getProperty('lowerCase');
+    $titleCaseProperty->setAccessible(true);
+    $titleCaseProperty->setValue($mock, 456);
 
-        // Configuring stub
-        $mock->expects($this->once())
-             ->method('glueUsingRules')
-             ->with(KebabCase::DELIMITER, 456)
-             ->willReturn('e1bfd762321e409cee4ac0b6e841963c');
+    // Configuring stub
+    $mock->expects($this->once())
+      ->method('glueUsingRules')
+      ->with(KebabCase::DELIMITER, 456)
+      ->willReturn('e1bfd762321e409cee4ac0b6e841963c')
+    ;
 
-        /** @var \Jawira\CaseConverter\Glue\KebabCase $mock */
-        $returned = $mock->glue();
-        $this->assertSame('e1bfd762321e409cee4ac0b6e841963c', $returned, 'Returned value is not the expected');
-    }
+    /** @var KebabCase $mock */
+    $returned = $mock->glue();
+    $this->assertSame('e1bfd762321e409cee4ac0b6e841963c', $returned, 'Returned value is not the expected');
+  }
 }
