@@ -1,5 +1,7 @@
 <?php
 
+namespace Jawira\CaseConverterTests;
+
 use Jawira\CaseConverter\Glue\CobolCase;
 use PHPUnit\Framework\TestCase;
 
@@ -23,7 +25,7 @@ class CobolCaseTest extends TestCase
                      ->getMock();
 
         // Setting `upperCase` property value
-        $reflectionObject  = new ReflectionObject($mock);
+        $reflectionObject  = new \ReflectionObject($mock);
         $titleCaseProperty = $reflectionObject->getProperty('upperCase');
         $titleCaseProperty->setAccessible(true);
         $titleCaseProperty->setValue($mock, 789);
@@ -34,7 +36,7 @@ class CobolCaseTest extends TestCase
              ->with(CobolCase::DELIMITER, 789)
              ->willReturn('e1bfd762321e409cee4ac0b6e841963c');
 
-        /** @var \Jawira\CaseConverter\CobolCase $mock */
+        /** @var \Jawira\CaseConverter\Glue\CobolCase $mock */
         $returned = $mock->glue();
         $this->assertSame('e1bfd762321e409cee4ac0b6e841963c', $returned, 'Returned value is not the expected');
     }

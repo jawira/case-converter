@@ -1,5 +1,7 @@
 <?php
 
+namespace Jawira\CaseConverterTests;
+
 use Jawira\CaseConverter\Glue\SnakeCase;
 use PHPUnit\Framework\TestCase;
 
@@ -17,7 +19,7 @@ class SnakeCaseTest extends TestCase
                      ->getMock();
 
         // Setting titleCase and lowerCase properties
-        $reflectionObject  = new ReflectionObject($mock);
+        $reflectionObject  = new \ReflectionObject($mock);
         $lowerCaseProperty = $reflectionObject->getProperty('lowerCase');
         $lowerCaseProperty->setAccessible(true);
         $lowerCaseProperty->setValue($mock, 456);

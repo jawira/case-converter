@@ -1,5 +1,7 @@
 <?php
 
+namespace Jawira\CaseConverterTests;
+
 use Jawira\CaseConverter\Split\UnderscoreSplitter;
 use PHPUnit\Framework\TestCase;
 
@@ -19,7 +21,7 @@ class UnderscoreSplitterTest extends TestCase
                      ->getMock();
 
         // Setting value to protected property
-        $reflectionObject   = new ReflectionObject($mock);
+        $reflectionObject   = new \ReflectionObject($mock);
         $reflectionProperty = $reflectionObject->getProperty('inputString');
         $reflectionProperty->setAccessible(true);
         $reflectionProperty->setValue($mock, 'dummyString');

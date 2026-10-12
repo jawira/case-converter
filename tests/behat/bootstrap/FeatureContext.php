@@ -1,8 +1,13 @@
 <?php
 
+namespace Jawira\CaseConverterBehat;
+
 use Behat\Behat\Context\Context;
-use Behat\Behat\Tester\Exception\PendingException;
+use Behat\Transformation\Transform;
 use Jawira\CaseConverter\Convert;
+use Behat\Step\Given;
+use Behat\Step\When;
+use Behat\Step\Then;
 
 /**
  * Defines application features from the specific context.
@@ -25,68 +30,48 @@ class FeatureContext implements Context
     protected $count;
 
     /**
-     * @Given /^CaseConverter class is instantiated with "([^"]*)"$/
-     * @param string $arg1 String to convert
-     *
-     * @throws \Jawira\CaseConverter\CaseConverterException
+     * @param string $argument String to convert
      */
-    public function caseConverterClassIsInstantiatedWith($arg1)
+    #[Given('CaseConverter class is instantiated with :argument')]
+    public function caseConverterClassIsInstantiatedWith(string $argument)
     {
-        $this->instance = new Convert($arg1);
+        $this->instance = new Convert($argument);
     }
 
-    /**
-     * @When I cast object to string
-     */
-    public function iCastObjectToString()
-    {
-        $this->result = (string)($this->instance);
-    }
-
-    /**
-     * @When I call :methodName
-     *
-     * @param $methodName
-     */
-    public function iCall($methodName)
+    #[When('I call :methodName')]
+    public function iCall(string $methodName)
     {
         $this->result = ($this->instance)->$methodName();
     }
 
     /**
-     * @Then method should return string :returnString
-     *
      * @param string $returnString Expected string
-     *
-     * @throws \Exception
      */
-    public function methodShouldReturnString($returnString)
+    #[Then('method should return string :returnString')]
+    public function methodShouldReturnString(string $returnString)
     {
         if (!is_string($returnString)) {
-            throw new Exception('Result is not a string');
+            throw new \Exception('Result is not a string');
         }
 
         if ($this->result !== $returnString) {
             $message = sprintf('Result "%s" is not equal to expected string "%s"', $this->result, $returnString);
-            throw new Exception($message);
+            throw new \Exception($message);
         }
     }
 
     /**
-     * @Then method should return array :returnArray
-     *
      * @param array $returnArray
-     *
-     * @throws \Exception
      */
+    #[Then('method should return array :returnArray')]
     public function methodShouldReturnArray($returnArray)
     {
         if (!is_array($returnArray)) {
-            throw new Exception('Result is not array');
+            throw new \Exception('Result is not array');
         }
 
         if ($this->result !== $returnArray) {
-            throw new Exception('Result is not the expected array');
+            throw new \Exception('Result is not the expected array');
         }
     }
 
@@ -95,14 +80,13 @@ class FeatureContext implements Context
      *
      * Array format is `[One;Two;Three]`.
      *
-     * @Transform /^(\[.*\])$/
-     *
      * @see https://behat.readthedocs.io/en/v2.5/guides/2.definitions.html#step-argument-transformations
      *
      * @param string $string The string to convert to array
      *
      * @return array
      */
+    #[Transform('/^(\[.*\])$/')]
     public function transformStringToArray($string): array
     {
         $trimmed = trim($string, '[]');
@@ -134,13 +118,13 @@ class FeatureContext implements Context
     public function functionsShouldReturn($expectedCount)
     {
         if (!is_numeric($expectedCount)) {
-            throw new Exception('Count value is not numeric');
+            throw new \Exception('Count value is not numeric');
         }
 
         $expectedCount = (int)$expectedCount;
 
         if ($this->count !== $expectedCount) {
-            throw new Exception('Invalid count');
+            throw new \Exception('Invalid count');
         }
     }
 }

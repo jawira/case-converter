@@ -1,5 +1,7 @@
 <?php
 
+namespace Jawira\CaseConverterTests;
+
 use Jawira\CaseConverter\Glue\AdaCase;
 use PHPUnit\Framework\TestCase;
 
@@ -23,7 +25,7 @@ class AdaCaseTest extends TestCase
                      ->getMock();
 
         // Setting proper titleCase property value
-        $reflectionObject   = new ReflectionObject($mock);
+        $reflectionObject   = new \ReflectionObject($mock);
         $titleCaseProperty = $reflectionObject->getProperty('titleCase');
         $titleCaseProperty->setAccessible(true);
         $titleCaseProperty->setValue($mock, 123);

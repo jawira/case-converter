@@ -1,5 +1,7 @@
 <?php
 
+namespace Jawira\CaseConverterTests;
+
 use Jawira\CaseConverter\Glue\Gluer;
 use PHPUnit\Framework\TestCase;
 
@@ -26,13 +28,13 @@ class GluerTest extends TestCase
                      ->getMockForAbstractClass();
 
         // Making "words" property accessible and setting a value
-        $reflection = new ReflectionObject($mock);
+        $reflection = new \ReflectionObject($mock);
         $property   = $reflection->getProperty('words');
         $property->setAccessible(true);
         $property->setValue($mock, $words);
 
         // Making public a protected method
-        $reflection = new ReflectionObject($mock);
+        $reflection = new \ReflectionObject($mock);
         $method     = $reflection->getMethod('glueUsingRules');
         $method->setAccessible(true);
 
@@ -86,7 +88,7 @@ class GluerTest extends TestCase
                      ->getMockForAbstractClass();
 
         // Making public a protected method
-        $reflection = new ReflectionObject($mock);
+        $reflection = new \ReflectionObject($mock);
         $method     = $reflection->getMethod('changeWordsCase');
         $method->setAccessible(true);
         $result = $method->invoke($mock, $words, $caseMode);
@@ -126,7 +128,7 @@ class GluerTest extends TestCase
                      ->getMockForAbstractClass();
 
         // Making public a protected method
-        $reflection = new ReflectionObject($mock);
+        $reflection = new \ReflectionObject($mock);
         $method     = $reflection->getMethod('changeFirstWordCase');
         $method->setAccessible(true);
         $result = $method->invoke($mock, $words, $caseMode);

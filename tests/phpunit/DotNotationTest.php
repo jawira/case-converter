@@ -1,5 +1,7 @@
 <?php
 
+namespace Jawira\CaseConverterTests;
+
 use Jawira\CaseConverter\Glue\DotNotation;
 use PHPUnit\Framework\TestCase;
 
@@ -18,7 +20,7 @@ class DotNotationTest extends TestCase
                      ->getMock();
 
         // Setting `upperCase` property value
-        $reflectionObject  = new ReflectionObject($mock);
+        $reflectionObject  = new \ReflectionObject($mock);
         $titleCaseProperty = $reflectionObject->getProperty('lowerCase');
         $titleCaseProperty->setAccessible(true);
         $titleCaseProperty->setValue($mock, 789);

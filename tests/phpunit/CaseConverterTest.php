@@ -1,5 +1,7 @@
 <?php
 
+namespace Jawira\CaseConverterTests;
+
 use Jawira\CaseConverter\CaseConverter;
 use Jawira\CaseConverter\Convert;
 use PHPUnit\Framework\TestCase;
