@@ -13,7 +13,7 @@
   <target name="setup" description="Install dependencies" depends="composer:install"/>
 
   <target name="qa" description="Run quality tests"
-          depends="php:lint, composer:validate, phpunit:check, behat:check, phpstan:check"/>
+          depends="php:lint, composer:validate, cs:check, phpunit:check, behat:check, phpstan:check"/>
 
   <target name="docs:refresh-images" description="Update and regenerate docs images"
           depends="phing:visualize, plantuml:puml-to-png"/>
@@ -134,4 +134,17 @@
     </exec>
   </target>
 
+  <target name="cs:fix" description="Fixes code style in src dir.">
+    <exec executable="vendor/bin/php-cs-fixer" passthru="true" checkreturn="true">
+      <arg line="--ansi --no-interaction --verbose"/>
+      <arg value="fix"/>
+    </exec>
+  </target>
+
+  <target name="cs:check" description="Checks if configured files/directories comply with configured rules.">
+    <exec executable="vendor/bin/php-cs-fixer" passthru="true" checkreturn="true">
+      <arg line="--ansi --no-interaction --verbose"/>
+      <arg value="check"/>
+    </exec>
+  </target>
 </project>
